@@ -11,6 +11,7 @@ public class gameManager : MonoBehaviour
 
     public GameObject activeMenu;
     public GameObject pauseMenu;
+    
 
     bool isPaused;
 
@@ -20,6 +21,7 @@ public class gameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+       
     }
 
     // Update is called once per frame
@@ -50,4 +52,4 @@ public class gameManager : MonoBehaviour
         activeMenu.SetActive(false);
         activeMenu = null;
     }
-}
+}    // Kenneth Little
