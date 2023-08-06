@@ -32,7 +32,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             facePlayer();
 
-            if(!isShooting) 
+            if (!isShooting)
                 StartCoroutine(shoot());
         }
 

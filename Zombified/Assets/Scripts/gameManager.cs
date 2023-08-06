@@ -13,8 +13,8 @@ public class gameManager : MonoBehaviour
     public playerController playerScript;
 
     public GameObject activeMenu;
-    public GameObject winMenu;
     public GameObject pauseMenu;
+    public GameObject winMenu;
     public TextMeshProUGUI enemiesRemainingText;
 
     bool isPaused;
@@ -73,4 +73,4 @@ public class gameManager : MonoBehaviour
         activeMenu = winMenu;
         activeMenu.SetActive(true);
     }
-}   // Kenneth Little
+}
