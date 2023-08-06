@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class buttonFunctions : MonoBehaviour
+public class buttonFunctions : MonoBehaviour 
 {
     public void resume()
     {
@@ -19,5 +19,10 @@ public class buttonFunctions : MonoBehaviour
     public void quit()
     {
         Application.Quit();
+    }
+
+    public void play()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Kenneth Little
     }
 }

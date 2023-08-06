@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Prefabs/Peter Scene.unity
-    guid: 589977d5141cd214fa0e0ba5a4645c94
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 745109d05cab78849a9ba5f966a9c3c7
+  - enabled: 1
+    path: Assets/KennethsTestScene/KennethsTestingScene.unity
+    guid: 941dc7b1f1c0bf9408546a67dacb5851
   m_configObjects: {}
