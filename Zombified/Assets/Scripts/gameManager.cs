@@ -1,30 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
+
     public static gameManager instance;
 
     public GameObject player;
     public playerController playerScript;
 
     public GameObject activeMenu;
+    public GameObject winMenu;
     public GameObject pauseMenu;
-    
+    public TextMeshProUGUI enemiesRemainingText;
 
     bool isPaused;
+    int enemiesRemaining;
 
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
-       
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetButtonDown("Cancel") && activeMenu == null)
@@ -52,4 +55,22 @@ public class gameManager : MonoBehaviour
         activeMenu.SetActive(false);
         activeMenu = null;
     }
-}    // Kenneth Little
+
+    public void updateGameGoal(int amount)
+    {
+        enemiesRemaining += amount;
+        enemiesRemainingText.text = enemiesRemaining.ToString("0");
+
+        if (enemiesRemaining <= 0)
+        {
+            youWin();
+        }
+    }
+
+    public void youWin()
+    {
+        statePaused();
+        activeMenu = winMenu;
+        activeMenu.SetActive(true);
+    }
+}   // Kenneth Little
