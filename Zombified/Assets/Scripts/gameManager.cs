@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class gameManager : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class gameManager : MonoBehaviour
 
     public GameObject activeMenu;
     public GameObject pauseMenu;
+    public GameObject winMenu;
+    public TextMeshProUGUI enemiesRemainingText;
 
     bool isPaused;
+    int enemiesRemaining;
 
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
@@ -22,7 +25,6 @@ public class gameManager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Cancel") && activeMenu == null)
@@ -49,5 +51,23 @@ public class gameManager : MonoBehaviour
         isPaused = !isPaused;
         activeMenu.SetActive(false);
         activeMenu = null;
+    }
+
+    public void updateGameGoal(int amount)
+    {
+        enemiesRemaining += amount;
+        enemiesRemainingText.text = enemiesRemaining.ToString("0");
+
+        if (enemiesRemaining <= 0)
+        {
+            youWin();
+        }
+    }
+
+    public void youWin()
+    {
+        statePaused();
+        activeMenu = winMenu;
+        activeMenu.SetActive(true);
     }
 }

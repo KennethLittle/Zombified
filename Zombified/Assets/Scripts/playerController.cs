@@ -100,4 +100,6 @@ public class playerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
+
+
 }
