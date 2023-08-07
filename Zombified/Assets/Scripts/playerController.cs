@@ -17,6 +17,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
 
+    
+
 
     private bool groundedPlayer;
     private Vector3 move;
