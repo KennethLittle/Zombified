@@ -19,21 +19,26 @@ public class enemyAI : MonoBehaviour, IDamage
     Vector3 playerDir;
     bool isShooting;
 
+    // Start is called before the first frame update
     void Start()
     {
         gameManager.instance.updateGameGoal(1);
     }
 
+    // Update is called once per frame
     void Update()
     {
         playerDir = gameManager.instance.player.transform.position - transform.position;
 
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             facePlayer();
 
             if (!isShooting)
+            {
                 StartCoroutine(shoot());
+            }
+
         }
 
         agent.SetDestination(gameManager.instance.player.transform.position);
