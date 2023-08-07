@@ -25,4 +25,14 @@ public class buttonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Kenneth Little
     }
+
+    public void playLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Kenneth Little
+    }
+
+    public void quittoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
