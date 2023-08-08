@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
+    //[SerializeField] Renderer model;
+    //[SerializeField] NavMeshAgent agent;
 
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
