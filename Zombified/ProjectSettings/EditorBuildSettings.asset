@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Player and Level Select Screen.unity
     guid: 1a12d4d57dc47b54491d61888c2f29d2
   - enabled: 1
-    path: Assets/KennethsTestScene/KennethsTestingScene.unity
+    path: Assets/Test Scenes/KennethsTestScene/KennethsTestingScene.unity
     guid: 941dc7b1f1c0bf9408546a67dacb5851
   m_configObjects: {}
