@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
-    //[SerializeField] Renderer model;
+    [SerializeField] Renderer model;
 
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
@@ -33,8 +33,8 @@ public class playerController : MonoBehaviour, IDamage
 
     private void Start()
     {
-        //HPMax = HP;
-        //spawnPlayer();
+        HPMax = HP;
+        spawnPlayer();
     }
 
     void Update()
@@ -48,12 +48,12 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        //updatePlayerUI();
+        updatePlayerUI();
 
-        //if (HP <= 0)
-        //{
-        //    GameManager.instance.youLose();
-        //}
+        if (HP <= 0)
+        {
+            gameManager.instance.youLose();
+        }
     }
 
     void movement()
@@ -115,24 +115,24 @@ public class playerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
-    //public void spawnPlayer()
-    //{
-    //    controller.enabled = false;
-    //    transform.position = GameManager.instance.playerSpawnPos.transform.position;
-    //    controller.enabled = true;
-    //    HP = HPMax;
-    //    updatePlayerUI();
-    //}
+    public void spawnPlayer()
+    {
+       controller.enabled = false;
+        transform.position = gameManager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+        HP = HPMax;
+        updatePlayerUI();
+    }
 
-    //public void updatePlayerUI()
-    //{
-    //    GameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
-    //}
+    public void updatePlayerUI()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
+    }
 
-    //IEnumerator flashDamage()
-    //{
-    //    model.material.color  = Color.red;
-    //    yield return new WaitForSeconds(0.1f);
-    //    model.material.color = Color.white;
-    //}
+    IEnumerator flashDamage()
+    {
+        model.material.color  = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = Color.white;
+    }
 }
