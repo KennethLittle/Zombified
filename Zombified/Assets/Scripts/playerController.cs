@@ -7,7 +7,6 @@ public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     //[SerializeField] Renderer model;
-    //[SerializeField] NavMeshAgent agent;
 
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
@@ -17,12 +16,14 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float gravityValue;
 
     [SerializeField] float shootRate;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform shootPos;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
 
-    
 
 
+    private int HPMax;
     private bool groundedPlayer;
     private Vector3 move;
     private Vector3 playerVelocity;
@@ -32,7 +33,8 @@ public class playerController : MonoBehaviour, IDamage
 
     private void Start()
     {
-
+        //HPMax = HP;
+        //spawnPlayer();
     }
 
     void Update()
@@ -46,6 +48,12 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        //updatePlayerUI();
+
+        //if (HP <= 0)
+        //{
+        //    GameManager.instance.youLose();
+        //}
     }
 
     void movement()
@@ -90,6 +98,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         isShooting = true;
 
+        Instantiate(bullet, shootPos.position, transform.rotation);
         // shoot code
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
@@ -106,5 +115,24 @@ public class playerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
+    //public void spawnPlayer()
+    //{
+    //    controller.enabled = false;
+    //    transform.position = GameManager.instance.playerSpawnPos.transform.position;
+    //    controller.enabled = true;
+    //    HP = HPMax;
+    //    updatePlayerUI();
+    //}
 
+    //public void updatePlayerUI()
+    //{
+    //    GameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
+    //}
+
+    //IEnumerator flashDamage()
+    //{
+    //    model.material.color  = Color.red;
+    //    yield return new WaitForSeconds(0.1f);
+    //    model.material.color = Color.white;
+    //}
 }
