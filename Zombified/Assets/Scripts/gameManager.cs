@@ -18,6 +18,7 @@ public class gameManager : MonoBehaviour
     public GameObject winMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject levelSelector;
     public TextMeshProUGUI enemiesRemainingText;
     public Image playerHPBar;
 
@@ -83,6 +84,12 @@ public class gameManager : MonoBehaviour
     {
         statePaused();
         activeMenu = loseMenu;
+        activeMenu.SetActive(true);
+    }
+    public void levelSelect()
+    {
+        statePaused();
+        activeMenu = levelSelector;
         activeMenu.SetActive(true);
     }
 }

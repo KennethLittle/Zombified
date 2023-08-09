@@ -28,11 +28,31 @@ public class buttonFunctions : MonoBehaviour
 
     public void playLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Kenneth Little
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Kenneth Little
     }
 
     public void quittoMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
+    public void easy()
+    {
+        SceneManager.LoadScene("Easy Level");
+    }
+
+    public void medium()
+    {
+        SceneManager.LoadScene("Medium Level");
+    }
+
+    public void hard()
+    {
+        SceneManager.LoadScene("Hard Level");
+    }
+    
+    public void quitToPlayerMenu()
+    {
+        SceneManager.LoadScene("Player and Level Select Screen");
+    }
+
 }

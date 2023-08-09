@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 672688524}
   m_Layer: 0
   m_Name: Player Spawn Pos
-  m_TagString: Untagged
+  m_TagString: Player Spawn Pos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -476,6 +476,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1438421398, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7423461717082805376, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: playerSpawnPos
       value: 
@@ -624,6 +628,10 @@ PrefabInstance:
     - target: {fileID: 556232874473705697, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4222571601195647384, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7933333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
