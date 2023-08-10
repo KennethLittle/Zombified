@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class rangedEnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
@@ -11,16 +11,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
-    [SerializeField] int damage;
-    [SerializeField] GameObject meleeAttack;
-    [SerializeField] float meleeRange;
 
-    [SerializeField] float attackRate;
-    [SerializeField] Transform attackPos;
-
+    [SerializeField] float shootRate;
+    [SerializeField] GameObject acidSpray;
+    [SerializeField] Transform shootPos;
 
     Vector3 playerDir;
-    bool isAttacking;
+    bool isShooting;
     bool playerInRange;
 
     // Start is called before the first frame update
@@ -40,12 +37,9 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 facePlayer();
 
-                if (!isAttacking)
+                if (!isShooting)
                 {
-                    if (playerDir.magnitude <= meleeRange)
-                    {
-                        StartCoroutine(attack());
-                    }
+                    StartCoroutine(shoot());
                 }
 
             }
@@ -60,14 +54,14 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * playerFaceSpeed);
     }
 
-    IEnumerator attack()
+    IEnumerator shoot()
     {
-        isAttacking = true;
+        isShooting = true;
 
-        dealMeleeDamage(damage);
+        Instantiate(acidSpray, shootPos.position, transform.rotation);
 
-        yield return new WaitForSeconds(attackRate);
-        isAttacking = false;
+        yield return new WaitForSeconds(shootRate);
+        isShooting = false;
     }
 
     public void takeDamage(int amount)
@@ -87,11 +81,6 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = Color.white;
-    }
-
-    public void dealMeleeDamage(int damage)
-    {
-        gameManager.instance.playerScript.takeDamage(damage);
     }
 
     private void OnTriggerEnter(Collider other)

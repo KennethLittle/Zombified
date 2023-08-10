@@ -55,4 +55,10 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("Player and Level Select Screen");
     }
 
+    public void playerRespawn()
+    {
+        gameManager.instance.playerScript.spawnPlayer();
+        gameManager.instance.stateUnpaused();
+    }
+
 }

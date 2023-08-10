@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &15808643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 15808644}
+  m_Layer: 0
+  m_Name: Spit shoot pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &15808644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15808643}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0.4}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6119219239861835937}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &131044850762569211
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +914,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5001161813880344541}
   m_LocalRotation: {x: -9.020564e-15, y: 0.000000030988744, z: 0.2052295, w: 0.97871387}
-  m_LocalPosition: {x: -0.03190352, y: 0.11402449, z: -0.000000059802105}
+  m_LocalPosition: {x: -0.022562295, y: 0.10479047, z: -0.00000005583752}
   m_LocalScale: {x: 1.5, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1447,10 +1478,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6119219239861835937}
-  - component: {fileID: 1265900399331308478}
+  - component: {fileID: 9033888661149584914}
   - component: {fileID: 1265900399331308472}
   - component: {fileID: 1265900398652012760}
-  m_Layer: 0
+  - component: {fileID: 113981472}
+  m_Layer: 6
   m_Name: Spitter Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1471,10 +1503,11 @@ Transform:
   m_Children:
   - {fileID: 8509981580419244058}
   - {fileID: 9218064844020692392}
+  - {fileID: 15808644}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1265900399331308478
+--- !u!114 &9033888661149584914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1483,19 +1516,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7111338441868421810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618e6b04857de27438c181c45fed7e2c, type: 3}
+  m_Script: {fileID: 11500000, guid: f52f152bc353c05408fc1f16d36f2de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 3527931498590195767}
   agent: {fileID: 1265900399331308472}
-  HP: 5
-  speed: 8
-  playerFaceSpeed: 15
-  damage: 3
-  meleeAttack: {fileID: 1062133960755754278}
-  meleeRange: 1
-  attackRate: 0.7
-  attackPos: {fileID: 0}
+  HP: 15
+  speed: 5
+  playerFaceSpeed: 8
+  shootRate: 0.9
+  acidSpray: {fileID: 3349821399021024291, guid: 88b32dee36762484a8fb9bbeba8df31a, type: 3}
+  shootPos: {fileID: 15808644}
 --- !u!195 &1265900399331308472
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1532,6 +1563,19 @@ CapsuleCollider:
   m_Height: 3.68
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &113981472
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7111338441868421810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 20.9
+  m_Center: {x: 0.02, y: 1.66, z: 0}
 --- !u!1 &7268269642718777957
 GameObject:
   m_ObjectHideFlags: 0

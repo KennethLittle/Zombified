@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class playerController : MonoBehaviour, IDamage
 {
@@ -15,12 +14,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float gravityValue;
 
     [SerializeField] float shootRate;
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
-
-
 
     private int HPMax;
     private bool groundedPlayer;
@@ -40,7 +35,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Fire") && !isShooting)
             StartCoroutine(shoot());
     }
 
@@ -97,7 +92,6 @@ public class playerController : MonoBehaviour, IDamage
     {
         isShooting = true;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
         // shoot code
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
@@ -116,7 +110,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
-       controller.enabled = false;
+        controller.enabled = false;
         transform.position = gameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
         HP = HPMax;

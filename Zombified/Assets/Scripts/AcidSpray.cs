@@ -2,17 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AcidSpray : MonoBehaviour
+public class acidSpray : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] Rigidbody rb;
+
+    [SerializeField] int damage;
+    [SerializeField] float speed;
+    [SerializeField] float destroyTime;
     void Start()
     {
-        
+        Destroy(gameObject, destroyTime);
+        rb.velocity = transform.forward * speed;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        IDamage damageable = other.GetComponent<IDamage>();
+
+        if (damageable != null)
+        {
+            damageable.takeDamage(damage);
+        }
+        Destroy(gameObject);
     }
 }
