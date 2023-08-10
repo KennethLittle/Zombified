@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
-    [SerializeField] Renderer model;
 
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
@@ -127,12 +126,5 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
-    }
-
-    IEnumerator flashDamage()
-    {
-        model.material.color  = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
     }
 }
