@@ -50,15 +50,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 556232874473705700}
   HP: 10
-  playerSpeed: 4
+  playerSpeed: 12
   sprintMod: 2
-  jumpMax: 10
-  jumpHeight: 5
-  gravityValue: -4
-  shootRate: 1
-  bullet: {fileID: 1769580639842953107, guid: 8da523805a86465429650e3d44c6cabb, type: 3}
-  shootPos: {fileID: 3702629629792647025}
-  shootDamage: 1
+  jumpMax: 1
+  jumpHeight: 6
+  gravityValue: -17
+  shootRate: 0.6
+  shootDamage: 7
   shootDist: 200
 --- !u!143 &556232874473705700
 CharacterController:
@@ -185,11 +183,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
---- !u!4 &3702629629792647025 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400054, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
-  m_PrefabInstance: {fileID: 3702629629793037767}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3702629629792647027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400052, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}

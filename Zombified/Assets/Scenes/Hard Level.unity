@@ -312,6 +312,10 @@ PrefabInstance:
       value: Boss Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 5109048006801340434, guid: 805ab647423873b4eb98c35264b0fded, type: 3}
+      propertyPath: HP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109048006801340434, guid: 805ab647423873b4eb98c35264b0fded, type: 3}
       propertyPath: damage
       value: 100
       objectReference: {fileID: 0}
@@ -616,6 +620,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1955401658, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: quitToPlayerMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 7423461717082805377, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -870,10 +878,6 @@ PrefabInstance:
     - target: {fileID: 556232874473705627, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 556232874473705696, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
-      propertyPath: playerSpeed
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 556232874473705697, guid: 81996818c872aa14c85eccc53545ca48, type: 3}
       propertyPath: m_Name
