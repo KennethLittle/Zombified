@@ -11,13 +11,15 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
+    [SerializeField] int damage;
+    [SerializeField] GameObject meleeAttack;
+    [SerializeField] float meleeRange;
 
-    [SerializeField] float shootRate;
-    [SerializeField] GameObject bullet;
-    [SerializeField] Transform shootPos;
+    [SerializeField] float attackRate;
+    [SerializeField] Transform attackPos;
 
     Vector3 playerDir;
-    bool isShooting;
+    bool isAttacking;
 
     // Start is called before the first frame update
     void Start()
@@ -34,9 +36,12 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             facePlayer();
 
-            if (!isShooting)
+            if (!isAttacking)
             {
-                StartCoroutine(shoot());
+                if (playerDir.magnitude <= meleeRange)
+                {
+                    StartCoroutine(attack());
+                }
             }
 
         }
@@ -50,14 +55,14 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * playerFaceSpeed);
     }
 
-    IEnumerator shoot()
+    IEnumerator attack()
     {
-        isShooting = true;
+        isAttacking = true;
 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        dealMeleeDamage(damage);
 
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+        yield return new WaitForSeconds(attackRate);
+        isAttacking = false;
     }
 
     public void takeDamage(int amount)
@@ -77,5 +82,10 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = Color.white;
+    }
+
+    public void dealMeleeDamage(int damage)
+    {
+        gameManager.instance.playerScript.takeDamage(damage);
     }
 }
