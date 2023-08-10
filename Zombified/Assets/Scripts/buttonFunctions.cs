@@ -38,18 +38,21 @@ public class buttonFunctions : MonoBehaviour
     public void easy()
     {
         SceneManager.LoadScene("Easy Level");
+        gameManager.instance.stateUnpaused();
     }
 
     public void medium()
     {
         SceneManager.LoadScene("Medium Level");
+        gameManager.instance.stateUnpaused();
     }
 
     public void hard()
     {
         SceneManager.LoadScene("Hard Level");
+        gameManager.instance.stateUnpaused();
     }
-    
+
     public void quitToPlayerMenu()
     {
         SceneManager.LoadScene("Player and Level Select Screen");
