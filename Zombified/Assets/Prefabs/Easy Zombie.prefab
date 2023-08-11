@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 6578004196882296871}
   agent: {fileID: 8803720619120726952}
-  HP: 5
+  HP: 7
   speed: 8
   playerFaceSpeed: 15
   damage: 3

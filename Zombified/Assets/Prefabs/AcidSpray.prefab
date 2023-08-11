@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7147181102476743920}
-  - component: {fileID: 7607954317514205149}
+  - component: {fileID: -2446365228518995208}
   - component: {fileID: 3391622305461311529}
   - component: {fileID: 8500829587812150371}
   - component: {fileID: 2426753024934627912}
   - component: {fileID: 8433679597578737503}
   m_Layer: 8
-  m_Name: Acid Spray
+  m_Name: AcidSpray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7607954317514205149
+--- !u!114 &-2446365228518995208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,9 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8433679597578737503}
-  damage: 3
-  speed: 15
-  destroyTime: 2
+  damage: 1
+  speed: 25
+  destroyTime: 3
 --- !u!33 &3391622305461311529
 MeshFilter:
   m_ObjectHideFlags: 0
