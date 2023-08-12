@@ -8,15 +8,17 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
 
-    [SerializeField] int HP;
+    [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
-    [SerializeField] int damage;
+    [SerializeField] public int damage;
     [SerializeField] GameObject meleeAttack;
     [SerializeField] float meleeRange;
 
     [SerializeField] float attackRate;
     [SerializeField] Transform attackPos;
+
+    [HideInInspector] public Transform spawnPoint;
 
 
     Vector3 playerDir;
@@ -79,6 +81,12 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             gameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
+
+            WaveSpawner waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
+            if (waveSpawner != null)
+            {
+                waveSpawner.enemiesRemaining--;
+            }
         }
     }
 

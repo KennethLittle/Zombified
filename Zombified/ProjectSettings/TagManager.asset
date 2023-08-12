@@ -6,6 +6,7 @@ TagManager:
   tags:
   - mainMenu
   - Player Spawn Pos
+  - Wave Spawner
   layers:
   - Default
   - TransparentFX

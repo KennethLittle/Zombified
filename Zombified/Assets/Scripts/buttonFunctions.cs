@@ -8,6 +8,7 @@ public class buttonFunctions : MonoBehaviour
     public void resume()
     {
         gameManager.instance.stateUnpaused();
+        gameManager.instance.escapeMenu.SetActive(false);
     }
 
     public void restart()

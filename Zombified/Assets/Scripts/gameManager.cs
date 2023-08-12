@@ -11,14 +11,18 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
     public GameObject playerSpawnPos;
 
+    public GameObject waveSpawner;
+    public WaveSpawner waveSpawnerScript;
+
     public GameObject player;
     public playerController playerScript;
 
     public GameObject activeMenu;
-    public GameObject winMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject escapeMenu;
     public TextMeshProUGUI enemiesRemainingText;
+    public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
 
     bool isPaused;
@@ -30,6 +34,9 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
+
+        waveSpawner = GameObject.FindGameObjectWithTag("Wave Spawner");
+        waveSpawnerScript = waveSpawner.GetComponent<WaveSpawner>();
     }
 
 
@@ -66,23 +73,23 @@ public class gameManager : MonoBehaviour
         enemiesRemaining += amount;
         enemiesRemainingText.text = enemiesRemaining.ToString("0");
 
-        if (enemiesRemaining <= 0)
+        if(waveSpawnerScript.waveNumber % 5 == 0 && enemiesRemaining <=0 )
         {
-            youWin();
+            escape();
         }
-    }
-
-    public void youWin()
-    {
-        statePaused();
-        activeMenu = winMenu;
-        activeMenu.SetActive(true);
     }
 
     public void youLose()
     {
         statePaused();
         activeMenu = loseMenu;
+        activeMenu.SetActive(true);
+    }
+
+    public void escape()
+    {
+        statePaused();
+        activeMenu = escapeMenu;
         activeMenu.SetActive(true);
     }
     
