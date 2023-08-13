@@ -1085,6 +1085,7 @@ GameObject:
   - component: {fileID: 5109048006801340436}
   - component: {fileID: 5109048006104642420}
   - component: {fileID: 3719551496018124389}
+  - component: {fileID: 384786318}
   m_Layer: 6
   m_Name: Boss Zombie
   m_TagString: Untagged
@@ -1123,14 +1124,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 7458566413117299611}
   agent: {fileID: 5109048006801340436}
+  anim: {fileID: 0}
+  headPos: {fileID: 8801893897103466036}
   HP: 5
   speed: 8
-  playerFaceSpeed: 15
+  playerFaceSpeed: 10
+  viewAngle: 91
+  roamDist: 11
+  roamTimer: 2
+  animChangeSpeed: 9
   damage: 100
-  meleeAttack: {fileID: 6470239548237217418}
   meleeRange: 10
   attackRate: 0.7
+  strikeAngle: 15
+  meleeAttack: {fileID: 6470239548237217418}
   attackPos: {fileID: 0}
+  spawnPoint: {fileID: 0}
 --- !u!195 &5109048006801340436
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1178,8 +1187,29 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 25
+  m_Radius: 10
   m_Center: {x: 0, y: 1.63, z: 0}
+--- !u!95 &384786318
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3875084702780023070}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8f7380da49034cd488ddff94b1ac35d1, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4016761126773553551
 GameObject:
   m_ObjectHideFlags: 0
