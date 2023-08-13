@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
 
+    [Header("----- Player stats -----")]
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
@@ -13,6 +15,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityValue;
 
+    [Header("----- Player Gun Stats -----")]
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
@@ -35,7 +38,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        if (Input.GetButton("Fire") && !isShooting)
+        if (Input.GetButton("Shoot") && !isShooting)
             StartCoroutine(shoot());
     }
 
