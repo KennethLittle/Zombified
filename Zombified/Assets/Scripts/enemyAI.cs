@@ -100,7 +100,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator roam()
     {
-        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        if (agent.remainingDistance <= 0.05f && !destinationChosen)
         {
             destinationChosen = true;
             agent.stoppingDistance = 0;

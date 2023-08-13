@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 3e67f0de33f20c64982f24df2bb6d904, type: 2}
 --- !u!1 &656969243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 652164688254487202, guid: 20b6728c31a63af46a344058f2a0e1ca, type: 3}
@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 6728423984189341023, guid: 6e6964bc3f66b2540b0de239317d835d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e6964bc3f66b2540b0de239317d835d, type: 3}
 --- !u!1001 &1024425965
@@ -366,6 +370,14 @@ PrefabInstance:
     - target: {fileID: 4372948084546935332, guid: 90a0b75cdb1a6ee4cad8ff72fcebe32a, type: 3}
       propertyPath: m_Name
       value: Long Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 4372948084546935332, guid: 90a0b75cdb1a6ee4cad8ff72fcebe32a, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4372948084546935332, guid: 90a0b75cdb1a6ee4cad8ff72fcebe32a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6720629010028421674, guid: 90a0b75cdb1a6ee4cad8ff72fcebe32a, type: 3}
       propertyPath: m_Size.x
@@ -797,6 +809,10 @@ PrefabInstance:
     - target: {fileID: 5109048006801340434, guid: 805ab647423873b4eb98c35264b0fded, type: 3}
       propertyPath: roamTimer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109048006801340434, guid: 805ab647423873b4eb98c35264b0fded, type: 3}
+      propertyPath: meleeRange
+      value: 5.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 805ab647423873b4eb98c35264b0fded, type: 3}
