@@ -17,6 +17,8 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
 
+    public LevelUpSystem levelUpSystem;
+
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
@@ -26,6 +28,8 @@ public class gameManager : MonoBehaviour
     public Image playerHPBar;
     public Image staminaBar;
 
+    public int enemiesKilled;
+    public int totalXP;
     bool isPaused;
     int enemiesRemaining;
 
@@ -38,6 +42,11 @@ public class gameManager : MonoBehaviour
 
         waveSpawner = GameObject.FindGameObjectWithTag("Wave Spawner");
         waveSpawnerScript = waveSpawner.GetComponent<WaveSpawner>();
+
+        levelUpSystem = FindObjectOfType<LevelUpSystem>();
+
+        enemyAI.OnEnemyKilled += UpdateEnemiesKilled;
+        UpdateTotalXP(totalXP);
     }
 
 
@@ -72,12 +81,15 @@ public class gameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         enemiesRemaining += amount;
-        enemiesRemainingText.text = enemiesRemaining.ToString("0");
+        
 
         if(waveSpawnerScript.waveNumber % 5 == 0 && enemiesRemaining <=0 )
         {
             escape();
         }
+
+        enemiesRemaining = Mathf.Max(enemiesRemaining, 0);
+        enemiesRemainingText.text = enemiesRemaining.ToString("0");
     }
 
     public void youLose()
@@ -92,6 +104,16 @@ public class gameManager : MonoBehaviour
         statePaused();
         activeMenu = escapeMenu;
         activeMenu.SetActive(true);
+    }
+
+    private void UpdateEnemiesKilled(int amount)
+    {
+        enemiesKilled += amount;
+    }
+
+    private void UpdateTotalXP(int amount)
+    {
+        gameManager.instance.levelUpSystem.totalAccumulatedXP = amount;
     }
     
 }

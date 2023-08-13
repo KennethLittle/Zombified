@@ -154,6 +154,20 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
+    public void IncreaseMaxHP(int amount)
+    {
+        HPMax += amount;
+        HP += amount;
+        updatePlayerUI();
+    }
+
+    public void IncreaseMaxStamina(int amount)
+    {
+        stamina += amount;
+        currentStamina += amount;
+        updatePlayerUI();
+    }
+
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;

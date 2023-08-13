@@ -11,13 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Player and Level Select Screen.unity
     guid: 1a12d4d57dc47b54491d61888c2f29d2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Easy Level.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Medium Level.unity
     guid: ad6affa0ae9023b46a1a86be5d144164
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Hard Level.unity
     guid: de7c6dd3bc626994f89e68bb39130463
+  - enabled: 1
+    path: Assets/Scenes/EscapeScene.unity
+    guid: bdb3bb9e1491ef541bfaa25f0bff3e98
   m_configObjects: {}

@@ -48,4 +48,12 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.stateUnpaused();
     }
 
+    public void escape()
+    {
+        gameManager.instance.levelUpSystem.MarkAsEscaped();
+        gameManager.instance.levelUpSystem.RewardXPUponEscape();
+        SceneManager.LoadScene("EscapeScene");
+
+    }
+
 }
