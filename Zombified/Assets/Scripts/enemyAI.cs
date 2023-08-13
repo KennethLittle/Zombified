@@ -14,9 +14,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
-    [SerializeField] public int damage;
-    [SerializeField] GameObject meleeAttack;
-    [SerializeField] float meleeRange;
+    [Range(60, 180)][SerializeField] int viewAngle;
+    [Range(1, 500)][SerializeField] int roamDist;
+    [Range(0, 3)][SerializeField] int roamTimer;
+    [SerializeField] int animChangeSpeed;
+
+    public int baseXP = 10;
+    
 
     [Header("----- Attack Stats -----")]
     [Range(1, 50)] [SerializeField] public int damage;
