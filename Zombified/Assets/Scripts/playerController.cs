@@ -33,8 +33,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioFootstepsVol;
     [SerializeField] AudioClip[] audioJump;
     [SerializeField] [Range(0, 1)] float audioJumpVol;
-    [SerializeField] AudioClip[] audioDamage;
-    [SerializeField] [Range(0, 1)] float audioDamageVol;
     [SerializeField] AudioClip[] audioShoot;
     [SerializeField] [Range(0, 1)] float audioShootVol;
 
@@ -64,9 +62,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol
-        audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
-        
+        // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         HP -= amount;
         updatePlayerUI();
 
@@ -74,6 +70,8 @@ public class playerController : MonoBehaviour, IDamage
         {
             gameManager.instance.youLose();
         }
+
+        
     }
 
     void movement()

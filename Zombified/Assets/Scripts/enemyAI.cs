@@ -23,7 +23,7 @@ public class enemyAI : MonoBehaviour, IDamage
     
 
     [Header("----- Attack Stats -----")]
-    [Range(1, 50)] [SerializeField] public int damage;
+    [SerializeField] public int damage;
     [Range(1, 50)] [SerializeField] float meleeRange;
     [Range(1, 50)] [SerializeField] float attackRate;
     [Range(0, 90)] [SerializeField] int strikeAngle;
@@ -36,9 +36,10 @@ public class enemyAI : MonoBehaviour, IDamage
     Vector3 playerDir;
     Vector3 startingPos;
 
-    bool isAttacking;
+    
     bool playerInRange;
     bool destinationChosen;
+    bool isAttacking = false;
 
     float angleToPlayer;
     float stoppingDistOrig;
@@ -55,11 +56,11 @@ public class enemyAI : MonoBehaviour, IDamage
         float agentVel = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-        if(playerInRange && !canSeePlayer())
+        if (playerInRange && !canSeePlayer())
         {
             StartCoroutine(roam());
         }
-        else if(agent.destination != gameManager.instance.player.transform.position)
+        else if (agent.destination != gameManager.instance.player.transform.position)
         {
             StartCoroutine(roam());
         }
@@ -71,11 +72,9 @@ public class enemyAI : MonoBehaviour, IDamage
         playerDir = gameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
 
-        Debug.Log(angleToPlayer);
-        Debug.DrawRay(headPos.position, playerDir);
-
         RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDir, out hit))  
+
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
@@ -127,9 +126,10 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         isAttacking = true;
 
-        dealMeleeDamage(damage);
+        MeleeDamage(damage);
 
         yield return new WaitForSeconds(attackRate);
+
         isAttacking = false;
     }
 
@@ -159,9 +159,9 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = Color.white;
     }
 
-    public void dealMeleeDamage(int damage)
+    public void MeleeDamage(int amount)
     {
-        gameManager.instance.playerScript.takeDamage(damage);
+        gameManager.instance.playerScript.takeDamage(amount);
     }
 
     private void OnDestroy()
