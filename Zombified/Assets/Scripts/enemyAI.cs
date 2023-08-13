@@ -11,14 +11,16 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Animator anim;
     [SerializeField] Transform headPos;
 
-    [Header("----- Enemy Physics -----")]
-    [Range(1, 50)] [SerializeField] public int HP;
-    [Range(1, 50)] [SerializeField] int speed;
-    [Range(1, 50)] [SerializeField] int playerFaceSpeed;
-    [Range(45, 360)] [SerializeField] int viewAngle;
-    [Range(1, 150)] [SerializeField] int roamDist;
-    [Range(0, 5)] [SerializeField] int roamTimer;
+    [SerializeField] public int HP;
+    [SerializeField] int speed;
+    [SerializeField] int playerFaceSpeed;
+    [Range(60, 180)][SerializeField] int viewAngle;
+    [Range(1, 500)][SerializeField] int roamDist;
+    [Range(0, 3)][SerializeField] int roamTimer;
     [SerializeField] int animChangeSpeed;
+
+    public int baseXP = 10;
+    
 
     [Header("----- Attack Stats -----")]
     [Range(1, 50)] [SerializeField] public int damage;
@@ -29,6 +31,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform attackPos;
 
     [HideInInspector] public Transform spawnPoint;
+    public static event System.Action<int> OnEnemyKilled;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -138,6 +141,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.levelUpSystem.GainXP(gameManager.instance.waveSpawnerScript.waveNumber * 7);
             Destroy(gameObject);
 
             WaveSpawner waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
@@ -160,6 +164,15 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.playerScript.takeDamage(damage);
     }
 
+    private void OnDestroy()
+    {
+        if (OnEnemyKilled != null)
+        {
+            gameManager.instance.levelUpSystem.GainXP(baseXP);
+            OnEnemyKilled(1);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -175,5 +188,10 @@ public class enemyAI : MonoBehaviour, IDamage
             playerInRange = false;
             agent.stoppingDistance = 0;
         }
+    }
+
+    private void UpdateBaseXP()
+    {
+        baseXP += gameManager.instance.waveSpawnerScript.waveNumber * 7;
     }
 }
