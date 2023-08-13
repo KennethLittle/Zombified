@@ -5,56 +5,111 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
+    [Header("----- Components -----")]
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
+    [SerializeField] Transform headPos;
 
     [SerializeField] public int HP;
-    [SerializeField] int baseXP = 10;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
     [SerializeField] public int damage;
     [SerializeField] GameObject meleeAttack;
     [SerializeField] float meleeRange;
 
-    [SerializeField] float attackRate;
+    [Header("----- Attack Stats -----")]
+    [Range(1, 50)] [SerializeField] public int damage;
+    [Range(1, 50)] [SerializeField] float meleeRange;
+    [Range(1, 50)] [SerializeField] float attackRate;
+    [Range(0, 90)] [SerializeField] int strikeAngle;
+    [SerializeField] GameObject meleeAttack;
     [SerializeField] Transform attackPos;
 
     [HideInInspector] public Transform spawnPoint;
     public static event System.Action<int> OnEnemyKilled;
 
-
     Vector3 playerDir;
+    Vector3 startingPos;
+
     bool isAttacking;
     bool playerInRange;
+    bool destinationChosen;
 
-    // Start is called before the first frame update
+    float angleToPlayer;
+    float stoppingDistOrig;
+
     void Start()
     {
         gameManager.instance.updateGameGoal(1);
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (playerInRange)
+        float agentVel = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
+
+        if(playerInRange && !canSeePlayer())
         {
-            playerDir = gameManager.instance.player.transform.position - transform.position;
+            StartCoroutine(roam());
+        }
+        else if(agent.destination != gameManager.instance.player.transform.position)
+        {
+            StartCoroutine(roam());
+        }
+    }
 
-            if (agent.remainingDistance <= agent.stoppingDistance)
+    bool canSeePlayer()
+    {
+        agent.stoppingDistance = stoppingDistOrig;
+        playerDir = gameManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
+
+        Debug.Log(angleToPlayer);
+        Debug.DrawRay(headPos.position, playerDir);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDir, out hit))  
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
-                facePlayer();
+                agent.SetDestination(gameManager.instance.player.transform.position);
 
-                if (!isAttacking)
+                if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if (playerDir.magnitude <= meleeRange)
-                    {
-                        StartCoroutine(attack());
-                    }
+                    facePlayer();
                 }
 
-            }
+                if (!isAttacking && angleToPlayer <= strikeAngle)
+                {
+                    StartCoroutine(attack());
+                }
 
-            agent.SetDestination(gameManager.instance.player.transform.position);
+                return true;
+            }
+        }
+        agent.stoppingDistance = 0;
+        return false;
+    }
+
+    IEnumerator roam()
+    {
+        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        {
+            destinationChosen = true;
+            agent.stoppingDistance = 0;
+            yield return new WaitForSeconds(roamTimer);
+
+            Vector3 randomPos = Random.insideUnitSphere * roamDist;
+            randomPos += startingPos;
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+            agent.SetDestination(hit.position);
+
+            destinationChosen = false;
         }
     }
 
@@ -127,6 +182,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            agent.stoppingDistance = 0;
         }
     }
 

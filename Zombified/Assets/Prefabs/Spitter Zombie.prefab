@@ -1521,14 +1521,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 3527931498590195767}
   agent: {fileID: 1265900399331308472}
+  anim: {fileID: 0}
+  headPos: {fileID: 3265398344287163800}
   HP: 3
   speed: 5
   playerFaceSpeed: 12
+  viewAngle: 0
+  roamDist: 0
+  roamTimer: 0
+  animChangeSpeed: 0
   damage: 14
-  meleeAttack: {fileID: 3349821399021024291, guid: 88b32dee36762484a8fb9bbeba8df31a, type: 3}
   meleeRange: 10
   attackRate: 0.7
+  strikeAngle: 0
+  meleeAttack: {fileID: 3349821399021024291, guid: 88b32dee36762484a8fb9bbeba8df31a, type: 3}
   attackPos: {fileID: 15808644}
+  spawnPoint: {fileID: 0}
 --- !u!195 &1265900399331308472
 NavMeshAgent:
   m_ObjectHideFlags: 0
