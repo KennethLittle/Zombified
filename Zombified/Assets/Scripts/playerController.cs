@@ -25,18 +25,18 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     
     [Header("----- Audio -----")]
-    //audio<something> is an array of sfx
-    // audio<something> Vol is the sfx volume
+     //audio<something> is an array of sfx
+     //audio<something>Vol is the sfx volume
     [SerializeField] AudioSource audioSFX;
     [SerializeField] AudioClip[] audioFootsteps;
-    [SerializeField][Range(0, 1)] float footstepsRate;
-    [SerializeField][Range(0, 1)] float audioFootstepsVol;
+    [SerializeField] [Range(0, 1)] float footstepsRate;
+    [SerializeField] [Range(0, 1)] float audioFootstepsVol;
     [SerializeField] AudioClip[] audioJump;
-    [SerializeField][Range(0, 1)] float audioJumpVol;
+    [SerializeField] [Range(0, 1)] float audioJumpVol;
     [SerializeField] AudioClip[] audioDamage;
-    [SerializeField][Range(0, 1)] float audioDamageVol;
+    [SerializeField] [Range(0, 1)] float audioDamageVol;
     [SerializeField] AudioClip[] audioShoot;
-    [SerializeField][Range(0, 1)] float audioShootVol;
+    [SerializeField] [Range(0, 1)] float audioShootVol;
 
     private int HPMax;
     private bool groundedPlayer;
@@ -64,9 +64,9 @@ public class playerController : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        //Plays damaged audio sfx -Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol
+        // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol
         audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
-
+        
         HP -= amount;
         updatePlayerUI();
 
@@ -85,7 +85,7 @@ public class playerController : MonoBehaviour, IDamage
             {
                 StartCoroutine(playFootsteps());
             }
-
+            
             if (playerVelocity.y < 0)
             {
                 playerVelocity.y = 0f;
@@ -100,9 +100,9 @@ public class playerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
+            //// Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
-
+            
             playerVelocity.y = jumpHeight;
             jumpCount++;
         }
@@ -111,11 +111,11 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    // Play footsteps sfx at a rate defined by footstepsRate
+    //// Play footsteps sfx at a rate defined by footstepsRate
     IEnumerator playFootsteps()
     {
         footstepsIsPlaying = true;
-        // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
+    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
         audioSFX.PlayOneShot(audioFootsteps[Random.Range(0, audioFootsteps.Length)], audioFootstepsVol);
         if (!isSprinting)
             yield return new WaitForSeconds(footstepsRate);
@@ -170,9 +170,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         isShooting = true;
 
-        // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
+        //// Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
         audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
-
+        
         // shoot code
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
