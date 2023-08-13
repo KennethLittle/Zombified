@@ -9,6 +9,10 @@ public class playerController : MonoBehaviour, IDamage
 
     [Header("----- Player stats -----")]
     [SerializeField] int HP;
+    [SerializeField] public float stamina;
+    [SerializeField] public float currentStamina;
+    [SerializeField] public float staminaConsumptionRate;
+    [SerializeField] public float staminaRegenerationRate;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
     [SerializeField] int jumpMax;
@@ -28,9 +32,11 @@ public class playerController : MonoBehaviour, IDamage
     private bool isSprinting;
     private bool isShooting;
 
+
     private void Start()
     {
         HPMax = HP;
+        currentStamina = stamina;
         spawnPlayer();
     }
 
@@ -89,6 +95,34 @@ public class playerController : MonoBehaviour, IDamage
             isSprinting = false;
             playerSpeed /= sprintMod;
         }
+
+        if (isSprinting)
+        {
+            ConsumeStamina(staminaConsumptionRate * Time.deltaTime);
+        }
+        else
+        {
+            RegenerateStamina(staminaRegenerationRate * Time.deltaTime);
+        }
+    }
+
+    public void ConsumeStamina(float amount)
+    {
+        currentStamina = Mathf.Clamp(currentStamina - amount, 0f, stamina);
+
+        if (currentStamina <= 0f)
+        {
+            isSprinting = false;
+        }
+
+        updatePlayerUI();
+    }
+
+    public void RegenerateStamina(float amount)
+    {
+        currentStamina = Mathf.Clamp(currentStamina + amount, 0f, stamina);
+
+        updatePlayerUI();
     }
 
     IEnumerator shoot()
@@ -123,5 +157,6 @@ public class playerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
+        gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
     }
 }

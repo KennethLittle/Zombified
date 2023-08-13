@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI enemiesRemainingText;
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
+    public Image staminaBar;
 
     bool isPaused;
     int enemiesRemaining;
