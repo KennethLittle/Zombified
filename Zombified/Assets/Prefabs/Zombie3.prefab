@@ -1283,13 +1283,13 @@ MonoBehaviour:
   HP: 5
   speed: 8
   playerFaceSpeed: 15
+  meleeRange: 2
   viewAngle: 90
   roamDist: 150
   roamTimer: 2
   animChangeSpeed: 5
   baseXP: 10
   damage: 3
-  meleeRange: 3
   attackRate: 1
   strikeAngle: 30
   meleeAttack: {fileID: 4320073142906702345}
@@ -1309,7 +1309,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

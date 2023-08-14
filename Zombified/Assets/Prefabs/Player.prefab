@@ -328,28 +328,13 @@ MonoBehaviour:
   audioSFX: {fileID: 291726850}
   audioFootsteps:
   - {fileID: 8300000, guid: 5f68799896551614483f23a93ead1d73, type: 3}
-  - {fileID: 8300000, guid: 0f75441984ea3e943bdf1a14cf11bac6, type: 3}
-  - {fileID: 8300000, guid: c5e1c916274563c469fcf15051d40300, type: 3}
-  - {fileID: 8300000, guid: 2ee60a38ccdf72841936108257e546bf, type: 3}
-  - {fileID: 8300000, guid: de36dc84b5d9964439b51dc037fbf328, type: 3}
-  - {fileID: 8300000, guid: 3d671bc26febe4a45bdff4fb20c4e9c7, type: 3}
-  - {fileID: 8300000, guid: 2267bed489f812644941d7775a3a53b6, type: 3}
-  - {fileID: 8300000, guid: 9f2177d081cde6e478f61fd1b2ff8f19, type: 3}
-  - {fileID: 8300000, guid: 2a6aa52d8b4cf68439ad207cb2d25f94, type: 3}
   footstepsRate: 0.6
   audioFootstepsVol: 0.2
   audioJump:
   - {fileID: 8300000, guid: 5eeb8723844e7f74c8fe302f9cb56ee7, type: 3}
-  - {fileID: 8300000, guid: e377f740b4b36df4cac1cdbcf20c5327, type: 3}
-  - {fileID: 8300000, guid: 4b28afd3fa7db5d4c9cf9a8101938554, type: 3}
   audioJumpVol: 0.5
   audioDamage:
   - {fileID: 8300000, guid: 0a9dee61b1937824aa827ec47c67f2de, type: 3}
-  - {fileID: 8300000, guid: a1986dd557919fd49ac51595b674b96f, type: 3}
-  - {fileID: 8300000, guid: f6c387c36b80e2e4fbcf13ef599d9d13, type: 3}
-  - {fileID: 8300000, guid: d913f1d8f5fd646458f02c17e6c710ce, type: 3}
-  - {fileID: 8300000, guid: bf24f37fd985d95418d8eaf15c332bf9, type: 3}
-  - {fileID: 8300000, guid: 9cc30f247387a9d4bb628b12f0a87c56, type: 3}
   audioDamageVol: 0.5
   audioShoot:
   - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}

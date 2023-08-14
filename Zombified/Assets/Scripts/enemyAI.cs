@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,19 +13,19 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
+    [SerializeField] float meleeRange;
     [Range(60, 180)][SerializeField] int viewAngle;
     [Range(1, 500)][SerializeField] int roamDist;
     [Range(0, 3)][SerializeField] int roamTimer;
     [SerializeField] int animChangeSpeed;
 
     public int baseXP = 10;
-    
+
 
     [Header("----- Attack Stats -----")]
     [SerializeField] public int damage;
-    [Range(1, 50)] [SerializeField] float meleeRange;
-    [Range(1, 50)] [SerializeField] float attackRate;
-    [Range(0, 90)] [SerializeField] int strikeAngle;
+    [Range(1, 50)][SerializeField] float attackRate;
+    [Range(0, 90)][SerializeField] int strikeAngle;
     [SerializeField] GameObject meleeAttack;
     [SerializeField] Transform attackPos;
 
@@ -36,8 +35,9 @@ public class enemyAI : MonoBehaviour, IDamage
     Vector3 playerDir;
     Vector3 startingPos;
 
-    
+
     bool playerInRange;
+    bool playerInAttackRange;
     bool destinationChosen;
     bool isAttacking = false;
 
@@ -49,6 +49,10 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        meleeRange = agent.stoppingDistance;
+        
+        
+
     }
 
     void Update()
@@ -56,14 +60,28 @@ public class enemyAI : MonoBehaviour, IDamage
         float agentVel = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-        if (playerInRange && !canSeePlayer())
+
+        if (!isAttacking) // Check if not already attacking
         {
-            StartCoroutine(roam());
+            if (canSeePlayer()) // Chase the player if they can be seen
+            {
+                if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
+                {
+                    StartCoroutine(attack());
+                }
+            }
+            if (playerInRange && !canSeePlayer())
+            {
+                StartCoroutine(roam());
+            }
+            else if (agent.destination != gameManager.instance.player.transform.position)
+            {
+                StartCoroutine(roam());
+            }
         }
-        else if (agent.destination != gameManager.instance.player.transform.position)
-        {
-            StartCoroutine(roam());
-        }
+
+
+
     }
 
     bool canSeePlayer()
@@ -85,14 +103,19 @@ public class enemyAI : MonoBehaviour, IDamage
                     facePlayer();
                 }
 
-                if (!isAttacking && angleToPlayer <= strikeAngle)
+                if (!isAttacking && angleToPlayer <= strikeAngle && Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
                 {
-                    StartCoroutine(attack());
+                    playerInAttackRange = true; // Set to true only if not attacking and player in attack range
+                }
+                else
+                {
+                    playerInAttackRange = false;
                 }
 
                 return true;
             }
         }
+
         agent.stoppingDistance = 0;
         return false;
     }
@@ -104,7 +127,6 @@ public class enemyAI : MonoBehaviour, IDamage
             destinationChosen = true;
             agent.stoppingDistance = 0;
             yield return new WaitForSeconds(roamTimer);
-
             Vector3 randomPos = Random.insideUnitSphere * roamDist;
             randomPos += startingPos;
 
@@ -194,4 +216,5 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         baseXP += gameManager.instance.waveSpawnerScript.waveNumber * 7;
     }
+
 }
