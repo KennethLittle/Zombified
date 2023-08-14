@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 6217912817681682714}
+  anim: {fileID: 0}
   HP: 5
   stamina: 0
   currentStamina: 0
@@ -322,6 +323,7 @@ MonoBehaviour:
   jumpMax: 1
   jumpHeight: 7
   gravityValue: -24
+  animChangeSpeed: 0
   shootRate: 0.8
   shootDamage: 5
   shootDist: 75
@@ -329,16 +331,23 @@ MonoBehaviour:
   audioFootsteps:
   - {fileID: 8300000, guid: 5f68799896551614483f23a93ead1d73, type: 3}
   footstepsRate: 0.6
-  audioFootstepsVol: 0.2
+  audioFootstepsVol: 0.1
   audioJump:
   - {fileID: 8300000, guid: 5eeb8723844e7f74c8fe302f9cb56ee7, type: 3}
   audioJumpVol: 0.5
   audioDamage:
   - {fileID: 8300000, guid: 0a9dee61b1937824aa827ec47c67f2de, type: 3}
-  audioDamageVol: 0.5
+  audioDamageVol: 0.2
   audioShoot:
-  - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
-  audioShootVol: 0.5
+  - {fileID: 8300000, guid: 49a85eeec03d0224f9fc8d4aae230456, type: 3}
+  audioShootVol: 0.2
+  audioShootCasing:
+  - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
+  - {fileID: 8300000, guid: bbcf3dfec8241ff44ab49b64a1d2c93f, type: 3}
+  audioShootCasingVol: 0.5
+  audioLowHealth:
+  - {fileID: 8300000, guid: f19f78725fe442c43a71a89447621d6e, type: 3}
+  audioLowHealthVol: 0.1
 --- !u!95 &6217912818414635019
 Animator:
   serializedVersion: 5
@@ -349,10 +358,10 @@ Animator:
   m_GameObject: {fileID: 6217912818404972203}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4f177d72549cddd48aad42d447007b7a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

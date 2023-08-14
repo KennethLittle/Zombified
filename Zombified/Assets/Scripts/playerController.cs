@@ -27,8 +27,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     
     [Header("----- Audio -----")]
-     //audio<something> is an array of sfx
-     //audio<something>Vol is the sfx volume
+    // audio<something> is an array of sfx
+    // audio<something>Vol is the sfx volume
     [SerializeField] AudioSource audioSFX;
     [SerializeField] AudioClip[] audioFootsteps;
     [SerializeField] [Range(0, 1)] float footstepsRate;
@@ -39,6 +39,11 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioDamageVol;
     [SerializeField] AudioClip[] audioShoot;
     [SerializeField] [Range(0, 1)] float audioShootVol;
+    [SerializeField] AudioClip[] audioShootCasing;
+    [SerializeField] [Range(0, 1)] float audioShootCasingVol;
+    [SerializeField] AudioClip[] audioLowHealth;
+    [SerializeField] [Range(0, 1)] float audioLowHealthVol;
+    
 
     private int HPMax;
     private bool groundedPlayer;
@@ -48,11 +53,14 @@ public class playerController : MonoBehaviour, IDamage
     private bool isSprinting;
     private bool isShooting;
     private bool footstepsIsPlaying;
+    private float audioLHVolOrig;
+    private bool lowHealthIsPlaying;
 
     private void Start()
     {
         HPMax = HP;
         currentStamina = stamina;
+        audioLHVolOrig = audioLowHealthVol;
         spawnPlayer();
     }
 
@@ -61,6 +69,7 @@ public class playerController : MonoBehaviour, IDamage
         
         movement();
         sprint();
+        lowHealthSFX();
 
         float agentVel = move.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
@@ -74,13 +83,44 @@ public class playerController : MonoBehaviour, IDamage
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         HP -= amount;
         updatePlayerUI();
-
+        
         if (HP <= 0)
         {
             gameManager.instance.youLose();
         }
 
         audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
+    }
+
+    void lowHealthSFX()
+    {
+        if (!lowHealthIsPlaying && HP <= (HPMax * 0.3))
+        {
+            StartCoroutine((playLowHealth()));
+        }
+    }
+
+    IEnumerator playLowHealth()
+    {
+        lowHealthIsPlaying = true;
+        // Plays low health audio sfx - Plays a random footsteps sfx from the range audioLowHealth at a volume defined by audioLowHealthVol
+        audioSFX.PlayOneShot(audioLowHealth[Random.Range(0, audioLowHealth.Length)], audioLowHealthVol);
+        if (HP <= (HPMax * 0.3) && HP > (HPMax * 0.2))
+        {
+            audioLowHealthVol = audioLHVolOrig + 0.2f;
+            yield return new WaitForSeconds(2.0f);
+        }
+        else if (HP <= (HPMax * 0.2) && HP > (HPMax * 0.1))
+        {
+            audioLowHealthVol = audioLHVolOrig + 0.4f;
+            yield return new WaitForSeconds(1.5f);
+        }
+        else if (HP <= (HPMax * 0.1) && HPMax > 0)
+        {
+            audioLowHealthVol = audioLHVolOrig + 0.6f;
+            yield return new WaitForSeconds(1.0f);
+        }
+        lowHealthIsPlaying = false;
     }
 
     void movement()
@@ -107,7 +147,7 @@ public class playerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            //// Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
+            // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
             
             playerVelocity.y = jumpHeight;
@@ -118,11 +158,11 @@ public class playerController : MonoBehaviour, IDamage
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    //// Play footsteps sfx at a rate defined by footstepsRate
+    // Play footsteps sfx at a rate defined by footstepsRate
     IEnumerator playFootsteps()
     {
         footstepsIsPlaying = true;
-    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
+        // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
         audioSFX.PlayOneShot(audioFootsteps[Random.Range(0, audioFootsteps.Length)], audioFootstepsVol);
         if (!isSprinting)
             yield return new WaitForSeconds(footstepsRate);
@@ -177,8 +217,10 @@ public class playerController : MonoBehaviour, IDamage
     {
         isShooting = true;
 
-        //// Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
+        // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
         audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
+        // Plays gunshot casing audio sfx - Plays a random gunshot casing sfx from the range audioShootCasing at a volume defined by audioShootCasingVol
+        audioSFX.PlayOneShot(audioShootCasing[Random.Range(0, audioShootCasing.Length)], audioShootCasingVol);
         
         // shoot code
         RaycastHit hit;
@@ -202,6 +244,7 @@ public class playerController : MonoBehaviour, IDamage
         transform.position = gameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
         HP = HPMax;
+        audioLowHealthVol = audioLHVolOrig;
         updatePlayerUI();
     }
 

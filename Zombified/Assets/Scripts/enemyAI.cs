@@ -30,6 +30,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform attackPos;
 
     [HideInInspector] public Transform spawnPoint;
+    
+    [Header("----- Audio -----")]
+    // audio<something> is an array of sfx
+    // audio<something>Vol is the sfx volume
+    [SerializeField] AudioSource audioSFX;
+    [SerializeField] AudioClip[] audioVoice;
+    [SerializeField] [Range(0, 1)] float audioVoiceVol;
     public static event System.Action<int> OnEnemyKilled;
 
     Vector3 playerDir;
@@ -40,6 +47,7 @@ public class enemyAI : MonoBehaviour, IDamage
     bool playerInAttackRange;
     bool destinationChosen;
     bool isAttacking = false;
+    bool zedIsGroaning;
 
     float angleToPlayer;
     float stoppingDistOrig;
@@ -80,8 +88,29 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }
 
+        zedGroansSFX();
 
+    }
 
+    void zedGroansSFX()
+    {
+        if (!zedIsGroaning && HP > 0)
+        {
+            StartCoroutine(playZedGroans());
+        }
+    }
+
+    IEnumerator playZedGroans()
+    {
+        zedIsGroaning = true;
+        // Plays zombie groans audio sfx - Plays a random zombie groan sfx from the range audioVoice at a volume defined by audioVoiceVol
+        audioSFX.PlayOneShot(audioVoice[Random.Range(0, audioVoice.Length)], audioVoiceVol);
+        if (HP > 0)
+        {
+            Random.seed = System.DateTime.Now.Millisecond;
+            yield return new WaitForSeconds(Random.Range(5.0f, 25.0f));
+        }
+        zedIsGroaning = false;
     }
 
     bool canSeePlayer()
