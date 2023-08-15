@@ -75,26 +75,15 @@ public class gameManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        isPaused = false;
-
-        if (activeMenu != null)
-        {
-            activeMenu.SetActive(false);
-
-            // If the active menu is the escape menu, set it to null
-            if (activeMenu == escapeMenu)
-            {
-                escapeMenu = null;
-            }
-
-            activeMenu = null;
-        }
+        isPaused = !isPaused;
+        activeMenu.SetActive(false);
+        activeMenu = null;
     }
 
     public void updateGameGoal(int amount)
     {
         enemiesRemaining += amount;
-       
+
         enemiesRemaining = Mathf.Max(enemiesRemaining, 0);
         enemiesRemainingText.text = enemiesRemaining.ToString("0");
     }

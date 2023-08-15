@@ -5,6 +5,7 @@ public class WaveSpawner : MonoBehaviour
 {
     public GameObject Zombie3;
     public Transform spawnPoint;
+    private gameManager gameManagerInstance;
 
     public float timeBetweenWaves;
     private float nextWaveTime;
@@ -25,6 +26,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Start()
     {
+        
         nextWaveTime = Time.time + timeBetweenWaves;
     }
 
@@ -36,7 +38,7 @@ public class WaveSpawner : MonoBehaviour
             StartCoroutine(SpawnWave());
             nextWaveTime = Time.time + timeBetweenWaves;
 
-            if (waveNumber % 5 == 0)
+            if (waveNumber > 1 && (waveNumber - 1) % 5 == 0)
             {
                 gameManager.instance.escape();
             }
@@ -59,11 +61,11 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenZombieSpawns);
         }
 
-        if (waveNumber > 0 && waveNumber % 5 == 0 && enemiesRemaining <= 0)
-        {
-            gameManager.instance.updateGameGoal(-numZombies);
-            gameManager.instance.escape();
-        }
+        //if (waveNumber % 5 == 0 && enemiesRemaining <= 0)
+       // {
+           // gameManager.instance.updateGameGoal(-numZombies);
+            //gameManager.instance.escape();
+       // }
 
         isSpawning = false;
     }

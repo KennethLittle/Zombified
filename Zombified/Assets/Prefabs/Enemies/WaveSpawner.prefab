@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c183968415218bc49bbf6c12d0922e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie3: {fileID: 6340507753872938397, guid: 8266466b608e2cc47bf783a3d2fd0c33, type: 3}
+  Zombie3: {fileID: 6340507753872938397, guid: 4ac6de4ea59d7ac4abdde3600ebbf25a, type: 3}
   spawnPoint: {fileID: 990607157547989639}
   timeBetweenWaves: 7
   timeBetweenZombieSpawns: 2
