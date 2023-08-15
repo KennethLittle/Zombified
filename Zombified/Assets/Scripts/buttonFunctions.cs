@@ -62,4 +62,10 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("DeathScene");
     }
 
+    public void resumeRun()
+    {
+        gameManager.instance.stateUnpaused();
+        gameManager.instance.waveSpawnerScript.ResumeWave();
+    }
+
 }

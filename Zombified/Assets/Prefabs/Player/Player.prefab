@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6217912818404968211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.002, y: 0.034, z: 0.002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -418,9 +418,13 @@ MonoBehaviour:
   jumpHeight: 7
   gravityValue: -24
   animChangeSpeed: 2
+  weaponList:
+  - {fileID: 11400000, guid: df11d2e0cc3d8434ba28c7861fd2a745, type: 2}
   shootRate: 0.8
   shootDamage: 5
   shootDist: 75
+  weaponmod: {fileID: 6217912818404968211}
+  Weaponselected: 0
   audioSFX: {fileID: 291726850}
   audioFootsteps:
   - {fileID: 8300000, guid: 5f68799896551614483f23a93ead1d73, type: 3}

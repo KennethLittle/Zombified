@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -101,6 +99,7 @@ public class gameManager : MonoBehaviour
 
     public void escape()
     {
+
         statePaused();
         activeMenu = escapeMenu;
         activeMenu.SetActive(true);
