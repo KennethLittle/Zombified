@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 6217912817681682714}
+  anim: {fileID: 6217912818414635019}
   HP: 5
   stamina: 0
   currentStamina: 0
@@ -321,6 +322,7 @@ MonoBehaviour:
   jumpMax: 1
   jumpHeight: 7
   gravityValue: -24
+  animChangeSpeed: 0
   shootRate: 0.8
   shootDamage: 5
   shootDist: 75
@@ -347,7 +349,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8ab539ede4da1614e8d3eb9347560e06, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

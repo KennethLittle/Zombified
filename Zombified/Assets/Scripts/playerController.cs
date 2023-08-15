@@ -6,6 +6,7 @@ public class playerController : MonoBehaviour, IDamage
 {
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] Animator anim;
 
     [Header("----- Player stats -----")]
     [SerializeField] int HP;
@@ -18,6 +19,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityValue;
+    [SerializeField] int animChangeSpeed;
 
     [Header("----- Player Gun Stats -----")]
     [SerializeField] float shootRate;
@@ -56,6 +58,9 @@ public class playerController : MonoBehaviour, IDamage
 
     void Update()
     {
+        float agentVel = move.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
+
         movement();
         sprint();
         if (Input.GetButton("Shoot") && !isShooting)
