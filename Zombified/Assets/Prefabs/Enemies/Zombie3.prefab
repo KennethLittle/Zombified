@@ -1257,8 +1257,8 @@ Transform:
   m_GameObject: {fileID: 6340507753872938397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.115931, y: 0.5, z: 18.250002}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4852357839962824501}
   - {fileID: 5378331174497143431}
@@ -1281,16 +1281,16 @@ MonoBehaviour:
   agent: {fileID: 2657105238829010071}
   anim: {fileID: 2528949231551706364}
   headPos: {fileID: 1738258517870242487}
-  HP: 5
-  speed: 8
-  playerFaceSpeed: 15
-  meleeRange: 2
+  HP: 15
+  speed: 5
+  playerFaceSpeed: 7
+  meleeRange: 3
   viewAngle: 90
-  roamDist: 150
-  roamTimer: 2
-  animChangeSpeed: 5
+  roamDist: 60
+  roamTimer: 3
+  animChangeSpeed: 12
   baseXP: 10
-  damage: 3
+  damage: 12
   attackRate: 1
   strikeAngle: 30
   meleeAttack: {fileID: 4320073142906702345}
@@ -1299,7 +1299,6 @@ MonoBehaviour:
   audioSFX: {fileID: 3099290702818361103}
   audioVoice:
   - {fileID: 8300000, guid: 76f5bfd28a857674ca830f1ff736a9e0, type: 3}
-  - {fileID: 8300000, guid: 92ead400b6469644288733f59f62edb6, type: 3}
   audioVoiceVol: 0.5
 --- !u!195 &2657105238829010071
 NavMeshAgent:
@@ -1310,16 +1309,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 6340507753872938397}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 7
+  m_Radius: 1.5
+  m_Speed: 6
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_AngularSpeed: 400
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

@@ -143,6 +143,16 @@ public class enemyAI : MonoBehaviour, IDamage
 
                 return true;
             }
+            else if (hit.collider.CompareTag("Obstacle"))
+            {
+                // Choose a new destination to avoid the obstacle
+                Vector3 avoidDirection = Vector3.Cross(Vector3.up, playerDir.normalized).normalized;
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(transform.position + avoidDirection * 2f, out navHit, 2f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(navHit.position);
+                }
+            }
         }
 
         agent.stoppingDistance = 0;
