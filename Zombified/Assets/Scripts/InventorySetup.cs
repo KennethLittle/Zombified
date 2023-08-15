@@ -7,7 +7,7 @@ public class InventorySetup : MonoBehaviour
     public static InventorySetup Instance;
     public int inventorybag = 32;
     public GameObject PhysicalWeapon;
-    public List<InventoryObject> Weapons = new List<InventoryObject>();
+    public List<WeaponStats> Weapons = new List<WeaponStats>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -22,7 +22,7 @@ public class InventorySetup : MonoBehaviour
     }
 
     // Update is called once per frame
-    public bool AddItem(InventoryObject item)
+    public bool AddItem(WeaponStats item)
     {
         if(Weapons.Count < inventorybag)
         {
@@ -32,7 +32,7 @@ public class InventorySetup : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(InventoryObject item)
+    public void RemoveItem(WeaponStats item)
     {
         Weapons.Remove(item);
     }

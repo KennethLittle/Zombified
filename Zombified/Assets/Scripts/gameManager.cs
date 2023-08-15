@@ -28,6 +28,8 @@ public class gameManager : MonoBehaviour
     public Image playerHPBar;
     public Image staminaBar;
     [SerializeField] GameObject playerDamageFlash;
+    //public TextMeshProUGUI ammoCur;
+    //public TextMeshProUGUI ammoMax;
 
 
     public int enemiesKilled;

@@ -22,10 +22,14 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float animChangeSpeed;
 
     [Header("----- Player Gun Stats -----")]
+    [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
-    
+    [SerializeField] GameObject weaponmod;
+    public int Weaponselected;
+
+
     [Header("----- Audio -----")]
     // audio<something> is an array of sfx
     // audio<something>Vol is the sfx volume
@@ -55,9 +59,7 @@ public class playerController : MonoBehaviour, IDamage
     private bool footstepsIsPlaying;
     private float audioLHVolOrig;
     private bool lowHealthIsPlaying;
-    private int loot;
-    private Rigidbody rb;
-    private InventoryObject inventory;
+
 
     private void Start()
     {
@@ -65,7 +67,6 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
         spawnPlayer();
-        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -74,12 +75,15 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         lowHealthSFX();
+        weaponselect();
 
         float agentVel = move.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
+        {
             StartCoroutine(shoot());
+        }
     }
 
     public void takeDamage(int amount)
@@ -222,6 +226,8 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+        weaponList[Weaponselected].ammoCur--;
+        updatePlayerUI();
 
         // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
         audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
@@ -280,15 +286,52 @@ public class playerController : MonoBehaviour, IDamage
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
         gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
+
+        if(weaponList.Count > 0)
+        {
+            //gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
+            //gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    public void weaponpickup(WeaponStats weaponStat)
     {
-        if (other.gameObject.CompareTag("Loot Weapon"))
+        weaponList.Add(weaponStat);
+
+        shootDamage = weaponStat.shootDamage;
+        shootRate = weaponStat.shootRate;
+        shootDist = (int)weaponStat.shootDist;
+
+        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponStat.model.GetComponent<MeshFilter>().sharedMesh;
+        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        updatePlayerUI();
+    }
+
+    void weaponselect()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Weaponselected < weaponList.Count - 1)
         {
-            other.gameObject.SetActive(false);
-            loot = loot + 1;
+            Weaponselected++;
+            changeweapon();
         }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && Weaponselected > 0)
+        {
+            Weaponselected--;
+            changeweapon();
+        }
+    }
+
+    void changeweapon()
+    {
+        shootDamage = weaponList[Weaponselected].shootDamage;
+        shootDist = (int)weaponList[Weaponselected].shootDist;
+        shootRate = weaponList[Weaponselected].shootRate;
+
+        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponList[Weaponselected].model.GetComponent<MeshFilter>().sharedMesh;
+        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponList[Weaponselected].model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        updatePlayerUI();
     }
 
 
