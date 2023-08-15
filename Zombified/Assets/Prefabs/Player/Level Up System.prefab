@@ -45,5 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLevel: 1
-  currentXP: 0
+  totalAccumulatedXP: 0
+  totalEarnedXP: 0
   requiredXP: 100
+  extraHP: 0
+  extraStamina: 0
+  isInRun: 0

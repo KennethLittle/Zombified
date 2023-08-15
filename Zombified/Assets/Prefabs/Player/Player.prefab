@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6217912817681682714}
   anim: {fileID: 6217912818414635019}
-  HP: 100
+  HP: 5
   stamina: 100
   currentStamina: 0
   staminaConsumptionRate: 15

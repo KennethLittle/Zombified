@@ -85,7 +85,8 @@ public class LevelUpSystem : MonoBehaviour
     public void RewardXPUponDeath()
     {
         int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.15f);
-        gameManager.instance.totalXP += rewardXP;
+        gameManager.instance.totalXP -= rewardXP;
+        totalAccumulatedXP += rewardXP;
         
     }
 

@@ -35,6 +35,11 @@ public class WaveSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnWave());
             nextWaveTime = Time.time + timeBetweenWaves;
+
+            if (waveNumber % 5 == 0)
+            {
+                gameManager.instance.escape();
+            }
         }
     }
 
