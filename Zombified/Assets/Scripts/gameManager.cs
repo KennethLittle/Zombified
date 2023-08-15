@@ -27,6 +27,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
     public Image staminaBar;
+    [SerializeField] GameObject playerDamageFlash;
+
 
     public int enemiesKilled;
     public int totalXP;
@@ -112,5 +114,13 @@ public class gameManager : MonoBehaviour
     {
         gameManager.instance.levelUpSystem.totalAccumulatedXP = amount;
     }
-    
+
+    public IEnumerator playerFlashDamage()
+    {
+        playerDamageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        playerDamageFlash.SetActive(false);
+    }
+
+
 }

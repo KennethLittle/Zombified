@@ -43,7 +43,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioShootCasingVol;
     [SerializeField] AudioClip[] audioLowHealth;
     [SerializeField] [Range(0, 1)] float audioLowHealthVol;
-    
+
 
     private int HPMax;
     private bool groundedPlayer;
@@ -55,6 +55,9 @@ public class playerController : MonoBehaviour, IDamage
     private bool footstepsIsPlaying;
     private float audioLHVolOrig;
     private bool lowHealthIsPlaying;
+    private int loot;
+    private Rigidbody rb;
+    private InventoryObject inventory;
 
     private void Start()
     {
@@ -62,6 +65,7 @@ public class playerController : MonoBehaviour, IDamage
         currentStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
         spawnPlayer();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -82,6 +86,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         HP -= amount;
+        StartCoroutine(gameManager.instance.playerFlashDamage());
         updatePlayerUI();
         
         if (HP <= 0)
@@ -276,4 +281,15 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
         gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Loot Weapon"))
+        {
+            other.gameObject.SetActive(false);
+            loot = loot + 1;
+        }
+    }
+
+
 }
