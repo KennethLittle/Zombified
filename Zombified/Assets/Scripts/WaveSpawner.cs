@@ -35,6 +35,11 @@ public class WaveSpawner : MonoBehaviour
         {
             StartCoroutine(SpawnWave());
             nextWaveTime = Time.time + timeBetweenWaves;
+
+            if (waveNumber % 5 == 0)
+            {
+                gameManager.instance.escape();
+            }
         }
     }
 
@@ -42,8 +47,11 @@ public class WaveSpawner : MonoBehaviour
     {
         isSpawning = true;
 
-        int numZombies = startingZombies + Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
+        int numZombies = startingZombies + waveNumber * Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
         enemiesRemaining = numZombies;
+
+        waveNumber++; // Increment the wave number before spawning zombies
+        gameManager.instance.waveNumberText.text = "Wave " + waveNumber;
 
         for (int i = 0; i < numZombies; i++)
         {
@@ -51,16 +59,11 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenZombieSpawns);
         }
 
-        waveNumber++;
-        gameManager.instance.waveNumberText.text = "Wave" + waveNumber;
-
-        if (waveNumber >= 5 && enemiesRemaining <= 0)
+        if (waveNumber > 0 && waveNumber % 5 == 0 && enemiesRemaining <= 0)
         {
             gameManager.instance.updateGameGoal(-numZombies);
             gameManager.instance.escape();
         }
-
-
 
         isSpawning = false;
     }

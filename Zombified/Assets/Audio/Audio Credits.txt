@@ -1,4 +1,19 @@
-Audio is taken from Sonniss's Royalty Free Sound Effects Archive: GameAudioGDC.
+Audio in Folders is taken from Sonniss's Royalty Free Sound Effects Archive: GameAudioGDC.
 https://sonniss.com/gameaudiogdc
 
 `All of the sound effects are royalty free and commercially usable with no attribution required. You can use the sound effects on an unlimited number of projects.`
+
+------------------------------------------
+
+Individual Sound Files:
+
+Heartbeat-single-cycle.wav	Taken from directory.audio | Uploaded by freesman | Creative Commons (CC BY 3.0)
+https://directory.audio/sound-effects/human/25010-heartbeat-single-cycle
+
+single-gunshot.wav		Taken from directory.audio | Uploaded by freesman | Creative Commons (CC BY 3.0)
+https://directory.audio/sound-effects/weapons/25394-single-gunshot
+
+159007__cgeffex__shell_9mm_luger_04.wav		Taken from freesound.org | Uploaded by CGEffex | Creative Commons (CC BY 4.0)
+https://freesound.org/people/CGEffex/sounds/159005/
+159007__cgeffex__shell_9mm_luger_09.wav
+https://freesound.org/people/CGEffex/sounds/159007/

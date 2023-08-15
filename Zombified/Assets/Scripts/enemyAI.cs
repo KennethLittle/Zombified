@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,32 +13,41 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public int HP;
     [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
+    [SerializeField] float meleeRange;
     [Range(60, 180)][SerializeField] int viewAngle;
     [Range(1, 500)][SerializeField] int roamDist;
     [Range(0, 3)][SerializeField] int roamTimer;
     [SerializeField] int animChangeSpeed;
 
     public int baseXP = 10;
-    
+
 
     [Header("----- Attack Stats -----")]
     [SerializeField] public int damage;
-    [Range(1, 50)] [SerializeField] float meleeRange;
-    [Range(1, 50)] [SerializeField] float attackRate;
-    [Range(0, 90)] [SerializeField] int strikeAngle;
+    [Range(1, 50)][SerializeField] float attackRate;
+    [Range(0, 90)][SerializeField] int strikeAngle;
     [SerializeField] GameObject meleeAttack;
     [SerializeField] Transform attackPos;
 
     [HideInInspector] public Transform spawnPoint;
+    
+    [Header("----- Audio -----")]
+    // audio<something> is an array of sfx
+    // audio<something>Vol is the sfx volume
+    [SerializeField] AudioSource audioSFX;
+    [SerializeField] AudioClip[] audioVoice;
+    [SerializeField] [Range(0, 1)] float audioVoiceVol;
     public static event System.Action<int> OnEnemyKilled;
 
     Vector3 playerDir;
     Vector3 startingPos;
 
-    
+
     bool playerInRange;
+    bool playerInAttackRange;
     bool destinationChosen;
     bool isAttacking = false;
+    bool zedIsGroaning;
 
     float angleToPlayer;
     float stoppingDistOrig;
@@ -49,6 +57,10 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        meleeRange = agent.stoppingDistance;
+        
+        
+
     }
 
     void Update()
@@ -56,14 +68,49 @@ public class enemyAI : MonoBehaviour, IDamage
         float agentVel = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-        if (playerInRange && !canSeePlayer())
+
+        if (!isAttacking) // Check if not already attacking
         {
-            StartCoroutine(roam());
+            if (canSeePlayer()) // Chase the player if they can be seen
+            {
+                if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
+                {
+                    StartCoroutine(attack());
+                }
+            }
+            if (playerInRange && !canSeePlayer())
+            {
+                StartCoroutine(roam());
+            }
+            else if (agent.destination != gameManager.instance.player.transform.position)
+            {
+                StartCoroutine(roam());
+            }
         }
-        else if (agent.destination != gameManager.instance.player.transform.position)
+
+        zedGroansSFX();
+
+    }
+
+    void zedGroansSFX()
+    {
+        if (!zedIsGroaning && HP > 0)
         {
-            StartCoroutine(roam());
+            StartCoroutine(playZedGroans());
         }
+    }
+
+    IEnumerator playZedGroans()
+    {
+        zedIsGroaning = true;
+        // Plays zombie groans audio sfx - Plays a random zombie groan sfx from the range audioVoice at a volume defined by audioVoiceVol
+        audioSFX.PlayOneShot(audioVoice[Random.Range(0, audioVoice.Length)], audioVoiceVol);
+        if (HP > 0)
+        {
+            Random.seed = System.DateTime.Now.Millisecond;
+            yield return new WaitForSeconds(Random.Range(5.0f, 25.0f));
+        }
+        zedIsGroaning = false;
     }
 
     bool canSeePlayer()
@@ -85,14 +132,29 @@ public class enemyAI : MonoBehaviour, IDamage
                     facePlayer();
                 }
 
-                if (!isAttacking && angleToPlayer <= strikeAngle)
+                if (!isAttacking && angleToPlayer <= strikeAngle && Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
                 {
-                    StartCoroutine(attack());
+                    playerInAttackRange = true; // Set to true only if not attacking and player in attack range
+                }
+                else
+                {
+                    playerInAttackRange = false;
                 }
 
                 return true;
             }
+            else if (hit.collider.CompareTag("Obstacle"))
+            {
+                // Choose a new destination to avoid the obstacle
+                Vector3 avoidDirection = Vector3.Cross(Vector3.up, playerDir.normalized).normalized;
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(transform.position + avoidDirection * 2f, out navHit, 2f, NavMesh.AllAreas))
+                {
+                    agent.SetDestination(navHit.position);
+                }
+            }
         }
+
         agent.stoppingDistance = 0;
         return false;
     }
@@ -104,7 +166,6 @@ public class enemyAI : MonoBehaviour, IDamage
             destinationChosen = true;
             agent.stoppingDistance = 0;
             yield return new WaitForSeconds(roamTimer);
-
             Vector3 randomPos = Random.insideUnitSphere * roamDist;
             randomPos += startingPos;
 
@@ -194,4 +255,5 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         baseXP += gameManager.instance.waveSpawnerScript.waveNumber * 7;
     }
+
 }

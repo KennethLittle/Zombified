@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class escapeSummary : MonoBehaviour
+public class deathSummary : MonoBehaviour
 {
     public TextMeshProUGUI enemiesKilledText;
     public TextMeshProUGUI xpEarnedText;
@@ -17,7 +17,7 @@ public class escapeSummary : MonoBehaviour
     private void Start()
     {
         int enemiesKilled = gameManager.instance.enemiesKilled; // Use the correct variable name from your gameManager script
-        int xpEarned = gameManager.instance.levelUpSystem.totalEarnedXP;
+        int xpEarned = Mathf.FloorToInt(gameManager.instance.levelUpSystem.totalEarnedXP * 0.15f); // Keep 15% of the earned XP
         int playerLevel = gameManager.instance.levelUpSystem.playerLevel; // Access playerLevel from the LevelUpSystem script
         int extraHP = gameManager.instance.levelUpSystem.extraHP; // Access extraHP from the LevelUpSystem script
         int extraStamina = gameManager.instance.levelUpSystem.extraStamina; // Access extraStamina from the LevelUpSystem script

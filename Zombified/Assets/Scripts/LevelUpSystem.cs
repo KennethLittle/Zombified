@@ -8,9 +8,13 @@ public class LevelUpSystem : MonoBehaviour
     public int totalAccumulatedXP;
     public int totalEarnedXP;
     public int requiredXP;
+    public int extraHP;
+    public int extraStamina;
+    
     
 
     private bool hasEscaped = false;
+    public bool isInRun = false;
 
     public void GainXP(int xpAmount)
     {
@@ -21,36 +25,39 @@ public class LevelUpSystem : MonoBehaviour
 
     private void CheckLevelUp()
     {
-        while (totalAccumulatedXP >= requiredXP)
+        if (!isInRun) 
         {
-            LevelUp();
+            while (totalAccumulatedXP >= requiredXP)
+            {
+                LevelUp();
 
-            requiredXP = CalculateRequiredXP();
+                requiredXP = CalculateRequiredXP();
+            }
         }
+        
+
     }
 
-    private void LevelUp()
+    public void LevelUp()
     {
-        playerLevel++;
-        totalAccumulatedXP -= requiredXP;
+        if (!isInRun) // Only apply HP and Stamina increase if not in a run
+        {
+            playerLevel++;
+            totalAccumulatedXP -= requiredXP;
 
-        int extraHP = ExtraHP();
-        gameManager.instance.playerScript.IncreaseMaxHP(extraHP);
-        int extraStamina = ExtraStamina();
-        gameManager.instance.playerScript.IncreaseMaxStamina(extraStamina);
+            extraHP = Mathf.RoundToInt(playerLevel * 15 * 1.75f);
+
+            gameManager.instance.playerScript.IncreaseMaxHP(extraHP);
+
+            extraStamina = Mathf.RoundToInt(playerLevel * 10 * 1.75f);
+
+            gameManager.instance.playerScript.IncreaseMaxStamina(extraStamina);
+        }
+
 
         requiredXP = CalculateRequiredXP();
     }
 
-    public int ExtraHP()
-    {
-        return Mathf.RoundToInt(playerLevel * 10 * 1.15f);
-    }
-
-    public int ExtraStamina()
-    {
-        return Mathf.RoundToInt(playerLevel * 15 * 1.25f);
-    }
 
     private int CalculateRequiredXP()
     {
@@ -62,7 +69,7 @@ public class LevelUpSystem : MonoBehaviour
     {
         int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.85f);
         gameManager.instance.totalXP += rewardXP;
-        totalAccumulatedXP -= rewardXP;
+        
 
         if (hasEscaped)
         {
@@ -78,6 +85,18 @@ public class LevelUpSystem : MonoBehaviour
     public void RewardXPUponDeath()
     {
         int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.15f);
-        totalAccumulatedXP -= rewardXP;
+        gameManager.instance.totalXP -= rewardXP;
+        totalAccumulatedXP += rewardXP;
+        
+    }
+
+    public void MarkRunStart()
+    {
+        isInRun = true;
+    }
+
+    public void MarkRunEnd()
+    {
+        isInRun = false;
     }
 }
