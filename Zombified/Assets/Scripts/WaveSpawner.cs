@@ -54,7 +54,7 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenZombieSpawns);
         }
 
-        if (waveNumber >= 5 && enemiesRemaining <= 0)
+        if (waveNumber > 0 && waveNumber % 5 == 0 && enemiesRemaining <= 0)
         {
             gameManager.instance.updateGameGoal(-numZombies);
             gameManager.instance.escape();

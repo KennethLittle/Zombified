@@ -8,7 +8,6 @@ public class buttonFunctions : MonoBehaviour
     public void resume()
     {
         gameManager.instance.stateUnpaused();
-        gameManager.instance.escapeMenu.SetActive(false);
     }
 
     public void restart()
@@ -50,10 +49,17 @@ public class buttonFunctions : MonoBehaviour
 
     public void escape()
     {
+        gameManager.instance.levelUpSystem.MarkRunEnd();
         gameManager.instance.levelUpSystem.MarkAsEscaped();
         gameManager.instance.levelUpSystem.RewardXPUponEscape();
         SceneManager.LoadScene("EscapeScene");
+    }
 
+    public void next()
+    {
+        gameManager.instance.levelUpSystem.RewardXPUponDeath();
+        gameManager.instance.levelUpSystem.MarkRunEnd();
+        SceneManager.LoadScene("DeathScene");
     }
 
 }

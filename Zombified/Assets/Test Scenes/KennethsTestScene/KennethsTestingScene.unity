@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4804914853634655438, guid: 611a6017d1b296543bf958640c8aaf91, type: 3}
+      propertyPath: HP
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6217912818404972203, guid: 611a6017d1b296543bf958640c8aaf91, type: 3}
       propertyPath: m_Name
       value: Player (1)
@@ -464,6 +468,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 990607157547989638, guid: b76ef65ba9f6338418859a62a6574b0b, type: 3}
+      propertyPath: startingZombies
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 990607157547989638, guid: b76ef65ba9f6338418859a62a6574b0b, type: 3}
+      propertyPath: maxAdditionalZombies
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 990607157547989638, guid: b76ef65ba9f6338418859a62a6574b0b, type: 3}
+      propertyPath: minAdditionalZombies
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 990607157547989639, guid: b76ef65ba9f6338418859a62a6574b0b, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -514,17 +530,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76ef65ba9f6338418859a62a6574b0b, type: 3}
---- !u!114 &1806602255 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1806602255, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-  m_PrefabInstance: {fileID: 7423461717902925517}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3386990529409528179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,6 +581,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3386990531074977694, guid: cda21bdd4daeac341970b4160e0b5b48, type: 3}
+      propertyPath: playerLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3386990531074977695, guid: cda21bdd4daeac341970b4160e0b5b48, type: 3}
       propertyPath: m_Name
       value: Level Up System
@@ -589,18 +598,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1702976703, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: escape
-      objectReference: {fileID: 0}
-    - target: {fileID: 1806602255, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7423461717082805376, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-      propertyPath: staminaBar
-      value: 
-      objectReference: {fileID: 1806602255}
     - target: {fileID: 7423461717082805376, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: levelUpSystem
       value: 

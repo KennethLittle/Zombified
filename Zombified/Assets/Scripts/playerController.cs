@@ -87,6 +87,7 @@ public class playerController : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gameManager.instance.youLose();
+            gameManager.instance.levelUpSystem.MarkRunEnd();
         }
 
         audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
@@ -250,16 +251,24 @@ public class playerController : MonoBehaviour, IDamage
 
     public void IncreaseMaxHP(int amount)
     {
-        HPMax += amount;
-        HP += amount;
-        updatePlayerUI();
+        if (!gameManager.instance.levelUpSystem.isInRun)
+        {
+            
+            HPMax += amount;
+            HP += amount;
+            updatePlayerUI();
+        }
     }
 
     public void IncreaseMaxStamina(int amount)
     {
-        stamina += amount;
-        currentStamina += amount;
-        updatePlayerUI();
+        if (!gameManager.instance.levelUpSystem.isInRun)
+        {
+            
+            stamina += amount;
+            currentStamina += amount;
+            updatePlayerUI();
+        }
     }
 
     public void updatePlayerUI()
