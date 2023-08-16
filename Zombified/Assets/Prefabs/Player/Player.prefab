@@ -437,12 +437,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0a9dee61b1937824aa827ec47c67f2de, type: 3}
   audioDamageVol: 0.2
   audioShoot:
-  - {fileID: 8300000, guid: 49a85eeec03d0224f9fc8d4aae230456, type: 3}
+  - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
   audioShootVol: 0.2
   audioShootCasing:
   - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
-  - {fileID: 8300000, guid: bbcf3dfec8241ff44ab49b64a1d2c93f, type: 3}
   audioShootCasingVol: 0.5
+  audioGunReload:
+  - {fileID: 8300000, guid: 7047c8952edf2aa4786768c0ee041501, type: 3}
+  audioGunReloadVol: 0.5
   audioLowHealth:
   - {fileID: 8300000, guid: f19f78725fe442c43a71a89447621d6e, type: 3}
   audioLowHealthVol: 0.1
