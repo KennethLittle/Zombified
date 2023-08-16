@@ -397,7 +397,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4804914853634655438, guid: 611a6017d1b296543bf958640c8aaf91, type: 3}
       propertyPath: Weaponselected
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6217912817681682715, guid: 611a6017d1b296543bf958640c8aaf91, type: 3}
       propertyPath: m_Material
