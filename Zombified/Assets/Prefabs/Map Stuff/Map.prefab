@@ -23,10 +23,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2594380503771928712}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 39, y: 0, z: 526}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8781070034262684440}
   - {fileID: 8781070034646059987}
@@ -914,6 +914,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1801516059866202619}
     m_Modifications:
+    - target: {fileID: 321761353807948939, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 321761353807948981, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 321761353807948981, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 321761353807948983, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
       propertyPath: m_Name
       value: Corridor Tee (1)
@@ -1044,6 +1056,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793604, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793604, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793608, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8911123174686793610, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
       propertyPath: m_Name
       value: Corridor Corner
@@ -1118,6 +1142,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793604, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793604, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911123174686793608, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8911123174686793610, guid: 0caa079a07bb6bb4d8189cbe94d69429, type: 3}
       propertyPath: m_Name
       value: Corridor Corner (1)
@@ -1136,6 +1172,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1801516059866202619}
     m_Modifications:
+    - target: {fileID: 321761353807948939, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 321761353807948981, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 321761353807948981, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 321761353807948983, guid: 29aa5a78b96148c42bd3f92e5e037e89, type: 3}
       propertyPath: m_Name
       value: Corridor Tee
