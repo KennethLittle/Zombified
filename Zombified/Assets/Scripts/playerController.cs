@@ -41,12 +41,15 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioJumpVol;
     [SerializeField] AudioClip[] audioDamage;
     [SerializeField] [Range(0, 1)] float audioDamageVol;
+    [SerializeField] AudioClip[] audioLowHealth;
+    [SerializeField] [Range(0, 1)] float audioLowHealthVol;
+    
     [SerializeField] AudioClip[] audioShoot;
     [SerializeField] [Range(0, 1)] float audioShootVol;
     [SerializeField] AudioClip[] audioShootCasing;
     [SerializeField] [Range(0, 1)] float audioShootCasingVol;
-    [SerializeField] AudioClip[] audioLowHealth;
-    [SerializeField] [Range(0, 1)] float audioLowHealthVol;
+    [SerializeField] AudioClip[] audioGunReload;
+    [SerializeField] [Range(0, 1)] float audioGunReloadVol;
 
 
     private int HPMax;
@@ -302,6 +305,13 @@ public class playerController : MonoBehaviour, IDamage
         shootRate = weaponStat.shootRate;
         shootDist = (int)weaponStat.shootDist;
 
+        audioShoot = weaponStat.audioShoot;
+        audioShootVol = weaponStat.audioShootVol;
+        audioShootCasing = weaponStat.audioShootCasing;
+        audioShootCasingVol = weaponStat.audioShootCasingVol;
+        audioGunReload = weaponStat.audioGunReload;
+        audioGunReloadVol = weaponStat.audioGunReloadVol;
+
         weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponStat.model.GetComponent<MeshFilter>().sharedMesh;
         weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponStat.model.GetComponent<MeshRenderer>().sharedMaterial;
 
@@ -328,6 +338,13 @@ public class playerController : MonoBehaviour, IDamage
         shootDist = (int)weaponList[Weaponselected].shootDist;
         shootRate = weaponList[Weaponselected].shootRate;
 
+        audioShoot = weaponList[Weaponselected].audioShoot;
+        audioShootVol = weaponList[Weaponselected].audioShootVol;
+        audioShootCasing = weaponList[Weaponselected].audioShootCasing;
+        audioShootCasingVol = weaponList[Weaponselected].audioShootCasingVol;
+        audioGunReload = weaponList[Weaponselected].audioGunReload;
+        audioGunReloadVol = weaponList[Weaponselected].audioGunReloadVol;
+        
         weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponList[Weaponselected].model.GetComponent<MeshFilter>().sharedMesh;
         weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponList[Weaponselected].model.GetComponent<MeshRenderer>().sharedMaterial;
 

@@ -37,6 +37,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] AudioSource audioSFX;
     [SerializeField] AudioClip[] audioVoice;
     [SerializeField] [Range(0, 1)] float audioVoiceVol;
+    [SerializeField] [Range(5, 24)] float voiceTimerMin;
+    [SerializeField] [Range(25, 60)] float voiceTimerMax;
     public static event System.Action<int> OnEnemyKilled;
 
     Vector3 playerDir;
@@ -108,7 +110,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP > 0)
         {
             Random.seed = System.DateTime.Now.Millisecond;
-            yield return new WaitForSeconds(Random.Range(5.0f, 25.0f));
+            yield return new WaitForSeconds(Random.Range(voiceTimerMin, voiceTimerMax));
         }
         zedIsGroaning = false;
     }

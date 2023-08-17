@@ -22,7 +22,7 @@ public class deathSummary : MonoBehaviour
         int extraHP = gameManager.instance.levelUpSystem.extraHP; // Access extraHP from the LevelUpSystem script
         int extraStamina = gameManager.instance.levelUpSystem.extraStamina; // Access extraStamina from the LevelUpSystem script
         int requiredXp = gameManager.instance.levelUpSystem.requiredXP; // Access requiredXP from the LevelUpSystem script
-        int currentXP = gameManager.instance.levelUpSystem.totalAccumulatedXP;
+        int currentXP = Mathf.FloorToInt(gameManager.instance.levelUpSystem.totalAccumulatedXP * 0.15f);
 
         enemiesKilledText.text = "Enemies Killed: " + enemiesKilled.ToString();
         xpEarnedText.text = "XP Earned: " + xpEarned.ToString();

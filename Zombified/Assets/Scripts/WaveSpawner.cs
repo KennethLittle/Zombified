@@ -5,17 +5,19 @@ public class WaveSpawner : MonoBehaviour
 {
     public GameObject Zombie3;
     public Transform spawnPoint;
-    private gameManager gameManagerInstance;
+    public gameManager gameManager;
 
-    public float timeBetweenWaves;
+    public float defaultTimeBetweenWaves = 240.0f;  // 4 minutes in seconds
+    public float countdownTime = 5.0f; // Countdown time in seconds
     private float nextWaveTime;
+    private float waveCountdownTimer;
     public float timeBetweenZombieSpawns;
 
     public int waveNumber;
     public int enemiesRemaining = 0;
 
-    [Range(1, 5)][SerializeField] float enemyHPMultiplier;
-    [Range(1, 5)][SerializeField] float enemyDamageMultiplier;
+    [Range(1, 5)][SerializeField] private float enemyHPMultiplier = 2.0f;
+    [Range(1, 5)][SerializeField] private float enemyDamageMultiplier = 1.5f;
 
     public int startingZombies;
     public int minAdditionalZombies;
@@ -24,35 +26,56 @@ public class WaveSpawner : MonoBehaviour
     private bool isPaused = false;
     private bool isSpawning = false;
 
-    void Start()
+    private void Start()
     {
-        
-        nextWaveTime = Time.time + timeBetweenWaves;
+        gameManager= GetComponent<gameManager>();
+        nextWaveTime = Time.time;
     }
 
-
-    void Update()
+    private void Update()
     {
-        if (!isPaused && !isSpawning && enemiesRemaining <= 0 && Time.time >= nextWaveTime)
+        if (!isPaused && !isSpawning)
         {
-            StartCoroutine(SpawnWave());
-            nextWaveTime = Time.time + timeBetweenWaves;
-
-            if (waveNumber > 1 && (waveNumber - 1) % 5 == 0)
+            if (enemiesRemaining <= 0)
             {
-                gameManager.instance.escape();
+                waveCountdownTimer -= Time.deltaTime;
+
+                if (waveCountdownTimer <= 0f)
+                {
+                    if (waveNumber % 5 == 0 && waveNumber > 1)
+                    {
+                        gameManager.instance.escape();
+                    }
+                    else
+                    {
+                        StartCoroutine(SpawnWave());
+                        nextWaveTime = Time.time + defaultTimeBetweenWaves;
+                        waveCountdownTimer = 0f;  // Reset countdown timer
+                    }
+                }
+            }
+            else
+            {
+                waveCountdownTimer = countdownTime;  // Set countdown timer to 5 seconds when enemies are present
+            }
+
+            if (Time.time >= nextWaveTime)
+            {
+                StartCoroutine(SpawnWave());
+                nextWaveTime = Time.time + defaultTimeBetweenWaves;
+                waveCountdownTimer = 0f;  // Reset countdown timer
             }
         }
     }
 
-    IEnumerator SpawnWave()
+    private IEnumerator SpawnWave()
     {
         isSpawning = true;
 
         int numZombies = startingZombies + waveNumber * Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
         enemiesRemaining = numZombies;
 
-        waveNumber++; // Increment the wave number before spawning zombies
+        waveNumber++;
         gameManager.instance.waveNumberText.text = "Wave " + waveNumber;
 
         for (int i = 0; i < numZombies; i++)
@@ -61,22 +84,25 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenZombieSpawns);
         }
 
-        //if (waveNumber % 5 == 0 && enemiesRemaining <= 0)
-       // {
-           // gameManager.instance.updateGameGoal(-numZombies);
-            //gameManager.instance.escape();
-       // }
-
         isSpawning = false;
     }
 
-    void SpawnZombie()
+    private void SpawnZombie()
     {
         GameObject newZombie = Instantiate(Zombie3, spawnPoint.position, spawnPoint.rotation);
         enemyAI zombieAI = newZombie.GetComponent<enemyAI>();
 
-        zombieAI.damage = Mathf.RoundToInt(Mathf.Pow(enemyDamageMultiplier, waveNumber - 1));
-        zombieAI.HP = Mathf.RoundToInt(Mathf.Pow(enemyHPMultiplier, waveNumber - 1));
+        int damageMultiplier = Mathf.RoundToInt(Mathf.Pow(enemyDamageMultiplier, waveNumber - 1));
+        int hpMultiplier = Mathf.RoundToInt(Mathf.Pow(enemyHPMultiplier, waveNumber - 1));
+
+        zombieAI.damage = damageMultiplier;
+        zombieAI.HP = hpMultiplier;
         zombieAI.spawnPoint = spawnPoint;
+    }
+
+    public void ResumeWave()
+    {
+        StartCoroutine(SpawnWave());
+        nextWaveTime = Time.time + defaultTimeBetweenWaves;
     }
 }
