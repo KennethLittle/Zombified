@@ -62,6 +62,8 @@ public class playerController : MonoBehaviour, IDamage
     private bool footstepsIsPlaying;
     private float audioLHVolOrig;
     private bool lowHealthIsPlaying;
+    private float lastJumpTime = 0f;
+    private float jumpCooldown = 3f;
 
 
     private void Start()
@@ -74,14 +76,10 @@ public class playerController : MonoBehaviour, IDamage
 
     void Update()
     {
-        
         movement();
         sprint();
         lowHealthSFX();
         weaponselect();
-
-        float agentVel = move.normalized.magnitude;
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
         if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
         {
@@ -98,6 +96,7 @@ public class playerController : MonoBehaviour, IDamage
         
         if (HP <= 0)
         {
+            anim.SetTrigger("IsDead");
             gameManager.instance.youLose();
             gameManager.instance.levelUpSystem.MarkRunEnd();
         }
@@ -145,30 +144,61 @@ public class playerController : MonoBehaviour, IDamage
             {
                 StartCoroutine(playFootsteps());
             }
-            
+
             if (playerVelocity.y < 0)
             {
                 playerVelocity.y = 0f;
                 jumpCount = 0;
             }
+
+            // Detect if the player is moving or not and set animation parameters accordingly
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
+            if (move != Vector3.zero)
+            {
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    anim.SetBool("IsRunning", true);
+                    anim.SetBool("IsWalking", false);
+                    anim.SetBool("IsIdle", false);
+                    controller.Move(move * Time.deltaTime * playerSpeed * 1.5f); // Running speed
+                }
+                else
+                {
+                    anim.SetBool("IsWalking", true);
+                    anim.SetBool("IsRunning", false);
+                    anim.SetBool("IsIdle", false);
+                    controller.Move(move * Time.deltaTime * playerSpeed); // Walking speed
+                }
+            }
+            else
+            {
+                anim.SetBool("IsIdle", true);
+                anim.SetBool("IsWalking", false);
+                anim.SetBool("IsRunning", false);
+            }
         }
 
-        move = (Input.GetAxis("Horizontal") * transform.right) +
-               (Input.GetAxis("Vertical") * transform.forward);
-        controller.Move(move * Time.deltaTime * playerSpeed);
-
-
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
+            lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
-            
+
             playerVelocity.y = jumpHeight;
             jumpCount++;
+            anim.SetBool("IsJumping", true);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        // Reset the IsJumping animation parameter if the player is grounded
+        if (groundedPlayer)
+        {
+            anim.SetBool("IsJumping", false);
+        }
     }
 
     // Play footsteps sfx at a rate defined by footstepsRate
@@ -189,11 +219,13 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint"))
         {
             isSprinting = true;
+            
             playerSpeed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             isSprinting = false;
+            
             playerSpeed /= sprintMod;
         }
 
@@ -229,6 +261,7 @@ public class playerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+        anim.SetTrigger("IsRecoiling");
         weaponList[Weaponselected].ammoCur--;
         updatePlayerUI();
 
