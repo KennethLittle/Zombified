@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b97ab6f20c4b8f44b36730d0065cf84, type: 3}
-  m_Name: New Weapon Stats
+  m_Name: SMG
   m_EditorClassIdentifier: 
-  shootRate: 0.6
-  shootDamage: 10
-  shootDist: 75
-  ammoCur: 18
-  ammoMax: 30
+  shootRate: 0.1
+  shootDamage: 1
+  shootDist: 45
+  ammoCur: 70
+  ammoMax: 70
   audioShoot:
   - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
   audioShootVol: 0.2
@@ -26,5 +26,5 @@ MonoBehaviour:
   audioGunReload:
   - {fileID: 8300000, guid: 7047c8952edf2aa4786768c0ee041501, type: 3}
   audioGunReloadVol: 0.5
-  model: {fileID: 100002, guid: 41ddbc89f43ce1149ba4f6f0f8ad75c8, type: 3}
+  model: {fileID: 4700516400784878867, guid: f3a71f60217bb804f800af7d2729d262, type: 3}
   hitEffect: {fileID: 0}

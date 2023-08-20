@@ -260,30 +260,33 @@ public class playerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        isShooting = true;
-        anim.SetTrigger("IsRecoiling");
-        weaponList[Weaponselected].ammoCur--;
-        updatePlayerUI();
-
-        // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
-        audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
-        // Plays gunshot casing audio sfx - Plays a random gunshot casing sfx from the range audioShootCasing at a volume defined by audioShootCasingVol
-        audioSFX.PlayOneShot(audioShootCasing[Random.Range(0, audioShootCasing.Length)], audioShootCasingVol);
-        
-        // shoot code
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+        if (weaponList[Weaponselected].ammoCur > 0)
         {
-            IDamage damageable = hit.collider.GetComponent<IDamage>();
+            isShooting = true;
+            anim.SetTrigger("IsRecoiling");
+            weaponList[Weaponselected].ammoCur--;
+            updatePlayerUI();
 
-            if (damageable != null)
+            // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
+            audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
+            // Plays gunshot casing audio sfx - Plays a random gunshot casing sfx from the range audioShootCasing at a volume defined by audioShootCasingVol
+            audioSFX.PlayOneShot(audioShootCasing[Random.Range(0, audioShootCasing.Length)], audioShootCasingVol);
+
+            // shoot code
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
-                damageable.takeDamage(shootDamage);
-            }
-        }
+                IDamage damageable = hit.collider.GetComponent<IDamage>();
 
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+                if (damageable != null)
+                {
+                    damageable.takeDamage(shootDamage);
+                }
+            }
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
     }
 
     public void spawnPlayer()
@@ -325,8 +328,8 @@ public class playerController : MonoBehaviour, IDamage
 
         if(weaponList.Count > 0)
         {
-            //gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
-            //gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
+            gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
+            gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
         }
     }
 

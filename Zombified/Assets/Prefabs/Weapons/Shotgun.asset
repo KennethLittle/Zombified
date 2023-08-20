@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b97ab6f20c4b8f44b36730d0065cf84, type: 3}
-  m_Name: Assault Rifle
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  shootRate: 0.3
-  shootDamage: 4
-  shootDist: 100
-  ammoCur: 36
-  ammoMax: 36
+  shootRate: 0.8
+  shootDamage: 7
+  shootDist: 25
+  ammoCur: 12
+  ammoMax: 16
   audioShoot:
-  - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
-  audioShootVol: 0.597
+  - {fileID: 8300000, guid: 2bd05af3c8d70974da9c207ad416463f, type: 3}
+  audioShootVol: 0.513
   audioShootCasing:
-  - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
-  audioShootCasingVol: 0.5
+  - {fileID: 8300000, guid: 3527e8e43aba0ea479bc0faeb4ceb097, type: 3}
+  audioShootCasingVol: 0.473
   audioGunReload:
-  - {fileID: 8300000, guid: 94e2ebe244dcb7447b875dc301adcab5, type: 3}
   - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
-  audioGunReloadVol: 0.5
-  model: {fileID: 8490501056518665618, guid: 04eef96e16650534f845d7f46936b7b7, type: 3}
+  audioGunReloadVol: 0.491
+  model: {fileID: 2274508903960980932, guid: 19466aa7daff22140b9ac4e70c4950c8, type: 3}
   hitEffect: {fileID: 0}
