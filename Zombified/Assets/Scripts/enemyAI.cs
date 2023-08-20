@@ -136,12 +136,12 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (!isAttacking && angleToPlayer <= strikeAngle && Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
                 {
                     playerInAttackRange = true; // Set to true only if not attacking and player in attack range
-                    anim.SetTrigger("Attack");
+                    
                 }
                 else
                 {
                     playerInAttackRange = false;
-                    anim.ResetTrigger("Attack");
+                    
                 }
 
                 return true;
@@ -189,8 +189,6 @@ public class enemyAI : MonoBehaviour, IDamage
     IEnumerator attack()
     {
         isAttacking = true;
-
-        anim.SetTrigger("Attack");
 
         MeleeDamage(damage);
 

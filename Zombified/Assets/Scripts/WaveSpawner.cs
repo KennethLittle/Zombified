@@ -8,7 +8,7 @@ public class WaveSpawner : MonoBehaviour
     public gameManager gameManager;
 
     public float defaultTimeBetweenWaves = 240.0f;  // 4 minutes in seconds
-    public float countdownTime = 5.0f; // Countdown time in seconds
+    public float countdownTime;
     private float nextWaveTime;
     private float waveCountdownTimer;
     public float timeBetweenZombieSpawns;
