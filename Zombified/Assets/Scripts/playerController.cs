@@ -157,12 +157,12 @@ public class playerController : MonoBehaviour, IDamage
             move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
             if (move != Vector3.zero)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
                 {
                     anim.SetBool("IsRunning", true);
                     anim.SetBool("IsWalking", false);
                     anim.SetBool("IsIdle", false);
-                    controller.Move(move * Time.deltaTime * playerSpeed * 1.5f); // Running speed
+                    controller.Move(move * Time.deltaTime * playerSpeed * sprintMod); // Running speed
                 }
                 else
                 {
@@ -263,7 +263,6 @@ public class playerController : MonoBehaviour, IDamage
         if (weaponList[Weaponselected].ammoCur > 0)
         {
             isShooting = true;
-            anim.SetTrigger("IsRecoiling");
             weaponList[Weaponselected].ammoCur--;
             updatePlayerUI();
 
