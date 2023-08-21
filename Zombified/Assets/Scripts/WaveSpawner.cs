@@ -12,6 +12,7 @@ public class WaveSpawner : MonoBehaviour
     private float nextWaveTime;
     private float waveCountdownTimer;
     public float timeBetweenZombieSpawns;
+    public doorController doorController;
 
     public int waveNumber;
     public int enemiesRemaining = 0;
@@ -25,18 +26,21 @@ public class WaveSpawner : MonoBehaviour
 
     private bool isPaused = false;
     private bool isSpawning = false;
+    private bool isFirstWaveSpanwed = false;
 
     private void Start()
     {
-        gameManager= GetComponent<gameManager>();
+        gameManager = GetComponent<gameManager>();
         nextWaveTime = Time.time;
+        waveCountdownTimer = defaultTimeBetweenWaves; // Initialize the countdown timer
+        Invoke(nameof(StartFirstWave), 5f);
     }
 
     private void Update()
     {
         if (!isPaused && !isSpawning)
         {
-            if (enemiesRemaining <= 0)
+            if (isFirstWaveSpanwed && enemiesRemaining <= 0 && waveCountdownTimer > 0)
             {
                 waveCountdownTimer -= Time.deltaTime;
 
@@ -44,26 +48,18 @@ public class WaveSpawner : MonoBehaviour
                 {
                     if (waveNumber % 5 == 0 && waveNumber > 1)
                     {
-                        gameManager.instance.escape();
+                        doorController.OpenDoor();
                     }
-                    else
-                    {
-                        StartCoroutine(SpawnWave());
-                        nextWaveTime = Time.time + defaultTimeBetweenWaves;
-                        waveCountdownTimer = 0f;  // Reset countdown timer
-                    }
+
+                    // Start spawning the wave
+                    StartCoroutine(SpawnWave());
+                    nextWaveTime = Time.time + defaultTimeBetweenWaves;
+                    waveCountdownTimer = defaultTimeBetweenWaves; // Reset countdown timer
                 }
             }
             else
             {
-                waveCountdownTimer = countdownTime;  // Set countdown timer to 5 seconds when enemies are present
-            }
-
-            if (Time.time >= nextWaveTime)
-            {
-                StartCoroutine(SpawnWave());
-                nextWaveTime = Time.time + defaultTimeBetweenWaves;
-                waveCountdownTimer = 0f;  // Reset countdown timer
+                waveCountdownTimer = countdownTime; // Set countdown timer to a specified value when enemies are present
             }
         }
     }
@@ -104,5 +100,11 @@ public class WaveSpawner : MonoBehaviour
     {
         StartCoroutine(SpawnWave());
         nextWaveTime = Time.time + defaultTimeBetweenWaves;
+    }
+
+    private void StartFirstWave()
+    {
+        isFirstWaveSpanwed = true;
+        StartCoroutine(SpawnWave());
     }
 }
