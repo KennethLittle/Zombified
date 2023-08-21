@@ -28,6 +28,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject playerDamageFlash;
     public TextMeshProUGUI ammoCur;
     public TextMeshProUGUI ammoMax;
+    public TextMeshProUGUI medPackCur;
+    public TextMeshProUGUI medPackMax;
+
 
 
     public int enemiesKilled;
