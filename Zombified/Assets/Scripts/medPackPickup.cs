@@ -7,12 +7,6 @@ public class medPackPickup : MonoBehaviour
 {
     [SerializeField] medPackStats medPack;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && gameManager.instance.playerScript.medPackAmount < gameManager.instance.playerScript.medPackMaxAmount)

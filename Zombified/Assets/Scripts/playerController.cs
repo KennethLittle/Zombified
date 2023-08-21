@@ -30,6 +30,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] GameObject weaponmod;
     public int Weaponselected;
 
+    [Header("----- Ammo Box -----")]
+    public int ammoBoxAmount;
+
     [Header("----- Player Med Packs -----")]
     [SerializeField] List<medPackStats> medPackList = new List<medPackStats>();
     public int medPackMaxAmount;
@@ -88,6 +91,7 @@ public class playerController : MonoBehaviour, IDamage
         lowHealthSFX();
         weaponselect();
         useMedPack();
+        reloadAmmo();
 
         if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
         {
@@ -311,6 +315,18 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    void reloadAmmo()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
+        {
+            int difference;
+            difference =  weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
+            weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
+            ammoBoxAmount -= difference;
+            gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
+        }
+    }
+
     public void spawnPlayer()
     {
         controller.enabled = false;
@@ -390,6 +406,12 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
         }
 
+    }
+
+    public void ammoBoxPickup(ammoBoxStats ammoBoxStat)
+    {
+        ammoBoxAmount += ammoBoxStat.ammoAmount;
+        gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
     }
 
     void weaponselect()

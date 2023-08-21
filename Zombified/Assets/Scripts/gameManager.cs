@@ -30,6 +30,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoMax;
     public TextMeshProUGUI medPackCur;
     public TextMeshProUGUI medPackMax;
+    public TextMeshProUGUI ammoBoxAmount;
 
 
 

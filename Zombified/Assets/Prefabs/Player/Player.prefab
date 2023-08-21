@@ -3090,7 +3090,7 @@ MonoBehaviour:
   weaponmod: {fileID: 6638206957048734522}
   Weaponselected: 0
   medPackList: []
-  medPackMaxAmount: 4
+  medPackMaxAmount: 3
   healAmount: 0
   medPackAmount: 0
   audioSFX: {fileID: 3323011607451955837}
