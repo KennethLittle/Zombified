@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
@@ -29,6 +30,11 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] GameObject weaponmod;
     public int Weaponselected;
 
+    [Header("----- Player Med Packs -----")]
+    [SerializeField] List<medPackStats> medPackList = new List<medPackStats>();
+    public int medPackMaxAmount;
+    [SerializeField] int healAmount;
+    public int medPackAmount;
 
     [Header("----- Audio -----")]
     // audio<something> is an array of sfx
@@ -71,6 +77,7 @@ public class playerController : MonoBehaviour, IDamage
         HPMax = HP;
         currentStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
+        gameManager.instance.medPackMax.text = medPackMaxAmount.ToString("F0"); 
         spawnPlayer();
     }
 
@@ -80,6 +87,7 @@ public class playerController : MonoBehaviour, IDamage
         sprint();
         lowHealthSFX();
         weaponselect();
+        useMedPack();
 
         if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
         {
@@ -288,6 +296,21 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    void useMedPack()
+    {
+        if(Input.GetKeyDown(KeyCode.Q) && medPackAmount > 0 && HP < HPMax)
+        {
+            medPackAmount--;
+            gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
+            HP += healAmount;
+            if (HP > HPMax)
+            {
+                HP = HPMax;
+            }
+            updatePlayerUI();
+        }
+    }
+
     public void spawnPlayer()
     {
         controller.enabled = false;
@@ -330,6 +353,7 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
             gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
         }
+
     }
 
     public void weaponpickup(WeaponStats weaponStat)
@@ -351,6 +375,21 @@ public class playerController : MonoBehaviour, IDamage
         weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponStat.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         updatePlayerUI();
+    }
+
+    public void medPackPickup(medPackStats medPackStat)
+    {
+        if (medPackAmount < medPackMaxAmount)
+        {
+            medPackList.Add(medPackStat);
+
+            healAmount = medPackStat.healAmount;
+
+            medPackAmount++;
+
+            gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
+        }
+
     }
 
     void weaponselect()

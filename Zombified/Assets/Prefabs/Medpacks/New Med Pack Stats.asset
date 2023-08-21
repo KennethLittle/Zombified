@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be32225e71919940b8e55d985363b1f, type: 3}
+  m_Name: New Med Pack Stats
+  m_EditorClassIdentifier: 
+  healAmount: 5
+  model: {fileID: 7455805100079890874, guid: 742a7d7fb39b4e740bf03b71c5b6a59c, type: 3}

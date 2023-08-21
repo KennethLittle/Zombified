@@ -3089,6 +3089,10 @@ MonoBehaviour:
   shootDist: 0
   weaponmod: {fileID: 6638206957048734522}
   Weaponselected: 0
+  medPackList: []
+  medPackMaxAmount: 4
+  healAmount: 0
+  medPackAmount: 0
   audioSFX: {fileID: 3323011607451955837}
   audioFootsteps:
   - {fileID: 8300000, guid: 5f68799896551614483f23a93ead1d73, type: 3}
