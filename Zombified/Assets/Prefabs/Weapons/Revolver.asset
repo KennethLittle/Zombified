@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b97ab6f20c4b8f44b36730d0065cf84, type: 3}
-  m_Name: Sniper Rifle
+  m_Name: Revolver
   m_EditorClassIdentifier: 
-  shootRate: 1
-  shootDamage: 10
-  shootDist: 1000
-  ammoCur: 10
-  ammoMax: 10
+  shootRate: 0.55
+  shootDamage: 6
+  shootDist: 70
+  ammoCur: 6
+  ammoMax: 6
   audioShoot:
-  - {fileID: 8300000, guid: 2bd05af3c8d70974da9c207ad416463f, type: 3}
-  audioShootVol: 1
+  - {fileID: 8300000, guid: 49a85eeec03d0224f9fc8d4aae230456, type: 3}
+  audioShootVol: 0.376
   audioShootCasing:
   - {fileID: 8300000, guid: 3527e8e43aba0ea479bc0faeb4ceb097, type: 3}
-  audioShootCasingVol: 0.102
+  audioShootCasingVol: 0.019
   audioGunReload:
-  - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
-  audioGunReloadVol: 1
-  model: {fileID: 8315025053193393175, guid: a8a5f7b5cc9d55f4297ba58d3d851a65, type: 3}
+  - {fileID: 8300000, guid: 7aa9c8134c2f142408c38aa9405324ef, type: 3}
+  audioGunReloadVol: 0.431
+  model: {fileID: 2772698855860154696, guid: 293398ce64bff1e45a65f73715ee7b43, type: 3}
   hitEffect: {fileID: 0}
