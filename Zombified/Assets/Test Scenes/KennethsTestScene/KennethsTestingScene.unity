@@ -123,63 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 8f6d0b3b1d2a0f94cb7719a68dfd19ad, type: 2}
---- !u!1001 &69617458
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 12.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989639, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 990607157547989642, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
-      propertyPath: m_Name
-      value: WaveSpawner
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5cee6993c3ebde34a8f361a5cdde65ed, type: 3}
 --- !u!1 &626045636
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,7 +714,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bdd217d8196e1cf439bc3e2a58b981ae, type: 2}
     - target: {fileID: 7010706763737493208, guid: 7b00b71af30e34a4292afbeff15c51d0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7010706763737493208, guid: 7b00b71af30e34a4292afbeff15c51d0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -921,6 +864,11 @@ MonoBehaviour:
   shootDist: 75
   weaponmod: {fileID: 6217912818804791480}
   Weaponselected: 0
+  ammoBoxAmount: 0
+  medPackList: []
+  medPackMaxAmount: 0
+  healAmount: 0
+  medPackAmount: 0
   audioSFX: {fileID: 1765161385}
   audioFootsteps:
   - {fileID: 8300000, guid: 5f68799896551614483f23a93ead1d73, type: 3}
@@ -1040,7 +988,7 @@ Transform:
   - {fileID: 6217912818804566188}
   - {fileID: 6217912818804540574}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &6217912818804561210
 Transform:
