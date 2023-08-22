@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 [CreateAssetMenu]
 public class WeaponStats : ScriptableObject
@@ -17,6 +19,8 @@ public class WeaponStats : ScriptableObject
     [SerializeField] [Range(0, 1)] public float audioShootCasingVol;
     [SerializeField] public AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] public float audioGunReloadVol;
+
+    public Image icon;
 
     public GameObject model;
     public ParticleSystem hitEffect;
