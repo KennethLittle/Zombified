@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] WeaponStats gun;
+    
 
     void Start()
     {
@@ -14,10 +15,11 @@ public class WeaponPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            gameManager.instance.playerScript.weaponpickup(gun);
-            Destroy(gameObject);
-        }
+            if (other.CompareTag("Player"))
+            {
+                gameManager.instance.playerScript.weaponpickup(gun);
+                Destroy(gameObject);
+            }
     }
+
 }
