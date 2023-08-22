@@ -1,93 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
-    public Spawner[] spawners; // The spawners you can assign in the Inspector
-    public gameManager gameManager;
-    public float defaultTimeBetweenWaves = 240.0f;
-    public float countdownTime;
-    private float nextWaveTime;
-    private float waveCountdownTimer;
+    public Spawner[] spawners;
     public doorController doorController;
-    public int waveNumber;
+    public int waveNumber = 0;
     public int enemiesRemaining = 0;
-    private bool isPaused = false;
-    private bool isFirstWaveSpanwed = false;
-    private List<Spawner> activeSpawners = new List<Spawner>();
+
+    private bool isWaveInProgress = false;
 
     private void Start()
     {
         instance = this;
-        gameManager = GetComponent<gameManager>();
-        nextWaveTime = Time.time;
-        waveCountdownTimer = defaultTimeBetweenWaves;
-        Invoke(nameof(StartFirstWave), 5f);
-        ActivateSpawnersForWave();
+        StartNextWave();
     }
 
     private void Update()
     {
-        if (!isPaused && enemiesRemaining <= 0 && waveCountdownTimer > 0)
+        if (enemiesRemaining == 0 && !isWaveInProgress)
         {
-            waveCountdownTimer -= Time.deltaTime;
-
-            if (waveCountdownTimer <= 0f)
-            {
-                waveNumber++;
-
-                if (waveNumber % 5 == 0 && waveNumber > 1)
-                {
-                    doorController.OpenDoor();
-                }
-
-                // Activate spawners based on wave number
-                ActivateSpawnersForWave();
-
-                nextWaveTime = Time.time + defaultTimeBetweenWaves;
-                waveCountdownTimer = defaultTimeBetweenWaves;
-            }
-        }
-        else
-        {
-            waveCountdownTimer = countdownTime;
+            StartNextWave(); // Start next wave if no enemies remain and no wave is currently spawning
         }
     }
 
-    private void ActivateSpawnersForWave()
+    private void StartNextWave()
     {
-        activeSpawners.Clear();
+        isWaveInProgress = true;
+        Invoke(nameof(StartWave), 5f); // 5-second buffer before starting the next wave
+    }
+
+    private void StartWave()
+    {
+        if (waveNumber == 5)
+        {
+            doorController.OpenDoor();
+        }
+
+        waveNumber++;
+
         foreach (Spawner spawner in spawners)
         {
             if (spawner.activationWave <= waveNumber)
             {
-                spawner.SetWaveManager(this); // Set the WaveManager for this spawner
-                activeSpawners.Add(spawner);
+                spawner.SpawnWave();
             }
         }
 
-        foreach (Spawner spawner in activeSpawners)
-        {
-            spawner.SpawnWave();
-        }
+        isWaveInProgress = false; // Allow the next wave to start once this wave has begun spawning
     }
-
-    private void StartFirstWave()
-    {
-        isFirstWaveSpanwed = true;
-        ActivateSpawnersForWave();
-    }
-
-    public void ResumeWave()
-    {
-        foreach (Spawner spawner in spawners)
-        {
-            spawner.SetWaveManager(this);
-            spawner.SpawnWave();
-        }
-        nextWaveTime = Time.time + defaultTimeBetweenWaves;
-    }
-
 }
