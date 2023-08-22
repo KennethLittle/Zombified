@@ -205,13 +205,13 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             gameManager.instance.updateGameGoal(-1);
-            gameManager.instance.levelUpSystem.GainXP(gameManager.instance.waveSpawnerScript.waveNumber * 7);
+            gameManager.instance.levelUpSystem.GainXP(WaveManager.instance.waveNumber * 7);
             Destroy(gameObject);
 
-            WaveSpawner waveSpawner = GameObject.FindObjectOfType<WaveSpawner>();
-            if (waveSpawner != null)
+            WaveManager wave = GameObject.FindObjectOfType<WaveManager>();
+            if (wave != null)
             {
-                waveSpawner.enemiesRemaining--;
+                wave.enemiesRemaining--;
             }
         }
     }
@@ -256,7 +256,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     private void UpdateBaseXP()
     {
-        baseXP += gameManager.instance.waveSpawnerScript.waveNumber * 7;
+        baseXP += WaveManager.instance.waveNumber * 7;
     }
 
 }

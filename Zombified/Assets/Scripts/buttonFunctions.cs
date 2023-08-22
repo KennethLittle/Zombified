@@ -65,7 +65,7 @@ public class buttonFunctions : MonoBehaviour
     public void resumeRun()
     {
         gameManager.instance.stateUnpaused();
-        gameManager.instance.waveSpawnerScript.ResumeWave();
+        WaveManager.instance.ResumeWave();
     }
 
 }
