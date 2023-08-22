@@ -25,5 +25,6 @@ MonoBehaviour:
   audioGunReload:
   - {fileID: 8300000, guid: 7047c8952edf2aa4786768c0ee041501, type: 3}
   audioGunReloadVol: 0.312
+  icon: {fileID: 2111337330863374038, guid: f7971c4a51e6be544a67f0dd218016eb, type: 3}
   model: {fileID: 8527647462254948795, guid: 6ba9be477ae5a3e42a7975755634ea37, type: 3}
   hitEffect: {fileID: 0}

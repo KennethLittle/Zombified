@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class gameManager : MonoBehaviour
 {
 
@@ -31,6 +32,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI medPackCur;
     public TextMeshProUGUI medPackMax;
     public TextMeshProUGUI ammoBoxAmount;
+    public Image weaponIcon;
 
 
 
