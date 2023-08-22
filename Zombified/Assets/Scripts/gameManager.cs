@@ -1,5 +1,7 @@
 using System.Collections;
 using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,9 +31,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI medPackCur;
     public TextMeshProUGUI medPackMax;
     public TextMeshProUGUI ammoBoxAmount;
+
     public Image weaponIcon;
-
-
 
     public int enemiesKilled;
     public int totalXP;
@@ -122,6 +123,5 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         playerDamageFlash.SetActive(false);
     }
-
 
 }

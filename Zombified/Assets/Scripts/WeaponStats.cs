@@ -20,7 +20,7 @@ public class WeaponStats : ScriptableObject
     [SerializeField] public AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] public float audioGunReloadVol;
 
-    public Image icon;
+    public Sprite icon;
 
     public GameObject model;
     public ParticleSystem hitEffect;

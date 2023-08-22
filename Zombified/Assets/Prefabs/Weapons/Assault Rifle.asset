@@ -15,7 +15,7 @@ MonoBehaviour:
   shootRate: 0.35
   shootDamage: 4
   shootDist: 100
-  ammoCur: 31
+  ammoCur: 36
   ammoMax: 36
   audioShoot:
   - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
@@ -27,6 +27,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 94e2ebe244dcb7447b875dc301adcab5, type: 3}
   - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
   audioGunReloadVol: 0.5
-  icon: {fileID: 9106792375616924624, guid: 77c6f7cc45cc5ba4ea164c0b9b6b65eb, type: 3}
+  icon: {fileID: 21300000, guid: de31ce17d9ef0d44681da38244e979d1, type: 3}
   model: {fileID: 8490501056518665618, guid: 04eef96e16650534f845d7f46936b7b7, type: 3}
   hitEffect: {fileID: 0}
