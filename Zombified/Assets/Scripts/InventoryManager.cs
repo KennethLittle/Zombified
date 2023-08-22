@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySetup : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-    public static InventorySetup Instance;
+    public static InventoryManager Instance;
     public int inventorybag = 32;
-    public GameObject PhysicalWeapon;
-    public List<WeaponStats> Weapons = new List<WeaponStats>();
+    public List<Inventoryitem> items = new List<Inventoryitem>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,23 +16,23 @@ public class InventorySetup : MonoBehaviour
         }
         else
         {
-            Destroy(PhysicalWeapon);
+            Destroy(gameObject);
         }
     }
 
     // Update is called once per frame
-    public bool AddItem(WeaponStats item)
+    public bool AddItem(Inventoryitem item)
     {
-        if(Weapons.Count < inventorybag)
+        if(items.Count < inventorybag)
         {
-            Weapons.Add(item);
+            items.Add(item);
             return true;
         }
         return false;
     }
 
-    public void RemoveItem(WeaponStats item)
+    public void RemoveItem(Inventoryitem item)
     {
-        Weapons.Remove(item);
+        items.Remove(item);
     }
 }

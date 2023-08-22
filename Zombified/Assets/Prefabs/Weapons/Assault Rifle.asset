@@ -15,14 +15,14 @@ MonoBehaviour:
   shootRate: 0.35
   shootDamage: 4
   shootDist: 100
-  ammoCur: 36
+  ammoCur: 31
   ammoMax: 36
   audioShoot:
   - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
   audioShootVol: 0.597
   audioShootCasing:
   - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
-  audioShootCasingVol: 0.571
+  audioShootCasingVol: 0
   audioGunReload:
   - {fileID: 8300000, guid: 94e2ebe244dcb7447b875dc301adcab5, type: 3}
   - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
