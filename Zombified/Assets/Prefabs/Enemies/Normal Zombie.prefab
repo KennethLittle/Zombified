@@ -1152,7 +1152,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 769f9a6085125f5449a63039983ed26f, type: 2}
+  - {fileID: 2100000, guid: 30bf4af314834584a8090ac12d5c3629, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1593,7 +1593,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300008, guid: af18b2939d810c24483b695b029d2bdf, type: 3}
+  m_Mesh: {fileID: 4300006, guid: af18b2939d810c24483b695b029d2bdf, type: 3}
   m_Bones:
   - {fileID: 4440960739102745864}
   - {fileID: 4440837708383788582}
@@ -5126,12 +5126,12 @@ MonoBehaviour:
   headPos: {fileID: 4440837708383788582}
   HP: 15
   speed: 3
-  playerFaceSpeed: 8
+  playerFaceSpeed: 6
   meleeRange: 2
   viewAngle: 90
-  roamDist: 50
+  roamDist: 25
   roamTimer: 3
-  animChangeSpeed: 5
+  animChangeSpeed: 15
   baseXP: 10
   damage: 12
   attackRate: 1
@@ -5233,16 +5233,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 481038d33eb44184085d9f70cf081127, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.69
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 190
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
