@@ -16,7 +16,7 @@ public class rangedEnemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject acidSpray;
     [SerializeField] Transform shootPos;
 
-    public Spawner whereItemSpawn;
+    
 
     Vector3 playerDir;
     bool isShooting;

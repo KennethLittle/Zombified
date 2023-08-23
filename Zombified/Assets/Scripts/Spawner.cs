@@ -1,28 +1,27 @@
+using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class Spawner : MonoBehaviour
 {
+
     public GameObject Zombie3;
-    public Transform[] spawnPoints;
-    public float timeBetweenZombieSpawns;
+    public Transform spawnPoint;
     public int startingZombies;
     public int minAdditionalZombies;
     public int maxAdditionalZombies;
-    public int activationWave;
+    public int activationWave = 1; // The wave number at which this spawner is activated
     [Range(1, 5)][SerializeField] private float enemyHPMultiplier = 2.0f;
     [Range(1, 5)][SerializeField] private float enemyDamageMultiplier = 1.5f;
     private WaveManager waveManager;
 
+
     private void Start()
     {
-        waveManager = WaveManager.instance;
+        waveManager = GetComponentInParent<WaveManager>();
     }
 
     public void SpawnWave()
     {
-        if (waveManager.waveNumber < activationWave) return;
-
         int numZombies = startingZombies;
 
         if (waveManager.waveNumber > 1)
@@ -31,35 +30,29 @@ public class Spawner : MonoBehaviour
         }
 
         waveManager.enemiesRemaining += numZombies;
-     
-        gameManager.instance.waveNumberText.text = "Wave " + waveManager.waveNumber;
+        gameManager.instance.waveNumberText.text = "Wave " +(waveManager.waveNumber);
 
-        StartCoroutine(SpawnZombies(numZombies));
-    }
-
-    private IEnumerator SpawnZombies(int numZombies)
-    {
         for (int i = 0; i < numZombies; i++)
         {
             SpawnZombie();
-            yield return new WaitForSeconds(timeBetweenZombieSpawns);
         }
     }
 
     private void SpawnZombie()
     {
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; 
         GameObject newZombie = Instantiate(Zombie3, spawnPoint.position, spawnPoint.rotation);
         enemyAI zombieAI = newZombie.GetComponent<enemyAI>();
-
-        int baseDamage = zombieAI.damage; 
-        int baseHP = zombieAI.HP; 
 
         int damageMultiplier = Mathf.RoundToInt(Mathf.Pow(enemyDamageMultiplier, waveManager.waveNumber - 1));
         int hpMultiplier = Mathf.RoundToInt(Mathf.Pow(enemyHPMultiplier, waveManager.waveNumber - 1));
 
-        zombieAI.damage = baseDamage * damageMultiplier;
-        zombieAI.HP = baseHP * hpMultiplier;
+        zombieAI.damage = damageMultiplier;
+        zombieAI.HP = hpMultiplier;
         zombieAI.spawnPoint = spawnPoint;
+    }
+
+    public void SetWaveManager(WaveManager waveManager)
+    {
+        this.waveManager = waveManager;
     }
 }
