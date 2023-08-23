@@ -106,7 +106,7 @@ RectTransform:
   m_GameObject: {fileID: 201198076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.37243, y: 0.37243, z: 0.37243}
+  m_LocalScale: {x: 0.50739866, y: 0.50739866, z: 0.50739866}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1594186369}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 65c20e640c55b83499705fd504c477c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d0e0ab1b671b03f47bec2ec2f0a6d07c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1117,10 +1117,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  gameManager: {fileID: 7423461717082805376}
-  defaultTimeBetweenWaves: 10
-  countdownTime: 5
-  doorController: {fileID: 0}
+  doorControllers: []
   waveNumber: 0
   enemiesRemaining: 0
 --- !u!1 &1206670339
@@ -2130,7 +2127,7 @@ RectTransform:
   m_GameObject: {fileID: 1832398934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.37037656, y: 0.37037656, z: 0.37037656}
+  m_LocalScale: {x: 0.4424148, y: 0.4424148, z: 0.4424148}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1932267600}
@@ -2169,7 +2166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b08d3dde613f476469148d5455bbbecf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c7680e4fc3e44b44ab172ffa1e13b4d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2190,7 +2187,6 @@ GameObject:
   - component: {fileID: 1838039201}
   - component: {fileID: 1838039200}
   - component: {fileID: 1838039199}
-  - component: {fileID: 5846409197288325162}
   m_Layer: 0
   m_Name: Weapon Icon
   m_TagString: Untagged
@@ -2239,14 +2235,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 748ee004aca48094989c00d3bf82badc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2256,20 +2252,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5846409197288325162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838039198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a998d6dc756539c429b7b7746771d4d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  icon: {fileID: 0}
 --- !u!1 &1932267599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3249,7 +3231,7 @@ MonoBehaviour:
   medPackCur: {fileID: 1932267601}
   medPackMax: {fileID: 1708325671}
   ammoBoxAmount: {fileID: 1594186367}
-  weaponIcon: {fileID: 0}
+  weaponIcon: {fileID: 1838039199}
   enemiesKilled: 0
   totalXP: 0
 --- !u!114 &7423461717082805379
