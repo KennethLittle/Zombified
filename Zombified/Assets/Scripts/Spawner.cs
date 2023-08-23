@@ -4,7 +4,7 @@ using System.Collections;
 public class Spawner : MonoBehaviour
 {
     public GameObject Zombie3;
-    public Transform spawnPoint;
+    public Transform[] spawnPoints;
     public float timeBetweenZombieSpawns;
     public int startingZombies;
     public int minAdditionalZombies;
@@ -48,6 +48,7 @@ public class Spawner : MonoBehaviour
 
     private void SpawnZombie()
     {
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; 
         GameObject newZombie = Instantiate(Zombie3, spawnPoint.position, spawnPoint.rotation);
         enemyAI zombieAI = newZombie.GetComponent<enemyAI>();
 

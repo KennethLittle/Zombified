@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic; 
 
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
     public Spawner[] spawners;
-    public doorController doorController;
+    public List<doorController> doorControllers; 
     public int waveNumber = 0;
     public int enemiesRemaining = 0;
 
@@ -20,24 +21,27 @@ public class WaveManager : MonoBehaviour
     {
         if (enemiesRemaining == 0 && !isWaveInProgress)
         {
-            StartNextWave(); // Start next wave if no enemies remain and no wave is currently spawning
+            StartNextWave(); 
         }
     }
 
     private void StartNextWave()
     {
         isWaveInProgress = true;
-        Invoke(nameof(StartWave), 5f); // 5-second buffer before starting the next wave
+        Invoke(nameof(StartWave), 5f); 
     }
 
     private void StartWave()
     {
+        waveNumber++;
+
         if (waveNumber == 5)
         {
-            doorController.OpenDoor();
+            foreach (var doorController in doorControllers) 
+            {
+                doorController.OpenDoor();
+            }
         }
-
-        waveNumber++;
 
         foreach (Spawner spawner in spawners)
         {
@@ -47,6 +51,6 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        isWaveInProgress = false; // Allow the next wave to start once this wave has begun spawning
+        isWaveInProgress = false; 
     }
 }
