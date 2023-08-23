@@ -31,6 +31,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
 
+    public Spawner whereItemSpawn;
 
 
     public int enemiesKilled;
