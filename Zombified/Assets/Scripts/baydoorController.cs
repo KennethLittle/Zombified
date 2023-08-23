@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class doorController : MonoBehaviour
+public class baydoorController : MonoBehaviour
 {
     public float doorRaiseSpeed = 5f;
     public float raiseHeight = 10f;
@@ -19,12 +19,14 @@ public class doorController : MonoBehaviour
         navMeshObstacle = GetComponent<NavMeshObstacle>();
     }
 
+
+
     private void Update()
     {
         if (doorOpened)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, doorRaiseSpeed * Time.deltaTime);
-            if (transform.position == targetPosition && navMeshObstacle.enabled)
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f && navMeshObstacle.enabled)
             {
                 navMeshObstacle.enabled = false;
             }
@@ -32,24 +34,42 @@ public class doorController : MonoBehaviour
         if (closeDoor)
         {
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, doorRaiseSpeed * Time.deltaTime);
-            if (transform.position == initialPosition && !navMeshObstacle.enabled)
+            if (Vector3.Distance(transform.position, initialPosition) < 0.01f)
             {
-                navMeshObstacle.enabled = true;
+                if (!navMeshObstacle.enabled)
+                {
+                    navMeshObstacle.enabled = true;
+                }
+                closeDoor = false; 
             }
         }
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && doorOpened)
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            closeDoor = true;
-            doorOpened = false; // This will ensure the door stays closed.
+            OpenDoor();
         }
     }
 
-    public void OpenDoor()
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        {
+            CloseDoor();
+        }
+    }
+
+    private void OpenDoor()
     {
         doorOpened = true;
+    }
+
+    private void CloseDoor()
+    {
+        doorOpened = false;
+        closeDoor = true; 
     }
 }
