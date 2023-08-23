@@ -73,10 +73,17 @@ public class playerController : MonoBehaviour, IDamage
     private bool lowHealthIsPlaying;
     private float lastJumpTime = 0f;
     private float jumpCooldown = 3f;
-
+    private float animVelocity = 0.0f;
+    private int velocityHash;
+    private float deceleration = 0.5f;
+    private float acceleration = 0.6f;
 
     private void Start()
     {
+        //reference
+        anim = GetComponent<Animator>();
+        velocityHash = Animator.StringToHash("animVelocity");
+
         HPMax = HP;
         currentStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
@@ -97,6 +104,11 @@ public class playerController : MonoBehaviour, IDamage
         {
             StartCoroutine(shoot());
         }
+        if (!isShooting)
+        {
+            anim.SetBool("IsShooting", false);
+        }
+
     }
 
     public void takeDamage(int amount)
@@ -171,25 +183,38 @@ public class playerController : MonoBehaviour, IDamage
             {
                 if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
                 {
-                    anim.SetBool("IsRunning", true);
-                    anim.SetBool("IsWalking", false);
                     anim.SetBool("IsIdle", false);
+                    anim.SetBool("IsWalking", false);
+                    anim.SetBool("IsRunning", true);
+                    if (animVelocity < 1.0f)
+                    {
+                        animVelocity += Time.deltaTime * acceleration;
+                    }
                     controller.Move(move * Time.deltaTime * playerSpeed * sprintMod); // Running speed
                 }
                 else
                 {
-                    anim.SetBool("IsWalking", true);
-                    anim.SetBool("IsRunning", false);
                     anim.SetBool("IsIdle", false);
+                    anim.SetBool("IsRunning", false);
+                    anim.SetBool("IsWalking", true);
+                    if (animVelocity > 0.0f)
+                    {
+                        animVelocity -= Time.deltaTime * deceleration;
+                    }
                     controller.Move(move * Time.deltaTime * playerSpeed); // Walking speed
                 }
             }
             else
             {
-                anim.SetBool("IsIdle", true);
                 anim.SetBool("IsWalking", false);
                 anim.SetBool("IsRunning", false);
+                anim.SetBool("IsIdle", true);
+                if (animVelocity < 0.0f)
+                {
+                    animVelocity = 0.0f;
+                }
             }
+            anim.SetFloat(velocityHash, animVelocity);
         }
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
@@ -198,9 +223,9 @@ public class playerController : MonoBehaviour, IDamage
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
 
+            anim.SetBool("IsJumping", true);
             playerVelocity.y = jumpHeight;
             jumpCount++;
-            anim.SetBool("IsJumping", true);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -275,6 +300,7 @@ public class playerController : MonoBehaviour, IDamage
         if (weaponList[Weaponselected].ammoCur > 0)
         {
             isShooting = true;
+            anim.SetBool("IsShooting", true);
             weaponList[Weaponselected].ammoCur--;
             updatePlayerUI();
 
@@ -296,7 +322,8 @@ public class playerController : MonoBehaviour, IDamage
             }
 
             yield return new WaitForSeconds(shootRate);
-            isShooting = false;
+            isShooting = false; 
+
         }
     }
 
@@ -320,10 +347,12 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
         {
             int difference;
+            anim.SetBool("IsReloading", true);
             difference =  weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
             weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
             ammoBoxAmount -= difference;
             gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
+            anim.SetBool("IsReloading", false);
         }
     }
 
@@ -375,6 +404,7 @@ public class playerController : MonoBehaviour, IDamage
     public void weaponpickup(WeaponStats weaponStat)
     {
         weaponList.Add(weaponStat);
+        anim.SetBool("weaponEquipped", true);
 
         shootDamage = weaponStat.shootDamage;
         shootRate = weaponStat.shootRate;
