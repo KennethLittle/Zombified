@@ -3072,12 +3072,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3323011607451955835}
   anim: {fileID: 3323011606028813650}
-  HP: 10
+  HP: 100
   stamina: 100
   currentStamina: 0
   staminaConsumptionRate: 15
   staminaRegenerationRate: 5
-  playerSpeed: 2
+  playerSpeed: 2.5
   sprintMod: 1.5
   jumpMax: 1
   jumpHeight: 5
@@ -3089,6 +3089,7 @@ MonoBehaviour:
   shootDist: 0
   weaponmod: {fileID: 6638206957048734522}
   Weaponselected: 0
+  ammoBoxAmount: 0
   medPackList: []
   medPackMaxAmount: 3
   healAmount: 0
@@ -3154,7 +3155,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.05, z: 0}
+  m_Center: {x: 0, y: 0.96401, z: 0}
 --- !u!136 &3323011607451955836
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3189,7 +3190,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.012585249
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -13573,7 +13574,7 @@ PrefabInstance:
     - target: {fileID: 5273814670298374285, guid: 04eef96e16650534f845d7f46936b7b7, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -50397647144078270, guid: 6253b78970a16a848a9313b27e46449c, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 7986199121665987655, guid: 04eef96e16650534f845d7f46936b7b7, type: 3}
       propertyPath: m_Enabled
       value: 1

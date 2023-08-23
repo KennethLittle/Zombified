@@ -1,21 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-<<<<<<<< Updated upstream:Zombified/Assets/Prefabs/Weapons/AK-47.prefab.meta
-guid: 6ba9be477ae5a3e42a7975755634ea37
-========
-guid: 293398ce64bff1e45a65f73715ee7b43
->>>>>>>> Stashed changes:Zombified/Assets/Prefabs/Weapons/Revolver.prefab.meta
+guid: c4f4d3d29b1f1ca4aa7a4585f207dc83
 PrefabImporter:
-=======
-<<<<<<<< HEAD:Zombified/Assets/Prefabs/Medpacks.meta
-guid: 7dd976304dbfff64b93b92ded8e562de
-folderAsset: yes
-DefaultImporter:
-========
-guid: 6ba9be477ae5a3e42a7975755634ea37
-PrefabImporter:
->>>>>>>> ce3f621d568c7bb0e9ba0e7be30059dca157943f:Zombified/Assets/Prefabs/Weapons/AK-47.prefab.meta
->>>>>>> Stashed changes
   externalObjects: {}
   userData: 
   assetBundleName: 

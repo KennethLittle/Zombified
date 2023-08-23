@@ -3,14 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class gameManager : MonoBehaviour
 {
 
     public static gameManager instance;
     public GameObject playerSpawnPos;
-
-    public GameObject waveSpawner;
-    public WaveSpawner waveSpawnerScript;
 
     public GameObject player;
     public playerController playerScript;
@@ -31,7 +29,9 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI medPackCur;
     public TextMeshProUGUI medPackMax;
     public TextMeshProUGUI ammoBoxAmount;
+    public Image weaponIcon;
 
+    
 
 
     public int enemiesKilled;
@@ -45,9 +45,6 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
-
-        waveSpawner = GameObject.FindGameObjectWithTag("Wave Spawner");
-        waveSpawnerScript = waveSpawner.GetComponent<WaveSpawner>();
 
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
 

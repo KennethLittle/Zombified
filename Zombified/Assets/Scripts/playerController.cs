@@ -397,6 +397,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
             gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
+            gameManager.instance.weaponIcon.sprite = weaponList[Weaponselected].icon;
         }
 
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class buttonFunctions : MonoBehaviour 
+public class buttonFunctions : MonoBehaviour
 {
     public void resume()
     {
@@ -62,10 +62,6 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("DeathScene");
     }
 
-    public void resumeRun()
-    {
-        gameManager.instance.stateUnpaused();
-        gameManager.instance.waveSpawnerScript.ResumeWave();
-    }
+   
 
 }
