@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +9,7 @@ public class baydoorController : MonoBehaviour
     private Vector3 initialPosition;
     private Vector3 targetPosition;
     private bool doorOpened = false;
+    private bool closeDoor = false;
     private NavMeshObstacle navMeshObstacle;
 
     private void Start()
@@ -20,27 +19,32 @@ public class baydoorController : MonoBehaviour
         navMeshObstacle = GetComponent<NavMeshObstacle>();
     }
 
+
+
     private void Update()
     {
         if (doorOpened)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, doorRaiseSpeed * Time.deltaTime);
-
-            if (transform.position == targetPosition && navMeshObstacle.enabled)
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f && navMeshObstacle.enabled)
             {
                 navMeshObstacle.enabled = false;
             }
         }
-        else
+        if (closeDoor)
         {
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, doorRaiseSpeed * Time.deltaTime);
-
-            if (transform.position == initialPosition && !navMeshObstacle.enabled)
+            if (Vector3.Distance(transform.position, initialPosition) < 0.01f)
             {
-                navMeshObstacle.enabled = true;
+                if (!navMeshObstacle.enabled)
+                {
+                    navMeshObstacle.enabled = true;
+                }
+                closeDoor = false; 
             }
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -66,5 +70,6 @@ public class baydoorController : MonoBehaviour
     private void CloseDoor()
     {
         doorOpened = false;
+        closeDoor = true; 
     }
 }
