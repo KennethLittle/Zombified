@@ -68849,7 +68849,7 @@ GameObject:
   - component: {fileID: 1091362752684468540}
   - component: {fileID: 6636553020468516293}
   - component: {fileID: 2406652174561942007}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Catwalk Long
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68868,7 +68868,7 @@ GameObject:
   - component: {fileID: 1091362751990348795}
   - component: {fileID: 6636553020059535106}
   - component: {fileID: 2406652174937099056}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Catwalk Long (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
