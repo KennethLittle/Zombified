@@ -13,7 +13,6 @@ public class buttonFunctions : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameManager.instance.stateUnpaused();
     }
 
     public void quit()
@@ -28,17 +27,22 @@ public class buttonFunctions : MonoBehaviour
 
     public void playLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Kenneth Little
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Kenneth Littl
     }
 
     public void quittoMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+        
     }
 
     public void quitToPlayerMenu()
     {
-        SceneManager.LoadScene("Player and Level Select Screen");
+        int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
+        SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void playerRespawn()
@@ -62,6 +66,30 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("DeathScene");
     }
 
-   
+    public void backtoPlayerMenu()
+    {
+        int  previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
+        SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void backtoPlayerMenu2()
+    {
+        int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 2;
+        SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+
+    public void LoadGame()
+    {
+        gameManager.instance.LoadGame();
+    }
+
+
 
 }

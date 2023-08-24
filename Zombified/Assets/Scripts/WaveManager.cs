@@ -14,7 +14,6 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        StartNextWave();
     }
 
     private void Update()

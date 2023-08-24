@@ -22,6 +22,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float gravityValue;
     [SerializeField] float animChangeSpeed;
 
+    [SerializeField] int defaultHP = 100;
+    [SerializeField] float defaultStamina = 100;
+
     [Header("----- Player Gun Stats -----")]
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] float shootRate;
@@ -59,8 +62,14 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioShootCasingVol;
     [SerializeField] AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] float audioGunReloadVol;
+    [SerializeField] AudioClip[] audioUseMed;
+    [SerializeField] [Range(0, 1)] float audioUseMedVol;
+    [SerializeField] AudioClip[] audioAmmoPickup;
+    [SerializeField] [Range(0, 1)] float audioAmmoPickupVol;
+    [SerializeField] AudioClip[] audioMedPickup;
+    [SerializeField] [Range(0, 1)] float audioMedPickupVol;
 
-
+    private float originalPlayerSpeed;
     private int HPMax;
     private bool groundedPlayer;
     private Vector3 move;
@@ -80,12 +89,14 @@ public class playerController : MonoBehaviour, IDamage
 
     private void Start()
     {
-        //reference
+        
         anim = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("animVelocity");
-
+        originalPlayerSpeed = playerSpeed;
         HPMax = HP;
         currentStamina = stamina;
+        defaultHP = HP;
+        defaultStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
         gameManager.instance.medPackMax.text = medPackMaxAmount.ToString("F0"); 
         spawnPlayer();
@@ -109,6 +120,12 @@ public class playerController : MonoBehaviour, IDamage
             anim.SetBool("IsShooting", false);
         }
 
+    }
+
+    public void ResetToDefaults()
+    {
+        HP = defaultHP;
+        stamina = defaultStamina;
     }
 
     public void takeDamage(int amount)
@@ -178,29 +195,25 @@ public class playerController : MonoBehaviour, IDamage
             // Detect if the player is moving or not and set animation parameters accordingly
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+            float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * sprintMod : originalPlayerSpeed;
+
             move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
+
             if (move != Vector3.zero)
             {
-                if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
+                if (isSprinting && currentStamina > 0) // Modified check here
                 {
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsWalking", false);
                     anim.SetBool("IsRunning", true);
-                    if (animVelocity < 1.0f)
-                    {
-                        animVelocity += Time.deltaTime * acceleration;
-                    }
-                    controller.Move(move * Time.deltaTime * playerSpeed * sprintMod); // Running speed
+                    controller.Move(move * Time.deltaTime * playerSpeed * effectivePlayerSpeed); // Running speed
                 }
                 else
                 {
+                    isSprinting = false; // Add this line to ensure that sprinting is turned off if stamina is depleted
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsRunning", false);
                     anim.SetBool("IsWalking", true);
-                    if (animVelocity > 0.0f)
-                    {
-                        animVelocity -= Time.deltaTime * deceleration;
-                    }
                     controller.Move(move * Time.deltaTime * playerSpeed); // Walking speed
                 }
             }
@@ -214,19 +227,25 @@ public class playerController : MonoBehaviour, IDamage
                     animVelocity = 0.0f;
                 }
             }
+            playerVelocity.x = move.x * effectivePlayerSpeed; 
+            playerVelocity.z = move.z * effectivePlayerSpeed;
+
             anim.SetFloat(velocityHash, animVelocity);
         }
-
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
 
+            
+            playerVelocity.y += jumpHeight;
             anim.SetBool("IsJumping", true);
-            playerVelocity.y = jumpHeight;
             jumpCount++;
         }
+
+        playerVelocity.x = move.x * playerSpeed; // Maintain the horizontal components
+        playerVelocity.z = move.z * playerSpeed;
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
@@ -253,17 +272,13 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint") && currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
-            
-            playerSpeed *= sprintMod;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") || currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
-            
-            playerSpeed /= sprintMod;
         }
 
         if (isSprinting)
@@ -331,6 +346,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         if(Input.GetKeyDown(KeyCode.Q) && medPackAmount > 0 && HP < HPMax)
         {
+            // Plays medkit use sfx - Plays a random use medkit sfx from the range audioUseMed at a volume defined by audioUseMedVol
+            audioSFX.PlayOneShot(audioUseMed[Random.Range(0, audioUseMed.Length)], audioUseMedVol);
+            
             medPackAmount--;
             gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
             HP += healAmount;
@@ -346,11 +364,23 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
         {
-            int difference;
+            // Plays reload sfx - Plays a random reload sfx from the range audioGunReload at a volume defined by audioGunReloadVol
+            audioSFX.PlayOneShot(audioGunReload[Random.Range(0, audioGunReload.Length)], audioGunReloadVol);
+            
+            int difference = weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
             anim.SetBool("IsReloading", true);
-            difference =  weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
-            weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
-            ammoBoxAmount -= difference;
+
+            if (ammoBoxAmount >= difference)
+            {
+                weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
+                ammoBoxAmount -= difference;
+            }
+            else
+            {
+                weaponList[Weaponselected].ammoCur += ammoBoxAmount;
+                ammoBoxAmount = 0; // Since all the ammo in the box was used, set it to 0
+            }
+
             gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
             anim.SetBool("IsReloading", false);
         }
@@ -370,7 +400,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (!gameManager.instance.levelUpSystem.isInRun)
         {
-            
+             
             HPMax += amount;
             HP += amount;
             updatePlayerUI();
@@ -428,6 +458,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (medPackAmount < medPackMaxAmount)
         {
+            // Plays med pickup sfx - Plays a random med pickup sfx from the range audioMedPickup at a volume defined by audioMedPickupVol
+            audioSFX.PlayOneShot(audioMedPickup[Random.Range(0, audioMedPickup.Length)], audioMedPickupVol);
+            
             medPackList.Add(medPackStat);
 
             healAmount = medPackStat.healAmount;
@@ -441,6 +474,9 @@ public class playerController : MonoBehaviour, IDamage
 
     public void ammoBoxPickup(ammoBoxStats ammoBoxStat)
     {
+        // Plays ammo pickup sfx - Plays a random ammo pickup sfx from the range audioAmmoPickup at a volume defined by audioAmmoPickupVol
+        audioSFX.PlayOneShot(audioAmmoPickup[Random.Range(0, audioAmmoPickup.Length)], audioAmmoPickupVol);
+        
         ammoBoxAmount += ammoBoxStat.ammoAmount;
         gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
     }

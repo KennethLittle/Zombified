@@ -31,5 +31,7 @@ public class deathSummary : MonoBehaviour
         staminaIncreaseText.text = "Stamina Increase: " + extraStamina.ToString();
         requiredXpText.text = "XP for Next Level: " + requiredXp.ToString();
         currentXPText.text = "Current XP: " + currentXP.ToString();
+
+        gameManager.instance.SaveGame();
     }
 }

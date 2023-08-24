@@ -77,6 +77,7 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
                 {
+                    zedGroansSFX();
                     StartCoroutine(attack());
                 }
             }
@@ -90,7 +91,7 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }
 
-        zedGroansSFX();
+        
 
     }
 
@@ -206,6 +207,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        agent.SetDestination(gameManager.instance.player.transform.position);
         StartCoroutine(flashDamage());
 
         if (HP <= 0)
@@ -227,9 +229,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator flashDamage()
     {
-        model.material.color = Color.red;
+        Color originalColor = model.material.color; // Store the original color
+        model.material.color = Color.red; // Set to red
         yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
+        model.material.color = originalColor; // Restore the original color
     }
 
     public void MeleeDamage(int amount)
