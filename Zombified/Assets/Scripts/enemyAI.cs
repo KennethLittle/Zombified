@@ -229,10 +229,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator flashDamage()
     {
-        
-        model.material.color = Color.red; 
+        Color originalColor = model.material.color; // Store the original color
+        model.material.color = Color.red; // Set to red
         yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
+        model.material.color = originalColor; // Restore the original color
     }
 
     public void MeleeDamage(int amount)

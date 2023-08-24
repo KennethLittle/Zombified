@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Player and Level Select Screen.unity
     guid: 1a12d4d57dc47b54491d61888c2f29d2
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: d8eadf977d4dc854cb91d0dc2e8dfd8e
+    path: Assets/Test Scenes/MapCreation.unity
+    guid: c4c9c23d0955b8d4fb341861a29390af
   - enabled: 1
     path: Assets/Scenes/DeathScene.unity
     guid: bdb3bb9e1491ef541bfaa25f0bff3e98

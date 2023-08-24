@@ -70,12 +70,18 @@ public class buttonFunctions : MonoBehaviour
     {
         int  previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
         SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void backtoPlayerMenu2()
     {
         int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 2;
         SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
 
