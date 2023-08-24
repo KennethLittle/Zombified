@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3864a1113c1d5eb44a0b425de427553c, type: 3}
   m_Name: New Ammo Box Stats
   m_EditorClassIdentifier: 
-  ammoAmount: 25
+  ammoAmount: 20
   model: {fileID: -927199367670048503, guid: 45fb3b613218da844b047d1f9349e0d6, type: 3}
