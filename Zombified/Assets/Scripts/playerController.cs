@@ -62,6 +62,12 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] [Range(0, 1)] float audioShootCasingVol;
     [SerializeField] AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] float audioGunReloadVol;
+    [SerializeField] AudioClip[] audioUseMed;
+    [SerializeField] [Range(0, 1)] float audioUseMedVol;
+    [SerializeField] AudioClip[] audioAmmoPickup;
+    [SerializeField] [Range(0, 1)] float audioAmmoPickupVol;
+    [SerializeField] AudioClip[] audioMedPickup;
+    [SerializeField] [Range(0, 1)] float audioMedPickupVol;
 
     private float originalPlayerSpeed;
     private int HPMax;
@@ -340,6 +346,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         if(Input.GetKeyDown(KeyCode.Q) && medPackAmount > 0 && HP < HPMax)
         {
+            // Plays medkit use sfx - Plays a random use medkit sfx from the range audioUseMed at a volume defined by audioUseMedVol
+            audioSFX.PlayOneShot(audioUseMed[Random.Range(0, audioUseMed.Length)], audioUseMedVol);
+            
             medPackAmount--;
             gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
             HP += healAmount;
@@ -355,6 +364,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
         {
+            // Plays reload sfx - Plays a random reload sfx from the range audioGunReload at a volume defined by audioGunReloadVol
+            audioSFX.PlayOneShot(audioGunReload[Random.Range(0, audioGunReload.Length)], audioGunReloadVol);
+            
             int difference = weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
             anim.SetBool("IsReloading", true);
 
@@ -446,6 +458,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (medPackAmount < medPackMaxAmount)
         {
+            // Plays med pickup sfx - Plays a random med pickup sfx from the range audioMedPickup at a volume defined by audioMedPickupVol
+            audioSFX.PlayOneShot(audioMedPickup[Random.Range(0, audioMedPickup.Length)], audioMedPickupVol);
+            
             medPackList.Add(medPackStat);
 
             healAmount = medPackStat.healAmount;
@@ -459,6 +474,9 @@ public class playerController : MonoBehaviour, IDamage
 
     public void ammoBoxPickup(ammoBoxStats ammoBoxStat)
     {
+        // Plays ammo pickup sfx - Plays a random ammo pickup sfx from the range audioAmmoPickup at a volume defined by audioAmmoPickupVol
+        audioSFX.PlayOneShot(audioAmmoPickup[Random.Range(0, audioAmmoPickup.Length)], audioAmmoPickupVol);
+        
         ammoBoxAmount += ammoBoxStat.ammoAmount;
         gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
     }
