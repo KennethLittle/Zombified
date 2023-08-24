@@ -45,7 +45,7 @@ public class WaveManager : MonoBehaviour
 
         foreach (Spawner spawner in spawners)
         {
-            if (spawner.activationWave <= waveNumber)
+            if (spawner.activationWave == waveNumber)
             {
                 spawner.SpawnWave();
             }

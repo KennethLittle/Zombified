@@ -149,4 +149,14 @@ public class gameManager : MonoBehaviour
     {
         stateUnpaused();
     }
+
+    public void SaveGame()
+    {
+        SaveManager.SaveGame(this);
+    }
+
+    public void LoadGame()
+    {
+        SaveManager.LoadGame(this);
+    }
 }

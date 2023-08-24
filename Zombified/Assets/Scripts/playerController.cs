@@ -22,6 +22,9 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float gravityValue;
     [SerializeField] float animChangeSpeed;
 
+    [SerializeField] int defaultHP = 100;
+    [SerializeField] float defaultStamina = 100;
+
     [Header("----- Player Gun Stats -----")]
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
     [SerializeField] float shootRate;
@@ -86,6 +89,8 @@ public class playerController : MonoBehaviour, IDamage
         originalPlayerSpeed = playerSpeed;
         HPMax = HP;
         currentStamina = stamina;
+        defaultHP = HP;
+        defaultStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
         gameManager.instance.medPackMax.text = medPackMaxAmount.ToString("F0"); 
         spawnPlayer();
@@ -109,6 +114,12 @@ public class playerController : MonoBehaviour, IDamage
             anim.SetBool("IsShooting", false);
         }
 
+    }
+
+    public void ResetToDefaults()
+    {
+        HP = defaultHP;
+        stamina = defaultStamina;
     }
 
     public void takeDamage(int amount)
