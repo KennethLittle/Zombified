@@ -14,7 +14,6 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        StartNextWave();
     }
 
     private void Update()
@@ -45,7 +44,7 @@ public class WaveManager : MonoBehaviour
 
         foreach (Spawner spawner in spawners)
         {
-            if (spawner.activationWave == waveNumber)
+            if (spawner.activationWave <= waveNumber)
             {
                 spawner.SpawnWave();
             }

@@ -4304,7 +4304,7 @@ MonoBehaviour:
   playerSpawnPos: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
-  levelUpSystem: {fileID: 615540975}
+  levelUpSystem: {fileID: 0}
   activeMenu: {fileID: 0}
   pauseMenu: {fileID: 7423461717292039091}
   loseMenu: {fileID: 330141977}
