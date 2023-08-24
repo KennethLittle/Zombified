@@ -181,26 +181,19 @@ public class playerController : MonoBehaviour, IDamage
             move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
             if (move != Vector3.zero)
             {
-                if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
+                if (isSprinting && currentStamina > 0) // Modified check here
                 {
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsWalking", false);
                     anim.SetBool("IsRunning", true);
-                    if (animVelocity < 1.0f)
-                    {
-                        animVelocity += Time.deltaTime * acceleration;
-                    }
                     controller.Move(move * Time.deltaTime * playerSpeed * sprintMod); // Running speed
                 }
                 else
                 {
+                    isSprinting = false; // Add this line to ensure that sprinting is turned off if stamina is depleted
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsRunning", false);
                     anim.SetBool("IsWalking", true);
-                    if (animVelocity > 0.0f)
-                    {
-                        animVelocity -= Time.deltaTime * deceleration;
-                    }
                     controller.Move(move * Time.deltaTime * playerSpeed); // Walking speed
                 }
             }
@@ -216,17 +209,20 @@ public class playerController : MonoBehaviour, IDamage
             }
             anim.SetFloat(velocityHash, animVelocity);
         }
-
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
 
+            
+            playerVelocity.y += jumpHeight;
             anim.SetBool("IsJumping", true);
-            playerVelocity.y = jumpHeight;
             jumpCount++;
         }
+
+        playerVelocity.x = move.x * playerSpeed; // Maintain the horizontal components
+        playerVelocity.z = move.z * playerSpeed;
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
@@ -253,16 +249,14 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        if (Input.GetButtonDown("Sprint") && currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
-            
             playerSpeed *= sprintMod;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") || currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
-            
             playerSpeed /= sprintMod;
         }
 
