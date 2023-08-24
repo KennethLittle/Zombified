@@ -698,7 +698,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 482496603}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: quitToPlayerMenu
+        m_MethodName: backtoPlayerMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

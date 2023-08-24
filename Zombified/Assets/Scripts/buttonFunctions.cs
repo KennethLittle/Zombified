@@ -66,6 +66,14 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("DeathScene");
     }
 
+    public void backtoPlayerMenu()
+    {
+        SceneManager.LoadScene("Player and Level Select Screen");
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     
 
 }

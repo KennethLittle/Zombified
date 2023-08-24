@@ -60,7 +60,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] float audioGunReloadVol;
 
-
+    private float originalPlayerSpeed;
     private int HPMax;
     private bool groundedPlayer;
     private Vector3 move;
@@ -80,10 +80,10 @@ public class playerController : MonoBehaviour, IDamage
 
     private void Start()
     {
-        //reference
+        
         anim = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("animVelocity");
-
+        originalPlayerSpeed = playerSpeed;
         HPMax = HP;
         currentStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
@@ -178,7 +178,10 @@ public class playerController : MonoBehaviour, IDamage
             // Detect if the player is moving or not and set animation parameters accordingly
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+            float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * sprintMod : originalPlayerSpeed;
+
             move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
+
             if (move != Vector3.zero)
             {
                 if (isSprinting && currentStamina > 0) // Modified check here
@@ -186,7 +189,7 @@ public class playerController : MonoBehaviour, IDamage
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsWalking", false);
                     anim.SetBool("IsRunning", true);
-                    controller.Move(move * Time.deltaTime * playerSpeed * sprintMod); // Running speed
+                    controller.Move(move * Time.deltaTime * playerSpeed * effectivePlayerSpeed); // Running speed
                 }
                 else
                 {
@@ -207,6 +210,9 @@ public class playerController : MonoBehaviour, IDamage
                     animVelocity = 0.0f;
                 }
             }
+            playerVelocity.x = move.x * effectivePlayerSpeed; 
+            playerVelocity.z = move.z * effectivePlayerSpeed;
+
             anim.SetFloat(velocityHash, animVelocity);
         }
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
@@ -252,12 +258,10 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
-            playerSpeed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint") || currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
-            playerSpeed /= sprintMod;
         }
 
         if (isSprinting)
