@@ -68,12 +68,28 @@ public class buttonFunctions : MonoBehaviour
 
     public void backtoPlayerMenu()
     {
-        SceneManager.LoadScene("Player and Level Select Screen");
+        int  previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
+        SceneManager.LoadScene(previousSceneIndex);
         gameManager.instance.ResetAndUnpauseGame();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
-    
+    public void backtoPlayerMenu2()
+    {
+        int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 2;
+        SceneManager.LoadScene(previousSceneIndex);
+        gameManager.instance.ResetAndUnpauseGame();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+
+    public void LoadGame()
+    {
+        gameManager.instance.LoadGame();
+    }
+
+
 
 }

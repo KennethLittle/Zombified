@@ -4,9 +4,11 @@ using System.Collections;
 public class Spawner : MonoBehaviour
 {
     public GameObject Zombie3;
-    public Transform[] spawnPoints; // Array of spawn positions
+    public Transform[] spawnPoints; 
     public float timeBetweenZombieSpawns;
     public int startingZombies;
+    public int minAdditionalZombies;
+    public int maxAdditionalZombies;
     public int activationWave;
     [Range(1, 5)][SerializeField] private float enemyHPMultiplier = 2.0f;
     [Range(1, 5)][SerializeField] private float enemyDamageMultiplier = 1.5f;
@@ -15,13 +17,12 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         waveManager = WaveManager.instance;
+         
     }
 
     public void SpawnWave()
     {
-        if (waveManager.waveNumber < activationWave || spawnPoints.Length == 0) return;
-
-        int numZombies = startingZombies;
+        int numZombies = startingZombies + waveManager.waveNumber * Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
         waveManager.enemiesRemaining += numZombies;
         gameManager.instance.waveNumberText.text = "Wave " + waveManager.waveNumber;
 
