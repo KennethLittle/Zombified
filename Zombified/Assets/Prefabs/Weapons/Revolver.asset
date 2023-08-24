@@ -18,15 +18,13 @@ MonoBehaviour:
   ammoCur: 3
   ammoMax: 6
   audioShoot:
-  - {fileID: 8300000, guid: 482ec0b393dd6eb41a488741d98506bb, type: 3}
-  - {fileID: 8300000, guid: 198ff5a67911d084b84a3f6ffa6cfc8e, type: 3}
+  - {fileID: 8300000, guid: 49a85eeec03d0224f9fc8d4aae230456, type: 3}
   audioShootVol: 0.376
-  audioShootCasing: []
+  audioShootCasing:
+  - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
   audioShootCasingVol: 0
   audioGunReload:
-  - {fileID: 8300000, guid: ca24ab80a8c2c9f4aafd2912312e9e48, type: 3}
-  - {fileID: 8300000, guid: 390e09845ae9e7d4fa4598d64290a684, type: 3}
-  - {fileID: 8300000, guid: dce4f11e5dfcd3547b8d891cdf629c01, type: 3}
+  - {fileID: 8300000, guid: 7aa9c8134c2f142408c38aa9405324ef, type: 3}
   audioGunReloadVol: 0.431
   icon: {fileID: 21300000, guid: 91819a57d04b9ff49a1b8c35e7ac1f46, type: 3}
   model: {fileID: 4330079131909685691, guid: a0cb7727526061a4fbd1c0b8cef39e2f, type: 3}

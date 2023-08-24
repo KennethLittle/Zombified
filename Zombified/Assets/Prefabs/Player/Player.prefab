@@ -3083,8 +3083,6 @@ MonoBehaviour:
   jumpHeight: 5
   gravityValue: -14
   animChangeSpeed: 12
-  defaultHP: 100
-  defaultStamina: 100
   weaponList: []
   shootRate: 0
   shootDamage: 0
@@ -3119,15 +3117,6 @@ MonoBehaviour:
   audioGunReload:
   - {fileID: 8300000, guid: 7047c8952edf2aa4786768c0ee041501, type: 3}
   audioGunReloadVol: 0.5
-  audioUseMed:
-  - {fileID: 8300000, guid: d3b9379ea2843c34aa08bc6fa6b5a160, type: 3}
-  audioUseMedVol: 0.2
-  audioAmmoPickup:
-  - {fileID: 8300000, guid: 7f256cce6eb257b4b81e2785c0ce30f1, type: 3}
-  audioAmmoPickupVol: 0.2
-  audioMedPickup:
-  - {fileID: 8300000, guid: a26fd680176033248a9135653895a057, type: 3}
-  audioMedPickupVol: 0.2
 --- !u!95 &3323011606028813650
 Animator:
   serializedVersion: 5

@@ -18,12 +18,10 @@ MonoBehaviour:
   ammoCur: 36
   ammoMax: 36
   audioShoot:
-  - {fileID: 8300000, guid: 49a85eeec03d0224f9fc8d4aae230456, type: 3}
+  - {fileID: 8300000, guid: a747d97cf0b40604a9925b1330ab6836, type: 3}
   audioShootVol: 0.597
   audioShootCasing:
-  - {fileID: 8300000, guid: 7266db348a3085b4d84cfcbc9602f5d0, type: 3}
-  - {fileID: 8300000, guid: 3f58b1c62b9a0634c98595bd6a222126, type: 3}
-  - {fileID: 8300000, guid: 422f8551f2814de4bac7360eadd57a3c, type: 3}
+  - {fileID: 8300000, guid: a5175dd39dce7714f97c943a16dc8608, type: 3}
   audioShootCasingVol: 0
   audioGunReload:
   - {fileID: 8300000, guid: 94e2ebe244dcb7447b875dc301adcab5, type: 3}

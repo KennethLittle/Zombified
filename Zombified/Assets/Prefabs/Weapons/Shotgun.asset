@@ -18,21 +18,13 @@ MonoBehaviour:
   ammoCur: 16
   ammoMax: 16
   audioShoot:
-  - {fileID: 8300000, guid: fbd2128d48d5dc140a54300426771ff4, type: 3}
-  - {fileID: 8300000, guid: d5fce2fb18344534fa14b8e765e9cae6, type: 3}
-  - {fileID: 8300000, guid: 68d479e729904c24da8ba9af85489548, type: 3}
-  - {fileID: 8300000, guid: d0cc21ca44b1a324c86d84db9887aedd, type: 3}
+  - {fileID: 8300000, guid: 2bd05af3c8d70974da9c207ad416463f, type: 3}
   audioShootVol: 0.513
   audioShootCasing:
-  - {fileID: 8300000, guid: ec42ac37071683e44a7a7c3a4c7f32ce, type: 3}
-  - {fileID: 8300000, guid: 3bc133248a8daca48b1bbfb88a14afd7, type: 3}
-  - {fileID: 8300000, guid: 51edf88ff2d49a246bf83d001d8d43fe, type: 3}
+  - {fileID: 8300000, guid: bbcf3dfec8241ff44ab49b64a1d2c93f, type: 3}
   audioShootCasingVol: 0
   audioGunReload:
-  - {fileID: 8300000, guid: eb9230f1c83c33b4db3a8fadb681d948, type: 3}
-  - {fileID: 8300000, guid: 5d3ab9b06f05efd41a31dceae0a40f88, type: 3}
-  - {fileID: 8300000, guid: b67841a573feea349a38ca310de16830, type: 3}
-  - {fileID: 8300000, guid: e9674daae4312b24a84d69976db9f920, type: 3}
+  - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
   audioGunReloadVol: 0.491
   icon: {fileID: 21300000, guid: c6fe61fb2ebb9c8459981d023a1bb2e4, type: 3}
   model: {fileID: 2274508903960980932, guid: 19466aa7daff22140b9ac4e70c4950c8, type: 3}
