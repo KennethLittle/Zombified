@@ -50,6 +50,9 @@ public class enemyAI : MonoBehaviour, IDamage
     bool destinationChosen;
     bool isAttacking = false;
     bool zedIsGroaning;
+    bool isMoving;
+    bool isDead = false;
+    bool pause = false;
 
     float angleToPlayer;
     float stoppingDistOrig;
@@ -68,9 +71,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         float agentVel = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
-
-
-        if (!isAttacking) // Check if not already attacking
+        if (!isAttacking && pause == false) // Check if not already attacking
         {
             if (canSeePlayer()) // Chase the player if they can be seen
             {
@@ -136,7 +137,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (!isAttacking && angleToPlayer <= strikeAngle && Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
                 {
                     playerInAttackRange = true; // Set to true only if not attacking and player in attack range
-                    
+                    attack();
                 }
                 else
                 {
@@ -166,6 +167,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (agent.remainingDistance <= 0.05f && !destinationChosen)
         {
+
             destinationChosen = true;
             agent.stoppingDistance = 0;
             yield return new WaitForSeconds(roamTimer);
@@ -188,15 +190,19 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator attack()
     {
-        isAttacking = true;
+        if (!isDead)
+        {
+            isAttacking = true;
+            anim.SetBool("isAttacking", isAttacking);
+            MeleeDamage(damage);
 
-        MeleeDamage(damage);
+            yield return new WaitForSeconds(attackRate);
 
-        yield return new WaitForSeconds(attackRate);
+            isAttacking = false;
+            anim.SetBool("isAttacking", isAttacking);
 
-        isAttacking = false;
+        }
     }
-
     public void takeDamage(int amount)
     {
         HP -= amount;
@@ -204,10 +210,13 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
+            isDead = true;
+            pause = true;
             gameManager.instance.updateGameGoal(-1);
             gameManager.instance.levelUpSystem.GainXP(WaveManager.instance.waveNumber * 7);
-            Destroy(gameObject);
-
+            anim.SetBool("isDead", isDead);
+            enabled = false;
+            Destroy(gameObject,5.0f);
             WaveManager wave = GameObject.FindObjectOfType<WaveManager>();
             if (wave != null)
             {
@@ -235,6 +244,7 @@ public class enemyAI : MonoBehaviour, IDamage
             gameManager.instance.levelUpSystem.GainXP(baseXP);
             OnEnemyKilled(1);
         }
+        enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
