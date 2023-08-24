@@ -344,11 +344,20 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
         {
-            int difference;
+            int difference = weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
             anim.SetBool("IsReloading", true);
-            difference =  weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
-            weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
-            ammoBoxAmount -= difference;
+
+            if (ammoBoxAmount >= difference)
+            {
+                weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
+                ammoBoxAmount -= difference;
+            }
+            else
+            {
+                weaponList[Weaponselected].ammoCur += ammoBoxAmount;
+                ammoBoxAmount = 0; // Since all the ammo in the box was used, set it to 0
+            }
+
             gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
             anim.SetBool("IsReloading", false);
         }
@@ -368,7 +377,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (!gameManager.instance.levelUpSystem.isInRun)
         {
-            
+             
             HPMax += amount;
             HP += amount;
             updatePlayerUI();
