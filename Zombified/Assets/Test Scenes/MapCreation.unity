@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.19940192, g: 0.13418078, b: 0.2983923, a: 1}
+  m_IndirectSpecularColor: {r: 0.18423101, g: 0.1162498, b: 0.2176919, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3021,14 +3021,6 @@ PrefabInstance:
       propertyPath: doorControllers.Array.data[3]
       value: 
       objectReference: {fileID: 5564319382957309725}
-    - target: {fileID: 1594186369, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 119.1001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1594186369, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 107.70001
-      objectReference: {fileID: 0}
     - target: {fileID: 7423461717082805376, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: playerSpawnPos
       value: 
@@ -17925,13 +17917,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4033570458024204668, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: near clip plane
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4033570458024204669, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.391
+      value: 1.744
       objectReference: {fileID: 0}
     - target: {fileID: 4033570458024204669, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1333332
+      value: 0.071
       objectReference: {fileID: 0}
     - target: {fileID: 4033570458024204669, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_LocalRotation.w

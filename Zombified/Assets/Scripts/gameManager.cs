@@ -19,6 +19,7 @@ public class gameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject loseMenu;
     public GameObject escapeMenu;
+    public GameObject controlMenu;
     public TextMeshProUGUI enemiesRemainingText;
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
@@ -31,9 +32,9 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
 
-    
 
 
+    bool isControlMenuActive = false;
     public int enemiesKilled;
     public int totalXP;
     bool isPaused;
@@ -62,6 +63,11 @@ public class gameManager : MonoBehaviour
             statePaused();
             activeMenu = pauseMenu;
             activeMenu.SetActive(isPaused);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            ToggleControlMenu();
         }
     }
 
@@ -124,5 +130,11 @@ public class gameManager : MonoBehaviour
         playerDamageFlash.SetActive(false);
     }
 
+    private void ToggleControlMenu()
+    {
+        isControlMenuActive = !isControlMenuActive; 
+        controlMenu.SetActive(isControlMenuActive);
+    }
+    
 
 }
