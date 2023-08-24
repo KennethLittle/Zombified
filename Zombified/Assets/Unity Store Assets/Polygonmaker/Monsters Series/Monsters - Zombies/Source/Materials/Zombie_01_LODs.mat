@@ -184,7 +184,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.9764151, b: 0.9764151, a: 1}
     - _ColorB: {r: 1, g: 1, b: 1, a: 0}
     - _ColorG: {r: 1, g: 1, b: 1, a: 0}
     - _ColorR: {r: 1, g: 1, b: 1, a: 0}
@@ -196,6 +196,6 @@ Material:
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _SSS: {r: 0.22794116, g: 0.07709775, b: 0.07709775, a: 0}
     - _SkinHairColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
-    - _UnlitColor: {r: 1, g: 1, b: 1, a: 1}
+    - _UnlitColor: {r: 1, g: 0.9764151, b: 0.9764151, a: 1}
     - _UnlitColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

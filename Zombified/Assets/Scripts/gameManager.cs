@@ -135,6 +135,18 @@ public class gameManager : MonoBehaviour
         isControlMenuActive = !isControlMenuActive; 
         controlMenu.SetActive(isControlMenuActive);
     }
-    
 
+    public void ResetPauseState()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+
+        }
+    }
+
+    public void ResetAndUnpauseGame()
+    {
+        stateUnpaused();
+    }
 }
