@@ -8,9 +8,11 @@ public class baydoorController : MonoBehaviour
 
     private Vector3 initialPosition;
     private Vector3 targetPosition;
-    private bool doorOpened = false;
     private bool closeDoor = false;
     private NavMeshObstacle navMeshObstacle;
+
+    // Counter to keep track of how many entities are within the trigger zone
+    private int entitiesInTriggerZone = 0;
 
     private void Start()
     {
@@ -19,11 +21,9 @@ public class baydoorController : MonoBehaviour
         navMeshObstacle = GetComponent<NavMeshObstacle>();
     }
 
-
-
     private void Update()
     {
-        if (doorOpened)
+        if (entitiesInTriggerZone > 0)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, doorRaiseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, targetPosition) < 0.01f && navMeshObstacle.enabled)
@@ -31,7 +31,7 @@ public class baydoorController : MonoBehaviour
                 navMeshObstacle.enabled = false;
             }
         }
-        if (closeDoor)
+        else if (closeDoor)
         {
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, doorRaiseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initialPosition) < 0.01f)
@@ -40,17 +40,16 @@ public class baydoorController : MonoBehaviour
                 {
                     navMeshObstacle.enabled = true;
                 }
-                closeDoor = false; 
+                closeDoor = false;
             }
         }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            OpenDoor();
+            entitiesInTriggerZone++; // Increment counter
         }
     }
 
@@ -58,18 +57,13 @@ public class baydoorController : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            CloseDoor();
+            entitiesInTriggerZone--; // Decrement counter
+
+            if (entitiesInTriggerZone <= 0)
+            {
+                entitiesInTriggerZone = 0; // Make sure it doesn't go below 0
+                closeDoor = true; // Close the door only if counter is 0
+            }
         }
-    }
-
-    private void OpenDoor()
-    {
-        doorOpened = true;
-    }
-
-    private void CloseDoor()
-    {
-        doorOpened = false;
-        closeDoor = true; 
     }
 }

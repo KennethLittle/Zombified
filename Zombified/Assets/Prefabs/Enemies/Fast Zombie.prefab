@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 3656280558421563317}
   m_Layer: 6
   m_Name: Fast Zombie
-  m_TagString: Obstacle
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

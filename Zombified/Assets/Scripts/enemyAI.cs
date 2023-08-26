@@ -6,17 +6,14 @@ public class enemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] Animator anim;
     [SerializeField] Transform headPos;
 
     [SerializeField] public int HP;
-    [SerializeField] int speed;
     [SerializeField] int playerFaceSpeed;
     [SerializeField] float meleeRange;
     [Range(60, 180)][SerializeField] int viewAngle;
-    [Range(1, 500)][SerializeField] int roamDist;
-    [Range(0, 3)][SerializeField] int roamTimer;
     [SerializeField] int animChangeSpeed;
 
     public int baseXP = 10;
@@ -69,30 +66,47 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Update()
     {
+        UpdatePlayerPosition(); // Constantly update player position
+
+        // Calculate agent velocity and update animation
         float agentVel = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
-        if (!isAttacking && pause == false) // Check if not already attacking
+
+        if (!isAttacking && !pause)
         {
-            if (canSeePlayer()) // Chase the player if they can be seen
+            float someThreshold = 0.5f;  // You can adjust this value
+            if (agent.pathStatus != NavMeshPathStatus.PathComplete && agent.remainingDistance > someThreshold)
             {
-                if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
-                {
-                    zedGroansSFX();
-                    StartCoroutine(attack());
-                }
-            }
-            if (playerInRange && !canSeePlayer())
-            {
-                StartCoroutine(roam());
-            }
-            else if (agent.destination != gameManager.instance.player.transform.position)
-            {
-                StartCoroutine(roam());
+                agent.ResetPath();
             }
         }
 
-        
+        if (!isAttacking && pause == false)
+        {
+            if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
+            {
+                zedGroansSFX();
+                StartCoroutine(attack());
+            }
+        }
+    }
 
+    void UpdatePlayerPosition()
+    {
+        RaycastHit hit;
+        Vector3 directionToPlayer = (gameManager.instance.player.transform.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                agent.SetDestination(gameManager.instance.player.transform.position);
+            }
+            else
+            {
+                // Obstacle detected; you can decide what action to take here.
+                agent.ResetPath();
+            }
+        }
     }
 
     void zedGroansSFX()
@@ -116,72 +130,6 @@ public class enemyAI : MonoBehaviour, IDamage
         zedIsGroaning = false;
     }
 
-    bool canSeePlayer()
-    {
-        agent.stoppingDistance = stoppingDistOrig;
-        playerDir = gameManager.instance.player.transform.position - headPos.position;
-        angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
-        {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
-            {
-                agent.SetDestination(gameManager.instance.player.transform.position);
-
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    facePlayer();
-                }
-
-                if (!isAttacking && angleToPlayer <= strikeAngle && Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
-                {
-                    playerInAttackRange = true; // Set to true only if not attacking and player in attack range
-                    attack();
-                }
-                else
-                {
-                    playerInAttackRange = false;
-                    
-                }
-
-                return true;
-            }
-            else if (hit.collider.CompareTag("Obstacle"))
-            {
-                // Choose a new destination to avoid the obstacle
-                Vector3 avoidDirection = Vector3.Cross(Vector3.up, playerDir.normalized).normalized;
-                NavMeshHit navHit;
-                if (NavMesh.SamplePosition(transform.position + avoidDirection * 2f, out navHit, 2f, NavMesh.AllAreas))
-                {
-                    agent.SetDestination(navHit.position);
-                }
-            }
-        }
-
-        agent.stoppingDistance = 0;
-        return false;
-    }
-
-    IEnumerator roam()
-    {
-        if (agent.remainingDistance <= 0.05f && !destinationChosen)
-        {
-
-            destinationChosen = true;
-            agent.stoppingDistance = 0;
-            yield return new WaitForSeconds(roamTimer);
-            Vector3 randomPos = Random.insideUnitSphere * roamDist;
-            randomPos += startingPos;
-
-            NavMeshHit hit;
-            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
-            agent.SetDestination(hit.position);
-
-            destinationChosen = false;
-        }
-    }
 
     void facePlayer()
     {
@@ -207,7 +155,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        UpdatePlayerPosition();
         StartCoroutine(flashDamage());
 
         if (HP <= 0)
@@ -263,7 +211,6 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0;
         }
     }
 

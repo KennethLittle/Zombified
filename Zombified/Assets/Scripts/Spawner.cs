@@ -20,23 +20,12 @@ public class Spawner : MonoBehaviour
         if (waveManager == null)
         {
             waveManager = gameManager.instance.waveManager;
-            if (waveManager == null)
-            {
-                Debug.LogError("waveManager instance is still null");
-                return;
-            }
         }
 
         if (waveManager.waveNumber < activationWave) return;
 
         int numZombies = startingZombies + waveManager.waveNumber * Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
         waveManager.enemiesRemaining += numZombies;
-
-        if (gameManager.instance == null)
-        {
-            Debug.LogError("gameManager instance is null");
-            return;
-        }
 
         gameManager.instance.waveNumberText.text = "Wave " + waveManager.waveNumber;
 
@@ -54,28 +43,13 @@ public class Spawner : MonoBehaviour
 
     private void SpawnZombie()
     {
-        Debug.Log("SpawnZombie invoked"); // To confirm SpawnZombie is being called
-
-        if (spawnPoints == null || spawnPoints.Length == 0)
-        {
-            Debug.LogError("spawnPoints array is null or empty");
-            return;
-        }
+     
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; // Choose a random spawn point
         GameObject newZombie = Instantiate(Zombie3, spawnPoint.position, spawnPoint.rotation);
-        if (newZombie == null)
-        {
-            Debug.LogError("newZombie instance is null");
-            return;
-        }
+     
 
         enemyAI zombieAI = newZombie.GetComponent<enemyAI>();
-        if (zombieAI == null)
-        {
-            Debug.LogError("Failed to get enemyAI component from newZombie");
-            return;
-        }
 
         int baseDamage = zombieAI.damage;
         int baseHP = zombieAI.HP;
