@@ -14,6 +14,7 @@ public class gameManager : MonoBehaviour
     public playerController playerScript;
 
     public LevelUpSystem levelUpSystem;
+    public WaveManager waveManager;
 
     public GameObject activeMenu;
     public GameObject pauseMenu;
@@ -48,6 +49,7 @@ public class gameManager : MonoBehaviour
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
 
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
+        waveManager= FindObjectOfType<WaveManager>();
 
         enemyAI.OnEnemyKilled += UpdateEnemiesKilled;
         UpdateTotalXP(totalXP);

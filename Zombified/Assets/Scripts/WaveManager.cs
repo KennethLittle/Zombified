@@ -32,24 +32,49 @@ public class WaveManager : MonoBehaviour
 
     private void StartWave()
     {
+        Debug.Log("StartWave invoked"); // To confirm StartWave is being called
+
         waveNumber++;
 
         if (waveNumber == 5)
         {
-            foreach (var doorController in doorControllers) 
+            if (doorControllers == null)
             {
+                Debug.LogError("doorControllers list is null");
+                return;
+            }
+
+            foreach (var doorController in doorControllers)
+            {
+                if (doorController == null)
+                {
+                    Debug.LogError("One of the doorController instances is null");
+                    continue;
+                }
                 doorController.OpenDoor();
             }
         }
 
+        if (spawners == null)
+        {
+            Debug.LogError("spawners array is null");
+            return;
+        }
+
         foreach (Spawner spawner in spawners)
         {
+            if (spawner == null)
+            {
+                Debug.LogError("One of the spawner instances is null");
+                continue;
+            }
+
             if (spawner.activationWave <= waveNumber)
             {
                 spawner.SpawnWave();
             }
         }
 
-        isWaveInProgress = false; 
+        isWaveInProgress = false;
     }
 }
