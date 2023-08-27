@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class baydoorController : MonoBehaviour
 {
     public float doorRaiseSpeed = 5f;
     public float raiseHeight = 10f;
+    
 
     private Vector3 initialPosition;
     private Vector3 targetPosition;
@@ -26,9 +28,9 @@ public class baydoorController : MonoBehaviour
         if (entitiesInTriggerZone > 0)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, doorRaiseSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, targetPosition) < 0.01f && navMeshObstacle.enabled)
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
             {
-                navMeshObstacle.enabled = false;
+                navMeshObstacle.enabled = false; 
             }
         }
         else if (closeDoor)
@@ -36,14 +38,11 @@ public class baydoorController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, initialPosition, doorRaiseSpeed * Time.deltaTime);
             if (Vector3.Distance(transform.position, initialPosition) < 0.01f)
             {
-                if (!navMeshObstacle.enabled)
-                {
-                    navMeshObstacle.enabled = true;
-                }
-                closeDoor = false;
+                navMeshObstacle.enabled = true; 
             }
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

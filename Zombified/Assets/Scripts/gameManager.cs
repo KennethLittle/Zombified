@@ -16,6 +16,9 @@ public class gameManager : MonoBehaviour
     public LevelUpSystem levelUpSystem;
     public WaveManager waveManager;
 
+    public enemyAI enemyAIScript;
+    public baydoorController baydoor;
+
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
@@ -43,13 +46,25 @@ public class gameManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Debug.LogError("Multiple instances of gameManager found. Destroying one.");
+            Destroy(gameObject);
+        }
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
 
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
         waveManager= FindObjectOfType<WaveManager>();
+
+        enemyAIScript = FindObjectOfType<enemyAI>();
+        baydoor = FindObjectOfType<baydoorController>();
+
 
         enemyAI.OnEnemyKilled += UpdateEnemiesKilled;
         UpdateTotalXP(totalXP);

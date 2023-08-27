@@ -5064,6 +5064,7 @@ GameObject:
   - component: {fileID: 4440678468582738134}
   - component: {fileID: 4440678468582738133}
   - component: {fileID: 4440678468582738153}
+  - component: {fileID: -7453942437092677433}
   m_Layer: 6
   m_Name: Normal Zombie
   m_TagString: Enemy
@@ -5122,28 +5123,20 @@ MonoBehaviour:
   model: {fileID: 4343399624176368608}
   agent: {fileID: 4440678468582738134}
   anim: {fileID: 4394258079959640422}
-  headPos: {fileID: 4440837708383788582}
   HP: 15
-  speed: 4
   playerFaceSpeed: 6
   meleeRange: 2
-  viewAngle: 90
-  roamDist: 25
-  roamTimer: 3
   animChangeSpeed: 15
   baseXP: 10
   damage: 12
   attackRate: 1
-  strikeAngle: 20
-  meleeAttack: {fileID: 4443185527024688328}
-  attackPos: {fileID: 4440590344965935024}
-  spawnPoint: {fileID: 0}
   audioSFX: {fileID: 4440678468582738133}
   audioVoice:
   - {fileID: 8300000, guid: 76f5bfd28a857674ca830f1ff736a9e0, type: 3}
   audioVoiceVol: 0.5
   voiceTimerMin: 10
   voiceTimerMax: 35
+  spawnPoint: {fileID: 0}
 --- !u!95 &4394258079959640422
 Animator:
   serializedVersion: 5
@@ -5330,6 +5323,19 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!65 &-7453942437092677433
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4444178053021449384}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1.11, z: 0}
 --- !u!1 &4444180074153746426
 GameObject:
   m_ObjectHideFlags: 0
