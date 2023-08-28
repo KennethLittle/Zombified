@@ -107,8 +107,16 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             isDead = true;
             pause = true;
+            gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.levelUpSystem.GainXP(WaveManager.instance.waveNumber * 7);
             anim.SetBool("isDead", isDead);
-            Destroy(gameObject, 5.0f);
+            Destroy(gameObject);
+            WaveManager wave = GameObject.FindAnyObjectByType<WaveManager>();
+            if(wave != null)
+            {
+                wave.enemiesRemaining--;
+            }
+           
         }
     }
 

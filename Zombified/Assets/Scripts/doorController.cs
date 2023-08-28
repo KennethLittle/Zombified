@@ -39,14 +39,6 @@ public class doorController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && doorOpened)
-        {
-            closeDoor = true;
-            doorOpened = false; // This will ensure the door stays closed.
-        }
-    }
 
     public void OpenDoor()
     {
