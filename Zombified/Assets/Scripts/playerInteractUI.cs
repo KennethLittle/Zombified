@@ -12,21 +12,27 @@ public class playerInteractUI : MonoBehaviour
 
     private void Update()
     {
-        if (playerInteract.GetInteractableObject() != null)
-        {
-            Show(playerInteract.GetInteractableObject());
-        }
-        else
-        {
-            Hide();
-        }
+
+            if (playerInteract.GetInteractableObject() != null)
+            {
+                Show(playerInteract.GetInteractableObject());
+            }
+            else
+            {
+                Hide();
+            }
+            if (gameManager.instance.isPaused == true)
+                {
+                    Hide();
+                }
+        
     }
     private void Show(iInteractable Interactable)
     {
         containerGameObject.SetActive(true);
         interactTextMeshProUGUI.text = Interactable.GetInteractText();
     }
-    private void Hide()
+    public void Hide()
     {
         containerGameObject.SetActive(false);
     }

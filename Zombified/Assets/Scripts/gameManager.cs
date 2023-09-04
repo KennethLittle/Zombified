@@ -41,7 +41,7 @@ public class gameManager : MonoBehaviour
     bool isControlMenuActive = false;
     public int enemiesKilled;
     public int totalXP;
-    bool isPaused;
+    public bool isPaused;
     int enemiesRemaining;
 
     void Awake()
