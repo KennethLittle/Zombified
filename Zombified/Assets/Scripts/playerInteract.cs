@@ -18,6 +18,11 @@ public class playerInteract : MonoBehaviour
                     npcInteractable.Interact();
 
                 }
+                if (collider.TryGetComponent(out doorInteractable doorInteractable))
+                {
+                    doorInteractable.ToggleDoor();
+
+                }
             }
         }
     }

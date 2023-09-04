@@ -953,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5218905739117072863, guid: ac1851edae49d714b879d434ab5a1114, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: Sentence 2
+      value: I have ants in my butt
       objectReference: {fileID: 0}
     - target: {fileID: 5218905739117072863, guid: ac1851edae49d714b879d434ab5a1114, type: 3}
       propertyPath: dialogue.sentences.Array.data[2]
