@@ -21,10 +21,10 @@ public class playerInteractUI : MonoBehaviour
             Hide();
         }
     }
-    private void Show(NPCInteractable npcInteractable)
+    private void Show(iInteractable Interactable)
     {
         containerGameObject.SetActive(true);
-        interactTextMeshProUGUI.text = npcInteractable.GetInteractText();
+        interactTextMeshProUGUI.text = Interactable.GetInteractText();
     }
     private void Hide()
     {

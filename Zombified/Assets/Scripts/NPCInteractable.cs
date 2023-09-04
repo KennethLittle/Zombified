@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCInteractable : MonoBehaviour
+public class NPCInteractable : MonoBehaviour, iInteractable
 {
     [SerializeField] private string interactText;
     private Animator animator;
@@ -21,5 +21,9 @@ public class NPCInteractable : MonoBehaviour
     public string GetInteractText()
     {
         return interactText;
+    }
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }
