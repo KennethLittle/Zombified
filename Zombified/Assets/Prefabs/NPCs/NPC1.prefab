@@ -3030,6 +3030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e875f6a21e28f74392bd43dadf534e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactText: Talk with Frank
 --- !u!114 &1114110628
 MonoBehaviour:
   m_ObjectHideFlags: 0

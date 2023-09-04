@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NPCInteractable : MonoBehaviour
 {
-
+    [SerializeField] private string interactText;
     private Animator animator;
+    public dialogue dialogue;
 
     private void Awake()
     {
@@ -13,7 +14,12 @@ public class NPCInteractable : MonoBehaviour
     }
     public void Interact()
     {
-
+        FindObjectOfType<dialogueManager>().StartDialogue(dialogue);
         animator.SetTrigger("Talk");
+    }
+
+    public string GetInteractText()
+    {
+        return interactText;
     }
 }
