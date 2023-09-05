@@ -13,12 +13,15 @@ public class WeaponPickup : MonoBehaviour
         gun.ammoCur = gun.ammoMax;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
             if (other.CompareTag("Player"))
             {
+             if (Input.GetKey(KeyCode.E))
+             {
                 gameManager.instance.playerScript.weaponpickup(gun);
                 Destroy(gameObject);
+             }
             }
     }
 

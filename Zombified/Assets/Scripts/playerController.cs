@@ -496,5 +496,4 @@ public class playerController : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
-
 }

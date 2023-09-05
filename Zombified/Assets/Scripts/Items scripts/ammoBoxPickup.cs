@@ -6,12 +6,15 @@ public class ammoBoxPickup : MonoBehaviour
 {
     [SerializeField] ammoBoxStats ammoBox;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.ammoBoxPickup(ammoBox);
-            Destroy(gameObject);
+            if (Input.GetKey(KeyCode.E))
+            {
+                gameManager.instance.playerScript.ammoBoxPickup(ammoBox);
+                Destroy(gameObject);
+            }
         }
     }
 
