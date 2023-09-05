@@ -862,7 +862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2007575805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2772,7 +2772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &852385487641071681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5650,6 +5650,7 @@ MonoBehaviour:
   weaponIcon: {fileID: 852385487406238453}
   enemiesKilled: 0
   totalXP: 0
+  isPaused: 0
 --- !u!114 &7841091360792567529
 MonoBehaviour:
   m_ObjectHideFlags: 0

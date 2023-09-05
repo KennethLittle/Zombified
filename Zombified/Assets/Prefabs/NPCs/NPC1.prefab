@@ -3031,6 +3031,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactText: Talk with Frank
+  dialogue:
+    name: Frank
+    sentences:
+    - Please For the love of God help!
+    - I have ants in my butt
+    - Sentence 3
 --- !u!114 &1114110628
 MonoBehaviour:
   m_ObjectHideFlags: 0

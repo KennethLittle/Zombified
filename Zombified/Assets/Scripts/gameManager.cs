@@ -36,6 +36,10 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
 
+    //public TextMeshProUGUI dialogueBox;
+    //public TextMeshProUGUI input;
+    //public TextMeshProUGUI npcName;
+
 
 
     bool isControlMenuActive = false;

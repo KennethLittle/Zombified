@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class playerInteract : MonoBehaviour
 {
+    //public bool interactPressed;
     void Update()
     {
+        //if (!dialogueManager.inDialogue)
+        //{
+
+        //}
         if (Input.GetKey(KeyCode.E))
         {
             iInteractable interactable = GetInteractableObject();
             if (interactable != null)
-            {
-                interactable.Interact();
+            {               
+                interactable.Interact();   
+                //interactPressed = true;
             }
         }
     }

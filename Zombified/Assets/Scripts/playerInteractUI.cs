@@ -9,11 +9,11 @@ public class playerInteractUI : MonoBehaviour
     [SerializeField] private playerInteract playerInteract;
     [SerializeField] private TextMeshProUGUI interactTextMeshProUGUI;
 
+    //public static playerInteractUI instance;
 
     private void Update()
     {
-
-            if (playerInteract.GetInteractableObject() != null)
+        if (playerInteract.GetInteractableObject() != null)
             {
                 Show(playerInteract.GetInteractableObject());
             }
@@ -22,10 +22,15 @@ public class playerInteractUI : MonoBehaviour
                 Hide();
             }
             if (gameManager.instance.isPaused == true)
-                {
-                    Hide();
-                }
-        
+            {
+                Hide();
+            }
+            //this made the interact ui hide once the player pressed interact but i dont like it...
+
+        //    if (playerInteract.interactPressed == true)
+        //{
+        //    Hide();
+        //}   
     }
     private void Show(iInteractable Interactable)
     {
