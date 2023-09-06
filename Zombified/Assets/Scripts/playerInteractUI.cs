@@ -10,7 +10,10 @@ public class playerInteractUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI interactTextMeshProUGUI;
 
     //public static playerInteractUI instance;
-
+    private void Start()
+    {
+        this.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (playerInteract.GetInteractableObject() != null)

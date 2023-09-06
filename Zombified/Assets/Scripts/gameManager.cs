@@ -37,6 +37,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
 
+    public playerInteractUI pIUI;
+
     //public TextMeshProUGUI dialogueBox;
     //public TextMeshProUGUI input;
     //public TextMeshProUGUI npcName;
@@ -60,8 +62,8 @@ public class gameManager : MonoBehaviour
             Debug.LogError("Multiple instances of gameManager found. Destroying one.");
             Destroy(gameObject);
         }
-        player = GameObject.FindGameObjectWithTag("Player");
 
+        player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
             player = Instantiate(playerPrefab, playerSpawnPos.transform.position, Quaternion.identity);
@@ -71,20 +73,40 @@ public class gameManager : MonoBehaviour
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
 
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
-        waveManager= FindObjectOfType<WaveManager>();
+        if (levelUpSystem == null)
+        {
+            Debug.LogWarning("LevelUpSystem not found in the scene.");
+        }
+
+        waveManager = FindObjectOfType<WaveManager>();
+        if (waveManager == null)
+        {
+            Debug.LogWarning("WaveManager not found in the scene.");
+        }
 
         enemyAIScript = FindObjectOfType<enemyAI>();
+        if (enemyAIScript == null)
+        {
+            Debug.LogWarning("enemyAI not found in the scene.");
+        }
+
         baydoor = FindObjectOfType<baydoorController>();
+        if (baydoor == null)
+        {
+            Debug.LogWarning("baydoorController not found in the scene.");
+        }
 
+        pIUI = FindObjectOfType<playerInteractUI>();
+        if (pIUI == null)
+        {
+            Debug.LogWarning("playerInteractUI not found in the scene.");
+        }
 
-        enemyAI.OnEnemyKilled += UpdateEnemiesKilled;
-        UpdateTotalXP(totalXP);
-
-        levelUpSystem.MarkRunStart();
+        StartCoroutine(AutoSaveEveryFiveMinutes());
     }
 
 
-    void Update()
+        void Update()
     {
         if (Input.GetButtonDown("Cancel") && activeMenu == null)
         {
@@ -180,25 +202,28 @@ public class gameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        
         GameData gameData = new GameData(this);
         gameData.NewGame(this);
 
-        
         GameObject newPlayer = Instantiate(player, playerSpawnPos.transform.position, Quaternion.identity);
-
-        
         playerScript = newPlayer.GetComponent<playerController>();
+
         playerScript.SetInitialStats(gameData.playerLevel, gameData.extraHP, gameData.extraStamina);
 
-        // Update the GameManager with the new GameData values
+        pIUI.gameObject.SetActive(true);
+
         this.enemiesKilled = gameData.enemiesKilled;
         levelUpSystem.totalEarnedXP = gameData.totalEarnedXP;
         levelUpSystem.playerLevel = gameData.playerLevel;
         playerScript.defaultHP = gameData.HP;
         playerScript.defaultStamina = gameData.Stamina;
         levelUpSystem.totalAccumulatedXP = gameData.totalAccumulatedXP;
+
+        SaveManager.SaveGame(this);
+
+        Debug.Log("Started new game and created new save data.");
     }
+
 
     public void SaveGame()
     {
@@ -208,5 +233,27 @@ public class gameManager : MonoBehaviour
     public void LoadGame()
     {
         SaveManager.LoadGame(this);
+    }
+
+    IEnumerator AutoSaveEveryFiveMinutes()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5 * 60); // 5 minutes
+            SaveManager.SaveGame(this, true); // true indicates AutoSave
+            Debug.Log("AutoSaved!");
+        }
+    }
+
+    public void RunComplete()
+    {
+        levelUpSystem.MarkRunEnd();
+        SaveManager.SaveGame(this);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveManager.SaveGame(this, true); // AutoSave on quit
+        Debug.Log("AutoSaved on application quit.");
     }
 }

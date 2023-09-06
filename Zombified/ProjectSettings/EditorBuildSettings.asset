@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 745109d05cab78849a9ba5f966a9c3c7
   - enabled: 1
-    path: Assets/Scenes/NpcVillage.unity
-    guid: 67be8e3e7a707164eb3a280ffd69328b
+    path: Assets/Scenes/NewGame TestScene.unity
+    guid: 28097f869e63f2a469e745eda33d6a45
   - enabled: 1
     path: Assets/Scenes/Alpha stain.unity
     guid: 83b619ad8313fdc4f825e7a2494decb2
