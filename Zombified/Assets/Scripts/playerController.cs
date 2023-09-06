@@ -22,8 +22,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float gravityValue;
     [SerializeField] float animChangeSpeed;
 
-    [SerializeField] int defaultHP = 100;
-    [SerializeField] float defaultStamina = 100;
+    [SerializeField] public int defaultHP = 100;
+    [SerializeField] public float defaultStamina = 100;
 
     [Header("----- Player Gun Stats -----")]
     [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
@@ -120,6 +120,13 @@ public class playerController : MonoBehaviour, IDamage
     {
         HP = defaultHP;
         stamina = defaultStamina;
+    }
+
+    public void SetInitialStats(int level, int hp, int stamina)
+    {
+        gameManager.instance.levelUpSystem.playerLevel = level;
+        defaultHP = hp;
+        defaultStamina = stamina;
     }
 
     public void takeDamage(int amount)

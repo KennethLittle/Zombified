@@ -11,6 +11,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerSpawnPos;
 
     public GameObject player;
+    public GameObject playerPrefab;
     public playerController playerScript;
 
     public LevelUpSystem levelUpSystem;
@@ -60,6 +61,12 @@ public class gameManager : MonoBehaviour
             Destroy(gameObject);
         }
         player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
+        {
+            player = Instantiate(playerPrefab, playerSpawnPos.transform.position, Quaternion.identity);
+            player.tag = "Player";
+        }
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
 
@@ -169,6 +176,28 @@ public class gameManager : MonoBehaviour
     public void ResetAndUnpauseGame()
     {
         stateUnpaused();
+    }
+
+    public void StartNewGame()
+    {
+        
+        GameData gameData = new GameData(this);
+        gameData.NewGame(this);
+
+        
+        GameObject newPlayer = Instantiate(player, playerSpawnPos.transform.position, Quaternion.identity);
+
+        
+        playerScript = newPlayer.GetComponent<playerController>();
+        playerScript.SetInitialStats(gameData.playerLevel, gameData.extraHP, gameData.extraStamina);
+
+        // Update the GameManager with the new GameData values
+        this.enemiesKilled = gameData.enemiesKilled;
+        levelUpSystem.totalEarnedXP = gameData.totalEarnedXP;
+        levelUpSystem.playerLevel = gameData.playerLevel;
+        playerScript.defaultHP = gameData.HP;
+        playerScript.defaultStamina = gameData.Stamina;
+        levelUpSystem.totalAccumulatedXP = gameData.totalAccumulatedXP;
     }
 
     public void SaveGame()

@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
     public void resume()
     {
         gameManager.instance.stateUnpaused();
@@ -84,6 +89,23 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.LoadGame();
     }
 
+    public void NewGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == SceneManager.GetActiveScene().buildIndex)
+        {
+            gameManager.instance.StartNewGame();
 
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 }
