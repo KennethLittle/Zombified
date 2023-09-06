@@ -1,37 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
-{
-    public Image icon;
-    public Button removeButton;
-
-    private Inventoryitem item;
-
-    public void AddItem(Inventoryitem newitem)
+public class InventorySlot : MonoBehaviour, IDropHandler
+{ 
+    public void OnDrop(PointerEventData eventData)
     {
-        item = newitem;
-        icon.sprite = newitem.itemIcon;
-        icon.enabled = true;
-        removeButton.interactable = true;
-    }
-
-    public void ClearSlot()
-    {
-        item = null;
-        icon.sprite = null;
-        icon.enabled = false;
-        removeButton.interactable = false;
-    }
-
-    public void OnRemoveButton()
-    {
-        if(item != null)
+        if (transform.childCount == 0)
         {
-            InventoryManager.Instance.RemoveItem(item);
-            ClearSlot();
+            GameObject dropped = eventData.pointerDrag;
+            DragItem movedItem = dropped.GetComponent<DragItem>();
+            movedItem.parentafterDrag = transform;
         }
     }
 }
