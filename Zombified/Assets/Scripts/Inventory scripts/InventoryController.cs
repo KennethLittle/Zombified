@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    [HideInInspector]
-    public InventorySlot selectedInventorySlot;
+    public GameObject inventory;
+    public bool InventoryIsClose;
 
-    private void Update()
+    void Start()
     {
-        if(selectedInventorySlot == null)
+        InventoryIsClose = false;
+    }
+
+    void Update()
+    {
+       if(Input.GetKey(KeyCode.I))
         {
-            return;
-        }
-        if(Input.GetMouseButton(0))
-        {
-           
+            if(InventoryIsClose == true)
+            {
+                inventory.SetActive(true);
+                InventoryIsClose = false;
+            }
+            else
+            {
+                inventory.SetActive(false);
+                InventoryIsClose = true;
+            }
         }
     }
+
+
 }

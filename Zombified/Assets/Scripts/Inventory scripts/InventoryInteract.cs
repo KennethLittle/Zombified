@@ -17,12 +17,12 @@ public class InventoryInteract : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryController.selectedInventorySlot = inventorySlot;
+        //inventoryController.selectedInventorySlot = inventorySlot;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryController.selectedInventorySlot = null;
+        //inventoryController.selectedInventorySlot = null;
     }
 
 }
