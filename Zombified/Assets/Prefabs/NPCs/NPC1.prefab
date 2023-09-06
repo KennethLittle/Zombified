@@ -3032,6 +3032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: Talk with Frank
   dialogue:
+    inDialogue: 0
     name: Frank
     sentences:
     - Please For the love of God help!

@@ -21,25 +21,25 @@ public class dialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-        DisplayNextSentence();
+        DisplayNextSentence(dialogue);
     }
 
 
-    public void DisplayNextSentence()
+    public void DisplayNextSentence(dialogue dialogue)
     {
         if (sentences.Count == 0) 
         {
-            EndDialogue();
+            EndDialogue(dialogue);
             return;
         }
 
         string sentence = sentences.Dequeue();
         Debug.Log(sentence);
     }
-    void EndDialogue()//this is not finished and needs to update the bool inDialogue
+    void EndDialogue(dialogue dialogue)//this is not finished and needs to update the bool inDialogue
     {
         Debug.Log("End of convo.");
-        //dialogue.inDialogue = true;
+        dialogue.inDialogue = false;
         inDialogue = false;
     }
 
