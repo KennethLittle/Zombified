@@ -44,26 +44,12 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        if (spawners != null)
+        foreach (Spawner spawner in spawners)
         {
-            foreach (Spawner spawner in spawners)
+            if (spawner.activationWave <= waveNumber)
             {
-                if (spawner != null)
-                {
-                    if (spawner.activationWave <= waveNumber)
-                    {
-                        spawner.SpawnWave();
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("Null spawner in the array.");
-                }
+                spawner.SpawnWave();
             }
-        }
-        else
-        {
-            Debug.LogWarning("Spawners array is null.");
         }
 
         isWaveInProgress = false;

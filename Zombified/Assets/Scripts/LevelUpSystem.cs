@@ -93,12 +93,10 @@ public class LevelUpSystem : MonoBehaviour
     public void MarkRunStart()
     {
         isInRun = true;
-        
     }
 
     public void MarkRunEnd()
     {
         isInRun = false;
-        
     }
 }

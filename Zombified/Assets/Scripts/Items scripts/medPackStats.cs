@@ -6,7 +6,6 @@ using UnityEngine;
 public class medPackStats : ScriptableObject
 {
     public int healAmount;
-
     public GameObject model;
 
 }

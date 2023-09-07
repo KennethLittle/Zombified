@@ -1,27 +1,22 @@
+using System.IO;
 using UnityEngine;
 
 public static class SaveManager
 {
-    private static readonly string manualSaveKey = "gameDataManual";
-    private static readonly string autoSaveKey = "gameDataAuto";
+    private static readonly string savePath = Application.persistentDataPath + "/save.json";
 
-    public static void SaveGame(gameManager manager, bool isAutoSave = false)
+    public static void SaveGame(gameManager manager)
     {
         GameData data = new GameData(manager);
         string json = JsonUtility.ToJson(data, true);
-        string keyToUse = isAutoSave ? autoSaveKey : manualSaveKey;
-
-        PlayerPrefs.SetString(keyToUse, json);
-        PlayerPrefs.Save();
+        File.WriteAllText(savePath, json);
     }
 
-    public static void LoadGame(gameManager manager, bool isAutoSave = false)
+    public static void LoadGame(gameManager manager)
     {
-        string keyToUse = isAutoSave ? autoSaveKey : manualSaveKey;
-
-        if (PlayerPrefs.HasKey(keyToUse))
+        if (File.Exists(savePath))
         {
-            string json = PlayerPrefs.GetString(keyToUse);
+            string json = File.ReadAllText(savePath);
             GameData data = JsonUtility.FromJson<GameData>(json);
 
             gameManager.instance.enemiesKilled = data.enemiesKilled;
@@ -33,7 +28,7 @@ public static class SaveManager
         }
         else
         {
-            Debug.LogWarning("Save data not found.");
+            Debug.LogWarning("Save file not found.");
         }
     }
 }
