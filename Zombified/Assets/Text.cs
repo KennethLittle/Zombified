@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Text : MonoBehaviour
 {
+    public string text { get; internal set; }
+
     // Start is called before the first frame update
     void Start()
     {
