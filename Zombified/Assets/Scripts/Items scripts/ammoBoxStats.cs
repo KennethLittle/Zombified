@@ -6,6 +6,5 @@ using UnityEngine;
 public class ammoBoxStats : ScriptableObject
 {
     public int ammoAmount;
-
     public GameObject model;
 }
