@@ -2002,7 +2002,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6aa0773e4e6b356459f8585993c2048e, type: 2}
+  - {fileID: 2100000, guid: af7ee246303972a4e970cde0512e99f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2952,9 +2952,11 @@ GameObject:
   - component: {fileID: 5216139114733770304}
   - component: {fileID: 5277309603805439138}
   - component: {fileID: 5218905739117072860}
-  - component: {fileID: 5218905739117072863}
   - component: {fileID: 1114110628}
   - component: {fileID: 1114110629}
+  - component: {fileID: 2020600827}
+  - component: {fileID: 2020600829}
+  - component: {fileID: 2020600828}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: Untagged
@@ -3018,26 +3020,6 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5218905739117072863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5219331806649197930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e875f6a21e28f74392bd43dadf534e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactText: Talk with Frank
-  dialogue:
-    inDialogue: 0
-    name: Frank
-    sentences:
-    - Please For the love of God help!
-    - I have ants in my butt
-    - Sentence 3
 --- !u!114 &1114110628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3129,3 +3111,66 @@ MonoBehaviour:
   - m_Rig: {fileID: 1701729391}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &2020600827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5219331806649197930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7cb48202d7b0244b26c359885fa1a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcName: Frank
+  quest:
+    isActive: 0
+    title: 
+    description: 
+    expReward: 0
+    scrapReward: 0
+  dialogue:
+    inDialogue: 0
+    name: 
+    sentences:
+    - Yo.
+    - What's up
+  hasShop: 0
+  interactionPrompt: {fileID: 0}
+  roamRange: 5
+--- !u!135 &2020600829
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5219331806649197930}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &2020600828
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5219331806649197930}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
