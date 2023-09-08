@@ -2270,6 +2270,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40563b1cf00e57848958f95c99a97ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quest:
+    isActive: 0
+    title: 
+    description: 
+    expReward: 0
+    scrapReward: 0
+  player: {fileID: 0}
+  questWindow: {fileID: 0}
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  experienceText: {fileID: 0}
+  scrapText: {fileID: 0}
 --- !u!4 &1886854651
 Transform:
   m_ObjectHideFlags: 0
