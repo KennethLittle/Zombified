@@ -1,26 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
-    public List<ItemManager> items = new List<ItemManager>();
-
+    public int inventorybag = 32;
+    public List<Inventoryitem> items = new List<Inventoryitem>();
     // Start is called before the first frame update
-    private void Awake()
+    void Awake()
     {
+        if (Instance == null)
+        {
             Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
-    public void AddItem(ItemManager item)
+    public bool AddItem(Inventoryitem item)
     {
-        items.Add(item);
+        if(items.Count < inventorybag)
+        {
+            items.Add(item);
+            return true;
+        }
+        return false;
     }
 
-    public void RemoveItem(ItemManager item)
+    public void RemoveItem(Inventoryitem item)
     {
         items.Remove(item);
     }
