@@ -1,10 +1,18 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Inventoryitem;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    public InventorySystem playerInventorySystem;
+    public InventoryUI playerInventoryUI;
+
+    public GameObject primaryWeaponSlot;
+    public GameObject secondaryWeaponSlot;
+
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] Animator anim;
@@ -97,6 +105,14 @@ public class playerController : MonoBehaviour, IDamage
         audioLHVolOrig = audioLowHealthVol;
         gameManager.instance.medPackMax.text = medPackMaxAmount.ToString("F0"); 
         spawnPlayer();
+        if(!playerInventorySystem)
+        {
+            playerInventorySystem = FindObjectOfType<InventorySystem>();
+        }
+        if(!playerInventoryUI)
+        {
+            playerInventoryUI = FindObjectOfType<InventoryUI>();
+        }
     }
 
     void Update()
@@ -430,6 +446,18 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Inventoryitem item = other.GetComponent<Inventoryitem>();
+        if(item)
+        {
+            if(playerInventorySystem.AddItem(item))
+            {
+                Destroy(item.gameObject);
+            }
+        }
+    }
+
     public void weaponpickup(WeaponStats weaponStat)
     {
         weaponList.Add(weaponStat);
@@ -451,15 +479,23 @@ public class playerController : MonoBehaviour, IDamage
 
         updatePlayerUI();
     }
+    public void EquipWeapon(Inventoryitem weapon)
+    {
+        if (weapon.itemType == ItemType.PrimaryWeapon && !primaryWeaponSlot.transform)
+        {
+            GameObject newWeapon = Instantiate(weapon.gameObject, primaryWeaponSlot.transform);
+        }
+        else if (weapon.itemType == ItemType.SecondaryWeapon && !secondaryWeaponSlot.transform)
+        {
+            GameObject NewWeapon = Instantiate(weapon.gameObject, secondaryWeaponSlot.transform);
+        }
+    }
 
     public void medPackPickup(medPackStats medPackStat)
     {
         if (medPackAmount < medPackMaxAmount)
         {
             medPackList.Add(medPackStat);
-
-            healAmount = medPackStat.healAmount;
-
             medPackAmount++;
 
             gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
@@ -487,6 +523,24 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    public void UseItem(Inventoryitem item)
+    {
+        if(item.itemType == ItemType.General)
+        {
+            if(item.name == "MedPack")
+            {
+                if (HP > HPMax)
+                {
+                    useMedPack();
+                    playerInventorySystem.RemoveItem(item);
+                }
+            }
+            else if(item.name == "Ammo Box")
+            {
+                reloadAmmo();
+            }
+        }
+    }
     void changeweapon()
     {
         shootDamage = weaponList[Weaponselected].shootDamage;

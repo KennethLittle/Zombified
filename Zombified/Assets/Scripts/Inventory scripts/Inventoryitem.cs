@@ -3,24 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor;
 
-public class Inventoryitem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Inventoryitem : MonoBehaviour
 {
-    [Header("UI")]
-    public Image image;
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public enum ItemType
     {
-        image.raycastTarget = false;
+        General,
+        PrimaryWeapon,
+        SecondaryWeapon
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        transform.position = Input.mousePosition;
-    }
+    public ItemType itemType;
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
 }
