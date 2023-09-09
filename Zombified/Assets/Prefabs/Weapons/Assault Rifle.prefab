@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5273814670298374285}
   - component: {fileID: 7986199121665987655}
   - component: {fileID: 8724941872497325634}
-  - component: {fileID: 8724941872497325635}
   - component: {fileID: 3447571214326578616}
   m_Layer: 0
   m_Name: Assault Rifle
@@ -99,19 +98,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.4479585
   m_Center: {x: -0.005947288, y: 0.20827577, z: 0.031448126}
---- !u!114 &8724941872497325635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8490501056518665618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d61dfb72c965b48a0a1e25d9aa2722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gun: {fileID: 11400000, guid: 7f6be407ec3fb414ab61b938340e7002, type: 2}
 --- !u!54 &3447571214326578616
 Rigidbody:
   m_ObjectHideFlags: 0

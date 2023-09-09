@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3204320324251748767}
   - component: {fileID: 9170596788105442662}
   - component: {fileID: 8554653792088103786}
-  - component: {fileID: 8554653792088103785}
+  - component: {fileID: 1107976155860209841}
   m_Layer: 0
   m_Name: MedPack
   m_TagString: Untagged
@@ -98,7 +98,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 1.2310425, z: 0.20749219}
---- !u!114 &8554653792088103785
+--- !u!114 &1107976155860209841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7455805100079890874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8392d7825e4a6904f8fa4d099d6dc8e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 95780c8b846b9ce46adeaf3b7b679f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  medPack: {fileID: 11400000, guid: 13b60fda437ae604aa2748c14048d5bd, type: 2}
+  itemStats: {fileID: 11400000, guid: 13b60fda437ae604aa2748c14048d5bd, type: 2}

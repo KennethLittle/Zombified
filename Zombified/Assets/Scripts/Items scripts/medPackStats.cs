@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class medPackStats : ScriptableObject
+[CreateAssetMenu(fileName = "New MedPack Object", menuName = "Inventory System/Items/MedPack")]
+public class medPackStats : BaseItemStats
 {
     public int healAmount;
-    public GameObject model;
-
+    
 }

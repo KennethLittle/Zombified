@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b97ab6f20c4b8f44b36730d0065cf84, type: 3}
   m_Name: Sniper Rifle
   m_EditorClassIdentifier: 
+  itemName: Sniper Rifle
+  icon: {fileID: 21300000, guid: 71d6922cc328d6147b50149d7b1b8806, type: 3}
+  modelPrefab: {fileID: 8315025053193393175, guid: a8a5f7b5cc9d55f4297ba58d3d851a65, type: 3}
   shootRate: 1
   shootDamage: 10
   shootDist: 1000
@@ -26,6 +29,4 @@ MonoBehaviour:
   audioGunReload:
   - {fileID: 8300000, guid: d3ae920d19a60ca458a6a1cbb7bf379c, type: 3}
   audioGunReloadVol: 1
-  icon: {fileID: 21300000, guid: 71d6922cc328d6147b50149d7b1b8806, type: 3}
-  model: {fileID: 8315025053193393175, guid: a8a5f7b5cc9d55f4297ba58d3d851a65, type: 3}
   hitEffect: {fileID: 0}

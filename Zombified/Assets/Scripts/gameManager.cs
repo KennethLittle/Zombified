@@ -9,6 +9,8 @@ public class gameManager : MonoBehaviour
 
     public static gameManager instance;
     public GameObject playerSpawnPos;
+    public GameObject inventory;
+    public InventoryUI inventoryUI;
 
     public GameObject player;
     public GameObject playerPrefab;
@@ -72,6 +74,7 @@ public class gameManager : MonoBehaviour
 
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
         waveManager= FindObjectOfType<WaveManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>();
 
         enemyAIScript = FindObjectOfType<enemyAI>();
         baydoor = FindObjectOfType<baydoorController>();
@@ -97,6 +100,8 @@ public class gameManager : MonoBehaviour
         {
             ToggleControlMenu();
         }
+
+        Inventory();
     }
 
     public void statePaused()
@@ -208,5 +213,10 @@ public class gameManager : MonoBehaviour
     public void LoadGame()
     {
         SaveManager.LoadGame(this);
+    }
+
+    public void Inventory()
+    {
+        inventoryUI.ToggleInventory();
     }
 }

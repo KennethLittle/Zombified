@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-[CreateAssetMenu]
-public class WeaponStats : ScriptableObject
+[CreateAssetMenu(fileName = "New Weapon Object", menuName = "Inventory System/Items/Weapon")]
+public class WeaponStats : BaseItemStats
 {
     public float shootRate;
     public int shootDamage;
@@ -20,8 +21,6 @@ public class WeaponStats : ScriptableObject
     [SerializeField] public AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] public float audioGunReloadVol;
 
-    public Sprite icon;
-
-    public GameObject model;
     public ParticleSystem hitEffect;
+
 }

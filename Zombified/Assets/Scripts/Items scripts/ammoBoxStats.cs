@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class ammoBoxStats : ScriptableObject
+[CreateAssetMenu(fileName = "New Ammo Box Object", menuName = "Inventory System/Items/Ammo Box")]
+public class ammoBoxStats : BaseItemStats
 {
     public int ammoAmount;
-    public GameObject model;
+    
 }

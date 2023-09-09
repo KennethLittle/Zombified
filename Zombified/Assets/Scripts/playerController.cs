@@ -446,18 +446,6 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Inventoryitem item = other.GetComponent<Inventoryitem>();
-        if(item)
-        {
-            if(playerInventorySystem.AddItem(item))
-            {
-                Destroy(item.gameObject);
-            }
-        }
-    }
-
     public void weaponpickup(WeaponStats weaponStat)
     {
         weaponList.Add(weaponStat);
@@ -474,8 +462,7 @@ public class playerController : MonoBehaviour, IDamage
         audioGunReload = weaponStat.audioGunReload;
         audioGunReloadVol = weaponStat.audioGunReloadVol;
 
-        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponStat.model.GetComponent<MeshFilter>().sharedMesh;
-        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+       
 
         updatePlayerUI();
     }
@@ -522,25 +509,6 @@ public class playerController : MonoBehaviour, IDamage
             changeweapon();
         }
     }
-
-    public void UseItem(Inventoryitem item)
-    {
-        if(item.itemType == ItemType.General)
-        {
-            if(item.name == "MedPack")
-            {
-                if (HP > HPMax)
-                {
-                    useMedPack();
-                    playerInventorySystem.RemoveItem(item);
-                }
-            }
-            else if(item.name == "Ammo Box")
-            {
-                reloadAmmo();
-            }
-        }
-    }
     void changeweapon()
     {
         shootDamage = weaponList[Weaponselected].shootDamage;
@@ -553,9 +521,7 @@ public class playerController : MonoBehaviour, IDamage
         audioShootCasingVol = weaponList[Weaponselected].audioShootCasingVol;
         audioGunReload = weaponList[Weaponselected].audioGunReload;
         audioGunReloadVol = weaponList[Weaponselected].audioGunReloadVol;
-        
-        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponList[Weaponselected].model.GetComponent<MeshFilter>().sharedMesh;
-        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponList[Weaponselected].model.GetComponent<MeshRenderer>().sharedMaterial;
+       
 
         updatePlayerUI();
     }
