@@ -1,12 +1,21 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class LootBoxUI : MonoBehaviour
 {
+    [System.Serializable]
+    public struct LootItem
+    {
+        public BaseItemStats item;
+        [Range(0, 1)] public float dropChance;
+    }
+
     public Transform storage; // A UI container (e.g., a Grid) to hold item UI representations.
     public GameObject itemUIPrefab; // A prefab representing an individual item in the UI.
     public Transform[] slots;
+    public List<LootItem> possibleLootItems;
 
     private bool isStorageClosed = true;
     private bool lootDropped = false;
@@ -16,37 +25,26 @@ public class LootBoxUI : MonoBehaviour
     {
         currentLoot = DropLoot();
         Debug.Log("Loot assigned to currentLoot with count: " + currentLoot.Count);
-    }
-
-    BaseItemStats GetItemByName(string name)
-    {
-        return ItemFactory.Instance.CreateItem(name);
+        DisplayLoot();
     }
 
     List<BaseItemStats> DropLoot()
     {
         List<BaseItemStats> loot = new List<BaseItemStats>();
+        int numberOfItemsToDrop = Random.Range(1, 9); // This will give a number between 1 and 8 inclusive.
 
-        int amountDropped = UnityEngine.Random.Range(1, 5);
-        Debug.Log("Amount of items to be dropped: " + amountDropped);
-
-        for (int i = 0; i < amountDropped; i++)
+        for (int i = 0; i < numberOfItemsToDrop; i++)
         {
-            BaseItemStats randomItem = ItemFactory.Instance.CreateRandomItem(); // Fetching random item
-            if (randomItem != null)
+            BaseItemStats potentialDrop = ItemFactory.Instance.CreateRandomItem();
+
+            if (potentialDrop && possibleLootItems.Any(li => li.item == potentialDrop))
             {
-                loot.Add(randomItem);
-                Debug.Log($"{randomItem.itemName} added to loot");
+                loot.Add(potentialDrop);
+                Debug.Log($"{potentialDrop.itemName} added to loot");
             }
         }
 
-        foreach (var item in loot)
-        {
-            Debug.Log("Dropped item: " + item.itemName);
-        }
-
         Debug.Log("Current loot list count after item addition: " + loot.Count);
-
         lootDropped = true;
 
         return loot;
@@ -54,6 +52,7 @@ public class LootBoxUI : MonoBehaviour
 
     public void ToggleUI()
     {
+        Debug.Log("ToggleUI function called.");
         if (isStorageClosed)
         {
             DisplayLoot();
@@ -75,11 +74,11 @@ public class LootBoxUI : MonoBehaviour
         Debug.Log("DisplayLoot called. CurrentLoot count: " + currentLoot.Count);
 
         // Clear previous displayed items
-        //foreach (Transform slot in slots)
+        foreach (Transform slot in slots)
         {
-            //foreach (Transform child in slot)
+            foreach (Transform child in slot)
             {
-               // Destroy(child.gameObject);
+                Destroy(child.gameObject);
             }
         }
 
@@ -89,6 +88,13 @@ public class LootBoxUI : MonoBehaviour
             if (slotIndex < slots.Length)
             {
                 GameObject itemUIObject = Instantiate(itemUIPrefab, slots[slotIndex]);
+                RectTransform rt = itemUIObject.GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0, 0);
+                rt.anchorMax = new Vector2(1, 1);
+                rt.offsetMin = new Vector2(0, 0);
+                rt.offsetMax = new Vector2(0, 0);
+                Debug.Log("Instantiated itemUIPrefab at slot: " + slotIndex);
+                Debug.Log(itemUIObject.name + " parent is: " + itemUIObject.transform.parent.name);
                 SetIcon(itemUIObject, item.icon);
                 slotIndex++; // Move to the next slot for the next item
             }
@@ -102,7 +108,6 @@ public class LootBoxUI : MonoBehaviour
         lootDropped = false;
     }
 
-
     private void SetIcon(GameObject itemUIObject, Sprite iconSprite)
     {
         Image imageComponent = itemUIObject.GetComponent<Image>();
@@ -115,6 +120,7 @@ public class LootBoxUI : MonoBehaviour
         {
             Debug.Log("Setting icon for: " + itemUIObject.name);
             imageComponent.sprite = iconSprite;
+            Debug.Log("Icon sprite for " + itemUIObject.name + " set to: " + iconSprite.name);
         }
         else
         {
