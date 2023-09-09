@@ -19,16 +19,24 @@ public class InventoryUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.I))
-        {
-            ToggleInventory();
-        }
+        ToggleInventory();
     }
 
     public void ToggleInventory()
     {
-        inventory.SetActive(!inventory.activeSelf);
-        InventoryIsClose = !InventoryIsClose;
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (InventoryIsClose == true)
+            {
+                inventory.SetActive(true);
+                InventoryIsClose= false;
+            }
+            else
+            {
+                inventory.SetActive(false);
+                InventoryIsClose= true;
+            }
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
