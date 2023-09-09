@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LootBoxUI : MonoBehaviour
@@ -9,6 +8,7 @@ public class LootBoxUI : MonoBehaviour
 
     public InventoryUI inventoryUI;
     public static LootBoxUI Instance;
+    public Button lootAllButton;
 
     [System.Serializable]
     public struct LootItem
@@ -39,6 +39,7 @@ public class LootBoxUI : MonoBehaviour
         currentLoot = DropLoot();
         Debug.Log("Loot assigned to currentLoot with count: " + currentLoot.Count);
         DisplayLoot();
+        lootAllButton.onClick.AddListener(LootAllItems);
     }
 
     List<BaseItemStats> DropLoot()
@@ -95,13 +96,11 @@ public class LootBoxUI : MonoBehaviour
         Debug.Log("Entering DisplayLoot method.");
         Debug.Log("DisplayLoot called. CurrentLoot count: " + currentLoot.Count);
 
+        DebugPrintChildHierarchy(storage);
         // Clear previous displayed items
         foreach (Transform slot in slots)
         {
-            foreach (Transform child in slot)
-            {
-                Destroy(child.gameObject);
-            }
+            DestroyAllChildren(slot);
         }
 
         int slotIndex = 0;
@@ -110,13 +109,6 @@ public class LootBoxUI : MonoBehaviour
             if (slotIndex < slots.Length)
             {
                 GameObject itemUIObject = Instantiate(itemUIPrefab, slots[slotIndex]);
-                DraggableItemUI draggable = itemUIObject.GetComponent<DraggableItemUI>();
-                if (draggable)
-                {
-                    draggable.AssociatedItem = item;
-                }
-                Debug.Log("Instantiated itemUIPrefab at slot: " + slotIndex);
-                Debug.Log(itemUIObject.name + " parent is: " + itemUIObject.transform.parent.name);
                 SetIcon(itemUIObject, item.icon);
                 slotIndex++; // Move to the next slot for the next item
             }
@@ -126,8 +118,26 @@ public class LootBoxUI : MonoBehaviour
                 break; // Break out of the loop once we've run out of slots
             }
         }
-
+        DebugPrintChildHierarchy(storage);
         lootDropped = false;
+    }
+
+    public void LootAllItems()
+    {
+        foreach (var item in currentLoot)
+        {
+            // Move the item to the inventory
+            inventoryUI.AddItemToInventory(item);
+        }
+        currentLoot.Clear(); // Clear the loot
+
+        // Clear item UI representations from the loot box slots
+        foreach (Transform slot in slots)
+        {
+            DestroyAllChildren(slot);
+        }
+
+        DisplayLoot(); // This will essentially clear the UI display since currentLoot is now empty
     }
 
     private void SetIcon(GameObject itemUIObject, Sprite iconSprite)
@@ -152,19 +162,21 @@ public class LootBoxUI : MonoBehaviour
 
     public bool MoveItemToInventory(BaseItemStats item)
     {
+        // Try adding the item to the InventorySystem
         if (InventorySystem.Instance.AddItem(item))
         {
             // If successfully added to InventorySystem, add to UI
             inventoryUI.AddItemToInventory(item);
 
-            // If successful, remove the item from currentLoot
+            // Remove the item from currentLoot
             currentLoot.Remove(item);
             DisplayLoot(); // Redisplay loot without the moved item
-            
-        }
-        bool wasAdded = true;
-        return wasAdded;
 
+            return true; // Indicate success
+        }
+
+        // If reached here, the item was not added to the inventory
+        return false;
     }
 
     public void RemoveItemFromLoot(BaseItemStats item)
@@ -177,6 +189,36 @@ public class LootBoxUI : MonoBehaviour
         else
         {
             Debug.LogWarning("Trying to remove an item that isn't in the currentLoot list.");
+        }
+    }
+
+    private void DestroyAllChildren(Transform parentTransform)
+    {
+        for (int i = parentTransform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parentTransform.GetChild(i);
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void DebugPrintChildHierarchy(Transform parentTransform)
+    {
+        Debug.Log("Children of: " + parentTransform.name);
+        foreach (Transform child in parentTransform)
+        {
+            Debug.Log("--> " + child.name);
+            foreach (Transform subChild in child)
+            {
+                Debug.Log("----> " + subChild.name);
+            }
+        }
+    }
+
+    private void DestroyLootBoxPrefab()
+    {
+        if (this.gameObject.CompareTag("LootBox"))
+        {
+            Destroy(this.gameObject);
         }
     }
 }

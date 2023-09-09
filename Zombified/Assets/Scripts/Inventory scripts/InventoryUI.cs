@@ -42,16 +42,16 @@ public class InventoryUI : MonoBehaviour
     {
         foreach (var slot in InventorySlots)
         {
-            // Check if the slot is empty using the Transform component's childCount property
             if (slot.childCount == 0)
             {
-                GameObject itemUIObject = Instantiate(itemUIPrefab, slot); // The slot is already a Transform, so this is fine.
+                GameObject itemUIObject = Instantiate(itemUIPrefab, slot);
                 SetIcon(itemUIObject, item.icon);
-                return;
+                return; // Exit the method once the item is added
             }
         }
         Debug.LogWarning("No available slots in the inventory!");
     }
+
 
     private void SetIcon(GameObject itemUIObject, Sprite iconSprite)
     {
