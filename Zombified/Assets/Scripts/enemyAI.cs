@@ -14,6 +14,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int playerFaceSpeed;
     [SerializeField] float meleeRange;
     [SerializeField] int animChangeSpeed;
+    public int ID { get; set; }
 
     public int baseXP = 10;
 
@@ -34,6 +35,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float recheckPathInterval = 3f; // Time in seconds the enemy waits before rechecking path
     private float lastPathCheckTime;
 
+    public Quest quest;
     bool isAttacking = false;
     bool zedIsGroaning;
     bool isDead = false;
@@ -43,6 +45,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         gameManager.instance.updateGameGoal(1);
         agent.stoppingDistance = meleeRange;
+        ID = 0; //enemy ID #
     }
 
     void Update()
@@ -116,6 +119,14 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 wave.enemiesRemaining--;
             }
+            //if (quest.isActive)
+            //{
+            //    quest.goal.EnemyKilled();
+            //    if (quest.goal.Complete())
+            //    {
+            //        // turn in quest to NPC
+            //    }
+            //}
            
         }
     }
