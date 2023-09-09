@@ -8,6 +8,11 @@ using TMPro;
 
 public class QuestGiver : MonoBehaviour
 {
+    private void Start()
+    {
+        OpenQuestWindow();
+    }
+
     public Quest quest;
 
     public playerController player;
@@ -25,5 +30,17 @@ public class QuestGiver : MonoBehaviour
         descriptionText.text = quest.description;
         experienceText.text = quest.expReward.ToString();
         scrapText.text = quest.scrapReward.ToString();
+    }
+
+    public void AcceptQuest()
+    {
+        quest.isActive = true;
+        player.quest = quest;
+        questWindow.SetActive(false);
+    }
+
+    public void DenyQuest()
+    {
+        questWindow.SetActive(false);
     }
 }
