@@ -446,11 +446,15 @@ public class playerController : MonoBehaviour, IDamage
     private void OnTriggerEnter(Collider other)
     {
         Inventoryitem item = other.GetComponent<Inventoryitem>();
-        if(item)
+        KeyCode itempickup = KeyCode.E;
+        if (Input.GetKeyDown(itempickup))
         {
-            if(playerInventorySystem.AddItem(item))
+            if (item)
             {
-                Destroy(item.gameObject);
+                if (playerInventorySystem.AddItem(item))
+                {
+                    Destroy(item.gameObject);
+                }
             }
         }
     }

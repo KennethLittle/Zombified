@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New Weapon Object", menuName = "Inventory System/Items/Weapon")]
 public class WeaponStats : ScriptableObject
 {
     public float shootRate;
@@ -24,4 +25,5 @@ public class WeaponStats : ScriptableObject
 
     public GameObject model;
     public ParticleSystem hitEffect;
+
 }
