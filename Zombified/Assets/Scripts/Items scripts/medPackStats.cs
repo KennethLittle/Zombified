@@ -8,5 +8,5 @@ public class medPackStats : ScriptableObject
 {
     public int healAmount;
     public GameObject model;
-
+    public Sprite icon;
 }

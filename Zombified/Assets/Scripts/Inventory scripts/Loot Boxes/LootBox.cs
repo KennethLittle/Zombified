@@ -5,73 +5,73 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
+using static UnityEditor.Progress;
 
 public class LootBox : MonoBehaviour, iInteractable
 {
     public ItemManager itemManager;
+    List<ScriptableObject> droppingLoot = new List<ScriptableObject>();
     public TextMeshProUGUI interactTextObject;
+    public Transform storage; // A UI container (e.g., a Grid) to hold item UI representations.
+    public GameObject itemUIPrefab; // A prefab representing an individual item in the UI.
     private bool isPlayerInRange = false;
+    private bool isInteractTextShowing;
+    private bool isStorageClosed;
     private const string INTERACT_MESSAGE = "Press E to Open LootBox";
 
     private void Start()
     {
-
+        isStorageClosed = true;
         droppedLoot();
 
     }
     private void Update()
     {
-        if (isPlayerInRange)
-        {
-            ShowInteractText();
-        }
-        else
-        {
-            HideInteractText();
-        }
+        Interact();
     }
     List<ScriptableObject> droppedLoot()
     {
-        int amountDropped = Random.Range(1, 5);
+        List<ScriptableObject> loot = new List<ScriptableObject>();
 
-        List<ScriptableObject> droppingLoot = new List<ScriptableObject>();
+        int amountDropped = UnityEngine.Random.Range(1, 5);
 
         for (int i = 0; i < amountDropped; i++)
         {
-            int dropChance = Random.Range(1, 101);
+            int dropChance = UnityEngine.Random.Range(1, 101);
 
             if (dropChance <= 15)
             {
-                medPackStats med = itemManager.GetItem<medPackStats>("MedPack");
-                droppingLoot.Add(med);
+                var med = itemManager.GetItem<ScriptableObject>("MedPack");
+                if (med != null) loot.Add(med);
             }
             else if(dropChance <= 25)
             {
-                ammoBoxStats ammo = itemManager.GetItem<ammoBoxStats>("Ammo");
-                droppingLoot.Add(ammo);
+                var ammo = itemManager.GetItem<ScriptableObject>("Ammo");
+                if (ammo != null) loot.Add(ammo);
             }
             else if (dropChance <= 30)
             {
-                WeaponStats snipe = itemManager.GetItem<WeaponStats>("Sniper Rifle");
-                droppingLoot.Add(snipe);
+                var snipe = itemManager.GetItem<ScriptableObject>("Sniper Rifle");
+                if (snipe != null) loot.Add(snipe);
             }
             else if (dropChance <= 40)
             {
-                WeaponStats shotgun = itemManager.GetItem<WeaponStats>("Shotgun");
-                droppingLoot.Add(shotgun);
+                var shotgun = itemManager.GetItem<ScriptableObject>("Shotgun");
+                if (shotgun != null) loot.Add(shotgun);
             }
             else if (dropChance <= 50)
             {
-                WeaponStats assualtRifle = itemManager.GetItem<WeaponStats>("Assualt Rifle");
-                droppingLoot.Add(assualtRifle);
+                var assualtRifle = itemManager.GetItem<ScriptableObject>("Assualt Rifle");
+                if (assualtRifle != null) loot.Add(assualtRifle);
             }
             else if (dropChance <= 60)
             {
-                WeaponStats ak = itemManager.GetItem<WeaponStats>("AK-47");
-                droppingLoot.Add(ak);
+                var ak = itemManager.GetItem<ScriptableObject>("AK-47");
+                if (ak != null) loot.Add(ak);
             }
         }
-        return droppingLoot;
+        return loot;
     }
     public Transform GetTransform()
     {
@@ -84,21 +84,43 @@ public class LootBox : MonoBehaviour, iInteractable
 
         foreach (var item in items)
         {
-            // Here, you'll want to add the item to the player's inv.
+            GameObject itemUIObject = Instantiate(itemUIPrefab, storage);
+
+            // Set the icon
+            Image itemImage = itemUIObject.GetComponentInChildren<Image>();
+            if (item is WeaponStats) // Check if the item is of type WeaponStats
+            {
+                WeaponStats weaponItem = (WeaponStats)item;
+                SetIcon(itemUIObject, weaponItem.icon);
+            }
+            else if (item is medPackStats)
+            {
+                medPackStats medItem = (medPackStats)item;
+                SetIcon(itemUIObject, medItem.icon);
+            }
+            else if (item is ammoBoxStats)
+            {
+                ammoBoxStats ammoItem = (ammoBoxStats)item;
+                SetIcon(itemUIObject, ammoItem.icon);
+            }
+            // Here, you'll want to add the item to the player's inventory.
             // Example: PlayerInventory.Add(item);
-
-            // Optionally, provide feedback to the player about what they collected.
         }
-
-        // Optionally destroy the loot box after the loot has been collected
-        Destroy(this.gameObject);
     }
-
+    private void SetIcon(GameObject uiObject, Sprite icon)
+    {
+        Image itemImage = uiObject.GetComponentInChildren<Image>();
+        if (itemImage != null && icon != null)
+        {
+            itemImage.sprite = icon;
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = true;
+            ShowInteractText();
         }
     }
 
@@ -107,15 +129,26 @@ public class LootBox : MonoBehaviour, iInteractable
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
+            HideInteractText();
         }
     }
 
     public void Interact()
     {
-        if (isPlayerInRange)
+        //CollectLoot();
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            CollectLoot();
             HideInteractText();
+            if (isStorageClosed)
+            {
+                storage.gameObject.SetActive(true);
+                isStorageClosed = false;
+            }
+            else
+            {
+                storage.gameObject.SetActive(false);
+                isStorageClosed = true;
+            }
         }
     }
 
@@ -126,12 +159,14 @@ public class LootBox : MonoBehaviour, iInteractable
 
     private void ShowInteractText()
     {
+        isInteractTextShowing = true;
         interactTextObject.gameObject.SetActive(true);
         interactTextObject.text = GetInteractText(); // Sets the text content.
     }
 
     private void HideInteractText()
     {
+        isInteractTextShowing = false;
         interactTextObject.gameObject.SetActive(false);
     }
 

@@ -7,4 +7,5 @@ public class ammoBoxStats : ScriptableObject
 {
     public int ammoAmount;
     public GameObject model;
+    public Sprite icon;
 }

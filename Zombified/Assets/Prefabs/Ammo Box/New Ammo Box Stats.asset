@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoAmount: 20
   model: {fileID: -927199367670048503, guid: 45fb3b613218da844b047d1f9349e0d6, type: 3}
+  icon: {fileID: 21300000, guid: d0e0ab1b671b03f47bec2ec2f0a6d07c, type: 3}

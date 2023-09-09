@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healAmount: 5
   model: {fileID: 7455805100079890874, guid: 742a7d7fb39b4e740bf03b71c5b6a59c, type: 3}
+  icon: {fileID: 21300000, guid: c7680e4fc3e44b44ab172ffa1e13b4d9, type: 3}
