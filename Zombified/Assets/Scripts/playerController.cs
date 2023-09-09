@@ -475,8 +475,7 @@ public class playerController : MonoBehaviour, IDamage
         audioGunReload = weaponStat.audioGunReload;
         audioGunReloadVol = weaponStat.audioGunReloadVol;
 
-        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponStat.model.GetComponent<MeshFilter>().sharedMesh;
-        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+       
 
         updatePlayerUI();
     }
@@ -554,9 +553,7 @@ public class playerController : MonoBehaviour, IDamage
         audioShootCasingVol = weaponList[Weaponselected].audioShootCasingVol;
         audioGunReload = weaponList[Weaponselected].audioGunReload;
         audioGunReloadVol = weaponList[Weaponselected].audioGunReloadVol;
-        
-        weaponmod.GetComponent<MeshFilter>().sharedMesh = weaponList[Weaponselected].model.GetComponent<MeshFilter>().sharedMesh;
-        weaponmod.GetComponent<MeshRenderer>().sharedMaterial = weaponList[Weaponselected].model.GetComponent<MeshRenderer>().sharedMaterial;
+       
 
         updatePlayerUI();
     }

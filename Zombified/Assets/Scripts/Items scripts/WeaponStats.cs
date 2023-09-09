@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 [CreateAssetMenu(fileName = "New Weapon Object", menuName = "Inventory System/Items/Weapon")]
-public class WeaponStats : ScriptableObject
+public class WeaponStats : BaseItemStats
 {
     public float shootRate;
     public int shootDamage;
@@ -21,9 +21,6 @@ public class WeaponStats : ScriptableObject
     [SerializeField] public AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] public float audioGunReloadVol;
 
-    public Sprite icon;
-
-    public GameObject model;
     public ParticleSystem hitEffect;
 
 }

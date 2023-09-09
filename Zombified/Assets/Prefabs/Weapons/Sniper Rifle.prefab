@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7522167286900159938}
   - component: {fileID: 5728838223622275319}
   - component: {fileID: 5728838223622275318}
-  - component: {fileID: 5728838223622275337}
   m_Layer: 0
   m_Name: Sniper Rifle
   m_TagString: Untagged
@@ -115,16 +114,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3.3930852
   m_Center: {x: 0.021642119, y: -0.025194913, z: 0.0052063465}
---- !u!114 &5728838223622275337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8315025053193393175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d61dfb72c965b48a0a1e25d9aa2722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gun: {fileID: 11400000, guid: 234c41736f67ddc4cb38107315631af4, type: 2}

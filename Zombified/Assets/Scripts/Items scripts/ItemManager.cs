@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
 
-[CreateAssetMenu(fileName = "ItemManager", menuName = "Items")]
 public class ItemManager : ScriptableObject
 {
-    public List<ScriptableObject> items; // This will store all your items
+    public List<BaseItemStats> items; // This will store all your items
 
-    // Here's a method to get a specific item by its name/type
-    public T GetItem<T>(string name) where T : ScriptableObject
+    public T GetItem<T>(string name) where T : BaseItemStats
     {
         foreach (var item in items)
         {
@@ -20,8 +18,6 @@ public class ItemManager : ScriptableObject
         }
         return null;
     }
-
-    // And other methods you might find useful...
 }
 
 //Here's how you can set it up and use it:

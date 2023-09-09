@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1722385715054005982}
   - component: {fileID: 1824062707}
-  - component: {fileID: 1824062706}
+  - component: {fileID: 4096286598492939546}
   m_Layer: 0
   m_Name: Ammo Box
   m_TagString: Untagged
@@ -47,7 +47,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1824062706
+--- !u!114 &4096286598492939546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,10 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1722385715054005983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41553fb137c318e42866b38462b00f4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 95780c8b846b9ce46adeaf3b7b679f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoBox: {fileID: 11400000, guid: 17a96c4f27b0f384cb0268d054b8bce0, type: 2}
+  itemStats: {fileID: 11400000, guid: 17a96c4f27b0f384cb0268d054b8bce0, type: 2}
 --- !u!1001 &1722385716281065423
 PrefabInstance:
   m_ObjectHideFlags: 0

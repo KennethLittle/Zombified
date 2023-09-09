@@ -4,9 +4,8 @@ using System.Diagnostics.Contracts;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New MedPack Object", menuName = "Inventory System/Items/MedPack")]
-public class medPackStats : ScriptableObject
+public class medPackStats : BaseItemStats
 {
     public int healAmount;
-    public GameObject model;
-    public Sprite icon;
+    
 }
