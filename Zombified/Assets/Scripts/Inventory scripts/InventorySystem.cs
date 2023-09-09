@@ -23,7 +23,7 @@ public class InventorySystem : MonoBehaviour
 
     public bool AddItem(Inventoryitem item)
     {
-        if(items.Count < inventorybag)
+        if (items.Count > inventorybag)
         {
             items.Add(item);
             return true;
