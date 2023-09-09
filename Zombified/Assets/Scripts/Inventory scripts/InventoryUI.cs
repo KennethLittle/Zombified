@@ -5,13 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventoryUI : MonoBehaviour
 {
     public bool InventoryIsClose;
-    public  List<Image> InventorySlots = new List<Image>();
-
-    private Transform parentafterDrag;
-
+    public List<Transform> InventorySlots = new List<Transform>();
+    public GameObject itemUIPrefab;
 
     public void ToggleInventory()
     {
@@ -19,52 +17,57 @@ public class InventoryUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             if (InventoryIsClose == true)
             {
+                Cursor.lockState = CursorLockMode.None; // This unlocks the cursor
+                Cursor.visible = true; // This makes the cursor visible
                 gameManager.instance.inventory.SetActive(true);
                 InventoryIsClose = false;
             }
             else
             {
+                Cursor.lockState = CursorLockMode.Locked; // This locks the cursor to the center
+                Cursor.visible = false; // This hides the cursor
                 gameManager.instance.inventory.SetActive(false);
                 InventoryIsClose = true;
             }
         }
     }
 
-        public void OnBeginDrag(PointerEventData eventData)
+    public void OpenInventoryDirectly()
     {
-        parentafterDrag = transform.parent;
-        transform.SetParent(transform.root);
-        foreach(Image img in InventorySlots)
-        {
-            img.raycastTarget = true;
-        }
+        gameManager.instance.inventory.SetActive(true);
+        InventoryIsClose = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void AddItemToInventory(BaseItemStats item)
     {
-        transform.position = Input.mousePosition;
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        if(transform.childCount == 0)
+        foreach (var slot in InventorySlots)
         {
-            GameObject dropped = eventData.pointerDrag;
-            DragItem movedItem = dropped.GetComponent<DragItem>();
-            if(movedItem)
+            // Check if the slot is empty using the Transform component's childCount property
+            if (slot.childCount == 0)
             {
-                movedItem.parentafterDrag = transform;
+                GameObject itemUIObject = Instantiate(itemUIPrefab, slot); // The slot is already a Transform, so this is fine.
+                SetIcon(itemUIObject, item.icon);
+                return;
             }
         }
+        Debug.LogWarning("No available slots in the inventory!");
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    private void SetIcon(GameObject itemUIObject, Sprite iconSprite)
     {
-        transform.SetParent(parentafterDrag);
-        foreach (Image img in InventorySlots)
+        Image imageComponent = itemUIObject.GetComponent<Image>();
+        if (!imageComponent)
         {
-            img.raycastTarget = false;
+            imageComponent = itemUIObject.GetComponentInChildren<Image>();
         }
 
+        if (imageComponent)
+        {
+            imageComponent.sprite = iconSprite;
+        }
+        else
+        {
+            Debug.LogError("No Image component found for: " + itemUIObject.name);
+        }
     }
 }

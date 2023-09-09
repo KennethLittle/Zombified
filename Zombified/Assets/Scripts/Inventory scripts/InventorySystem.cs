@@ -7,7 +7,7 @@ public class InventorySystem : MonoBehaviour
     public static InventorySystem Instance;
 
     public int inventorybag = 32;
-    public List<Inventoryitem> items = new List<Inventoryitem>();
+    public List<BaseItemStats> items = new List<BaseItemStats>();
 
     private void Awake()
     {
@@ -21,9 +21,9 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public bool AddItem(Inventoryitem item)
+    public bool AddItem(BaseItemStats item)
     {
-        if (items.Count > inventorybag)
+        if (items.Count < inventorybag)
         {
             items.Add(item);
             return true;
@@ -31,7 +31,7 @@ public class InventorySystem : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(Inventoryitem item)
+    public void RemoveItem(BaseItemStats item)
     {
         items.Remove(item);
     }

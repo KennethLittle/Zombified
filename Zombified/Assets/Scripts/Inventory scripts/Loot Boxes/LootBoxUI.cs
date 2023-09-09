@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LootBoxUI : MonoBehaviour
 {
+
+    public InventoryUI inventoryUI;
+    public static LootBoxUI Instance;
+
     [System.Serializable]
     public struct LootItem
     {
@@ -23,6 +28,14 @@ public class LootBoxUI : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         currentLoot = DropLoot();
         Debug.Log("Loot assigned to currentLoot with count: " + currentLoot.Count);
         DisplayLoot();
@@ -55,14 +68,23 @@ public class LootBoxUI : MonoBehaviour
         Debug.Log("ToggleUI function called.");
         if (isStorageClosed)
         {
+            Cursor.lockState = CursorLockMode.None; // This unlocks the cursor
+            Cursor.visible = true; // This makes the cursor visible
             DisplayLoot();
             storage.gameObject.SetActive(true);
             isStorageClosed = false;
+
+            // Open the Inventory
+            inventoryUI.OpenInventoryDirectly();
+
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked; // This locks the cursor to the center
+            Cursor.visible = false; // This hides the cursor
             storage.gameObject.SetActive(false);
             isStorageClosed = true;
+            gameManager.instance.inventory.SetActive(false);
         }
     }
 
@@ -88,11 +110,11 @@ public class LootBoxUI : MonoBehaviour
             if (slotIndex < slots.Length)
             {
                 GameObject itemUIObject = Instantiate(itemUIPrefab, slots[slotIndex]);
-                RectTransform rt = itemUIObject.GetComponent<RectTransform>();
-                rt.anchorMin = new Vector2(0, 0);
-                rt.anchorMax = new Vector2(1, 1);
-                rt.offsetMin = new Vector2(0, 0);
-                rt.offsetMax = new Vector2(0, 0);
+                DraggableItemUI draggable = itemUIObject.GetComponent<DraggableItemUI>();
+                if (draggable)
+                {
+                    draggable.AssociatedItem = item;
+                }
                 Debug.Log("Instantiated itemUIPrefab at slot: " + slotIndex);
                 Debug.Log(itemUIObject.name + " parent is: " + itemUIObject.transform.parent.name);
                 SetIcon(itemUIObject, item.icon);
@@ -125,6 +147,36 @@ public class LootBoxUI : MonoBehaviour
         else
         {
             Debug.LogError("No Image component found for: " + itemUIObject.name);
+        }
+    }
+
+    public bool MoveItemToInventory(BaseItemStats item)
+    {
+        if (InventorySystem.Instance.AddItem(item))
+        {
+            // If successfully added to InventorySystem, add to UI
+            inventoryUI.AddItemToInventory(item);
+
+            // If successful, remove the item from currentLoot
+            currentLoot.Remove(item);
+            DisplayLoot(); // Redisplay loot without the moved item
+            
+        }
+        bool wasAdded = true;
+        return wasAdded;
+
+    }
+
+    public void RemoveItemFromLoot(BaseItemStats item)
+    {
+        if (currentLoot.Contains(item))
+        {
+            currentLoot.Remove(item);
+            DisplayLoot();
+        }
+        else
+        {
+            Debug.LogWarning("Trying to remove an item that isn't in the currentLoot list.");
         }
     }
 }

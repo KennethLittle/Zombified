@@ -443,22 +443,6 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Inventoryitem item = other.GetComponent<Inventoryitem>();
-        KeyCode itempickup = KeyCode.E;
-        if (Input.GetKeyDown(itempickup))
-        {
-            if (item)
-            {
-                if (playerInventorySystem.AddItem(item))
-                {
-                    Destroy(item.gameObject);
-                }
-            }
-        }
-    }
-
     public void weaponpickup(WeaponStats weaponStat)
     {
         weaponList.Add(weaponStat);
@@ -520,25 +504,6 @@ public class playerController : MonoBehaviour, IDamage
         {
             Weaponselected--;
             changeweapon();
-        }
-    }
-
-    public void UseItem(Inventoryitem item)
-    {
-        if(item.itemType == ItemType.General)
-        {
-            if(item.name == "MedPack")
-            {
-                if (HP > HPMax)
-                {
-                    useMedPack();
-                    playerInventorySystem.RemoveItem(item);
-                }
-            }
-            else if(item.name == "Ammo Box")
-            {
-                reloadAmmo();
-            }
         }
     }
     void changeweapon()
