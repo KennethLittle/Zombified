@@ -11,6 +11,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerSpawnPos;
     public GameObject inventory;
     public InventoryUI inventoryUI;
+    
 
     public GameObject player;
     public GameObject playerPrefab;
