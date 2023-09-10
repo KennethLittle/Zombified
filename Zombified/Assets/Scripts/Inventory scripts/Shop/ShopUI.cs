@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,140 +6,57 @@ using TMPro;
 
 public class ShopUI : MonoBehaviour
 {
-    public InventoryUI inventoryUI;
-    public static ShopUI Instance;
-    public Button buyAllButton;
-
-    [System.Serializable]
-    public struct ShopItem
-    {
-        public BaseItemStats item;
-        public int cost;
-    }
-
-    public Transform storage; // UI container for items
-    public GameObject itemUIPrefab;
-    public Transform[] slots;
-    public List<ShopItem> possibleShopItems;
-
-    private bool isShopClosed = true;
-    private List<BaseItemStats> currentShopItems = new List<BaseItemStats>();
+    private Transform Shop;
+    private Transform shopItemTemplate;
+    private Buying purchase;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        PopulateShopItems();
-        DisplayShopItems();
-        buyAllButton.onClick.AddListener(BuyAllItems);
+        Shop = transform.Find("Shop");
+        shopItemTemplate = Shop.Find("ShopItemTemplate");
+        shopItemTemplate.gameObject.SetActive(false);
     }
 
-    void PopulateShopItems()
+    private void Start()
     {
-        // Add logic to determine what items should be in the shop. 
-        // For now, we'll just add everything from possibleShopItems.
-        foreach (var shopItem in possibleShopItems)
-        {
-            currentShopItems.Add(shopItem.item);
-        }
+        //CreateItemButton(BaseItemStats.ItemType.AK,BaseItemStats.GetSprite(BaseItemStats.ItemType.AK), "AK - 47", BaseItemStats.GetCost(BaseItemStats.ItemType.AK), 0);
+        //CreateItemButton(BaseItemStats.ItemType.AssaultRifle,BaseItemStats.GetSprite(BaseItemStats.ItemType.AssaultRifle), "Assault Rifle", BaseItemStats.GetCost(BaseItemStats.ItemType.AssaultRifle), 1);
+        //CreateItemButton(BaseItemStats.ItemType.Shotgun,BaseItemStats.GetSprite(BaseItemStats.ItemType.Shotgun), "Shotgun", BaseItemStats.GetCost(BaseItemStats.ItemType.Shotgun), 1);
+        //CreateItemButton(BaseItemStats.ItemType.Sniper,BaseItemStats.GetSprite(BaseItemStats.ItemType.Sniper), "Sniper", BaseItemStats.GetCost(BaseItemStats.ItemType.Sniper), 1);
+        //CreateItemButton(BaseItemStats.ItemType.AmmoBox,BaseItemStats.GetSprite(BaseItemStats.ItemType.AmmoBox), "Ammo Box", BaseItemStats.GetCost(BaseItemStats.ItemType.AmmoBox), 1);
+        //CreateItemButton(BaseItemStats.ItemType.MedPack,BaseItemStats.GetSprite(BaseItemStats.ItemType.MedPack), "MedPack", BaseItemStats.GetCost(BaseItemStats.ItemType.MedPack), 1);
+
     }
+//    private void CreateItemButton(BaseItemStats.ItemType itemtype, Sprite itemSprite, string itemName, int Buyable, int positionlocation)
+//    {
+//        Transform shopItemTransform = Instantiate(shopItemTemplate, Shop);
+//        shopItemTransform.gameObject.SetActive(true);
+//        RectTransform shopItemRectTransform = shopItemTransform.GetComponent<RectTransform>();
 
-    public void ToggleUI()
-    {
-        if (isShopClosed)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            DisplayShopItems();
-            storage.gameObject.SetActive(true);
-            isShopClosed = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            storage.gameObject.SetActive(false);
-            isShopClosed = true;
-        }
-    }
+//        float shopItemHeight = 90f;
+//        shopItemRectTransform.anchoredPosition = new Vector2(0, -shopItemHeight * positionlocation);
 
-    private void DisplayShopItems()
-    {
-        foreach (Transform slot in slots)
-        {
-            DestroyAllChildren(slot);
-        }
+//        shopItemTransform.Find("Weapon").GetComponent<TextMeshProUGUI>().SetText(itemName);
+//        shopItemTransform.Find("Price").GetComponent<TextMeshProUGUI>().SetText(Buyable.ToString());
+//        shopItemTransform.Find("Weapon Image").GetComponent<Image>().sprite = itemSprite;
 
-        int slotIndex = 0;
-        foreach (var item in currentShopItems)
-        {
-            if (slotIndex < slots.Length)
-            {
-                GameObject itemUIObject = Instantiate(itemUIPrefab, slots[slotIndex]);
-                SetIcon(itemUIObject, item.icon);
-                slotIndex++;
-            }
-            else
-            {
-                Debug.LogWarning("No more slots available to display shop items.");
-                break;
-            }
-        }
-    }
+//        //shopItemTransform.GetComponent<Button>().onClick = () =>
+//        //{ BuyItem(type)}
+//    }
 
-    private void SetIcon(GameObject itemUIObject, Sprite iconSprite)
-    {
-        Image imageComponent = itemUIObject.GetComponent<Image>();
-        if (!imageComponent)
-        {
-            imageComponent = itemUIObject.GetComponentInChildren<Image>();
-        }
+//    private void BuyItem(BaseItemStats.ItemType type)
+//    {
+//        purchase.BuyingItem(type);
+//    }
 
-        if (imageComponent)
-        {
-            imageComponent.sprite = iconSprite;
-        }
-        else
-        {
-            Debug.LogError("No Image component found for: " + itemUIObject.name);
-        }
-    }
+//    public void Show(Buying buy)
+//    {
+//        this.purchase = buy;
+//        gameObject.SetActive(true);
+//    }
 
-    public void BuyItemFromShop(BaseItemStats item, int cost)
-    {
-        // Implement logic to buy item, which may involve checking player's money, etc.
-        // For now, we just move the item to inventory:
-        inventoryUI.AddItemToInventory(item);
-        InventorySystem.Instance.AddItem(item);
-
-        // Remove the item from currentShopItems
-        currentShopItems.Remove(item);
-        DisplayShopItems();
-    }
-
-    public void BuyAllItems()
-    {
-        foreach (var item in currentShopItems)
-        {
-            BuyItemFromShop(item, possibleShopItems.Find(si => si.item == item).cost);
-        }
-        currentShopItems.Clear();
-        DisplayShopItems();
-    }
-
-    private void DestroyAllChildren(Transform parentTransform)
-    {
-        for (int i = parentTransform.childCount - 1; i >= 0; i--)
-        {
-            Transform child = parentTransform.GetChild(i);
-            Destroy(child.gameObject);
-        }
-    }
+//    public void Hide()
+//    {
+//        gameObject.SetActive(false);
+//    }
 }

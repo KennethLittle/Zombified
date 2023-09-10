@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface Buying 
 {
-    void BuyingItem(ItemType type);
-    bool TrytoBuy(int coins);
+    //void BuyingItem(BaseItemStats.ItemType type);
 }
