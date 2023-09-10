@@ -69,7 +69,7 @@ public class LootBoxUI : MonoBehaviour
         Debug.Log("ToggleUI function called.");
         if (isStorageClosed)
         {
-            Cursor.lockState = CursorLockMode.None; // This unlocks the cursor
+            gameManager.instance.statePaused();
             Cursor.visible = true; // This makes the cursor visible
             DisplayLoot();
             storage.gameObject.SetActive(true);
@@ -81,7 +81,7 @@ public class LootBoxUI : MonoBehaviour
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked; // This locks the cursor to the center
+            gameManager.instance.stateUnpaused();
             Cursor.visible = false; // This hides the cursor
             storage.gameObject.SetActive(false);
             isStorageClosed = true;
