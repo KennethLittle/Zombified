@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -34,7 +35,8 @@ public class enemyAI : MonoBehaviour, IDamage
     public Transform spawnPoint;
     [SerializeField] float recheckPathInterval = 3f; // Time in seconds the enemy waits before rechecking path
     private float lastPathCheckTime;
-
+    
+    public enemyAI enemy;
     public Quest quest;
     bool isAttacking = false;
     bool zedIsGroaning;
@@ -45,6 +47,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         gameManager.instance.updateGameGoal(1);
         agent.stoppingDistance = meleeRange;
+        OnEnemyDeath();
         ID = 0; //enemy ID #
     }
 
@@ -119,15 +122,6 @@ public class enemyAI : MonoBehaviour, IDamage
             {
                 wave.enemiesRemaining--;
             }
-            //if (quest.isActive)
-            //{
-            //    quest.goal.EnemyKilled();
-            //    if (quest.goal.Complete())
-            //    {
-            //        // turn in quest to NPC
-            //    }
-            //}
-           
         }
     }
 
@@ -143,7 +137,7 @@ public class enemyAI : MonoBehaviour, IDamage
         gameManager.instance.playerScript.takeDamage(amount);
     }
 
-    private void OnDestroy()
+    public void OnEnemyDeath()
     {
         if (OnEnemyKilled != null)
         {

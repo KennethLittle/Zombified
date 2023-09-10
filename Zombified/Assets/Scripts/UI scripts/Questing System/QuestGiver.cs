@@ -23,13 +23,17 @@ public class QuestGiver : MonoBehaviour
     public TextMeshProUGUI experienceText;
     public TextMeshProUGUI scrapText;
 
+
     public void OpenQuestWindow()
     {
-        questWindow.SetActive(true);
-        titleText.text = quest.title;
-        descriptionText.text = quest.description;
-        experienceText.text = quest.expReward.ToString();
-        scrapText.text = quest.scrapReward.ToString();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            questWindow.SetActive(true);
+            titleText.text = quest.title;
+            descriptionText.text = quest.description;
+            experienceText.text = quest.expReward.ToString();
+            scrapText.text = quest.scrapReward.ToString();
+        }
     }
 
     public void AcceptQuest()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class KillGoal : QuestGoal
@@ -18,10 +19,17 @@ public class KillGoal : QuestGoal
     public override void Init()
     {
         base.Init();
+
+        System.Action<enemyAI> OnEnemyDeath = null;
+        OnEnemyDeath += EnemyDied;
     }
 
-    void EnemyDied(enemyAI enemy) // listens for when an enemy dies
+    public void EnemyDied(enemyAI enemy) // listens for when an enemy dies
     {
-
+        if (enemy.ID == this.EnemyID)
+        {
+            this.currentAmount++;
+            Evaluate();
+        }
     }
 }

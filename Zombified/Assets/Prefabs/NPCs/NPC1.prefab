@@ -3125,11 +3125,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Frank
   quest:
-    isActive: 0
+    isActive: 1
+    questComplete: 0
     title: 
     description: 
     expReward: 0
     scrapReward: 0
+    goal:
+      goalType: 0
   dialogue:
     inDialogue: 0
     name: 
