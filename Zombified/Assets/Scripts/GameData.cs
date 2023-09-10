@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class GameData
 {
@@ -9,6 +11,8 @@ public class GameData
     public int totalAccumulatedXP;
     public int HP;
     public float Stamina;
+    public string lastScene;
+    public List<BaseItemStats> inventoryItems;
 
     public GameData(gameManager manager)
     {
@@ -18,6 +22,8 @@ public class GameData
         extraHP = gameManager.instance.levelUpSystem.extraHP;
         extraStamina = gameManager.instance.levelUpSystem.extraStamina;
         totalAccumulatedXP = gameManager.instance.levelUpSystem.totalAccumulatedXP;
+        lastScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        inventoryItems = InventorySystem.Instance.items;
     }
 
     public void NewGame(gameManager manager)
@@ -28,5 +34,7 @@ public class GameData
         HP = gameManager.instance.playerScript.defaultHP;
         Stamina = gameManager.instance.playerScript.defaultStamina;
         totalAccumulatedXP = 0;
+        inventoryItems = new List<BaseItemStats>();
+        lastScene = "";
     }
 }
