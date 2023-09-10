@@ -361,6 +361,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 223054697817256093, guid: c535516c8f6f036428354b161f04a957, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 223054697817256093, guid: c535516c8f6f036428354b161f04a957, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5265918352529587737, guid: c535516c8f6f036428354b161f04a957, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -421,6 +429,10 @@ PrefabInstance:
       propertyPath: playerInventorySystem
       value: 
       objectReference: {fileID: 204724856}
+    - target: {fileID: 7213953004955010007, guid: c535516c8f6f036428354b161f04a957, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8224281536955380425, guid: c535516c8f6f036428354b161f04a957, type: 3}
       propertyPath: m_Name
       value: Level 1
