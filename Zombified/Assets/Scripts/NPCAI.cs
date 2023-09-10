@@ -21,6 +21,7 @@ public class NPCAI : MonoBehaviour
     private Vector3 initialPosition;
     public float roamRange = 5f;  // Radius around the initial position
     private bool isRoaming;
+    [SerializeField] Animator anim;
 
     private void Start()
     {
@@ -57,6 +58,7 @@ public class NPCAI : MonoBehaviour
 
     private void InteractWithPlayer()
     {
+        anim.SetTrigger("isInteracting");
         isRoaming = false;
         agent.isStopped = true;  // Stop the NPC
 
