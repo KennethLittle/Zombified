@@ -7,6 +7,15 @@ using static Inventoryitem;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    enum ActiveWeapon
+    {
+        Primary,
+        Secondary
+    }
+
+    ActiveWeapon activeWeapon = ActiveWeapon.Primary;
+    private BaseItemStats currentWeapon;
+
     public InventorySystem playerInventorySystem;
     public InventoryUI playerInventoryUI;
 
@@ -120,11 +129,15 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         lowHealthSFX();
-        weaponselect();
         useMedPack();
         reloadAmmo();
 
-        if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButtonDown("SwitchWeapons"))
+        {
+            SwitchWeapon();
+        }
+
+        if (currentWeapon != null && Input.GetButton("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
         }
@@ -332,33 +345,35 @@ public class playerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        if (weaponList[Weaponselected].ammoCur > 0)
+        WeaponStats weapon = currentWeapon as WeaponStats;
+        if (weapon.ammoCur > 0)
         {
             isShooting = true;
             anim.SetBool("IsShooting", true);
-            weaponList[Weaponselected].ammoCur--;
+
+            weapon.ammoCur--;
             updatePlayerUI();
 
-            // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
-            audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
-            // Plays gunshot casing audio sfx - Plays a random gunshot casing sfx from the range audioShootCasing at a volume defined by audioShootCasingVol
-            audioSFX.PlayOneShot(audioShootCasing[Random.Range(0, audioShootCasing.Length)], audioShootCasingVol);
+            // Plays gunshot audio sfx
+            audioSFX.PlayOneShot(weapon.audioShoot[Random.Range(0, weapon.audioShoot.Length)], weapon.audioShootVol);
 
-            // shoot code
+            // Plays gunshot casing audio sfx
+            audioSFX.PlayOneShot(weapon.audioShootCasing[Random.Range(0, weapon.audioShootCasing.Length)], weapon.audioShootCasingVol);
+
+            // Shoot code
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, weapon.shootDist))
             {
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
 
                 if (damageable != null)
                 {
-                    damageable.takeDamage(shootDamage);
+                    damageable.takeDamage(weapon.shootDamage);
                 }
             }
 
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false; 
-
+            yield return new WaitForSeconds(weapon.shootRate);
+            isShooting = false;
         }
     }
 
@@ -466,15 +481,15 @@ public class playerController : MonoBehaviour, IDamage
 
         updatePlayerUI();
     }
-    public void EquipWeapon(Inventoryitem weapon)
+    public void EquipWeapon(BaseItemStats weapon)
     {
-        if (weapon.itemType == ItemType.PrimaryWeapon && !primaryWeaponSlot.transform)
+        // Decide which slot to equip to based on the weapon's ItemType
+        Transform targetSlot = (weapon.itemType == ItemType.PrimaryWeapon) ? primaryWeaponSlot.transform : secondaryWeaponSlot.transform;
+
+        // Check if the target slot is empty before equipping
+        if (targetSlot.childCount == 0)
         {
-            GameObject newWeapon = Instantiate(weapon.gameObject, primaryWeaponSlot.transform);
-        }
-        else if (weapon.itemType == ItemType.SecondaryWeapon && !secondaryWeaponSlot.transform)
-        {
-            GameObject NewWeapon = Instantiate(weapon.gameObject, secondaryWeaponSlot.transform);
+            Instantiate(weapon.modelPrefab, targetSlot.position, Quaternion.identity, targetSlot);
         }
     }
 
@@ -496,35 +511,26 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
     }
 
-    void weaponselect()
+    public void SwitchWeapon()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Weaponselected < weaponList.Count - 1)
+        if (activeWeapon == ActiveWeapon.Primary)
         {
-            Weaponselected++;
-            changeweapon();
+            activeWeapon = ActiveWeapon.Secondary;
+            // Assuming you have the weapon objects as children to the slots
+            if (primaryWeaponSlot.transform.childCount > 0)
+                primaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(false);
+            if (secondaryWeaponSlot.transform.childCount > 0)
+                secondaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(true);
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && Weaponselected > 0)
+        else
         {
-            Weaponselected--;
-            changeweapon();
+            activeWeapon = ActiveWeapon.Primary;
+            if (secondaryWeaponSlot.transform.childCount > 0)
+                secondaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(false);
+            if (primaryWeaponSlot.transform.childCount > 0)
+                primaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
-    void changeweapon()
-    {
-        shootDamage = weaponList[Weaponselected].shootDamage;
-        shootDist = (int)weaponList[Weaponselected].shootDist;
-        shootRate = weaponList[Weaponselected].shootRate;
 
-        audioShoot = weaponList[Weaponselected].audioShoot;
-        audioShootVol = weaponList[Weaponselected].audioShootVol;
-        audioShootCasing = weaponList[Weaponselected].audioShootCasing;
-        audioShootCasingVol = weaponList[Weaponselected].audioShootCasingVol;
-        audioGunReload = weaponList[Weaponselected].audioGunReload;
-        audioGunReloadVol = weaponList[Weaponselected].audioGunReloadVol;
-       
 
-        updatePlayerUI();
-    }
-
-    
 }
