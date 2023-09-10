@@ -10,26 +10,36 @@ public class InventoryUI : MonoBehaviour
     public bool InventoryIsClose;
     public List<Transform> InventorySlots = new List<Transform>();
     public GameObject itemUIPrefab;
+    private float debounceTime = 3f; // Half a second delay
+    private float nextToggleTime;
 
     public void ToggleInventory()
     {
         if (Input.GetButtonDown("Inventory"))
         {
-            if (InventoryIsClose == true)
+            if (Time.time < nextToggleTime) return;
             {
-                Cursor.lockState = CursorLockMode.None; // This unlocks the cursor
-                Cursor.visible = true; // This makes the cursor visible
-                gameManager.instance.inventory.SetActive(true);
-                InventoryIsClose = false;
+                if (InventoryIsClose == true)
+                {
+                    Cursor.lockState = CursorLockMode.None; // This unlocks the cursor
+                    Cursor.visible = true; // This makes the cursor visible
+                    gameManager.instance.inventory.SetActive(true);
+                    InventoryIsClose = false;
+                }
+                else
+                {
+                    Cursor.lockState = CursorLockMode.Locked; // This locks the cursor to the center
+                    Cursor.visible = false; // This hides the cursor
+                    gameManager.instance.inventory.SetActive(false);
+                    InventoryIsClose = true;
+                }
             }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked; // This locks the cursor to the center
-                Cursor.visible = false; // This hides the cursor
-                gameManager.instance.inventory.SetActive(false);
-                InventoryIsClose = true;
-            }
+
+
+            nextToggleTime = Time.time + debounceTime;
         }
+        
+        
     }
 
     public void OpenInventoryDirectly()

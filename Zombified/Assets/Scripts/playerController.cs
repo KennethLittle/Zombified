@@ -515,7 +515,6 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
 
-        // Equip the new weapon
         if (weapon.itemType == ItemType.Weapon)
         {
             GameObject equippedWeaponGO = Instantiate(weapon.modelPrefab, weaponSlot.transform.position, Quaternion.identity, weaponSlot.transform);
@@ -525,12 +524,6 @@ public class playerController : MonoBehaviour, IDamage
             weaponBehavior.itemStats = weapon;
 
             equippedWeapons.Add(equippedWeaponGO);
-
-            // Deactivate the weapon if there's another already equipped
-            if (equippedWeapons.Count > 1)
-            {
-                equippedWeaponGO.SetActive(false);
-            }
         }
     }
 

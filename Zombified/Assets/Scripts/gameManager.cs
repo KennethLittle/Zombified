@@ -101,7 +101,7 @@ public class gameManager : MonoBehaviour
             ToggleControlMenu();
         }
 
-        Inventory();
+        inventoryUI.ToggleInventory();
     }
 
     public void statePaused()
@@ -215,8 +215,5 @@ public class gameManager : MonoBehaviour
         SaveManager.LoadGame(this);
     }
 
-    public void Inventory()
-    {
-        inventoryUI.ToggleInventory();
-    }
+   
 }
