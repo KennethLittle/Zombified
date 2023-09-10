@@ -7,20 +7,11 @@ using static Inventoryitem;
 
 public class playerController : MonoBehaviour, IDamage
 {
-    enum ActiveWeapon
-    {
-        Primary,
-        Secondary
-    }
 
-    ActiveWeapon activeWeapon = ActiveWeapon.Primary;
-    private BaseItemStats currentWeapon;
+    public Transform weaponSlot;
 
     public InventorySystem playerInventorySystem;
     public InventoryUI playerInventoryUI;
-
-    public GameObject primaryWeaponSlot;
-    public GameObject secondaryWeaponSlot;
 
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
@@ -132,12 +123,7 @@ public class playerController : MonoBehaviour, IDamage
         useMedPack();
         reloadAmmo();
 
-        if (Input.GetButtonDown("SwitchWeapons"))
-        {
-            SwitchWeapon();
-        }
-
-        if (currentWeapon != null && Input.GetButton("Shoot") && !isShooting)
+        if (weaponSlot.transform.childCount > 0 && Input.GetButton("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
         }
@@ -345,7 +331,13 @@ public class playerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        WeaponStats weapon = currentWeapon as WeaponStats;
+        if (weaponSlot.transform.childCount == 0)
+            yield break; // No weapon to shoot with
+
+        WeaponStats weapon = weaponSlot.transform.GetChild(0).GetComponent<WeaponStats>();
+        if (weapon == null)
+            yield break; // No weapon stats found
+
         if (weapon.ammoCur > 0)
         {
             isShooting = true;
@@ -452,44 +444,34 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
         gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
 
-        if(weaponList.Count > 0)
+        // Check if a weapon is equipped
+        if (weaponSlot.transform.childCount > 0)
         {
-            gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
-            gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
-            gameManager.instance.weaponIcon.sprite = weaponList[Weaponselected].icon;
+            WeaponStats equippedWeapon = weaponSlot.transform.GetChild(0).GetComponent<WeaponStats>();
+            if (equippedWeapon != null) // Ensuring the weapon has the WeaponStats component
+            {
+                gameManager.instance.ammoCur.text = equippedWeapon.ammoCur.ToString("F0");
+                gameManager.instance.ammoMax.text = equippedWeapon.ammoMax.ToString("F0");
+                gameManager.instance.weaponIcon.sprite = equippedWeapon.icon;
+            }
+        }
+        else
+        {
+            // Optionally, clear weapon-related UI fields if no weapon is equipped
+            gameManager.instance.ammoCur.text = "0";
+            gameManager.instance.ammoMax.text = "0";
+            gameManager.instance.weaponIcon.sprite = null; // Or some default 'no weapon' icon
         }
 
     }
 
-    public void weaponpickup(WeaponStats weaponStat)
-    {
-        weaponList.Add(weaponStat);
-        anim.SetBool("weaponEquipped", true);
-
-        shootDamage = weaponStat.shootDamage;
-        shootRate = weaponStat.shootRate;
-        shootDist = (int)weaponStat.shootDist;
-
-        audioShoot = weaponStat.audioShoot;
-        audioShootVol = weaponStat.audioShootVol;
-        audioShootCasing = weaponStat.audioShootCasing;
-        audioShootCasingVol = weaponStat.audioShootCasingVol;
-        audioGunReload = weaponStat.audioGunReload;
-        audioGunReloadVol = weaponStat.audioGunReloadVol;
-
-       
-
-        updatePlayerUI();
-    }
     public void EquipWeapon(BaseItemStats weapon)
     {
-        // Decide which slot to equip to based on the weapon's ItemType
-        Transform targetSlot = (weapon.itemType == ItemType.PrimaryWeapon) ? primaryWeaponSlot.transform : secondaryWeaponSlot.transform;
-
-        // Check if the target slot is empty before equipping
-        if (targetSlot.childCount == 0)
+        if (weapon.itemType == ItemType.Weapon && weaponSlot.transform.childCount == 0)
         {
-            Instantiate(weapon.modelPrefab, targetSlot.position, Quaternion.identity, targetSlot);
+            Instantiate(weapon.modelPrefab, weaponSlot.transform.position, Quaternion.identity, weaponSlot.transform);
+            weaponSlot.GetComponent<MeshFilter>().sharedMesh = weapon.modelPrefab.GetComponent<MeshFilter>().sharedMesh;
+            weaponSlot.GetComponent<MeshRenderer>().sharedMaterial = weapon.modelPrefab.GetComponent<MeshRenderer>().sharedMaterial;
         }
     }
 
@@ -509,27 +491,6 @@ public class playerController : MonoBehaviour, IDamage
     {
         ammoBoxAmount += ammoBoxStat.ammoAmount;
         gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
-    }
-
-    public void SwitchWeapon()
-    {
-        if (activeWeapon == ActiveWeapon.Primary)
-        {
-            activeWeapon = ActiveWeapon.Secondary;
-            // Assuming you have the weapon objects as children to the slots
-            if (primaryWeaponSlot.transform.childCount > 0)
-                primaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(false);
-            if (secondaryWeaponSlot.transform.childCount > 0)
-                secondaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(true);
-        }
-        else
-        {
-            activeWeapon = ActiveWeapon.Primary;
-            if (secondaryWeaponSlot.transform.childCount > 0)
-                secondaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(false);
-            if (primaryWeaponSlot.transform.childCount > 0)
-                primaryWeaponSlot.transform.GetChild(0).gameObject.SetActive(true);
-        }
     }
 
 

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    PrimaryWeapon,
-    SecondaryWeapon,
+    Weapon,
     MedPack,
     AmmoBox
     // Add more item types if needed

@@ -8,10 +8,7 @@ public class InventorySystem : MonoBehaviour
     public int inventorybag = 32;
     public List<BaseItemStats> items = new List<BaseItemStats>();
 
-    private BaseItemStats primaryWeapon;
-    private BaseItemStats secondaryWeapon;
-    public Transform primaryWeaponSlot;
-    public Transform secondaryWeaponSlot;
+    private BaseItemStats equippedWeapon;
 
     private void Awake()
     {
@@ -31,51 +28,31 @@ public class InventorySystem : MonoBehaviour
         {
             items.Add(item);
 
-            // Check if this is the first primary weapon and if the primary slot is empty.
-            if (item.itemType == ItemType.PrimaryWeapon && primaryWeapon == null)
+            // Equip the first weapon if none is equipped yet.
+            if (item.itemType == ItemType.Weapon && equippedWeapon == null)
             {
-                EquipPrimaryWeapon(item);
+                EquipWeapon(item);
             }
-            // Similarly, you can add for secondary weapon if you wish to keep a separate slot.
-
             return true;
         }
         return false;
     }
 
+    public void EquipWeapon(BaseItemStats weapon)
+    {
+        if (weapon.itemType == ItemType.Weapon)
+        {
+            equippedWeapon = weapon;
+            RemoveItem(weapon);  // Remove weapon from inventory once equipped
+
+            // Notify the player script to equip the weapon visually
+            gameManager.instance.playerScript.EquipWeapon(weapon);
+        }
+    }
+
     public void RemoveItem(BaseItemStats item)
     {
         items.Remove(item);
-    }
-
-    public void EquipPrimaryWeapon(BaseItemStats weapon)
-    {
-        if (weapon.itemType == ItemType.PrimaryWeapon && primaryWeapon == null)
-        {
-            primaryWeapon = weapon;
-            RemoveItem(weapon);  // Remove weapon from inventory once equipped
-
-            GameObject equippedWeapon = Instantiate(weapon.modelPrefab, primaryWeaponSlot.transform.position, Quaternion.identity, primaryWeaponSlot.transform);
-
-            // You can check and print out whether the MeshFilter and MeshRenderer exist on the instantiated weapon:
-            if (equippedWeapon.GetComponent<MeshFilter>() && equippedWeapon.GetComponent<MeshRenderer>())
-            {
-                Debug.Log("Weapon has MeshFilter and MeshRenderer");
-            }
-            else
-            {
-                Debug.LogWarning("Weapon might be missing MeshFilter or MeshRenderer");
-            }
-        }
-    }
-
-    public void EquipSecondaryWeapon(BaseItemStats weapon)
-    {
-        if (weapon.itemType == ItemType.SecondaryWeapon)
-        {
-            secondaryWeapon = weapon;
-            RemoveItem(weapon);  // Remove weapon from inventory once equipped
-        }
     }
 
     public void UseItem(BaseItemStats item)

@@ -15,4 +15,5 @@ MonoBehaviour:
   itemName: Ammo Box
   icon: {fileID: 21300000, guid: d0e0ab1b671b03f47bec2ec2f0a6d07c, type: 3}
   modelPrefab: {fileID: 1722385715054005983, guid: bd91e8d62d358ec4080f056d0fba58dc, type: 3}
+  itemType: 3
   ammoAmount: 20

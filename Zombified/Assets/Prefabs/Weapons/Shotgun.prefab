@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 328852641459276817}
   - component: {fileID: 6068944267235493524}
   - component: {fileID: 8462262485336776148}
+  - component: {fileID: 1568681669282441047}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -114,3 +115,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3.0458083
   m_Center: {x: -0.008700721, y: 0.22193724, z: -0.40894532}
+--- !u!114 &1568681669282441047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2274508903960980932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c8fbf4262f4934884db1cabd8ef38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemStats: {fileID: 11400000, guid: 48de6baf8019a1843aeef590a607d97a, type: 2}
