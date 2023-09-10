@@ -25,6 +25,12 @@ public static class SaveManager
             gameManager.instance.levelUpSystem.extraHP = data.extraHP;
             gameManager.instance.levelUpSystem.extraStamina = data.extraStamina;
             gameManager.instance.levelUpSystem.totalAccumulatedXP = data.totalAccumulatedXP;
+            if (!string.IsNullOrEmpty(data.lastScene))
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(data.lastScene);
+            }
+
+            InventorySystem.Instance.items = data.inventoryItems;
         }
         else
         {

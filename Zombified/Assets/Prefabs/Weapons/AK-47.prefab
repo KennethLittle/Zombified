@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 8233353459772421491}
   - component: {fileID: 6371684375815180967}
   - component: {fileID: 8661965161483695105}
+  - component: {fileID: 3721561566544479255}
   m_Layer: 0
   m_Name: AK-47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7064339693636685340
 Transform:
   m_ObjectHideFlags: 0
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3721561566544479255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7584698566914364582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c8fbf4262f4934884db1cabd8ef38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemStats: {fileID: 11400000, guid: d6b7d9f90f79c604189d28275bf58f46, type: 2}
+  weaponStats: {fileID: 11400000, guid: d6b7d9f90f79c604189d28275bf58f46, type: 2}

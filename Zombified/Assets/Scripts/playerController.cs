@@ -1,17 +1,18 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Inventoryitem;
 
 public class playerController : MonoBehaviour, IDamage
 {
+
+    public Transform weaponSlot;
+
     public InventorySystem playerInventorySystem;
     public InventoryUI playerInventoryUI;
-
-    public GameObject primaryWeaponSlot;
-    public GameObject secondaryWeaponSlot;
 
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
@@ -34,21 +35,8 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public float defaultStamina = 100;
 
     [Header("----- Player Gun Stats -----")]
-    [SerializeField] List<WeaponStats> weaponList = new List<WeaponStats>();
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDist;
-    [SerializeField] GameObject weaponmod;
-    public int Weaponselected;
-
-    [Header("----- Ammo Box -----")]
-    public int ammoBoxAmount;
-
-    [Header("----- Player Med Packs -----")]
-    [SerializeField] List<medPackStats> medPackList = new List<medPackStats>();
-    public int medPackMaxAmount;
-    [SerializeField] int healAmount;
-    public int medPackAmount;
+    [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>(); // List of instantiated weapon game objects
+    public int currentWeaponIndex = 0;
 
     [Header("----- Audio -----")]
     // audio<something> is an array of sfx
@@ -103,7 +91,6 @@ public class playerController : MonoBehaviour, IDamage
         defaultHP = HP;
         defaultStamina = stamina;
         audioLHVolOrig = audioLowHealthVol;
-        gameManager.instance.medPackMax.text = medPackMaxAmount.ToString("F0"); 
         spawnPlayer();
         if(!playerInventorySystem)
         {
@@ -120,17 +107,17 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         lowHealthSFX();
-        weaponselect();
         useMedPack();
         reloadAmmo();
 
-        if (weaponList.Count > 0 && Input.GetButton("Shoot") && !isShooting)
+        if (weaponSlot.transform.childCount > 0 && Input.GetButton("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
-        }
-        if (!isShooting)
-        {
             anim.SetBool("IsShooting", false);
+        }
+        if (Input.GetButtonDown("SwitchWeapons"))
+        {
+            SwitchToNextWeapon();
         }
 
     }
@@ -332,71 +319,137 @@ public class playerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        if (weaponList[Weaponselected].ammoCur > 0)
+        if (weaponSlot.transform.childCount == 0)
+        {
+            Debug.Log("No weapon in the slot.");
+            yield break;
+        }
+
+        ItemBehavior itemBehavior = weaponSlot.transform.GetChild(0).GetComponent<ItemBehavior>();
+        if (itemBehavior == null || itemBehavior.weaponStats == null)
+        {
+            Debug.Log("ItemBehavior or WeaponStats not found.");
+            yield break;
+        }
+
+        WeaponStats weapon = itemBehavior.weaponStats; // <-- Here's where we set the weapon stats
+
+        if (weapon.ammoCur > 0)
         {
             isShooting = true;
             anim.SetBool("IsShooting", true);
-            weaponList[Weaponselected].ammoCur--;
+
+            weapon.ammoCur--;
             updatePlayerUI();
 
-            // Plays gunshot audio sfx - Plays a random gunshot sfx from the range audioShoot at a volume defined by audioShootVol
-            audioSFX.PlayOneShot(audioShoot[Random.Range(0, audioShoot.Length)], audioShootVol);
-            // Plays gunshot casing audio sfx - Plays a random gunshot casing sfx from the range audioShootCasing at a volume defined by audioShootCasingVol
-            audioSFX.PlayOneShot(audioShootCasing[Random.Range(0, audioShootCasing.Length)], audioShootCasingVol);
+            // Plays gunshot audio sfx
+            audioSFX.PlayOneShot(weapon.audioShoot[Random.Range(0, weapon.audioShoot.Length)], weapon.audioShootVol);
 
-            // shoot code
+            // Plays gunshot casing audio sfx
+            audioSFX.PlayOneShot(weapon.audioShootCasing[Random.Range(0, weapon.audioShootCasing.Length)], weapon.audioShootCasingVol);
+
+            // Shoot code
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, weapon.shootDist))
             {
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
 
                 if (damageable != null)
                 {
-                    damageable.takeDamage(shootDamage);
+                    damageable.takeDamage(weapon.shootDamage);
                 }
             }
 
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false; 
-
+            yield return new WaitForSeconds(weapon.shootRate);
+            isShooting = false;
         }
     }
 
+    WeaponStats GetCurrentWeaponStats()
+    {
+        if (currentWeaponIndex >= 0 && currentWeaponIndex < equippedWeapons.Count)
+        {
+            ItemBehavior itemBehavior = equippedWeapons[currentWeaponIndex].GetComponent<ItemBehavior>();
+            return itemBehavior?.itemStats as WeaponStats;
+        }
+        return null;
+    }
+
+    private void SwitchToNextWeapon()
+    {
+        if (equippedWeapons.Count > 0)
+        {
+            // Deactivate the current weapon
+            if (currentWeaponIndex >= 0 && currentWeaponIndex < equippedWeapons.Count)
+            {
+                equippedWeapons[currentWeaponIndex].SetActive(false);
+            }
+
+            // Increment the weapon index
+            currentWeaponIndex = (currentWeaponIndex + 1) % equippedWeapons.Count;
+
+            // Activate the new weapon
+            equippedWeapons[currentWeaponIndex].SetActive(true);
+
+            // Update the player UI
+            updatePlayerUI();
+        }
+    }
+
+
     void useMedPack()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && medPackAmount > 0 && HP < HPMax)
+        BaseItemStats medPack = InventorySystem.Instance.items.Find(item => item is medPackStats);
+
+        if (Input.GetKeyDown(KeyCode.Q) && medPack != null && HP < HPMax)
         {
-            medPackAmount--;
-            gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
+            // Get the specific MedPack properties.
+            medPackStats specificMedPack = medPack as medPackStats;
+            int healAmount = specificMedPack.healAmount;
+
             HP += healAmount;
+
             if (HP > HPMax)
             {
                 HP = HPMax;
             }
+
+            // Update UI and remove the med pack from inventory after use.
             updatePlayerUI();
+            InventorySystem.Instance.RemoveItem(medPack);
         }
     }
 
     void reloadAmmo()
     {
-        if (Input.GetKeyDown(KeyCode.R) && weaponList[Weaponselected].ammoCur < weaponList[Weaponselected].ammoMax && ammoBoxAmount > 0)
+        WeaponStats currentWeapon = GetCurrentWeaponStats();
+
+        if (currentWeapon == null)
+            return; // No weapon currently equipped or selected
+
+        if (Input.GetKeyDown(KeyCode.R) && currentWeapon.ammoCur < currentWeapon.ammoMax)
         {
-            int difference = weaponList[Weaponselected].ammoMax - weaponList[Weaponselected].ammoCur;
+            int difference = currentWeapon.ammoMax - currentWeapon.ammoCur;
             anim.SetBool("IsReloading", true);
 
-            if (ammoBoxAmount >= difference)
+            while (difference > 0 && InventorySystem.Instance.items.Any(item => item is ammoBoxStats))
             {
-                weaponList[Weaponselected].ammoCur = weaponList[Weaponselected].ammoMax;
-                ammoBoxAmount -= difference;
-            }
-            else
-            {
-                weaponList[Weaponselected].ammoCur += ammoBoxAmount;
-                ammoBoxAmount = 0; // Since all the ammo in the box was used, set it to 0
+                ammoBoxStats ammoBox = (ammoBoxStats)InventorySystem.Instance.items.First(item => item is ammoBoxStats);
+                int ammoToTake = Mathf.Min(difference, ammoBox.ammoAmount);
+
+                currentWeapon.ammoCur += ammoToTake;
+                ammoBox.ammoAmount -= ammoToTake;
+
+                difference -= ammoToTake;
+
+                if (ammoBox.ammoAmount <= 0) // Remove ammo box if empty
+                {
+                    InventorySystem.Instance.RemoveItem(ammoBox);
+                }
             }
 
-            gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
             anim.SetBool("IsReloading", false);
+            updatePlayerUI(); // To reflect the changes in the UI
         }
     }
 
@@ -437,94 +490,42 @@ public class playerController : MonoBehaviour, IDamage
         gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
         gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
 
-        if(weaponList.Count > 0)
+        WeaponStats currentWeapon = GetCurrentWeaponStats();
+        if (currentWeapon != null)
         {
-            gameManager.instance.ammoCur.text = weaponList[Weaponselected].ammoCur.ToString("F0");
-            gameManager.instance.ammoMax.text = weaponList[Weaponselected].ammoMax.ToString("F0");
-            gameManager.instance.weaponIcon.sprite = weaponList[Weaponselected].icon;
+            gameManager.instance.ammoCur.text = currentWeapon.ammoCur.ToString("F0");
+            gameManager.instance.ammoMax.text = currentWeapon.ammoMax.ToString("F0");
+            gameManager.instance.weaponIcon.sprite = currentWeapon.icon;
         }
 
+        int medPackCount = InventorySystem.Instance.items.Count(item => item is medPackStats);
+        gameManager.instance.medPackCur.text = medPackCount.ToString("F0");
+
+        int ammoBoxCount = InventorySystem.Instance.items.Count(item => item is ammoBoxStats);
+        gameManager.instance.ammoBoxAmount.text = ammoBoxCount.ToString("F0");
     }
 
-    public void weaponpickup(WeaponStats weaponStat)
+    public void EquipWeapon(BaseItemStats weapon)
     {
-        weaponList.Add(weaponStat);
-        anim.SetBool("weaponEquipped", true);
-
-        shootDamage = weaponStat.shootDamage;
-        shootRate = weaponStat.shootRate;
-        shootDist = (int)weaponStat.shootDist;
-
-        audioShoot = weaponStat.audioShoot;
-        audioShootVol = weaponStat.audioShootVol;
-        audioShootCasing = weaponStat.audioShootCasing;
-        audioShootCasingVol = weaponStat.audioShootCasingVol;
-        audioGunReload = weaponStat.audioGunReload;
-        audioGunReloadVol = weaponStat.audioGunReloadVol;
-
-       
-
-        updatePlayerUI();
-    }
-    public void EquipWeapon(Inventoryitem weapon)
-    {
-        if (weapon.itemType == ItemType.PrimaryWeapon && !primaryWeaponSlot.transform)
+        if (weaponSlot.transform.childCount > 0)
         {
-            GameObject newWeapon = Instantiate(weapon.gameObject, primaryWeaponSlot.transform);
+            foreach (Transform child in weaponSlot.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
-        else if (weapon.itemType == ItemType.SecondaryWeapon && !secondaryWeaponSlot.transform)
+
+        if (weapon.itemType == ItemType.Weapon)
         {
-            GameObject NewWeapon = Instantiate(weapon.gameObject, secondaryWeaponSlot.transform);
+            GameObject equippedWeaponGO = Instantiate(weapon.modelPrefab, weaponSlot.transform.position, Quaternion.identity, weaponSlot.transform);
+            weaponSlot.GetComponent<MeshFilter>().sharedMesh = weapon.modelPrefab.GetComponent<MeshFilter>().sharedMesh;
+            weaponSlot.GetComponent<MeshRenderer>().sharedMaterial = weapon.modelPrefab.GetComponent<MeshRenderer>().sharedMaterial;
+            ItemBehavior weaponBehavior = equippedWeaponGO.AddComponent<ItemBehavior>();
+            weaponBehavior.itemStats = weapon;
+
+            equippedWeapons.Add(equippedWeaponGO);
         }
     }
 
-    public void medPackPickup(medPackStats medPackStat)
-    {
-        if (medPackAmount < medPackMaxAmount)
-        {
-            medPackList.Add(medPackStat);
-            medPackAmount++;
 
-            gameManager.instance.medPackCur.text = medPackAmount.ToString("F0");
-        }
-
-    }
-
-    public void ammoBoxPickup(ammoBoxStats ammoBoxStat)
-    {
-        ammoBoxAmount += ammoBoxStat.ammoAmount;
-        gameManager.instance.ammoBoxAmount.text = ammoBoxAmount.ToString("F0");
-    }
-
-    void weaponselect()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Weaponselected < weaponList.Count - 1)
-        {
-            Weaponselected++;
-            changeweapon();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && Weaponselected > 0)
-        {
-            Weaponselected--;
-            changeweapon();
-        }
-    }
-    void changeweapon()
-    {
-        shootDamage = weaponList[Weaponselected].shootDamage;
-        shootDist = (int)weaponList[Weaponselected].shootDist;
-        shootRate = weaponList[Weaponselected].shootRate;
-
-        audioShoot = weaponList[Weaponselected].audioShoot;
-        audioShootVol = weaponList[Weaponselected].audioShootVol;
-        audioShootCasing = weaponList[Weaponselected].audioShootCasing;
-        audioShootCasingVol = weaponList[Weaponselected].audioShootCasingVol;
-        audioGunReload = weaponList[Weaponselected].audioGunReload;
-        audioGunReloadVol = weaponList[Weaponselected].audioGunReloadVol;
-       
-
-        updatePlayerUI();
-    }
-
-    
 }

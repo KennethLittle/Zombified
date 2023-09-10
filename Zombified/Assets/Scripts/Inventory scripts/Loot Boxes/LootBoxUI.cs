@@ -128,6 +128,7 @@ public class LootBoxUI : MonoBehaviour
         {
             // Move the item to the inventory
             inventoryUI.AddItemToInventory(item);
+            InventorySystem.Instance.AddItem(item);
         }
         currentLoot.Clear(); // Clear the loot
 
@@ -167,6 +168,7 @@ public class LootBoxUI : MonoBehaviour
         {
             // If successfully added to InventorySystem, add to UI
             inventoryUI.AddItemToInventory(item);
+            InventorySystem.Instance.AddItem(item);
 
             // Remove the item from currentLoot
             currentLoot.Remove(item);
