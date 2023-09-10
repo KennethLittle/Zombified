@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class DoorInteraction : MonoBehaviour
 {
     private bool isPlayerClose = false;
+    public TextMeshProUGUI promptText;
 
+    private void Start()
+    {
+        promptText.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (isPlayerClose && Input.GetKeyDown(KeyCode.E))
@@ -25,6 +31,8 @@ public class DoorInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerClose = true;
+            promptText.text = "Press E to go to Alpha Station";
+            promptText.gameObject.SetActive(true);
         }
     }
 
@@ -33,6 +41,7 @@ public class DoorInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerClose = false;
+            promptText.gameObject.SetActive(false);
         }
     }
 }
