@@ -128,3 +128,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemStats: {fileID: 11400000, guid: 7f6be407ec3fb414ab61b938340e7002, type: 2}
+  weaponStats: {fileID: 11400000, guid: 7f6be407ec3fb414ab61b938340e7002, type: 2}

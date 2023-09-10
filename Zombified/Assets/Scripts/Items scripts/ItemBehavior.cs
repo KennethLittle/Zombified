@@ -3,6 +3,7 @@ using UnityEngine;
 public class ItemBehavior : MonoBehaviour
 {
     public BaseItemStats itemStats;
+    public WeaponStats weaponStats;
 
     private float shootRate;
     private int shootDamage;

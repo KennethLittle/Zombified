@@ -46,7 +46,12 @@ public class InventorySystem : MonoBehaviour
             RemoveItem(weapon);  // Remove weapon from inventory once equipped
 
             // Notify the player script to equip the weapon visually
+            
             gameManager.instance.playerScript.EquipWeapon(weapon);
+
+            // Add the weapon to the equipped weapons list in playerController
+            gameManager.instance.playerScript.equippedWeapons.Add(weapon.modelPrefab);
+            gameManager.instance.playerScript.currentWeaponIndex = gameManager.instance.playerScript.equippedWeapons.Count - 1; // Update index to the last weapon (most recent one equipped)
         }
     }
 
