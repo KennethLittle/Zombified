@@ -77,15 +77,13 @@ public class LootBoxUI : MonoBehaviour
 
             // Open the Inventory
             inventoryUI.OpenInventoryDirectly();
-
         }
         else
         {
-            gameManager.instance.stateUnpaused();
-            Cursor.visible = false; // This hides the cursor
             storage.gameObject.SetActive(false);
-            isStorageClosed = true;
             gameManager.instance.inventory.SetActive(false);
+            isStorageClosed = true;
+            gameManager.instance.stateUnpaused();
         }
     }
 
