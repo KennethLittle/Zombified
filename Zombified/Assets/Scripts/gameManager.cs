@@ -207,12 +207,12 @@ public class gameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveManager.SaveGame(this);
+        SaveManager.Instance.SaveGame(this);
     }
 
     public void LoadGame()
     {
-        SaveManager.LoadGame(this);
+        SaveManager.Instance.LoadGame(this);
     }
 
    

@@ -8,7 +8,7 @@ using TMPro;
 
 public class QuestGiver : MonoBehaviour
 {
-    private void Start()
+    private void Update()
     {
         OpenQuestWindow();
     }
@@ -28,7 +28,7 @@ public class QuestGiver : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            questWindow.SetActive(true);
+            questWindow.SetActive(!questWindow.activeSelf);
             titleText.text = quest.title;
             descriptionText.text = quest.description;
             experienceText.text = quest.expReward.ToString();

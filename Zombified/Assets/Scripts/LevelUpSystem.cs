@@ -93,10 +93,12 @@ public class LevelUpSystem : MonoBehaviour
     public void MarkRunStart()
     {
         isInRun = true;
+        gameManager.instance.SaveGame();
     }
 
     public void MarkRunEnd()
     {
         isInRun = false;
+        gameManager.instance.SaveGame();
     }
 }
