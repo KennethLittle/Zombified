@@ -45,7 +45,7 @@ public class LootBoxUI : MonoBehaviour
     List<BaseItemStats> DropLoot()
     {
         List<BaseItemStats> loot = new List<BaseItemStats>();
-        int numberOfItemsToDrop = Random.Range(1, 9); // This will give a number between 1 and 8 inclusive.
+        int numberOfItemsToDrop = Random.Range(12, 12); // This will give a number between 1 and 8 inclusive.
 
         for (int i = 0; i < numberOfItemsToDrop; i++)
         {

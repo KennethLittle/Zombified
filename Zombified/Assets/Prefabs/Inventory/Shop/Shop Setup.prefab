@@ -598,7 +598,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2296786405244682647}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2296786406492265157}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: BuyAllItems
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2296786405261028280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,7 +2543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
-  buyAllButton: {fileID: 0}
+  buyAllButton: {fileID: 2296786406059064251}
   storage: {fileID: 2296786406492265158}
   itemUIPrefab: {fileID: 9034195888715081945, guid: 0139ad405f2a51f4f9c9c10fba1e9b48, type: 3}
   slots:
@@ -2675,7 +2687,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2296786406558803429}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2296786406492265157}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: BuyAllItems
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2296786406641324385
 GameObject:
   m_ObjectHideFlags: 0
