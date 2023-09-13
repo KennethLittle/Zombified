@@ -1,54 +1,51 @@
+using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
-    [SerializeField] Renderer model;
+    [SerializeField] private Renderer model;
     [SerializeField] public NavMeshAgent agent;
-    [SerializeField] Animator anim;
+    [SerializeField] private Animator anim;
 
     [Header("----- Stats -----")]
-    [SerializeField] public int HP;
-    [SerializeField] int playerFaceSpeed;
-    [SerializeField] float meleeRange;
-    [SerializeField] int animChangeSpeed;
+    public EnemyStat enemyStats; // Introducing the EnemyStat reference
+    [SerializeField] private int playerFaceSpeed;
+    [SerializeField] private float meleeRange;
+    [SerializeField] private int animChangeSpeed;
     public int ID { get; set; }
-
-    public int baseXP = 10;
+    public int baseXP = 10; // XP might also be something you'd want to add in EnemyStat in future.
 
     [Header("----- Attack Stats -----")]
-    [SerializeField] public int damage;
-    [Range(1, 50)][SerializeField] float attackRate;
+    [Range(1, 50)][SerializeField] private float attackRate;
 
     [Header("----- Audio -----")]
-    [SerializeField] AudioSource audioSFX;
-    [SerializeField] AudioClip[] audioVoice;
-    [SerializeField][Range(0, 1)] float audioVoiceVol;
-    [SerializeField][Range(5, 24)] float voiceTimerMin;
-    [SerializeField][Range(25, 60)] float voiceTimerMax;
+    [SerializeField] private AudioSource audioSFX;
+    [SerializeField] private AudioClip[] audioVoice;
+    [SerializeField][Range(0, 1)] private float audioVoiceVol;
+    [SerializeField][Range(5, 24)] private float voiceTimerMin;
+    [SerializeField][Range(25, 60)] private float voiceTimerMax;
 
-    
-    public static event System.Action<int> OnEnemyKilled;
-    public Transform spawnPoint;
-    [SerializeField] float recheckPathInterval = 3f; // Time in seconds the enemy waits before rechecking path
+    private bool isAttacking = false;
+    private bool zedIsGroaning;
+    private bool isDead = false;
+    private bool pause = false;
+
     private float lastPathCheckTime;
-    
-    public enemyAI enemy;
-    public Quest quest;
-    bool isAttacking = false;
-    bool zedIsGroaning;
-    bool isDead = false;
-    bool pause = false;
+    [SerializeField] private float recheckPathInterval = 3f;
+    public static event Action<enemyAI> OnEnemyDeathEvent;
 
     void Start()
     {
-        gameManager.instance.updateGameGoal(1);
+        // Assuming you have a singleton or reference to your EnemyManager
+        EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
-        OnEnemyDeath();
-        ID = 0; //enemy ID #
+        ID = 0;
+
+        // TODO: Update the player's level in enemyStats. You need a way to access player's level.
+        // enemyStats.UpdatePlayerLevel(PlayerManager.instance.playerLevel); 
     }
 
     void Update()
@@ -79,7 +76,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void zedGroansSFX()
     {
-        if (!zedIsGroaning && HP > 0)
+        if (!zedIsGroaning && enemyStats.CurrentHP > 0)
         {
             StartCoroutine(playZedGroans());
         }
@@ -88,8 +85,8 @@ public class enemyAI : MonoBehaviour, IDamage
     IEnumerator playZedGroans()
     {
         zedIsGroaning = true;
-        audioSFX.PlayOneShot(audioVoice[Random.Range(0, audioVoice.Length)], audioVoiceVol);
-        yield return new WaitForSeconds(Random.Range(voiceTimerMin, voiceTimerMax));
+        audioSFX.PlayOneShot(audioVoice[UnityEngine.Random.Range(0, audioVoice.Length)], audioVoiceVol);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(voiceTimerMin, voiceTimerMax));
         zedIsGroaning = false;
     }
 
@@ -99,7 +96,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             isAttacking = true;
             anim.SetBool("isAttacking", isAttacking);
-            MeleeDamage(damage);
+            MeleeDamage(enemyStats.CurrentDamage); // Using stats from EnemyStat
             yield return new WaitForSeconds(attackRate);
             isAttacking = false;
             anim.SetBool("isAttacking", isAttacking);
@@ -108,20 +105,20 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
-        if (HP <= 0)
+        enemyStats.CurrentHP -= amount; // Using stats from EnemyStat
+        if (enemyStats.CurrentHP <= 0)
         {
+            int xpReward = enemyStats.CalculateExperienceReward();
             isDead = true;
             pause = true;
-            gameManager.instance.updateGameGoal(-1);
-            gameManager.instance.levelUpSystem.GainXP(WaveManager.instance.waveNumber * 7);
+
+            OnEnemyDeathEvent?.Invoke(this);
+
+            // Instead of directly modifying the gameManager, let the enemy manager handle it.
+            EnemyManager.Instance.HandleEnemyDeath(this);
+
             anim.SetBool("isDead", isDead);
             Destroy(gameObject);
-            WaveManager wave = GameObject.FindAnyObjectByType<WaveManager>();
-            if(wave != null)
-            {
-                wave.enemiesRemaining--;
-            }
         }
     }
 
@@ -137,30 +134,13 @@ public class enemyAI : MonoBehaviour, IDamage
         PlayerManager.instance.playerScript.takeDamage(amount);
     }
 
-    public void OnEnemyDeath()
+    void OnDestroy()
     {
-        if (OnEnemyKilled != null)
-        {
-            OnEnemyKilled(1);
-        }
-    }
-
-    // This function is called when the enemy enters a trigger zone
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("BayDoor"))
-        {
-            
-        }
-    }
-
-    // This function is called when the enemy exits a trigger zone
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("BayDoor"))
-        {
-            
-        }
+        EnemyManager.Instance.DeRegisterEnemy(this);
     }
 
 }
+
+
+
+

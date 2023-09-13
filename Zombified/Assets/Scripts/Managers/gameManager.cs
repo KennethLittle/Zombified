@@ -3,74 +3,64 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class gameManager : MonoBehaviour
 {
-
+    // Singleton
     public static gameManager instance;
-  
+
+    // Components and related scripts
+    [Header("Components & Related Scripts")]
     public GameObject inventory;
     public InventoryUI inventoryUI;
-    
     public LevelUpSystem levelUpSystem;
     public WaveManager waveManager;
-
-    public enemyAI enemyAIScript;
-
     private UIManager uiManager;
     private PlayerManager playerManager;
 
-    //public TextMeshProUGUI dialogueBox;
-    //public TextMeshProUGUI input;
-    //public TextMeshProUGUI npcName;
-
-   
+    // Game data
+    [Header("Game Data")]
     public int enemiesKilled;
     public int totalXP;
-    public bool isPaused;
     public int enemiesRemaining;
+    public bool isPaused;
 
-    void Awake()
+    // Initialization
+    private void Awake()
+    {
+        InitializeSingleton();
+        SetupReferences();
+        UpdateTotalXP(totalXP);
+        levelUpSystem.MarkRunStart();
+    }
+
+    private void InitializeSingleton()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
             Debug.LogError("Multiple instances of gameManager found. Destroying one.");
             Destroy(gameObject);
         }
-
-        levelUpSystem = FindObjectOfType<LevelUpSystem>();
-        waveManager= FindObjectOfType<WaveManager>();
-        inventoryUI = FindObjectOfType<InventoryUI>();
-
-        enemyAIScript = FindObjectOfType<enemyAI>();
-
-
-        enemyAI.OnEnemyKilled += UpdateEnemiesKilled;
-        UpdateTotalXP(totalXP);
-
-        levelUpSystem.MarkRunStart();
-
-        uiManager = GetComponent<UIManager>();
-        playerManager = GetComponent<PlayerManager>();
     }
 
-
-    void Update()
+    private void SetupReferences()
     {
-      
+        levelUpSystem = FindObjectOfType<LevelUpSystem>();
+        waveManager = FindObjectOfType<WaveManager>();
+        inventoryUI = FindObjectOfType<InventoryUI>();
+        uiManager = GetComponent<UIManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     public void updateGameGoal(int amount)
     {
         enemiesRemaining += amount;
-
-        enemiesRemaining = Mathf.Max(enemiesRemaining, 0);
+        enemiesRemaining = Mathf.Max(enemiesRemaining, 0); // Ensure enemiesRemaining doesn't go below 0
     }
-
 
     private void UpdateEnemiesKilled(int amount)
     {
@@ -79,49 +69,37 @@ public class gameManager : MonoBehaviour
 
     private void UpdateTotalXP(int amount)
     {
-        gameManager.instance.levelUpSystem.totalAccumulatedXP = amount;
+        levelUpSystem.totalAccumulatedXP = amount;
     }
 
     public void StartNewGame()
     {
-        // Load the default data for a new game
+        // Set up a new game using default data
         GameDataManager data = GameDataManager.GetDefaultGameData();
-
-        // Instantiate a new player and get its script
         GameObject newPlayer = Instantiate(PlayerManager.instance.playerPrefab, PlayerManager.instance.playerSpawnPos.transform.position, Quaternion.identity);
         PlayerManager.instance.playerScript = newPlayer.GetComponent<playerController>();
 
-        // Update player stats with data
+        // Update game state with data
         PlayerManager.instance.playerScript.defaultHP = data.playerHP;
         PlayerManager.instance.playerScript.defaultStamina = data.playerStamina;
-
-        // Update game state with data
-        this.enemiesKilled = data.enemiesKilled;
-        this.totalXP = data.totalXP;
-        this.enemiesRemaining = data.enemiesRemaining;
-
-        // Ensure the rest of the systems know about the changes
-        
+        enemiesKilled = data.enemiesKilled;
+        totalXP = data.totalXP;
+        enemiesRemaining = data.enemiesRemaining;
     }
 
     public void SaveGame()
     {
-        GameDataManager gameData = new GameDataManager(PlayerManager.instance.playerScript, this);
         SaveManager.Instance.SaveGame(PlayerManager.instance.playerScript, this);
     }
 
     public void LoadGame()
     {
         GameDataManager loadedData = SaveManager.Instance.LoadGame();
-
-        // Update the current game's data based on the loaded data
         PlayerManager.instance.playerScript.defaultHP = loadedData.playerHP;
         PlayerManager.instance.playerScript.defaultStamina = loadedData.playerStamina;
-        this.enemiesKilled = loadedData.enemiesKilled;
-        this.totalXP = loadedData.totalXP;
-        this.enemiesRemaining = loadedData.enemiesRemaining;
-
-        // You might also need to set other values depending on what's included in your GameDataManager and what needs to be updated in the scene.
+        enemiesKilled = loadedData.enemiesKilled;
+        totalXP = loadedData.totalXP;
+        enemiesRemaining = loadedData.enemiesRemaining;
     }
 
     public void Defeat()
@@ -133,6 +111,4 @@ public class gameManager : MonoBehaviour
     {
         GameStateManager.instance.HandleEscape();
     }
-
-
 }
