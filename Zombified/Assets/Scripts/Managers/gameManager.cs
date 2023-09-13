@@ -13,7 +13,6 @@ public class gameManager : MonoBehaviour
     public GameObject inventory;
     public InventoryUI inventoryUI;
     public LevelUpSystem levelUpSystem;
-    public WaveManager waveManager;
     private UIManager uiManager;
     private PlayerManager playerManager;
 
@@ -50,7 +49,6 @@ public class gameManager : MonoBehaviour
     private void SetupReferences()
     {
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
-        waveManager = FindObjectOfType<WaveManager>();
         inventoryUI = FindObjectOfType<InventoryUI>();
         uiManager = GetComponent<UIManager>();
         playerManager = GetComponent<PlayerManager>();
