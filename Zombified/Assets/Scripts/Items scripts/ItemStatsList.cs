@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class ItemAttributeList : ScriptableObject
+{
+    [SerializeField]
+    public List<ItemStats> itemStatsList = new List<ItemStats>();
+
+}
