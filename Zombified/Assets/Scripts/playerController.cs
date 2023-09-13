@@ -139,13 +139,13 @@ public class playerController : MonoBehaviour, IDamage
     {
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         HP -= amount;
-        StartCoroutine(gameManager.instance.playerFlashDamage());
+        StartCoroutine(UIManager.Instance.PlayerFlashDamage());
         updatePlayerUI();
         
         if (HP <= 0)
         {
             anim.SetTrigger("IsDead");
-            gameManager.instance.youLose();
+            gameManager.instance.Defeat();
             gameManager.instance.levelUpSystem.MarkRunEnd();
         }
 
@@ -456,7 +456,7 @@ public class playerController : MonoBehaviour, IDamage
     public void spawnPlayer()
     {
         controller.enabled = false;
-        transform.position = gameManager.instance.playerSpawnPos.transform.position;
+        transform.position = PlayerManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
         HP = HPMax;
         audioLowHealthVol = audioLHVolOrig;
@@ -487,22 +487,22 @@ public class playerController : MonoBehaviour, IDamage
 
     public void updatePlayerUI()
     {
-        gameManager.instance.playerHPBar.fillAmount = (float)HP / HPMax;
-        gameManager.instance.staminaBar.fillAmount = currentStamina / stamina;
+        UIManager.Instance.playerHPBar.fillAmount = (float)HP / HPMax;
+        UIManager.Instance.staminaBar.fillAmount = currentStamina / stamina;
 
         WeaponStats currentWeapon = GetCurrentWeaponStats();
         if (currentWeapon != null)
         {
-            gameManager.instance.ammoCur.text = currentWeapon.ammoCur.ToString("F0");
-            gameManager.instance.ammoMax.text = currentWeapon.ammoMax.ToString("F0");
-            gameManager.instance.weaponIcon.sprite = currentWeapon.icon;
+            UIManager.Instance.ammoCur.text = currentWeapon.ammoCur.ToString("F0");
+            UIManager.Instance.ammoMax.text = currentWeapon.ammoMax.ToString("F0");
+            UIManager.Instance.weaponIcon.sprite = currentWeapon.icon;
         }
 
         int medPackCount = InventorySystem.Instance.items.Count(item => item is medPackStats);
-        gameManager.instance.medPackCur.text = medPackCount.ToString("F0");
+        UIManager.Instance.medPackCur.text = medPackCount.ToString("F0");
 
         int ammoBoxCount = InventorySystem.Instance.items.Count(item => item is ammoBoxStats);
-        gameManager.instance.ammoBoxAmount.text = ammoBoxCount.ToString("F0");
+        UIManager.Instance.ammoBoxAmount.text = ammoBoxCount.ToString("F0");
     }
 
     public void EquipWeapon(BaseItemStats weapon)

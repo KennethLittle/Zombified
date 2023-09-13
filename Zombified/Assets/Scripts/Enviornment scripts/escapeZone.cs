@@ -20,6 +20,6 @@ public class escapeZone : MonoBehaviour
 
     private void ActivateEscape()
     {
-        gameManager.instance.escape();
+        gameManager.instance.Escape();
     }
 }

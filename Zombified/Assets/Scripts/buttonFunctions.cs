@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+
     public buttonFunctions loadGameButton;
     private void Start()
     {
@@ -21,7 +22,7 @@ public class buttonFunctions : MonoBehaviour
     }
     public void resume()
     {
-        gameManager.instance.stateUnpaused();
+        GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
     }
 
     public void restart()
@@ -54,16 +55,11 @@ public class buttonFunctions : MonoBehaviour
     {
         int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
         SceneManager.LoadScene(previousSceneIndex);
-        gameManager.instance.ResetAndUnpauseGame();
+        GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void playerRespawn()
-    {
-        gameManager.instance.playerScript.spawnPlayer();
-        gameManager.instance.stateUnpaused();
-    }
 
     public void escape()
     {

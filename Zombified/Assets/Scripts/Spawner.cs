@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
         int numZombies = startingZombies + waveManager.waveNumber * Random.Range(minAdditionalZombies, maxAdditionalZombies + 1);
         waveManager.enemiesRemaining += numZombies;
 
-        gameManager.instance.waveNumberText.text = "Wave " + waveManager.waveNumber;
+        UIManager.Instance.waveNumberText.text = "Wave " + waveManager.waveNumber;
 
         StartCoroutine(SpawnZombies(numZombies));
     }

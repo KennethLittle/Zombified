@@ -47,11 +47,11 @@ public class LevelUpSystem : MonoBehaviour
 
             extraHP = Mathf.RoundToInt(playerLevel * 15 * 1.75f);
 
-            gameManager.instance.playerScript.IncreaseMaxHP(extraHP);
+            PlayerManager.instance.playerScript.IncreaseMaxHP(extraHP);
 
             extraStamina = Mathf.RoundToInt(playerLevel * 10 * 1.75f);
 
-            gameManager.instance.playerScript.IncreaseMaxStamina(extraStamina);
+            PlayerManager.instance.playerScript.IncreaseMaxStamina(extraStamina);
         }
 
 

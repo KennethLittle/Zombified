@@ -54,7 +54,7 @@ public class ShopUI : MonoBehaviour
     {
         if (isShopClosed)
         {
-            gameManager.instance.statePaused();
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
             Cursor.visible = true; // This makes the cursor visible
             DisplayShopItems();
             storage.gameObject.SetActive(true);
@@ -66,7 +66,7 @@ public class ShopUI : MonoBehaviour
             storage.gameObject.SetActive(false);
             gameManager.instance.inventory.SetActive(false);
             isShopClosed = true;
-            gameManager.instance.stateUnpaused();
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
         }
     }
 

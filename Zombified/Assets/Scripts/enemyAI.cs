@@ -64,7 +64,7 @@ public class enemyAI : MonoBehaviour, IDamage
             float agentVel = agent.velocity.normalized.magnitude;
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-            if (Vector3.Distance(transform.position, gameManager.instance.player.transform.position) <= meleeRange)
+            if (Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position) <= meleeRange)
             {
                 zedGroansSFX();
                 StartCoroutine(attack());
@@ -74,7 +74,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void UpdatePlayerPosition()
     {
-        agent.SetDestination(gameManager.instance.player.transform.position);
+        agent.SetDestination(PlayerManager.instance.player.transform.position);
     }
 
     void zedGroansSFX()
@@ -134,7 +134,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void MeleeDamage(int amount)
     {
-        gameManager.instance.playerScript.takeDamage(amount);
+        PlayerManager.instance.playerScript.takeDamage(amount);
     }
 
     public void OnEnemyDeath()
