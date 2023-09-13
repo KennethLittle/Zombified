@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 1718992546597132047}
   - component: {fileID: 7758100425780072615}
   - component: {fileID: 7872316344858786172}
+  - component: {fileID: 5548694789457394840}
   m_Layer: 0
   m_Name: Robert
   m_TagString: Untagged
@@ -450,6 +451,27 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &5548694789457394840
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058362945976864181}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a555e70ffc2bba547bb0739edc839ff8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2287357702833977093
 GameObject:
   m_ObjectHideFlags: 0
