@@ -7,6 +7,8 @@ public class EnemyStat
     public int baseHP;
     public int baseDefense;
     public int currentHP;
+    public PlayerStat playerStat;
+
 
 
     // Assuming these multipliers will determine the rate at which the stats grow per level.
@@ -55,6 +57,13 @@ public class EnemyStat
         this.playerLevel = newLevel;
     }
 
+    public int Level
+    {
+        get
+        {
+            return playerStat.Level;
+        }
+    }
     public int baseXP = 10;
 
     public int CalculateExperienceReward()

@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class LevelUpSystem : MonoBehaviour
 {
-    public int playerLevel = 1;
+    public PlayerStat playerStats; // Reference to the PlayerStatScript to access playerLevel
+
     public int totalAccumulatedXP;
     public int totalEarnedXP;
     public int requiredXP;
-    public int extraHP;
-    public int extraStamina;
-    
-    
 
-    private bool hasEscaped = false;
-    public bool isInRun = false;
+    // No need for extraHP and extraStamina variables. We'll calculate them directly in the LevelUp function
 
     public void GainXP(int xpAmount)
     {
@@ -25,80 +21,42 @@ public class LevelUpSystem : MonoBehaviour
 
     private void CheckLevelUp()
     {
-        if (!isInRun) 
+        while (totalAccumulatedXP >= requiredXP)
         {
-            while (totalAccumulatedXP >= requiredXP)
-            {
-                LevelUp();
-
-                requiredXP = CalculateRequiredXP();
-            }
+            LevelUp();
+            requiredXP = CalculateRequiredXP();
         }
-        
-
     }
 
     public void LevelUp()
     {
-        if (!isInRun) // Only apply HP and Stamina increase if not in a run
-        {
-            playerLevel++;
-            totalAccumulatedXP -= requiredXP;
+        playerStats.Level++;
+        totalAccumulatedXP -= requiredXP;
 
-            extraHP = Mathf.RoundToInt(playerLevel * 15 * 1.75f);
+        int addedHP = Mathf.RoundToInt(playerStats.Level * 10 * Mathf.Log10(playerStats.Level + 10));
+        PlayerManager.instance.playerScript.IncreaseMaxHP(addedHP);
 
-            PlayerManager.instance.playerScript.IncreaseMaxHP(extraHP);
-
-            extraStamina = Mathf.RoundToInt(playerLevel * 10 * 1.75f);
-
-            PlayerManager.instance.playerScript.IncreaseMaxStamina(extraStamina);
-        }
-
-
-        requiredXP = CalculateRequiredXP();
+        int addedStamina = Mathf.RoundToInt(playerStats.Level * 5 * Mathf.Log10(playerStats.Level + 10));
+        PlayerManager.instance.playerScript.IncreaseMaxStamina(addedStamina);
     }
-
 
     private int CalculateRequiredXP()
     {
-        return Mathf.RoundToInt(requiredXP * 1.7f);
+        return Mathf.RoundToInt(requiredXP * (1 + 0.1f * playerStats.Level));
     }
-
 
     public void RewardXPUponEscape()
     {
         int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.85f);
         gameManager.instance.totalXP += rewardXP;
-        
-
-        if (hasEscaped)
-        {
-            CheckLevelUp();
-        }
-    }
-
-    public void MarkAsEscaped()
-    {
-        hasEscaped = true;
+        CheckLevelUp();
     }
 
     public void RewardXPUponDeath()
     {
         int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.15f);
         gameManager.instance.totalXP -= rewardXP;
-        
-        
     }
 
-    public void MarkRunStart()
-    {
-        isInRun = true;
-        gameManager.instance.SaveGame();
-    }
-
-    public void MarkRunEnd()
-    {
-        isInRun = false;
-        gameManager.instance.SaveGame();
-    }
+    // Move the MarkRunStart and MarkRunEnd functions to GameManager or a similar appropriate class.
 }

@@ -60,19 +60,10 @@ public class buttonFunctions : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-
-    public void escape()
-    {
-        gameManager.instance.levelUpSystem.MarkRunEnd();
-        gameManager.instance.levelUpSystem.MarkAsEscaped();
-        gameManager.instance.levelUpSystem.RewardXPUponEscape();
-        SceneManager.LoadScene("EscapeScene");
-    }
-
     public void next()
     {
         gameManager.instance.levelUpSystem.RewardXPUponDeath();
-        gameManager.instance.levelUpSystem.MarkRunEnd();
+        gameManager.instance.MarkRunEnd();
         SceneManager.LoadScene("DeathScene");
     }
 

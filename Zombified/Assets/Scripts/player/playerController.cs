@@ -8,7 +8,7 @@ using static InventoryItem;
 
 public class playerController : MonoBehaviour, IDamage
 {
-
+    public PlayerStat playerStat;
     public Transform weaponSlot;
 
     public InventorySystem playerInventorySystem;
@@ -18,21 +18,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] Animator anim;
 
-    [Header("----- Player stats -----")]
-    [SerializeField] int HP;
-    [SerializeField] public float stamina;
-    [SerializeField] public float currentStamina;
-    [SerializeField] public float staminaConsumptionRate;
-    [SerializeField] public float staminaRegenerationRate;
-    [SerializeField] float playerSpeed;
-    [SerializeField] float sprintMod;
-    [SerializeField] int jumpMax;
-    [SerializeField] float jumpHeight;
-    [SerializeField] float gravityValue;
-    [SerializeField] float animChangeSpeed;
-
-    [SerializeField] public int defaultHP = 100;
-    [SerializeField] public float defaultStamina = 100;
 
     [Header("----- Player Gun Stats -----")]
     [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>(); // List of instantiated weapon game objects
@@ -63,7 +48,6 @@ public class playerController : MonoBehaviour, IDamage
     public QuestGoal currQuest;
 
     private float originalPlayerSpeed;
-    private int HPMax;
     private bool groundedPlayer;
     private Vector3 move;
     private Vector3 playerVelocity;
@@ -85,11 +69,9 @@ public class playerController : MonoBehaviour, IDamage
         
         anim = GetComponent<Animator>();
         velocityHash = Animator.StringToHash("animVelocity");
-        originalPlayerSpeed = playerSpeed;
-        HPMax = HP;
-        currentStamina = stamina;
-        defaultHP = HP;
-        defaultStamina = stamina;
+        originalPlayerSpeed = playerStat.playerSpeed;
+        playerStat.HPMax = playerStat.HP;
+        playerStat.currentStamina = playerStat.stamina;
         audioLHVolOrig = audioLowHealthVol;
         spawnPlayer();
         if(!playerInventorySystem)
@@ -124,29 +106,29 @@ public class playerController : MonoBehaviour, IDamage
 
     public void ResetToDefaults()
     {
-        HP = defaultHP;
-        stamina = defaultStamina;
+        playerStat.HP = playerStat.HPMax;
+        playerStat.stamina = playerStat.currentStamina;
     }
 
     public void SetInitialStats(int level, int hp, int stamina)
     {
-        gameManager.instance.levelUpSystem.playerLevel = level;
-        defaultHP = hp;
-        defaultStamina = stamina;
+        playerStat.Level = level;
+        playerStat.HP = hp;
+        playerStat.stamina = stamina;
     }
 
     public void takeDamage(int amount)
     {
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
-        HP -= amount;
+        playerStat.HP -= amount;
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
         updatePlayerUI();
         
-        if (HP <= 0)
+        if (playerStat.HP <= 0)
         {
             anim.SetTrigger("IsDead");
             gameManager.instance.Defeat();
-            gameManager.instance.levelUpSystem.MarkRunEnd();
+            gameManager.instance.MarkRunEnd();
         }
 
         audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
@@ -154,7 +136,7 @@ public class playerController : MonoBehaviour, IDamage
 
     void lowHealthSFX()
     {
-        if (!lowHealthIsPlaying && HP <= (HPMax * 0.3))
+        if (!lowHealthIsPlaying && playerStat.HP <= (playerStat.HPMax * 0.3))
         {
             StartCoroutine((playLowHealth()));
         }
@@ -165,17 +147,17 @@ public class playerController : MonoBehaviour, IDamage
         lowHealthIsPlaying = true;
         // Plays low health audio sfx - Plays a random footsteps sfx from the range audioLowHealth at a volume defined by audioLowHealthVol
         audioSFX.PlayOneShot(audioLowHealth[Random.Range(0, audioLowHealth.Length)], audioLowHealthVol);
-        if (HP <= (HPMax * 0.3) && HP > (HPMax * 0.2))
+        if (playerStat.HP <= (playerStat.HPMax * 0.3) && playerStat.HP > (playerStat.HPMax * 0.2))
         {
             audioLowHealthVol = audioLHVolOrig + 0.2f;
             yield return new WaitForSeconds(2.0f);
         }
-        else if (HP <= (HPMax * 0.2) && HP > (HPMax * 0.1))
+        else if (playerStat.HP <= (playerStat.HPMax * 0.2) && playerStat.HP > (playerStat.HPMax * 0.1))
         {
             audioLowHealthVol = audioLHVolOrig + 0.4f;
             yield return new WaitForSeconds(1.5f);
         }
-        else if (HP <= (HPMax * 0.1) && HPMax > 0)
+        else if (playerStat.HP <= (playerStat.HPMax * 0.1) && playerStat.HPMax > 0)
         {
             audioLowHealthVol = audioLHVolOrig + 0.6f;
             yield return new WaitForSeconds(1.0f);
@@ -188,7 +170,7 @@ public class playerController : MonoBehaviour, IDamage
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer)
         {
-            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && HP > 0)
+            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
             {
                 StartCoroutine(playFootsteps());
             }
@@ -202,18 +184,18 @@ public class playerController : MonoBehaviour, IDamage
             // Detect if the player is moving or not and set animation parameters accordingly
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
-            float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * sprintMod : originalPlayerSpeed;
+            float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
 
             move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
 
             if (move != Vector3.zero)
             {
-                if (isSprinting && currentStamina > 0) // Modified check here
+                if (isSprinting && playerStat.currentStamina > 0) // Modified check here
                 {
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsWalking", false);
                     anim.SetBool("IsRunning", true);
-                    controller.Move(move * Time.deltaTime * playerSpeed * effectivePlayerSpeed); // Running speed
+                    controller.Move(move * Time.deltaTime * playerStat.playerSpeed * effectivePlayerSpeed); // Running speed
                 }
                 else
                 {
@@ -221,7 +203,7 @@ public class playerController : MonoBehaviour, IDamage
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsRunning", false);
                     anim.SetBool("IsWalking", true);
-                    controller.Move(move * Time.deltaTime * playerSpeed); // Walking speed
+                    controller.Move(move * Time.deltaTime * playerStat.playerSpeed); // Walking speed
                 }
             }
             else
@@ -239,22 +221,22 @@ public class playerController : MonoBehaviour, IDamage
 
             anim.SetFloat(velocityHash, animVelocity);
         }
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && Time.time - lastJumpTime > jumpCooldown)
+        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
 
             
-            playerVelocity.y += jumpHeight;
+            playerVelocity.y += playerStat.jumpHeight;
             anim.SetBool("IsJumping", true);
             jumpCount++;
         }
 
-        playerVelocity.x = move.x * playerSpeed; // Maintain the horizontal components
-        playerVelocity.z = move.z * playerSpeed;
+        playerVelocity.x = move.x * playerStat.playerSpeed; // Maintain the horizontal components
+        playerVelocity.z = move.z * playerStat.playerSpeed;
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
+        playerVelocity.y += playerStat.gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
         // Reset the IsJumping animation parameter if the player is grounded
@@ -279,30 +261,30 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint") && currentStamina > 0) // Add stamina check here
+        if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint") || currentStamina <= 0) // Add stamina check here
+        else if (Input.GetButtonUp("Sprint") || playerStat.currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
         }
 
         if (isSprinting)
         {
-            ConsumeStamina(staminaConsumptionRate * Time.deltaTime);
+            ConsumeStamina(playerStat.staminaConsumptionRate * Time.deltaTime);
         }
         else
         {
-            RegenerateStamina(staminaRegenerationRate * Time.deltaTime);
+            RegenerateStamina(playerStat.staminaRegenerationRate * Time.deltaTime);
         }
     }
 
     public void ConsumeStamina(float amount)
     {
-        currentStamina = Mathf.Clamp(currentStamina - amount, 0f, stamina);
+        playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina - amount, 0f, playerStat.stamina);
 
-        if (currentStamina <= 0f)
+        if (playerStat.currentStamina <= 0f)
         {
             isSprinting = false;
         }
@@ -312,7 +294,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void RegenerateStamina(float amount)
     {
-        currentStamina = Mathf.Clamp(currentStamina + amount, 0f, stamina);
+        playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina + amount, 0f, playerStat.stamina);
 
         updatePlayerUI();
     }
@@ -401,17 +383,17 @@ public class playerController : MonoBehaviour, IDamage
     {
         BaseItemStats medPack = InventorySystem.Instance.items.Find(item => item is medPackStats);
 
-        if (Input.GetKeyDown(KeyCode.Q) && medPack != null && HP < HPMax)
+        if (Input.GetKeyDown(KeyCode.Q) && medPack != null &&  playerStat.HP < playerStat.HPMax)
         {
             // Get the specific MedPack properties.
             medPackStats specificMedPack = medPack as medPackStats;
             int healAmount = specificMedPack.healAmount;
 
-            HP += healAmount;
+            playerStat.HP += healAmount;
 
-            if (HP > HPMax)
+            if (playerStat.HP > playerStat.HPMax)
             {
-                HP = HPMax;
+                playerStat.HP = playerStat.HPMax;
             }
 
             // Update UI and remove the med pack from inventory after use.
@@ -458,37 +440,37 @@ public class playerController : MonoBehaviour, IDamage
         controller.enabled = false;
         transform.position = PlayerManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
-        HP = HPMax;
+        playerStat.HP = playerStat.HPMax;
         audioLowHealthVol = audioLHVolOrig;
         updatePlayerUI();
     }
 
     public void IncreaseMaxHP(int amount)
     {
-        if (!gameManager.instance.levelUpSystem.isInRun)
+        if (!gameManager.instance.isInRun)
         {
              
-            HPMax += amount;
-            HP += amount;
+            playerStat.HPMax += amount;
+            playerStat.HP += amount;
             updatePlayerUI();
         }
     }
 
     public void IncreaseMaxStamina(int amount)
     {
-        if (!gameManager.instance.levelUpSystem.isInRun)
+        if (!gameManager.instance.isInRun)
         {
             
-            stamina += amount;
-            currentStamina += amount;
+            playerStat.stamina += amount;
+            playerStat.currentStamina += amount;
             updatePlayerUI();
         }
     }
 
     public void updatePlayerUI()
     {
-        UIManager.Instance.playerHPBar.fillAmount = (float)HP / HPMax;
-        UIManager.Instance.staminaBar.fillAmount = currentStamina / stamina;
+        UIManager.Instance.playerHPBar.fillAmount = (float)playerStat.HP / playerStat.HPMax;
+        UIManager.Instance.staminaBar.fillAmount = playerStat.currentStamina / playerStat.stamina;
 
         WeaponStats currentWeapon = GetCurrentWeaponStats();
         if (currentWeapon != null)

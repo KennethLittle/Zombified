@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour
     public int totalXP;
     public int enemiesRemaining;
     public bool isPaused;
+    public bool isInRun;
 
     // Initialization
     private void Awake()
@@ -29,7 +30,7 @@ public class gameManager : MonoBehaviour
         InitializeSingleton();
         SetupReferences();
         UpdateTotalXP(totalXP);
-        levelUpSystem.MarkRunStart();
+        MarkRunStart();
     }
 
     private void InitializeSingleton()
@@ -74,30 +75,33 @@ public class gameManager : MonoBehaviour
     {
         // Set up a new game using default data
         GameDataManager data = GameDataManager.GetDefaultGameData();
+
         GameObject newPlayer = Instantiate(PlayerManager.instance.playerPrefab, PlayerManager.instance.playerSpawnPos.transform.position, Quaternion.identity);
+
         PlayerManager.instance.playerScript = newPlayer.GetComponent<playerController>();
 
         // Update game state with data
-        PlayerManager.instance.playerScript.defaultHP = data.playerHP;
-        PlayerManager.instance.playerScript.defaultStamina = data.playerStamina;
-        enemiesKilled = data.enemiesKilled;
-        totalXP = data.totalXP;
-        enemiesRemaining = data.enemiesRemaining;
+        PlayerManager.instance.playerStat.HP = data.playerHP;
+        PlayerManager.instance.playerStat.stamina = data.playerStamina;  // Assuming the player has stamina property in the PlayerStatScript.
+        PlayerManager.instance.playerStat.Level = data.playerLevel;
+        PlayerManager.instance.levelSystem.totalAccumulatedXP = data.playerCurrentXP;
+        PlayerManager.instance.levelSystem.requiredXP = data.playerRequiredXP;
     }
 
     public void SaveGame()
     {
-        SaveManager.Instance.SaveGame(PlayerManager.instance.playerScript, this);
+        SaveManager.Instance.SaveGame(PlayerManager.instance.playerStat, this);
     }
 
     public void LoadGame()
     {
         GameDataManager loadedData = SaveManager.Instance.LoadGame();
-        PlayerManager.instance.playerScript.defaultHP = loadedData.playerHP;
-        PlayerManager.instance.playerScript.defaultStamina = loadedData.playerStamina;
-        enemiesKilled = loadedData.enemiesKilled;
-        totalXP = loadedData.totalXP;
-        enemiesRemaining = loadedData.enemiesRemaining;
+
+        PlayerManager.instance.playerStat.HP = loadedData.playerHP;
+        PlayerManager.instance.playerStat.stamina = loadedData.playerStamina;
+        PlayerManager.instance.playerStat.Level = loadedData.playerLevel;
+        PlayerManager.instance.levelSystem.totalAccumulatedXP = loadedData.playerCurrentXP;
+        PlayerManager.instance.levelSystem.requiredXP = loadedData.playerRequiredXP;
     }
 
     public void Defeat()
@@ -108,5 +112,17 @@ public class gameManager : MonoBehaviour
     public void Escape()
     {
         GameStateManager.instance.HandleEscape();
+    }
+
+    public void MarkRunStart()
+    {
+        isInRun = true;
+        gameManager.instance.SaveGame();
+    }
+
+    public void MarkRunEnd()
+    {
+        isInRun = false;
+        gameManager.instance.SaveGame();
     }
 }

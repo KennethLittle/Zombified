@@ -4,10 +4,12 @@ public class PlayerStat : MonoBehaviour
 {
     [Header("Player stats")]
     public int HP;
+    public int HPMax;
     public float stamina;
     public float currentStamina;
     public float staminaConsumptionRate;
     public float staminaRegenerationRate;
+    public int Level;
     public float playerSpeed;
     public float sprintMod;
     public int jumpMax;

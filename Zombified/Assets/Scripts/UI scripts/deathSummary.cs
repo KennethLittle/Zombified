@@ -16,19 +16,19 @@ public class deathSummary : MonoBehaviour
 
     private void Start()
     {
-        int enemiesKilled = gameManager.instance.enemiesKilled; // Use the correct variable name from your gameManager script
-        int xpEarned = Mathf.FloorToInt(gameManager.instance.levelUpSystem.totalEarnedXP * 0.15f); // Keep 15% of the earned XP
-        int playerLevel = gameManager.instance.levelUpSystem.playerLevel; // Access playerLevel from the LevelUpSystem script
-        int extraHP = gameManager.instance.levelUpSystem.extraHP; // Access extraHP from the LevelUpSystem script
-        int extraStamina = gameManager.instance.levelUpSystem.extraStamina; // Access extraStamina from the LevelUpSystem script
-        int requiredXp = gameManager.instance.levelUpSystem.requiredXP; // Access requiredXP from the LevelUpSystem script
-        int currentXP = Mathf.FloorToInt(gameManager.instance.levelUpSystem.totalAccumulatedXP * 0.15f);
+        int enemiesKilled = gameManager.instance.enemiesKilled;
+        int xpEarned = Mathf.FloorToInt(gameManager.instance.levelUpSystem.totalEarnedXP * 0.15f);
+        int playerLevel = PlayerManager.instance.playerScript.playerStat.Level; // Access playerLevel from PlayerStatScript
+        int totalHP = PlayerManager.instance.playerScript.playerStat.HP; // Access total HP from PlayerStatScript
+        int totalStamina = Mathf.FloorToInt(PlayerManager.instance.playerScript.playerStat.stamina); // Access total Stamina from PlayerStatScript
+        int requiredXp = gameManager.instance.levelUpSystem.requiredXP;
+        int currentXP = gameManager.instance.levelUpSystem.totalAccumulatedXP;
 
         enemiesKilledText.text = "Enemies Killed: " + enemiesKilled.ToString();
         xpEarnedText.text = "XP Earned: " + xpEarned.ToString();
         playerLevelText.text = "Player Level: " + playerLevel.ToString();
-        hpIncreaseText.text = "HP Increase: " + extraHP.ToString();
-        staminaIncreaseText.text = "Stamina Increase: " + extraStamina.ToString();
+        hpIncreaseText.text = "Total HP: " + totalHP.ToString();
+        staminaIncreaseText.text = "Total Stamina: " + totalStamina.ToString();
         requiredXpText.text = "XP for Next Level: " + requiredXp.ToString();
         currentXPText.text = "Current XP: " + currentXP.ToString();
 

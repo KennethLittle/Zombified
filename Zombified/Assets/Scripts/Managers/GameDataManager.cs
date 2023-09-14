@@ -1,31 +1,26 @@
+using static UnityEngine.Rendering.DebugUI.Table;
+using UnityEditor.VersionControl;
+
 [System.Serializable]
 public class GameDataManager
 {
     // Player Data
     public int playerHP;
     public float playerStamina;
+    public int playerLevel;
+    public int playerCurrentXP;
+    public int playerRequiredXP;
 
-    // Game State Data
-    public int enemiesKilled;
-    public int totalXP;
-    public int enemiesRemaining;
+    public GameDataManager() { }
 
-    public GameDataManager()
-    {
-
-    }
-
-    public GameDataManager(playerController player, gameManager game)
+    public GameDataManager(PlayerStat playerStats, LevelUpSystem levelSystem)
     {
         // Player Data
-        playerHP = player.defaultHP;
-        playerStamina = player.defaultStamina;
-        
-
-        // Game State Data
-        enemiesKilled = game.enemiesKilled;
-        totalXP = game.totalXP;
-        enemiesRemaining = game.enemiesRemaining;
+        playerHP = playerStats.HP;
+        playerStamina = playerStats.stamina;
+        playerLevel = playerStats.Level;
+        playerCurrentXP = levelSystem.totalAccumulatedXP;
+        playerRequiredXP = levelSystem.requiredXP;
     }
 
     // Default data for a new game
@@ -35,9 +30,16 @@ public class GameDataManager
         {
             playerHP = 100,
             playerStamina = 100,
-            enemiesKilled = 0,
-            totalXP = 0,
-            enemiesRemaining = 10
+            playerLevel = 1,
+            playerCurrentXP = 0,
+            playerRequiredXP = CalculateDefaultRequiredXP()
         };
+    }
+
+    // A method to calculate the default required XP for the first level up.
+    // This is an example, Sir. You can adjust the formula as needed.
+    private static int CalculateDefaultRequiredXP()
+    {
+        return 100; // The XP required for the first level up. Adjust this value or the formula as necessary.
     }
 }

@@ -21,6 +21,13 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("----- Attack Stats -----")]
     [Range(1, 50)][SerializeField] private float attackRate;
 
+    [Header("----- Roaming -----")]
+    public float roamRadius = 10f;
+    private Vector3 roamPosition;
+
+    [Header("----- Detection -----")]
+    public float detectionRange = 15f;
+
     [Header("----- Audio -----")]
     [SerializeField] private AudioSource audioSFX;
     [SerializeField] private AudioClip[] audioVoice;
@@ -41,6 +48,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         // Assuming you have a singleton or reference to your EnemyManager
         EnemyManager.Instance.RegisterEnemy(this);
+        InitiateRoaming();
         agent.stoppingDistance = meleeRange;
         ID = 0;
 
@@ -52,26 +60,46 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (!isAttacking && !pause)
         {
-            if (Time.time >= lastPathCheckTime + recheckPathInterval)
+            float distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position);
+
+            if (distanceToPlayer <= detectionRange)
             {
-                UpdatePlayerPosition();
-                lastPathCheckTime = Time.time;
+                // Player detected, chase the player
+                agent.SetDestination(PlayerManager.instance.player.transform.position);
+
+                if (distanceToPlayer <= meleeRange)
+                {
+                    zedGroansSFX();
+                    StartCoroutine(attack());
+                }
+            }
+            else
+            {
+                // No player detected, roam around
+                if (!agent.hasPath || agent.remainingDistance < 1f)
+                {
+                    roamPosition = GetRandomRoamingPosition();
+                    agent.SetDestination(roamPosition);
+                }
             }
 
             float agentVel = agent.velocity.normalized.magnitude;
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
-
-            if (Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position) <= meleeRange)
-            {
-                zedGroansSFX();
-                StartCoroutine(attack());
-            }
         }
     }
 
-    public void UpdatePlayerPosition()
+    private Vector3 GetRandomRoamingPosition()
     {
-        agent.SetDestination(PlayerManager.instance.player.transform.position);
+        float randomX = UnityEngine.Random.Range(-roamRadius, roamRadius);
+        float randomZ = UnityEngine.Random.Range(-roamRadius, roamRadius);
+
+        return new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+    }
+
+    public void InitiateRoaming()
+    {
+        roamPosition = GetRandomRoamingPosition();
+        agent.SetDestination(roamPosition);
     }
 
     void zedGroansSFX()

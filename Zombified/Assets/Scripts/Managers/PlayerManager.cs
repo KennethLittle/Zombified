@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject player;
     public GameObject playerPrefab;
     public playerController playerScript;
+    public PlayerStat playerStat;
+    public LevelUpSystem levelSystem;
 
     void Awake()
     {
@@ -39,5 +41,6 @@ public class PlayerManager : MonoBehaviour
         player = Instantiate(playerPrefab, playerSpawnPos.position, Quaternion.identity);
         player.tag = "Player";
         playerScript = player.GetComponent<playerController>();
+        playerStat = player.GetComponent<PlayerStat>();
     }
 }

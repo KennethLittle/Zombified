@@ -9,7 +9,7 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure that there's only one SaveManager instance
+        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
@@ -20,28 +20,32 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        // Rest of your initialization
     }
 
-    // Get the path for saving/loading data
     private string GetSavePath()
     {
         return Path.Combine(Application.persistentDataPath, SAVE_FILENAME);
     }
 
-    // Save the game data to a file
-    public void SaveGame(playerController player, gameManager game)
+    public void SaveGame(PlayerStat playerStats, gameManager game)
     {
-        GameDataManager data = new GameDataManager(player, game);
+        GameDataManager data = new GameDataManager();
 
+        // Player Data
+        data.playerHP = playerStats.HP;
+        data.playerStamina = playerStats.currentStamina;
+
+        // Additional Game State Data
+        // data.playerPosition = new Vector3Data(player.transform.position);
+        // ... (add other game state data)
+
+        // Convert to JSON and save
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(GetSavePath(), jsonData);
 
         Debug.Log("Game Saved!");
     }
 
-    // Load game data from a file
     public GameDataManager LoadGame()
     {
         if (!File.Exists(GetSavePath()))
@@ -51,14 +55,34 @@ public class SaveManager : MonoBehaviour
         }
 
         string jsonData = File.ReadAllText(GetSavePath());
-        GameDataManager data = JsonUtility.FromJson<GameDataManager>(jsonData);
 
+        // Error handling: Check if jsonData is null or empty
+        if (string.IsNullOrEmpty(jsonData))
+        {
+            Debug.LogError("Save file is corrupted or empty!");
+            return null;
+        }
+
+        GameDataManager data = JsonUtility.FromJson<GameDataManager>(jsonData);
         return data;
     }
 
-    // Check if a save game exists
     public bool DoesSaveGameExist()
     {
         return File.Exists(GetSavePath());
+    }
+}
+
+// Optionally, you can create a struct to hold vector data for JSON serialization
+[System.Serializable]
+public struct Vector3Data
+{
+    public float x, y, z;
+
+    public Vector3Data(Vector3 vec)
+    {
+        x = vec.x;
+        y = vec.y;
+        z = vec.z;
     }
 }
