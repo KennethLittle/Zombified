@@ -102,6 +102,12 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.SetDestination(roamPosition);
     }
 
+    public void InvestigatePoint(Vector3 point)
+    {
+        agent.SetDestination(point);
+        // You might want to add additional behavior, like increasing the enemy's speed temporarily.
+    }
+
     void zedGroansSFX()
     {
         if (!zedIsGroaning && enemyStats.CurrentHP > 0)
