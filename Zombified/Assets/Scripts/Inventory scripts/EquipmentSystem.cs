@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class EquipmentManager : MonoBehaviour
+public class EquipmentSystem : MonoBehaviour
 {
     [SerializeField]
     public int totalSlots;
@@ -45,7 +45,7 @@ public class EquipmentManager : MonoBehaviour
             Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
             //Inventory invInstance = panelObject.AddComponent<Inventory>();
            // panelObject.AddComponent<InventoryDesign>();
-            panelObject.AddComponent<EquipmentManager>();
+            panelObject.AddComponent<EquipmentSystem>();
            // invInstance.initializePrefabs();
         }
         else
@@ -54,7 +54,7 @@ public class EquipmentManager : MonoBehaviour
             panelObject.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, true);
             panelObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
            // Inventory invInstance = panelObject.AddComponent<Inventory>();
-            panelObject.AddComponent<EquipmentManager>();
+            panelObject.AddComponent<EquipmentSystem>();
             DestroyImmediate(GameObject.FindGameObjectWithTag("DraggingItem"));
             GameObject itemDrag = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
             //panelObject.AddComponent<InventoryDesign>();
