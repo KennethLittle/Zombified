@@ -298,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6864760123799039800}
   - component: {fileID: 6864760123808088066}
+  - component: {fileID: 2315855857986874302}
   - component: {fileID: 8266413911633685786}
   - component: {fileID: 6878703988354212238}
   m_Layer: 3
@@ -348,6 +349,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2315855857986874302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864760123798757026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43244bf8d3a55047a4d17eb76577460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 50
+  HPMax: 50
+  stamina: 100
+  currentStamina: 100
+  staminaConsumptionRate: 10
+  staminaRegenerationRate: 7
+  Level: 1
+  playerSpeed: 5
+  sprintMod: 1.2
+  jumpMax: 1
+  jumpHeight: 7
+  gravityValue: -15
 --- !u!114 &8266413911633685786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,24 +385,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae1bd5e057213e42b142b57524f5899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStat: {fileID: 2315855857986874302}
   weaponSlot: {fileID: 6864760123799076420}
   playerInventorySystem: {fileID: 0}
   playerInventoryUI: {fileID: 0}
   controller: {fileID: 6878703988354212238}
   anim: {fileID: 0}
-  HP: 100
-  stamina: 100
-  currentStamina: 0
-  staminaConsumptionRate: 5
-  staminaRegenerationRate: 5
-  playerSpeed: 4
-  sprintMod: 1.6
-  jumpMax: 1
-  jumpHeight: 5
-  gravityValue: -16
-  animChangeSpeed: 10
-  defaultHP: 100
-  defaultStamina: 100
   equippedWeapons:
   - {fileID: 6864760123798753050}
   currentWeaponIndex: 0

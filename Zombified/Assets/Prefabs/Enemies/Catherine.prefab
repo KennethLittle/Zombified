@@ -1324,30 +1324,29 @@ MonoBehaviour:
   model: {fileID: 7008337799593681832}
   agent: {fileID: 7787941256258250210}
   anim: {fileID: 0}
-  HP: 10
+  enemyStats:
+    baseDamage: 0
+    baseHP: 0
+    baseDefense: 0
+    currentHP: 0
+    playerStat: {fileID: 0}
+    damageMultiplier: 0
+    hpMultiplier: 0
+    defenseMultiplier: 0
+    baseXP: 0
   playerFaceSpeed: 5
   meleeRange: 2
   animChangeSpeed: 8
   baseXP: 10
-  damage: 3
   attackRate: 1
+  roamRadius: 10
+  detectionRange: 15
   audioSFX: {fileID: 0}
   audioVoice: []
   audioVoiceVol: 0
   voiceTimerMin: 0
   voiceTimerMax: 0
-  spawnPoint: {fileID: 0}
   recheckPathInterval: 3
-  enemy: {fileID: 0}
-  quest:
-    isActive: 0
-    questComplete: 0
-    title: 
-    description: 
-    expReward: 0
-    scrapReward: 0
-    goal:
-      goalType: 0
 --- !u!195 &7787941256258250210
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1364,7 +1363,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
