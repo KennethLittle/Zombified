@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
     public int inventorybag = 32;
-    public List<Inventoryitem> items = new List<Inventoryitem>();
+    public List<InventoryItem> items = new List<InventoryItem>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    public bool AddItem(Inventoryitem item)
+    public bool AddItem(InventoryItem item)
     {
         if(items.Count < inventorybag)
         {
@@ -31,7 +31,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(Inventoryitem item)
+    public void RemoveItem(InventoryItem item)
     {
         items.Remove(item);
     }

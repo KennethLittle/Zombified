@@ -48,11 +48,11 @@ public class InventorySystem : MonoBehaviour
 
             // Notify the player script to equip the weapon visually
             
-            gameManager.instance.playerScript.EquipWeapon(weapon);
+            PlayerManager.instance.playerScript.EquipWeapon(weapon);
 
             // Add the weapon to the equipped weapons list in playerController
-            gameManager.instance.playerScript.equippedWeapons.Add(weapon.modelPrefab);
-            gameManager.instance.playerScript.currentWeaponIndex = gameManager.instance.playerScript.equippedWeapons.Count - 1; // Update index to the last weapon (most recent one equipped)
+            PlayerManager.instance.playerScript.equippedWeapons.Add(weapon.modelPrefab);
+            PlayerManager.instance.playerScript.currentWeaponIndex = PlayerManager.instance.playerScript.equippedWeapons.Count - 1; // Update index to the last weapon (most recent one equipped)
         }
     }
 
