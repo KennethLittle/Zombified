@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 
-public class Inventory : MonoBehaviour
+public class InventorySystem : MonoBehaviour
 {
     //Prefabs
     [SerializeField]
@@ -222,7 +222,7 @@ public class Inventory : MonoBehaviour
             panel.transform.SetParent(Canvas.transform, true);
             GameObject draggingItem = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
             draggingItem.transform.SetParent(Canvas.transform, true);
-            Inventory temp = panel.AddComponent<Inventory>();
+            InventorySystem temp = panel.AddComponent<InventorySystem>();
             Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
             panel.AddComponent<InventoryDesign>();
             temp.getPrefabs();
@@ -232,7 +232,7 @@ public class Inventory : MonoBehaviour
             GameObject panel = (GameObject)Instantiate(Resources.Load("Prefabs/Panel - Inventory") as GameObject);
             panel.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, true);
             panel.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-            Inventory temp = panel.AddComponent<Inventory>();
+            InventorySystem temp = panel.AddComponent<InventorySystem>();
             panel.AddComponent<InventoryDesign>();
             DestroyImmediate(GameObject.FindGameObjectWithTag("DraggingItem"));
             GameObject draggingItem = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
