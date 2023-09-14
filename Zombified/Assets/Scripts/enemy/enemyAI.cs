@@ -8,13 +8,18 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] private Renderer model;
     [SerializeField] public NavMeshAgent agent;
+    [SerializeField] Transform headPos;
     [SerializeField] private Animator anim;
 
     [Header("----- Stats -----")]
     public EnemyStat enemyStats; // Introducing the EnemyStat reference
     [SerializeField] private int playerFaceSpeed;
+    [Range(60, 180)][SerializeField] int viewAngle;
+    [Range(30, 90)] [SerializeField] int attackAngle;
     [SerializeField] private float meleeRange;
     [SerializeField] private int animChangeSpeed;
+    [SerializeField] private int roamTimer;
+   
     public int ID { get; set; }
     public int baseXP = 10; // XP might also be something you'd want to add in EnemyStat in future.
 
@@ -39,16 +44,22 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool zedIsGroaning;
     private bool isDead = false;
     private bool pause = false;
+    private bool destinationChosen = false;
+    Vector3 playerDir;
 
-    private float lastPathCheckTime;
-    [SerializeField] private float recheckPathInterval = 3f;
+    bool playerInRange;
+    float angleToPlayer;
+    Vector3 startingPos;
+    
+    float stoppingDistOrig;
+
+
     public static event Action<enemyAI> OnEnemyDeathEvent;
 
     void Start()
     {
         // Assuming you have a singleton or reference to your EnemyManager
         EnemyManager.Instance.RegisterEnemy(this);
-        InitiateRoaming();
         agent.stoppingDistance = meleeRange;
         ID = 0;
 
@@ -58,54 +69,88 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (!isAttacking && !pause)
+        float agentVel = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
+
+        if (canSeePlayer())
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position);
-
-            if (distanceToPlayer <= detectionRange)
-            {
-                // Player detected, chase the player
-                agent.SetDestination(PlayerManager.instance.player.transform.position);
-
-                if (distanceToPlayer <= meleeRange)
-                {
-                    zedGroansSFX();
-                    StartCoroutine(attack());
-                }
-            }
-            else
-            {
-                // No player detected, roam around
-                if (!agent.hasPath || agent.remainingDistance < 1f)
-                {
-                    roamPosition = GetRandomRoamingPosition();
-                    agent.SetDestination(roamPosition);
-                }
-            }
-
-            float agentVel = agent.velocity.normalized.magnitude;
-            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
+            ChaseAndAttackPlayer();
+        }
+        else if (agent.remainingDistance < 0.05f)
+        {
+            StartCoroutine(roam());
         }
     }
 
-    private Vector3 GetRandomRoamingPosition()
+    void ChaseAndAttackPlayer()
     {
-        float randomX = UnityEngine.Random.Range(-roamRadius, roamRadius);
-        float randomZ = UnityEngine.Random.Range(-roamRadius, roamRadius);
+        agent.stoppingDistance = meleeRange;
+        agent.SetDestination(PlayerManager.instance.player.transform.position);
 
-        return new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            facePlayer();
+            if (!isAttacking && angleToPlayer <= attackAngle)
+            {
+                StartCoroutine(attack());
+            }
+        }
     }
 
-    public void InitiateRoaming()
+    bool canSeePlayer()
     {
-        roamPosition = GetRandomRoamingPosition();
-        agent.SetDestination(roamPosition);
+        agent.stoppingDistance = stoppingDistOrig;
+        playerDir = PlayerManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            {
+                agent.SetDestination(PlayerManager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    facePlayer();
+                }
+
+                if (isAttacking && angleToPlayer <= attackAngle)
+                {
+                    StartCoroutine(attack());
+                }
+
+                return true;
+            }
+        }
+        agent.stoppingDistance = 0;
+        return false;
     }
 
-    public void InvestigatePoint(Vector3 point)
+    IEnumerator roam()
     {
-        agent.SetDestination(point);
-        // You might want to add additional behavior, like increasing the enemy's speed temporarily.
+        if (agent.remainingDistance < 0.05f && !destinationChosen)
+        {
+            destinationChosen = true;
+            agent.stoppingDistance = 0;
+            yield return new WaitForSeconds(roamTimer);
+
+            Vector3 randomPos = UnityEngine.Random.insideUnitSphere * roamRadius;
+            randomPos += startingPos;
+
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPos, out hit, roamRadius, 1);
+            agent.SetDestination(hit.position);
+
+            destinationChosen = false;
+        }
+    }
+
+    void facePlayer()
+    {
+        Quaternion rot = Quaternion.LookRotation(playerDir);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * playerFaceSpeed);
     }
 
     void zedGroansSFX()

@@ -1281,10 +1281,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4218122600313857234}
+  - component: {fileID: 8047232249981147131}
   - component: {fileID: 3390755224888875319}
   - component: {fileID: 7787941256258250210}
   - component: {fileID: 4372276415301846528}
   - component: {fileID: 8891369446614201610}
+  - component: {fileID: -6668853158607555177}
   m_Layer: 6
   m_Name: Catherine
   m_TagString: Enemy
@@ -1309,6 +1311,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &8047232249981147131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585455210978442856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84279c59c8f6e8c4ab23353eff8e8ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 15
+  baseHP: 50
+  baseDefense: 12
+  currentHP: 0
+  damageMultiplier: 1.1
+  hpMultiplier: 1.2
+  defenseMultiplier: 1.2
+  baseXP: 10
 --- !u!114 &3390755224888875319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,16 +1346,7 @@ MonoBehaviour:
   model: {fileID: 7008337799593681832}
   agent: {fileID: 7787941256258250210}
   anim: {fileID: 0}
-  enemyStats:
-    baseDamage: 0
-    baseHP: 0
-    baseDefense: 0
-    currentHP: 0
-    playerStat: {fileID: 0}
-    damageMultiplier: 0
-    hpMultiplier: 0
-    defenseMultiplier: 0
-    baseXP: 0
+  enemyStats: {fileID: 8047232249981147131}
   playerFaceSpeed: 5
   meleeRange: 2
   animChangeSpeed: 8
@@ -1396,6 +1409,27 @@ CapsuleCollider:
   m_Height: 2.28
   m_Direction: 1
   m_Center: {x: 0, y: 1.08, z: 0}
+--- !u!95 &-6668853158607555177
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585455210978442856}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4096427466285443277
 GameObject:
   m_ObjectHideFlags: 0

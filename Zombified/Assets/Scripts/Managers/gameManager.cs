@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     public LevelUpSystem levelUpSystem;
     private UIManager uiManager;
     private PlayerManager playerManager;
+    private GameStateManager gameStateManager;
 
     // Game data
     [Header("Game Data")]
@@ -53,6 +54,8 @@ public class gameManager : MonoBehaviour
         inventoryUI = FindObjectOfType<InventoryUI>();
         uiManager = GetComponent<UIManager>();
         playerManager = GetComponent<PlayerManager>();
+        gameStateManager= GetComponent<GameStateManager>();
+
     }
 
     public void updateGameGoal(int amount)

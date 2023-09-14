@@ -1,13 +1,13 @@
 using UnityEngine;
 
 [System.Serializable]
-public class EnemyStat
+public class EnemyStat : MonoBehaviour
 {
     public int baseDamage;
     public int baseHP;
     public int baseDefense;
     public int currentHP;
-    public PlayerStat playerStat;
+    private PlayerStat playerStat;
 
 
 
