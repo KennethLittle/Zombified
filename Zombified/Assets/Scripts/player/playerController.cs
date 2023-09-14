@@ -43,8 +43,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip[] audioGunReload;
     [SerializeField] [Range(0, 1)] float audioGunReloadVol;
 
-    public Quest quest;
-    public QuestGoal currQuest;
 
     private float originalPlayerSpeed;
     private bool groundedPlayer;
