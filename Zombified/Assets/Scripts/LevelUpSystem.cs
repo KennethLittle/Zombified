@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelUpSystem : MonoBehaviour
 {
-    public PlayerStat playerStats; // Reference to the PlayerStatScript to access playerLevel
+    private PlayerStat playerStats; // Reference to the PlayerStatScript to access playerLevel
 
     public int totalAccumulatedXP;
     public int totalEarnedXP;

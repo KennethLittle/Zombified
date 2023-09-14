@@ -21,29 +21,48 @@ public class SpawnerManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
+    }
+
+    private void Start()
+    {
+        SpawnEnemies();
     }
 
     private void Update()
     {
-        EnemyDefeated();
+         
     }
 
     public void NotifyEnemyDeath()
     {
         currentEnemiesOnField--;
+        EnemyDefeated();  // Check if we need to spawn new enemies after each enemy death
     }
 
     private void SpawnEnemies()
     {
-        int enemiesToSpawn = Mathf.Min(enemiesToSpawnAtOnce, maxEnemiesOnField - currentEnemiesOnField);
+        int availableSpacesOnField = maxEnemiesOnField - currentEnemiesOnField;
+        int enemiesToSpawn = Mathf.Min(enemiesToSpawnAtOnce, availableSpacesOnField);
+
+        int baseEnemiesForSpawner = enemiesToSpawn / spawners.Length;
+        int remainingEnemies = enemiesToSpawn % spawners.Length;
 
         foreach (Spawner spawner in spawners)
         {
-            for (int i = 0; i < enemiesToSpawn; i++)
+            // Base number of enemies that should be spawned by this spawner
+            int enemiesForThisSpawner = baseEnemiesForSpawner;
+
+            // If there are remaining enemies, add one to this spawner and decrement the remaining count
+            if (remainingEnemies > 0)
             {
-                spawner.SpawnEnemy();
-                currentEnemiesOnField++;
+                enemiesForThisSpawner++;
+                remainingEnemies--;
             }
+
+            spawner.SpawnEnemies(enemiesForThisSpawner);
+            currentEnemiesOnField += enemiesForThisSpawner;
         }
     }
 
