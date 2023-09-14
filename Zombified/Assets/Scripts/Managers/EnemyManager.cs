@@ -21,30 +21,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    // Update positions of all active enemies
-    public void AlertAllEnemies(Vector3 playerPosition)
-    {
-        foreach (var enemy in activeEnemies)
-        {
-            enemy.InvestigatePoint(playerPosition);
-        }
-    }
-
-    public void InitiateEnemyRoaming(enemyAI enemy)
-    {
-        if (Vector3.Distance(enemy.transform.position, PlayerManager.instance.player.transform.position) > enemy.detectionRange)
-        {
-            enemy.InitiateRoaming();  // This is a method you might want to add in enemyAI.
-        }
-    }
-
     // Register an enemy when it's spawned
     public void RegisterEnemy(enemyAI enemy)
     {
         if (!activeEnemies.Contains(enemy))
         {
             activeEnemies.Add(enemy);
-            InitiateEnemyRoaming(enemy);
         }
     }
 

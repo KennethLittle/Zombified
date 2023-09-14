@@ -117,7 +117,6 @@ public class ShopUI : MonoBehaviour
         // Implement logic to buy item, which may involve checking player's money, etc.
         // For now, we just move the item to inventory:
         inventoryUI.AddItemToInventory(item);
-        InventorySystem.Instance.AddItem(item);
 
         // Remove the item from currentShopItems
         currentShopItems.Remove(item);

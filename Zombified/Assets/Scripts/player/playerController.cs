@@ -11,7 +11,6 @@ public class playerController : MonoBehaviour, IDamage
     public PlayerStat playerStat;
     public Transform weaponSlot;
 
-    public InventorySystem playerInventorySystem;
     public InventoryUI playerInventoryUI;
 
     [Header("----- Character -----")]
@@ -74,14 +73,6 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.currentStamina = playerStat.stamina;
         audioLHVolOrig = audioLowHealthVol;
         spawnPlayer();
-        if(!playerInventorySystem)
-        {
-            playerInventorySystem = FindObjectOfType<InventorySystem>();
-        }
-        if(!playerInventoryUI)
-        {
-            playerInventoryUI = FindObjectOfType<InventoryUI>();
-        }
     }
 
     void Update()
@@ -89,9 +80,6 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         lowHealthSFX();
-        useMedPack();
-        reloadAmmo();
-
         if (weaponSlot.transform.childCount > 0 && Input.GetButton("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
@@ -378,63 +366,6 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-
-    void useMedPack()
-    {
-        BaseItemStats medPack = InventorySystem.Instance.items.Find(item => item is medPackStats);
-
-        if (Input.GetKeyDown(KeyCode.Q) && medPack != null &&  playerStat.HP < playerStat.HPMax)
-        {
-            // Get the specific MedPack properties.
-            medPackStats specificMedPack = medPack as medPackStats;
-            int healAmount = specificMedPack.healAmount;
-
-            playerStat.HP += healAmount;
-
-            if (playerStat.HP > playerStat.HPMax)
-            {
-                playerStat.HP = playerStat.HPMax;
-            }
-
-            // Update UI and remove the med pack from inventory after use.
-            updatePlayerUI();
-            InventorySystem.Instance.RemoveItem(medPack);
-        }
-    }
-
-    void reloadAmmo()
-    {
-        WeaponStats currentWeapon = GetCurrentWeaponStats();
-
-        if (currentWeapon == null)
-            return; // No weapon currently equipped or selected
-
-        if (Input.GetKeyDown(KeyCode.R) && currentWeapon.ammoCur < currentWeapon.ammoMax)
-        {
-            int difference = currentWeapon.ammoMax - currentWeapon.ammoCur;
-            anim.SetBool("IsReloading", true);
-
-            while (difference > 0 && InventorySystem.Instance.items.Any(item => item is ammoBoxStats))
-            {
-                ammoBoxStats ammoBox = (ammoBoxStats)InventorySystem.Instance.items.First(item => item is ammoBoxStats);
-                int ammoToTake = Mathf.Min(difference, ammoBox.ammoAmount);
-
-                currentWeapon.ammoCur += ammoToTake;
-                ammoBox.ammoAmount -= ammoToTake;
-
-                difference -= ammoToTake;
-
-                if (ammoBox.ammoAmount <= 0) // Remove ammo box if empty
-                {
-                    InventorySystem.Instance.RemoveItem(ammoBox);
-                }
-            }
-
-            anim.SetBool("IsReloading", false);
-            updatePlayerUI(); // To reflect the changes in the UI
-        }
-    }
-
     public void spawnPlayer()
     {
         controller.enabled = false;
@@ -480,11 +411,6 @@ public class playerController : MonoBehaviour, IDamage
             UIManager.Instance.weaponIcon.sprite = currentWeapon.icon;
         }
 
-        int medPackCount = InventorySystem.Instance.items.Count(item => item is medPackStats);
-        UIManager.Instance.medPackCur.text = medPackCount.ToString("F0");
-
-        int ammoBoxCount = InventorySystem.Instance.items.Count(item => item is ammoBoxStats);
-        UIManager.Instance.ammoBoxAmount.text = ammoBoxCount.ToString("F0");
     }
 
     public void EquipWeapon(BaseItemStats weapon)

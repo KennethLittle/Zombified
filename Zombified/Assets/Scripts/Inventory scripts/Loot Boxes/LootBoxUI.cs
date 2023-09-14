@@ -126,7 +126,6 @@ public class LootBoxUI : MonoBehaviour
         {
             // Move the item to the inventory
             inventoryUI.AddItemToInventory(item);
-            InventorySystem.Instance.AddItem(item);
         }
         currentLoot.Clear(); // Clear the loot
 
@@ -161,21 +160,6 @@ public class LootBoxUI : MonoBehaviour
 
     public bool MoveItemToInventory(BaseItemStats item)
     {
-        // Try adding the item to the InventorySystem
-        if (InventorySystem.Instance.AddItem(item))
-        {
-            // If successfully added to InventorySystem, add to UI
-            inventoryUI.AddItemToInventory(item);
-            InventorySystem.Instance.AddItem(item);
-
-            // Remove the item from currentLoot
-            currentLoot.Remove(item);
-            DisplayLoot(); // Redisplay loot without the moved item
-
-            return true; // Indicate success
-        }
-
-        // If reached here, the item was not added to the inventory
         return false;
     }
 
