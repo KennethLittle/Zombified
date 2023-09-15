@@ -29,5 +29,4 @@ public class FindItemQuestStep : QuestStep
     {
         return currentItemFoundCount >= requiredItemCount;
     }
-
 }
