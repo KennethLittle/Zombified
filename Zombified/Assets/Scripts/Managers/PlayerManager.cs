@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public playerController playerScript;
     public PlayerStat playerStat;
     public LevelUpSystem levelSystem;
+    public static PlayerData TempPlayerData = null;
 
     void Awake()
     {
@@ -42,5 +43,12 @@ public class PlayerManager : MonoBehaviour
         player.tag = "Player";
         playerScript = player.GetComponent<playerController>();
         playerStat = player.GetComponent<PlayerStat>();
+
+        // Load temporary data if available
+        if (TempPlayerData != null)
+        {
+            TempPlayerData.LoadDataIntoPlayer(this);
+            TempPlayerData = null; // Clear temporary data after use
+        }
     }
 }

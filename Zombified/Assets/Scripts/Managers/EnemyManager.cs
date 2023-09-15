@@ -5,6 +5,7 @@ public class EnemyManager : MonoBehaviour
 {
     // Static instance of the EnemyManager which allows it to be accessed by any other script.
     public static EnemyManager Instance { get; private set; }
+    private GameObject enemyPrefab;
 
     public List<enemyAI> activeEnemies; // Store all active enemies
 
@@ -52,5 +53,40 @@ public class EnemyManager : MonoBehaviour
         // Handle XP gain, game goals, and other logic related to enemy death.
         gameManager.instance.updateGameGoal(-1);
         SpawnerManager.instance.EnemyDefeated();
+    }
+
+    public List<EnemyData> GetAllEnemyData()
+    {
+        List<EnemyData> allData = new List<EnemyData>();
+
+        foreach (enemyAI enemy in activeEnemies)
+        {
+            EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
+            if (enemyStat != null)
+            {
+                allData.Add(enemyStat.ExtractData());
+            }
+        }
+
+        return allData;
+    }
+
+    public void LoadEnemyData(List<EnemyData> enemyDataList)
+    {
+        // Logic to set the game state based on the list of EnemyData.
+        // This could involve instantiating enemies at saved positions, setting their HP, etc.
+
+        foreach (EnemyData data in enemyDataList)
+        {
+            // Example: Instantiate enemy prefab at the saved position.
+            GameObject enemyInstance = Instantiate(enemyPrefab, data.position, Quaternion.identity);
+
+            enemyAI enemyScript = enemyInstance.GetComponent<enemyAI>();
+            if (enemyScript != null)
+            {
+                // Assuming enemyAI or EnemyStat script has a method to set data
+                enemyScript.SetData(data);
+            }
+        }
     }
 }

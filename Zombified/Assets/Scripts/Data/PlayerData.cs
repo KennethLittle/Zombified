@@ -1,0 +1,95 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class PlayerData
+{
+    public Vector3 playerPosition;
+    public string currentQuest;
+    public LocationData.Location currentLocation;
+    public List<string> currentInventory; // List of items' names or IDs
+
+    // Player stats fields
+    public int HP;
+    public int HPMax;
+    public float stamina;
+    public float currentStamina;
+    public float staminaConsumptionRate;
+    public float staminaRegenerationRate;
+    public int Level;
+    public float playerSpeed;
+    public float sprintMod;
+    public int jumpMax;
+    public float jumpHeight;
+    public float gravityValue;
+
+    public PlayerData() { }
+
+    public PlayerData(PlayerManager playerManager)
+    {
+        PlayerStat stats = playerManager.playerStat;
+
+        playerPosition = playerManager.player.transform.position;
+
+        HP = stats.HP;
+        HPMax = stats.HPMax;
+        stamina = stats.stamina;
+        currentStamina = stats.currentStamina;
+        staminaConsumptionRate = stats.staminaConsumptionRate;
+        staminaRegenerationRate = stats.staminaRegenerationRate;
+        Level = stats.Level;
+        playerSpeed = stats.playerSpeed;
+        sprintMod = stats.sprintMod;
+        jumpMax = stats.jumpMax;
+        jumpHeight = stats.jumpHeight;
+        gravityValue = stats.gravityValue;
+
+        // As before, the other data (currentQuest, currentLocation, currentInventory) 
+        // will be set outside of this constructor when you have those systems in place.
+    }
+
+    public void LoadDataIntoPlayer(PlayerManager playerManager)
+    {
+        playerManager.player.transform.position = playerPosition;
+        PlayerStat stats = playerManager.playerStat;
+
+        stats.HP = HP;
+        stats.HPMax = HPMax;
+        stats.stamina = stamina;
+        stats.currentStamina = currentStamina;
+        stats.staminaConsumptionRate = staminaConsumptionRate;
+        stats.staminaRegenerationRate = staminaRegenerationRate;
+        stats.Level = Level;
+        stats.playerSpeed = playerSpeed;
+        stats.sprintMod = sprintMod;
+        stats.jumpMax = jumpMax;
+        stats.jumpHeight = jumpHeight;
+        stats.gravityValue = gravityValue;
+
+        // When you implement the quest, location, and inventory systems, 
+        // you'll similarly use the PlayerManager to set the player's state based on the saved data.
+    }
+
+    // Default data for a new game
+    public static PlayerData GetDefaultPlayerData()
+    {
+        return new PlayerData
+        {
+            playerPosition = Vector3.zero, // Default position
+
+            HP = 100,
+            HPMax = 100,
+            stamina = 100,
+            currentStamina = 100,
+            staminaConsumptionRate = 10,
+            staminaRegenerationRate = 5,
+            Level = 1,
+            playerSpeed = 2,
+            sprintMod = 2,
+            jumpMax = 1,
+            jumpHeight = 4,
+            gravityValue = -15
+           
+        };
+    }
+}

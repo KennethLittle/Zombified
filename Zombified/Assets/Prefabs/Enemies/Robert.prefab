@@ -412,7 +412,7 @@ MonoBehaviour:
   enemyStats: {fileID: -7103596828700182417}
   playerFaceSpeed: 5
   viewAngle: 90
-  attackAngle: 30
+  attackAngle: 33
   meleeRange: 2
   animChangeSpeed: 5
   roamTimer: 3

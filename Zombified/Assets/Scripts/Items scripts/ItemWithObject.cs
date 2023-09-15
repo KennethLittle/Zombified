@@ -14,7 +14,7 @@ public class ItemWithObject : MonoBehaviour                   //Saves the Item i
     {
         text.text = "" + item.itemValue;                     //sets the itemValue         
         image.sprite = item.itemIcon;
-        //GetComponent<ConsumingItems>().item = item;
+        GetComponent<ConsumingItems>().currentitem = item;
     }
 
     void Start()

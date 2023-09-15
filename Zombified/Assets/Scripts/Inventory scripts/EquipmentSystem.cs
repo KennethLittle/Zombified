@@ -17,13 +17,13 @@ public class EquipmentSystem : MonoBehaviour
 
     void Start()
     {
-       // ConsumeItem.equipmentRef = GetComponent<EquipmentManager>();
+        ConsumingItems.equipmentSystem = GetComponent<EquipmentSystem>();
     }
 
     public void computeTotalSlots()
     {
-       // Inventory itemHolder = GetComponent<Inventory>();
-       // totalSlots = itemHolder.width * itemHolder.height;
+        InventorySystem itemHolder = GetComponent<InventorySystem>();
+        totalSlots = itemHolder.width * itemHolder.height;
     }
 
 #if UNITY_EDITOR
@@ -43,23 +43,23 @@ public class EquipmentSystem : MonoBehaviour
             GameObject itemDrag = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
             itemDrag.transform.SetParent(UIContainer.transform, true);
             Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
-            //Inventory invInstance = panelObject.AddComponent<Inventory>();
-           // panelObject.AddComponent<InventoryDesign>();
+            InventorySystem invInstance = panelObject.AddComponent<InventorySystem>();
+           panelObject.AddComponent<InventoryDesign>();
             panelObject.AddComponent<EquipmentSystem>();
-           // invInstance.initializePrefabs();
+           invInstance.getPrefabs();
         }
         else
         {
             GameObject panelObject = (GameObject)Instantiate(Resources.Load("Prefabs/Panel - EquipmentManager") as GameObject);
             panelObject.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, true);
             panelObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-           // Inventory invInstance = panelObject.AddComponent<Inventory>();
+           InventorySystem invInstance = panelObject.AddComponent<InventorySystem>();
             panelObject.AddComponent<EquipmentSystem>();
             DestroyImmediate(GameObject.FindGameObjectWithTag("DraggingItem"));
             GameObject itemDrag = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
-            //panelObject.AddComponent<InventoryDesign>();
+            panelObject.AddComponent<InventoryDesign>();
             itemDrag.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, true);
-           // invInstance.initializePrefabs();
+           invInstance.getPrefabs();
         }
     }
 #endif

@@ -76,35 +76,40 @@ public class gameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        // Set up a new game using default data
-        GameDataManager data = GameDataManager.GetDefaultGameData();
+        // Set up a new game using default player data
+        PlayerData defaultPlayerData = PlayerData.GetDefaultPlayerData();
 
         GameObject newPlayer = Instantiate(PlayerManager.instance.playerPrefab, PlayerManager.instance.playerSpawnPos.transform.position, Quaternion.identity);
 
         PlayerManager.instance.playerScript = newPlayer.GetComponent<playerController>();
 
-        // Update game state with data
-        PlayerManager.instance.playerStat.HP = data.playerHP;
-        PlayerManager.instance.playerStat.stamina = data.playerStamina;  // Assuming the player has stamina property in the PlayerStatScript.
-        PlayerManager.instance.playerStat.Level = data.playerLevel;
-        PlayerManager.instance.levelSystem.totalAccumulatedXP = data.playerCurrentXP;
-        PlayerManager.instance.levelSystem.requiredXP = data.playerRequiredXP;
+        // Update game state with the default player data
+        defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
+
+        // If you have default game states for enemies or other elements, you'd set them up here as well.
     }
 
-    public void SaveGame()
+    public void SaveGameState(int saveSlot = 0)
     {
-        SaveManager.Instance.SaveGame(PlayerManager.instance.playerStat, this);
+        SaveManager.Instance.SaveGame(saveSlot);
     }
 
-    public void LoadGame()
+    public void LoadGameState(int saveSlot = 0)
     {
-        GameDataManager loadedData = SaveManager.Instance.LoadGame();
+        GameData loadedData = SaveManager.Instance.LoadGame(saveSlot);
 
-        PlayerManager.instance.playerStat.HP = loadedData.playerHP;
-        PlayerManager.instance.playerStat.stamina = loadedData.playerStamina;
-        PlayerManager.instance.playerStat.Level = loadedData.playerLevel;
-        PlayerManager.instance.levelSystem.totalAccumulatedXP = loadedData.playerCurrentXP;
-        PlayerManager.instance.levelSystem.requiredXP = loadedData.playerRequiredXP;
+        if (loadedData != null)
+        {
+            // Load player data
+            loadedData.playerData.LoadDataIntoPlayer(PlayerManager.instance);
+
+            // Load enemy data - You would need a method in EnemyManager to handle this.
+            EnemyManager.Instance.LoadEnemyData(loadedData.enemiesData);
+        }
+        else
+        {
+            Debug.LogError("Failed to load game state.");
+        }
     }
 
     public void Defeat()
@@ -120,12 +125,12 @@ public class gameManager : MonoBehaviour
     public void MarkRunStart()
     {
         isInRun = true;
-        gameManager.instance.SaveGame();
+        SaveGameState();
     }
 
     public void MarkRunEnd()
     {
         isInRun = false;
-        gameManager.instance.SaveGame();
+        SaveGameState();
     }
 }
