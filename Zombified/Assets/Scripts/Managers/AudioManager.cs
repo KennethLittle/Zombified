@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    public Sound[] musicSounds, playerSFXSounds, levelSFXSounds, enemySFXSounds, NPCSFXSounds, UI_MenuSFXSounds;
+    public Sound[] musicSounds, playerSFXSounds, itemSFXSounds, levelSFXSounds, enemySFXSounds, NPCSFXSounds, UI_MenuSFXSounds;
     public AudioSource musicSource, sfxSource;
 
     public void Awake()
@@ -23,13 +23,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Start()
-    {
-        foreach (var sound in musicSounds)
-        {
-            PlayMusic(sound.name);
-        }
-    }
+    //public void Start()
+    //{
+    //    foreach (var sound in musicSounds)
+    //    {
+    //        PlayMusic(sound.name);
+    //    }
+    //}
 
     public void PlayMusic(string name)
     {
@@ -104,6 +104,19 @@ public class AudioManager : MonoBehaviour
     public void UI_MenuSFX(string name)
     {
         Sound s = Array.Find(UI_MenuSFXSounds, x => x.name == name);
+
+        if (s == null)
+        {
+            Debug.Log("Sound Not Found");
+        }
+        else
+        {
+            sfxSource.PlayOneShot(s.clip);
+        }
+    }
+    public void ItemSFX(string name)
+    {
+        Sound s = Array.Find(itemSFXSounds, x => x.name == name);
 
         if (s == null)
         {
