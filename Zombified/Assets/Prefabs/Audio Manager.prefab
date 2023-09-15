@@ -47,8 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSounds:
-  - name: Music
+  - name: MainMenu
     clip: {fileID: 8300000, guid: af1aef93b3ff796448e20e87b4afc6ac, type: 3}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 200c04e535795ef428c8a9c3dabb3f9b, type: 3}
+  - name: Track1
+    clip: {fileID: 8300000, guid: b7e66643876f0d54481555daa647c696, type: 3}
+  - name: Track2
+    clip: {fileID: 8300000, guid: 26136e04d8f779544b417a76cf6caaf3, type: 3}
+  - name: Track3
+    clip: {fileID: 8300000, guid: bacc3faf166505944a574960b26fe29c, type: 3}
+  - name: Track4
+    clip: {fileID: 8300000, guid: f06c91446807ff841ab028754a77a685, type: 3}
   playerSFXSounds:
   - name: Jump
     clip: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
@@ -66,7 +76,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5e79f26ed88f6b047b1b060268420394, type: 3}
   - name: LevelUp
     clip: {fileID: 8300000, guid: 04a6961fdfe213745afd98959bd02ad7, type: 3}
-  levelSFXSounds: []
+  itemSFXSounds:
+  - name: ExplosionTimer
+    clip: {fileID: 8300000, guid: 6d8e5ccf888cf95408087bf49811078f, type: 3}
+  levelSFXSounds:
+  - name: ShipTakeOff
+    clip: {fileID: 8300000, guid: bf96a6389cb082d43a511e0748cec6fa, type: 3}
   enemySFXSounds:
   - name: Jump
     clip: {fileID: 8300000, guid: cad7d1dd92ab2384a99061534a96c143, type: 3}
@@ -74,7 +89,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 81b202f9744a9de4396c48dce365c70b, type: 3}
   - name: TakeDamage
     clip: {fileID: 8300000, guid: 3077cd334f269f441bbb4ab2cffb7ed3, type: 3}
-  NPCSFXSounds: []
+  NPCSFXSounds:
+  - name: Greeting
+    clip: {fileID: 8300000, guid: cdd7070d8332c4644bd220524f082c13, type: 3}
+  UI_MenuSFXSounds:
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 36c0734b3cfa78549a2ce2c0084c05ce, type: 3}
   musicSource: {fileID: 6067508096198701573}
   sfxSource: {fileID: 6067508096533776503}
 --- !u!1 &6067508096198701594

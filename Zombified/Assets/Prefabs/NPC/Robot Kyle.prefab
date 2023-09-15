@@ -460,7 +460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1206878371740023901}
   - component: {fileID: 9094371550395552039}
-  - component: {fileID: 8199232050486178134}
+  - component: {fileID: 2466911847364450379}
   m_Layer: 0
   m_Name: Robot Kyle
   m_TagString: Untagged
@@ -495,7 +495,7 @@ Animator:
   m_GameObject: {fileID: 2802620663317958222}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4036668b5ed4128429c74f5ad69fa1b5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -506,7 +506,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8199232050486178134
+--- !u!114 &2466911847364450379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,27 +515,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2802620663317958222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a7cb48202d7b0244b26c359885fa1a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 090e3a854c74e6949bc7aab2baf74683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: Robot Kyle
-  quest:
-    isActive: 0
-    questComplete: 0
-    title: 
-    description: 
-    expReward: 0
-    scrapReward: 0
-    goal:
-      goalType: 0
-  dialogue:
-    inDialogue: 0
-    name: 
-    sentences: []
-  hasShop: 0
-  interactionPrompt: {fileID: 0}
-  roamRange: 5
-  anim: {fileID: 0}
 --- !u!1 &2910102356118315634
 GameObject:
   m_ObjectHideFlags: 0
