@@ -174,18 +174,17 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (!isDead)
         {
-            isAttacking = true;
-            anim.SetBool("isAttacking", isAttacking);
+            anim.SetTrigger("isAttacking");
             MeleeDamage(enemyStats.CurrentDamage); // Using stats from EnemyStat
             yield return new WaitForSeconds(attackRate);
             isAttacking = false;
-            anim.SetBool("isAttacking", isAttacking);
         }
     }
 
     public void takeDamage(int amount)
     {
         enemyStats.CurrentHP -= amount; // Using stats from EnemyStat
+        anim.SetTrigger("isDamaged");
         if (enemyStats.CurrentHP <= 0)
         {
             int xpReward = enemyStats.CalculateExperienceReward();
@@ -197,7 +196,7 @@ public class enemyAI : MonoBehaviour, IDamage
             // Instead of directly modifying the gameManager, let the enemy manager handle it.
             EnemyManager.Instance.HandleEnemyDeath(this);
 
-            anim.SetBool("isDead", isDead);
+            anim.SetTrigger("isDead");
             Destroy(gameObject);
         }
     }

@@ -4632,6 +4632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9129863918187557488}
+  - component: {fileID: -2446902954761720663}
   - component: {fileID: 8308618675534759500}
   - component: {fileID: 2646159268149954084}
   m_Layer: 0
@@ -4658,6 +4659,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &-2446902954761720663
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500573365294721226}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 33b6b3aa0156c6146b8db27ca2dff66b, type: 3}
+  m_Controller: {fileID: 9100000, guid: a555e70ffc2bba547bb0739edc839ff8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8308618675534759500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4672,31 +4694,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 295592727387600851}
   agent: {fileID: 2646159268149954084}
-  anim: {fileID: 0}
-  HP: 0
+  anim: {fileID: -2446902954761720663}
+  enemyStats:
+    baseDamage: 0
+    baseHP: 0
+    baseDefense: 0
+    currentHP: 0
+    playerStat: {fileID: 0}
+    damageMultiplier: 0
+    hpMultiplier: 0
+    defenseMultiplier: 0
+    baseXP: 0
   playerFaceSpeed: 0
   meleeRange: 0
-  animChangeSpeed: 0
+  animChangeSpeed: 1
   baseXP: 10
-  damage: 0
   attackRate: 0
+  roamRadius: 10
+  detectionRange: 15
   audioSFX: {fileID: 0}
   audioVoice: []
   audioVoiceVol: 0
   voiceTimerMin: 0
   voiceTimerMax: 0
-  spawnPoint: {fileID: 0}
   recheckPathInterval: 3
-  enemy: {fileID: 0}
-  quest:
-    isActive: 0
-    questComplete: 0
-    title: 
-    description: 
-    expReward: 0
-    scrapReward: 0
-    goal:
-      goalType: 0
 --- !u!195 &2646159268149954084
 NavMeshAgent:
   m_ObjectHideFlags: 0

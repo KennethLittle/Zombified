@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43244bf8d3a55047a4d17eb76577460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 50
+  HP: 500
   HPMax: 50
   stamina: 100
   currentStamina: 100
@@ -410,17 +410,6 @@ MonoBehaviour:
   audioShootCasingVol: 0
   audioGunReload: []
   audioGunReloadVol: 0
-  quest:
-    isActive: 0
-    questComplete: 0
-    title: 
-    description: 
-    expReward: 0
-    scrapReward: 0
-    goal:
-      goalType: 0
-  currQuest:
-    goalType: 0
 --- !u!143 &6878703988354212238
 CharacterController:
   m_ObjectHideFlags: 0
