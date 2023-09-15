@@ -30,7 +30,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void NotifyItemFound(Item founditem)
+    public void NotifyItemFound(GameObject founditem)
     {
         if (CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count
             && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is FindItemQuestStep findItemQuest)
