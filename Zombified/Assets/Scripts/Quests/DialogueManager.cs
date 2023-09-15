@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
     public Text dialogueText;
     public Queue<string> sentences;
 
-    void Start()
+    private void Start()
     {
         sentences = new Queue<string>();
     }
