@@ -118,6 +118,7 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
+        // RJM AudioManager.instance.PlayerSFX("Take Damage"); //RJM
     }
 
     void lowHealthSFX()
@@ -212,6 +213,7 @@ public class playerController : MonoBehaviour, IDamage
             lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
             audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
+            // RJM AudioManager.instance.PlayerSFX("Jump"); //RJM
 
             
             playerVelocity.y += playerStat.jumpHeight;
