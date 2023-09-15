@@ -70,4 +70,27 @@ public class EnemyStat : MonoBehaviour
     {
         return Mathf.RoundToInt(baseXP * Mathf.Pow(1 + (float)Level / 10, 2));
     }
+
+    public EnemyData ExtractData()
+    {
+        EnemyData data = new EnemyData();
+
+        enemyAI aiComponent = GetComponent<enemyAI>();
+        if (aiComponent != null)
+        {
+            data.enemyID = aiComponent.enemyID;
+        }
+        else
+        {
+            Debug.LogError("Failed to get enemyAI component.");
+        }
+
+        data.position = transform.position;
+        data.currentHP = this.currentHP;
+        data.baseDamage = this.baseDamage;
+        data.baseDefense = this.baseDefense;
+      
+
+        return data;
+    }
 }

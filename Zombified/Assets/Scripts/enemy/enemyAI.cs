@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class enemyAI : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
+    [SerializeField] public static int nextID = 0;
+    [SerializeField] public int enemyID;
     [SerializeField] private Renderer model;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
@@ -20,7 +22,6 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] private int animChangeSpeed;
     [SerializeField] private int roamTimer;
    
-    public int ID { get; set; }
     public int baseXP = 10; // XP might also be something you'd want to add in EnemyStat in future.
 
     [Header("----- Attack Stats -----")]
@@ -61,7 +62,7 @@ public class enemyAI : MonoBehaviour, IDamage
         // Assuming you have a singleton or reference to your EnemyManager
         EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
-        ID = 0;
+        enemyID = nextID++;
 
         // TODO: Update the player's level in enemyStats. You need a way to access player's level.
         // enemyStats.UpdatePlayerLevel(PlayerManager.instance.playerLevel); 
@@ -216,6 +217,18 @@ public class enemyAI : MonoBehaviour, IDamage
     void OnDestroy()
     {
         EnemyManager.Instance.DeRegisterEnemy(this);
+    }
+
+    public void SetData(EnemyData data)
+    {
+        
+        // Use the data to set the properties of this enemy
+        this.enemyID = data.enemyID;
+        this.enemyStats.CurrentHP = data.currentHP;
+        this.enemyStats.baseDamage= data.baseDamage;
+        this.enemyStats.baseDefense= data.baseDefense;
+        Vector3 enemyPosition = data.position;
+        // Add more as needed
     }
 
 }

@@ -51,8 +51,10 @@ public class buttonFunctions : MonoBehaviour
         
     }
 
-    public void quitToPlayerMenu()
+    public void ReturntoHomeBase()
     {
+        PlayerData data = new PlayerData(PlayerManager.instance);
+        PlayerManager.TempPlayerData = data;
         int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
         SceneManager.LoadScene(previousSceneIndex);
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
@@ -81,12 +83,12 @@ public class buttonFunctions : MonoBehaviour
 
     public void SaveGame()
     {
-        gameManager.instance.SaveGame();
+        gameManager.instance.SaveGameState();
     }
 
     public void LoadGame()
     {
-        gameManager.instance.LoadGame();
+        gameManager.instance.LoadGameState();
     }
 
     public void NewGame()

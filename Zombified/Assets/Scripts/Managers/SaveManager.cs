@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    private const string SAVE_FILENAME = "savegame.json";
-
+    private const string SAVE_FILENAME = "savegame{0}.json";
     public static SaveManager Instance { get; private set; }
 
     private void Awake()
@@ -22,67 +23,56 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private string GetSavePath()
+    private string GetSavePath(int saveSlot)
     {
-        return Path.Combine(Application.persistentDataPath, SAVE_FILENAME);
+        return Path.Combine(Application.persistentDataPath, string.Format(SAVE_FILENAME, saveSlot));
     }
 
-    public void SaveGame(PlayerStat playerStats, gameManager game)
+    public void SaveGame(int saveSlot = 0)
     {
-        GameDataManager data = new GameDataManager();
+        PlayerData pD = new PlayerData(PlayerManager.instance);
+        List<EnemyData> eD = EnemyManager.Instance.GetAllEnemyData();
 
-        // Player Data
-        data.playerHP = playerStats.HP;
-        data.playerStamina = playerStats.currentStamina;
+        GameData gameData = new GameData(pD, eD);
 
-        // Additional Game State Data
-        // data.playerPosition = new Vector3Data(player.transform.position);
-        // ... (add other game state data)
-
-        // Convert to JSON and save
-        string jsonData = JsonUtility.ToJson(data);
-        File.WriteAllText(GetSavePath(), jsonData);
+        string jsonData = JsonUtility.ToJson(gameData);
+        File.WriteAllText(GetSavePath(saveSlot), jsonData);
 
         Debug.Log("Game Saved!");
     }
 
-    public GameDataManager LoadGame()
+    public GameData LoadGame(int saveSlot)
     {
-        if (!File.Exists(GetSavePath()))
+        if (!File.Exists(GetSavePath(saveSlot)))
         {
             Debug.LogError("Save file not found!");
             return null;
         }
 
-        string jsonData = File.ReadAllText(GetSavePath());
+        string jsonData = File.ReadAllText(GetSavePath(saveSlot));
 
-        // Error handling: Check if jsonData is null or empty
         if (string.IsNullOrEmpty(jsonData))
         {
             Debug.LogError("Save file is corrupted or empty!");
             return null;
         }
 
-        GameDataManager data = JsonUtility.FromJson<GameDataManager>(jsonData);
+        GameData data = JsonUtility.FromJson<GameData>(jsonData);
         return data;
     }
 
-    public bool DoesSaveGameExist()
+    public bool DoesSaveGameExist(int saveSlot)
     {
-        return File.Exists(GetSavePath());
+        return File.Exists(GetSavePath(saveSlot));
     }
-}
 
-// Optionally, you can create a struct to hold vector data for JSON serialization
-[System.Serializable]
-public struct Vector3Data
-{
-    public float x, y, z;
-
-    public Vector3Data(Vector3 vec)
+    // List all save files
+    public List<string> GetAllSaveFiles()
     {
-        x = vec.x;
-        y = vec.y;
-        z = vec.z;
+        var allSaveFiles = Directory.GetFiles(Application.persistentDataPath, "*.json")
+                                     .Select(Path.GetFileName)
+                                     .ToList();
+        return allSaveFiles;
     }
+
 }
