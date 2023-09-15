@@ -5,7 +5,6 @@ using UnityEditor;
 #endif
 using UnityEngine.UI;
 using System.Collections.Generic;
-using static UnityEditor.Progress;
 
 public class CraftSystem : MonoBehaviour
 {

@@ -15,7 +15,7 @@ public class PlayerEquipment : MonoBehaviour
     private InventorySystem characterInventory;
     private HelperTool Toolbar;
 
-    private InputManager inputManagerDatabase;
+    private InputManager inputManagerData;
 
     public GameObject HPMANACanvas;
 
@@ -169,8 +169,8 @@ public class PlayerEquipment : MonoBehaviour
         //    UpdateManaBar();
         //}
 
-        if (inputManagerDatabase == null)
-            inputManagerDatabase = (InputManager)Resources.Load("InputManager");
+        if (inputManagerData == null)
+            inputManagerData = (InputManager)Resources.Load("InputManager");
 
         if (craftSystem != null)
             craft = craftSystem.GetComponent<CraftSystem>();
@@ -285,7 +285,7 @@ public class PlayerEquipment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(inputManagerDatabase.CharacterSystemKeyCode))
+        if (Input.GetKeyDown(inputManagerData.CharacterSystemKeyCode))
         {
             if (!charactersetup.activeSelf)
             {
@@ -299,7 +299,7 @@ public class PlayerEquipment : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(inputManagerDatabase.InventoryKeyCode))
+        if (Input.GetKeyDown(inputManagerData.InventoryKeyCode))
         {
             if (!inventorysetup.activeSelf)
             {
@@ -313,7 +313,7 @@ public class PlayerEquipment : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(inputManagerDatabase.CraftSystemKeyCode))
+        if (Input.GetKeyDown(inputManagerData.CraftSystemKeyCode))
         {
             if (!craftSystem.activeSelf)
                 craftInventory.openInventory();

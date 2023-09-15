@@ -572,7 +572,7 @@ public class InventorySystem : MonoBehaviour
                 if (stack <= ItemsInInventory[i].maxStack)
                 {
                     ItemsInInventory[i].itemValue = stack;
-                    GameObject temp = getItemGameObject(ItemsInInventory[i]);
+                    //GameObject temp = getItemGameObject(ItemsInInventory[i]);
                     //if (temp != null && temp.GetComponent<ConsumingItems>().duplication != null)
                     //    temp.GetComponent<ConsumingItems>().duplication.GetComponent<ItemWithObject>().item.itemValue = stack;
                     //return true;
