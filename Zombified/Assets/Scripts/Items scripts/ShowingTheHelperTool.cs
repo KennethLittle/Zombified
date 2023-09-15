@@ -29,7 +29,7 @@ public class ShowingTheHelperTool : MonoBehaviour, IPointerEnterHandler, IPointe
         {
             item = GetComponent<ItemWithObject>().item;                   //we get the item
             Helper.item = item;                                        //set the item in the tooltip
-            Helper.activateTooltip();                                  //set all informations of the item in the tooltip
+            Helper.activateHelperTool();                                  //set all informations of the item in the tooltip
             if (CanvasRectTransform == null)
                 return;
 
