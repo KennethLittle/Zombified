@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    private const string SAVE_FILENAME = "savegame{0}.json";
+    private const string SAVE_FILENAME = "newSave{0}.json";
     public static SaveManager Instance { get; private set; }
 
     private void Awake()
@@ -73,6 +73,41 @@ public class SaveManager : MonoBehaviour
                                      .Select(Path.GetFileName)
                                      .ToList();
         return allSaveFiles;
+    }
+
+    public int GetNextSaveSlot()
+    {
+        List<string> saveFiles = GetAllSaveFiles();
+        int maxSlotNumber = 0;
+
+        foreach (string saveFile in saveFiles)
+        {
+            string slotString = saveFile.Replace("newSave", "").Replace(".json", "");
+            if (int.TryParse(slotString, out int currentSlot))
+            {
+                if (currentSlot > maxSlotNumber)
+                {
+                    maxSlotNumber = currentSlot;
+                }
+            }
+        }
+
+        return maxSlotNumber + 1;
+    }
+
+    public void RenameSaveFile(int saveSlot, string newName)
+    {
+        string oldPath = GetSavePath(saveSlot);
+        string newPath = Path.Combine(Application.persistentDataPath, newName + ".json");
+
+        if (File.Exists(oldPath))
+        {
+            File.Move(oldPath, newPath);
+        }
+        else
+        {
+            Debug.LogError("File doesn't exist: " + oldPath);
+        }
     }
 
 }

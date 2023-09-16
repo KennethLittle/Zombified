@@ -11,10 +11,10 @@ using static UnityEditor.Progress;
 public class InventoryStorage : MonoBehaviour
 {
     [SerializeField]
-    private GameObject inventoryPanel;
+    public GameObject inventory;
 
     [SerializeField]
-    private List<InventoryItem> storedItems = new List<InventoryItem>();
+    public List<InventoryItem> storedItems = new List<InventoryItem>();
 
     [SerializeField]
     private DataBaseForItems itemDatabase;
@@ -33,7 +33,7 @@ public class InventoryStorage : MonoBehaviour
     public int maximumRandomItems;
 
     private HelperTool itemHelper;
-    private InventorySystem inventory;
+    private InventorySystem invent;
 
     private GameObject player;
 
@@ -57,7 +57,7 @@ public class InventoryStorage : MonoBehaviour
             inputManager = (InputManager)Resources.Load("InputManager");
 
         player = GameObject.FindGameObjectWithTag("Player");
-        inventory = inventoryPanel.GetComponent<InventorySystem>();
+        invent = inventory.GetComponent<InventorySystem>();
         DataBaseForItems itemDB = (DataBaseForItems)Resources.Load("ItemDatabase");
 
         int itemsToGenerate = Random.Range(1, maximumRandomItems);
@@ -114,12 +114,12 @@ public class InventoryStorage : MonoBehaviour
         if (distanceToPlayer > interactionDistance && isInteractingWithStorage)
         {
             isInteractingWithStorage = false;
-            if (inventoryPanel.activeSelf)
+            if (inventory.activeSelf)
             {
                 storedItems.Clear();
                 UpdateStoredItemsList();
-                inventoryPanel.SetActive(false);
-                inventory.RemoveAllItems();
+                inventory.SetActive(false);
+                invent.RemoveAllItems();
             }
             itemHelper.deactivateHelperTool();
             interactionTimerImage.fillAmount = 0;
@@ -137,8 +137,8 @@ public class InventoryStorage : MonoBehaviour
             yield return new WaitForSeconds(interactionDelay);
             if (isInteractingWithStorage)
             {
-                inventory.ItemsInInventory.Clear();
-                inventoryPanel.SetActive(true);
+                invent.ItemsInInventory.Clear();
+                inventory.SetActive(true);
                 TransferItemsToInventory();
                 displayInteractionTimer = false;
                 interactionTimerObject.SetActive(false);
@@ -148,21 +148,21 @@ public class InventoryStorage : MonoBehaviour
         {
             storedItems.Clear();
             UpdateStoredItemsList();
-            inventoryPanel.SetActive(false);
-            inventory.RemoveAllItems();
+            inventory.SetActive(false);
+            invent.RemoveAllItems();
             itemHelper.deactivateHelperTool();
         }
     }
 
     private void UpdateStoredItemsList()
     {
-        InventorySystem currentInventory = inventoryPanel.GetComponent<InventorySystem>();
+        InventorySystem currentInventory = inventory.GetComponent<InventorySystem>();
         storedItems = currentInventory.getItemList();
     }
 
     private void TransferItemsToInventory()
     {
-        InventorySystem currentInventory = inventoryPanel.GetComponent<InventorySystem>();
+        InventorySystem currentInventory = inventory.GetComponent<InventorySystem>();
         foreach (InventoryItem storedItem in storedItems)
         {
             currentInventory.addItemToInventory(storedItem.itemID, storedItem.itemValue);
