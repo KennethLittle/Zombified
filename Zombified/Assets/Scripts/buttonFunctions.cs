@@ -83,17 +83,15 @@ public class buttonFunctions : MonoBehaviour
 
     public void NewGame()
     {
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == SceneManager.GetActiveScene().buildIndex)
-        {
-            gameManager.instance.StartNewGame();
-
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+        gameManager.instance.StartNewGame();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ToggleMuscic()

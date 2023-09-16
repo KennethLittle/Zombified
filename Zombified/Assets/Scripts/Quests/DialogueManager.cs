@@ -32,11 +32,13 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+       
         nameText.text = dialogue.speakerName;
         sentences.Clear();
 
         foreach (string sentence in dialogue.sentences)
-            sentences.Enqueue(sentence);
+        sentences.Enqueue(sentence);
+        Debug.Log("Starting dialogue: " + dialogue.sentences);
         StartCoroutine(FadeInDialogueBox());
         DisplayNextSentence();
     }

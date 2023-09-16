@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerStat playerStat;
     public LevelUpSystem levelSystem;
     public static PlayerData TempPlayerData = null;
+    
 
     void Awake()
     {
@@ -26,6 +27,11 @@ public class PlayerManager : MonoBehaviour
         }
 
         // Spawn player if not found
+        
+    }
+
+    private void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
@@ -50,5 +56,12 @@ public class PlayerManager : MonoBehaviour
             TempPlayerData.LoadDataIntoPlayer(this);
             TempPlayerData = null; // Clear temporary data after use
         }
+        QuestManager questManager = FindObjectOfType<QuestManager>();
+        if (questManager != null)
+        {
+            questManager.StartQuest();
+            Debug.Log("Quest Started");
+        }
+        
     }
 }

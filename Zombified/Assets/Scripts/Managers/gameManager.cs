@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour
     private UIManager uiManager;
     private PlayerManager playerManager;
     private GameStateManager gameStateManager;
+    public QuestManager questManager;
 
     // Game data
     [Header("Game Data")]
@@ -26,11 +27,14 @@ public class gameManager : MonoBehaviour
     public bool isInRun;
 
     // Initialization
-    private void Awake()
+    void Awake()
     {
         InitializeSingleton();
         SetupReferences();
-        UpdateTotalXP(totalXP);
+    }
+
+    void Start()
+    {
         MarkRunStart();
     }
 
@@ -52,6 +56,7 @@ public class gameManager : MonoBehaviour
     {
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
         inventoryUI = FindObjectOfType<InventoryUI>();
+        questManager= FindObjectOfType<QuestManager>();
         uiManager = GetComponent<UIManager>();
         playerManager = GetComponent<PlayerManager>();
         gameStateManager= GetComponent<GameStateManager>();
@@ -64,18 +69,9 @@ public class gameManager : MonoBehaviour
         enemiesRemaining = Mathf.Max(enemiesRemaining, 0); // Ensure enemiesRemaining doesn't go below 0
     }
 
-    private void UpdateEnemiesKilled(int amount)
-    {
-        enemiesKilled += amount;
-    }
-
-    private void UpdateTotalXP(int amount)
-    {
-        levelUpSystem.totalAccumulatedXP = amount;
-    }
-
     public void StartNewGame()
     {
+        Debug.Log("StartNewGame called");
         // Set up a new game using default player data
         PlayerData defaultPlayerData = PlayerData.GetDefaultPlayerData();
 
@@ -85,11 +81,11 @@ public class gameManager : MonoBehaviour
 
         // Update game state with the default player data
         defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
-
-        QuestManager questManager = FindObjectOfType<QuestManager>();
+        Debug.Log("QuestManager instance: " + questManager);
         if (questManager != null)
         {
             questManager.StartFirstQuest();
+            Debug.Log("Started First QUest");
         }
         // If you have default game states for enemies or other elements, you'd set them up here as well.
     }

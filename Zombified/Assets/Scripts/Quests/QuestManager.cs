@@ -1,18 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    public QuestManager instance;
     public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
     private List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
-    public QuestRuntime CurrentQuest => quests[currentQuestIndex];
+    public QuestRuntime CurrentQuest
+    {
+        get
+        {
+            if (currentQuestIndex < 0 || currentQuestIndex >= quests.Count)
+            {
+                Debug.LogError("CurrentQuest access error. Index out of range: " + currentQuestIndex);
+                return null;
+            }
+            return quests[currentQuestIndex];
+        }
+    }
     public QuestUIManager questUIManager;
 
     private void Awake()
     {
         InitializeQuests();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Debug.LogError("Multiple instances of QuestManager found. Destroying one.");
+            Destroy(gameObject);
+        }
+
+        
 
         foreach (QuestRuntime quest in quests)
         {
@@ -26,6 +49,8 @@ public class QuestManager : MonoBehaviour
         {
             quests.Add(new QuestRuntime(questTemplate));
         }
+
+        Debug.Log("Total quests initialized: " + quests.Count);
     }
 
     public void ProgressToNextStepOrQuest()
@@ -58,9 +83,14 @@ public class QuestManager : MonoBehaviour
 
     public void StartQuest()
     {
+        if (currentQuestIndex >= quests.Count || currentQuestIndex < 0)
+        {
+            Debug.LogError("Current quest index out of bounds: " + currentQuestIndex);
+            return;
+        }
         // Reset the step index for the new quest
         CurrentQuest.currentStepIndex = 0;
-
+        Debug.Log("Quests are available. Starting the first one.");
         // Start the first step of the new quest
         CurrentQuest.CurrentStep.StartStep();
         OnQuestOrStepChanged();
@@ -84,6 +114,7 @@ public class QuestManager : MonoBehaviour
 
     public void StartFirstQuest()
     {
+        Debug.Log("Inside StartFirstQuest method");
         if (quests.Count > 0)
         {
             quests[0].CurrentStep.StartStep();
@@ -96,6 +127,7 @@ public class QuestManager : MonoBehaviour
         if (DialogueManager.instance != null)
         {
             DialogueManager.instance.StartDialogue(dialogue);
+            Debug.Log("Triggering dialogue for " + dialogue.speakerName);
         }
         else
         {
@@ -107,9 +139,11 @@ public class QuestManager : MonoBehaviour
     {
         if (CurrentQuest != null)
         {
+            
             string questName = CurrentQuest.blueprint.questName;
             string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
             questUIManager.UpdateQuestUI(questName, questStepDescription);
+            Debug.Log("Updating Quest UI with quest name: " + questName);
         }
     }
 
@@ -120,7 +154,7 @@ public class QuestManager : MonoBehaviour
     }
 
 
-public void NotifyItemFound(GameObject founditem)
+    public void NotifyItemFound(GameObject founditem)
     {
         QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
         if (!currentStep.isCompleted && currentStep.blueprint is FindItemQuestStep findItemQuest)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8840d596e6bf0b24f8fb0503dd487991, type: 3}
   m_Name: New InteractObjectQuestStep
   m_EditorClassIdentifier: 
-  description: 
+  description: Interact with the cube
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
@@ -20,4 +20,4 @@ MonoBehaviour:
     - 'Welcome to HomeBase, this will be your new home. We have a few things for
       you to do. We collected some loot for you over there in that loot box by the
       round table. Grab that loot and then we will move on. '
-  objectType: {fileID: 0}
+  objectType: {fileID: 2209153664931206701, guid: d6c545e0a25a2ec4b8feb40f4bd36ba2, type: 3}
