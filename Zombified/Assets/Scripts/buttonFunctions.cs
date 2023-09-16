@@ -7,19 +7,7 @@ public class buttonFunctions : MonoBehaviour
 {
 
     public buttonFunctions loadGameButton;
-    private void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        if (System.IO.File.Exists(Application.persistentDataPath + "/save.json"))
-        {
-            loadGameButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            loadGameButton.gameObject.SetActive(false);
-        }
-    }
+    
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
