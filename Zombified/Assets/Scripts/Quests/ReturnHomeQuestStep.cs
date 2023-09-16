@@ -12,7 +12,7 @@ public class ReturnHomeQuestStep : QuestStep
 
     public void ReturnHome()
     {
-        if(!isCompleted)
+        if (!isCompleted)
         {
             SceneManager.LoadScene("HomeBase");
             isCompleted = true;
