@@ -9,14 +9,16 @@ public class QuestManager : MonoBehaviour
     public int currentQuestIndex = 0;
     public Quest CurrentQuest => quests[currentQuestIndex];
 
+    public DialogueManager dialogue;
+    public GameObject dialogueText;
+
 
     public IEnumerator StartQuest()
     {
         // As soon as New game scene loads dialogue box opens, player gets the quests and the quest gets activated
         if (Input.GetButtonDown("StartNewGame"))
         {
-            
-
+            dialogueText.SetActive(true);
         }
         // Trigger dialogue for the first step
         // Code to trigger dialogue system with CurrentQuest.questSteps[0].stepDialogue

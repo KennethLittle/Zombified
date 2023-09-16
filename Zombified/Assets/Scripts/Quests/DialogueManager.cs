@@ -8,10 +8,12 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
     public Text dialogueText;
     public Queue<string> sentences;
+    public DialogueManager instance;
 
     private void Start()
     {
         sentences = new Queue<string>();
+        instance = this;
     }
 
     public void StartDialogue(Dialogue dialogue)
