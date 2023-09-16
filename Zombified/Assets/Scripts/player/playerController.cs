@@ -40,7 +40,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         
         originalPlayerSpeed = playerStat.playerSpeed;
-        playerStat.HPMax = playerStat.HP;
+        playerStat.HP = playerStat.HPMax;
         playerStat.currentStamina = playerStat.stamina;
         
         //this is for the changing the rate and volume of footsteps
@@ -155,58 +155,15 @@ public class playerController : MonoBehaviour, IDamage
     void movement()
     {
         groundedPlayer = controller.isGrounded;
-        if (groundedPlayer)
-        {
-            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
-            {
-                StartCoroutine(playFootsteps());                
-            }
 
-            if (playerVelocity.y < 0)
-            {
-                playerVelocity.y = 0f;
-                jumpCount = 0;
-            }
+        HandleGroundedState();
 
-            // Detect if the player is moving or not and set animation parameters accordingly
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
+        HandlePlayerInput();
 
-            move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
+        ApplyGravity();
 
-            if (move != Vector3.zero)
-            {
-                if (isSprinting && playerStat.currentStamina > 0) // Modified check here
-                {
-                    controller.Move(move * Time.deltaTime * playerStat.playerSpeed * effectivePlayerSpeed); // Running speed
-                }
-                else
-                {
-                    isSprinting = false; // Add this line to ensure that sprinting is turned off if stamina is depleted
-                    controller.Move(move * Time.deltaTime * playerStat.playerSpeed); // Walking speed
-                }
-            }
-            playerVelocity.x = move.x * effectivePlayerSpeed; 
-            playerVelocity.z = move.z * effectivePlayerSpeed;
-            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), effectivePlayerSpeed, Time.deltaTime));
-        }
-        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
-        {
-            lastJumpTime = Time.time;
-            // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
-
-            AudioManager.instance.PlayerSFX("Jump");
-            
-            playerVelocity.y += playerStat.jumpHeight;
-            jumpCount++;
-        }
-
-        playerVelocity.x = move.x * playerStat.playerSpeed; // Maintain the horizontal components
-        playerVelocity.z = move.z * playerStat.playerSpeed;
-
-        playerVelocity.y += playerStat.gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        // Combine the movement from input and the velocity due to external forces.
+        controller.Move((move + playerVelocity) * Time.deltaTime);
 
         // Reset the IsJumping animation parameter if the player is grounded
         if (groundedPlayer)
@@ -215,8 +172,70 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    void HandleGroundedState()
+    {
+        if (groundedPlayer)
+        {
+            playerVelocity.y = 0f; // Ensures the player does not accumulate downward velocity when grounded.
+            jumpCount = 0;
+
+            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
+            {
+                StartCoroutine(playFootsteps());
+            }
+        }
+    }
+
+    void HandlePlayerInput()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
+
+        float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
+
+        if (move != Vector3.zero)
+        {
+            if (groundedPlayer)
+            {
+                if (isSprinting && playerStat.currentStamina > 0)
+                {
+                    move *= effectivePlayerSpeed * playerStat.playerSpeed;
+                }
+                else
+                {
+                    isSprinting = false;
+                    move *= playerStat.playerSpeed;
+                }
+            }
+            else
+            {
+                // This preserves momentum while airborne.
+                move.x = playerVelocity.x;
+                move.z = playerVelocity.z;
+            }
+
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), effectivePlayerSpeed, Time.deltaTime));
+        }
+
+        // Handle Jumping
+        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
+        {
+            lastJumpTime = Time.time;
+            AudioManager.instance.PlayerSFX("Jump");
+
+            playerVelocity.y += playerStat.jumpHeight;
+            jumpCount++;
+        }
+    }
+
+    void ApplyGravity()
+    {
+        playerVelocity.y += playerStat.gravityValue * Time.deltaTime;
+    }
+
     //Play footsteps sfx at a rate defined by footstepsRate
-   IEnumerator playFootsteps()
+    IEnumerator playFootsteps()
     {
         footstepsIsPlaying = true;
         // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
