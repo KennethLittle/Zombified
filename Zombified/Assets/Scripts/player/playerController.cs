@@ -33,19 +33,12 @@ public class playerController : MonoBehaviour, IDamage
     private bool lowHealthIsPlaying;
     private float lastJumpTime = 0f;
     private float jumpCooldown = 3f;
-    private float animVelocity = 0.0f;
-    private int velocityHash;
-    private float deceleration = 0.5f;
-    private float acceleration = 0.6f;
-
     private float audioLHVolOrig;
     private float walkVolume;
  
     private void Start()
     {
         
-        anim = GetComponent<Animator>();
-        velocityHash = Animator.StringToHash("animVelocity");
         originalPlayerSpeed = playerStat.playerSpeed;
         playerStat.HPMax = playerStat.HP;
         playerStat.currentStamina = playerStat.stamina;
@@ -71,7 +64,6 @@ public class playerController : MonoBehaviour, IDamage
         if (weaponSlot.transform.childCount > 0 && Input.GetButton("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
-            anim.SetBool("IsShooting", false);
         }
         if (Input.GetButtonDown("SwitchWeapons"))
         {
@@ -187,34 +179,17 @@ public class playerController : MonoBehaviour, IDamage
             {
                 if (isSprinting && playerStat.currentStamina > 0) // Modified check here
                 {
-                    anim.SetBool("IsIdle", false);
-                    anim.SetBool("IsWalking", false);
-                    anim.SetBool("IsRunning", true);
                     controller.Move(move * Time.deltaTime * playerStat.playerSpeed * effectivePlayerSpeed); // Running speed
                 }
                 else
                 {
                     isSprinting = false; // Add this line to ensure that sprinting is turned off if stamina is depleted
-                    anim.SetBool("IsIdle", false);
-                    anim.SetBool("IsRunning", false);
-                    anim.SetBool("IsWalking", true);
                     controller.Move(move * Time.deltaTime * playerStat.playerSpeed); // Walking speed
-                }
-            }
-            else
-            {
-                anim.SetBool("IsWalking", false);
-                anim.SetBool("IsRunning", false);
-                anim.SetBool("IsIdle", true);
-                if (animVelocity < 0.0f)
-                {
-                    animVelocity = 0.0f;
                 }
             }
             playerVelocity.x = move.x * effectivePlayerSpeed; 
             playerVelocity.z = move.z * effectivePlayerSpeed;
-
-            anim.SetFloat(velocityHash, animVelocity);
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), effectivePlayerSpeed, Time.deltaTime));
         }
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
@@ -222,10 +197,8 @@ public class playerController : MonoBehaviour, IDamage
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
 
             AudioManager.instance.PlayerSFX("Jump");
-
             
             playerVelocity.y += playerStat.jumpHeight;
-            anim.SetBool("IsJumping", true);
             jumpCount++;
         }
 
@@ -333,7 +306,6 @@ public class playerController : MonoBehaviour, IDamage
         if (weapon.ammoCur > 0)
         {
             isShooting = true;
-            anim.SetBool("IsShooting", true);
 
             weapon.ammoCur--;
             updatePlayerUI();
