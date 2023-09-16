@@ -23,14 +23,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //public void Start()
-    //{
-    //    foreach (var sound in musicSounds)
-    //    {
-    //        PlayMusic(sound.name);
-    //    }
-    //}
-
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name);
@@ -43,6 +35,8 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = s.clip;
             musicSource.Play();
         }
+
+        //change the audio source rate and volume by the levels in the inspector for each sound
     }
 
     public void PlayerSFX(string name)

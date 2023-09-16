@@ -279,14 +279,14 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
-            AudioManager.instance.PlayerSFX("SprintBreathing");
+            //AudioManager.instance.PlayerSFX("SprintBreathing");
         }
+
         else if (Input.GetButtonUp("Sprint") || playerStat.currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
             //AudioManager.instance.PlayerSFX("StaminaRecoverBreathing");
         }
-
         if (isSprinting)
         {
             ConsumeStamina(playerStat.staminaConsumptionRate * Time.deltaTime);
@@ -294,6 +294,10 @@ public class playerController : MonoBehaviour, IDamage
         else
         {
             RegenerateStamina(playerStat.staminaRegenerationRate * Time.deltaTime);
+        }
+        if (playerStat.stamina <= 0)
+        {
+            AudioManager.instance.PlayerSFX("StaminaRecoverBreathing");
         }
     }
 
@@ -409,7 +413,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-        updatePlayerUI();
+        //updatePlayerUI();
     }
 
     public void IncreaseMaxHP(int amount)
