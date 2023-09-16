@@ -2,14 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Text nameText;
-    public Text dialogueText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI dialogueText;
+    public Image dialogueBox;
     public Queue<string> sentences;
-    public DialogueManager instance;
+    public static DialogueManager instance;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         sentences = new Queue<string>();
@@ -24,6 +38,7 @@ public class DialogueManager : MonoBehaviour
         foreach (string sentence in dialogue.sentences)
             sentences.Enqueue(sentence);
 
+        StartCoroutine(FadeInDialogueBox());
         DisplayNextSentence();
     }
 
@@ -52,8 +67,30 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        // Logic for when dialogue ends.
-        // Maybe hide the dialogue box or signal another system.
+        StartCoroutine(FadeOutDialogueBox());
+    }
 
+    IEnumerator FadeInDialogueBox()
+    {
+        Color tempColor = dialogueBox.color;
+
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += Time.deltaTime;
+            dialogueBox.color = tempColor;
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeOutDialogueBox()
+    {
+        Color tempColor = dialogueBox.color;
+
+        while (tempColor.a > 0f)
+        {
+            tempColor.a -= Time.deltaTime;
+            dialogueBox.color = tempColor;
+            yield return null;
+        }
     }
 }

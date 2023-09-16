@@ -1,87 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public List<Quest> quests;
+    public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
+    private List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
-    public Quest CurrentQuest => quests[currentQuestIndex];
+    public QuestRuntime CurrentQuest => quests[currentQuestIndex];
 
-
-    public IEnumerator StartQuest()
+    private void Awake()
     {
-        // As soon as New game scene loads dialogue box opens, player gets the quests and the quest gets activated
-        // Trigger dialogue for the first step
-        // Code to trigger dialogue system
-        if (Input.GetButtonDown("StartNewGame"))
+        InitializeQuests();
+    }
+
+    private void InitializeQuests()
+    {
+        foreach (Quest questTemplate in questTemplates)
         {
-            TriggerDialogue(CurrentQuest.questSteps[0].stepDialogue);
-
-            while (currentQuestIndex < quests.Count)
-            {
-                yield return new WaitUntil(() => CurrentQuest.IsQuestComplete);
-                currentQuestIndex++;
-
-                if (currentQuestIndex < quests.Count)
-                {
-                    // input delay before next quest begins
-                    yield return new WaitForSeconds(5.0f);
-
-                    // Trigger dialogue for the first step of next quest
-                    TriggerDialogue(CurrentQuest.questSteps[0].stepDialogue);
-                }
-            }
+            quests.Add(new QuestRuntime(questTemplate));
         }
     }
 
     public void TriggerDialogue(Dialogue dialogue)
     {
-        DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
-        if (dialogueManager != null)
+        if (DialogueManager.instance != null)
         {
-            dialogueManager.StartDialogue(dialogue);
+            DialogueManager.instance.StartDialogue(dialogue);
         }
         else
         {
-            Debug.LogError("Dialogue Manager not found in the scene.");
+            Debug.LogError("Dialogue Manager instance is not initialized.");
         }
     }
 
     public void NotifyItemFound(GameObject founditem)
     {
-        if (CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count
-            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is FindItemQuestStep findItemQuest)
+        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        if (!currentStep.isCompleted && currentStep.blueprint is FindItemQuestStep findItemQuest)
         {
             findItemQuest.RegisterItemFound(founditem);
+            currentStep.TryCompleteStep();
         }
     }
 
     public void NotifyEnemyKilled(GameObject killedEnemyType)
     {
-        if(CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count 
-            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is KillEnemiesQuestStep killEnemyQuest)
+        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        if (!currentStep.isCompleted && currentStep.blueprint is KillEnemiesQuestStep killEnemyQuest)
         {
             killEnemyQuest.RegisterEnemyKill(killedEnemyType);
+            currentStep.TryCompleteStep();
         }
     }
 
     public void NotifyObjectInteracted(GameObject interactedObjectType)
     {
-        if (CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count
-            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is InteractObjectQuestStep interObjQuest)
+        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        if (!currentStep.isCompleted && currentStep.blueprint is InteractObjectQuestStep interObjQuest)
         {
             interObjQuest.RegisterObjectInteraction(interactedObjectType);
+            currentStep.TryCompleteStep();
         }
     }
 
-    public void NotifyReturnedHome() 
+    public void NotifyReturnedHome()
     {
-        if(CurrentQuest.currentStepIndex == CurrentQuest.questSteps.Count
-            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is ReturnHomeQuestStep ReturnHomeQuest)
+        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        if (currentStep.blueprint is ReturnHomeQuestStep ReturnHomeQuest)
         {
             ReturnHomeQuest.ReturnHome();
+            currentStep.TryCompleteStep();
         }
     }
 }
+
+

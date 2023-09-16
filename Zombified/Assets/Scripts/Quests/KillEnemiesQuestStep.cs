@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-[System.Serializable]
+[CreateAssetMenu(fileName = "New KillEnemiesQuestStep", menuName = "Quests/KillEnemiesQuestStep")]
 public class KillEnemiesQuestStep : QuestStep
 {
     public GameObject EnemyPrefab;

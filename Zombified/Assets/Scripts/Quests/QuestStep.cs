@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public abstract class QuestStep
+public abstract class QuestStep : ScriptableObject
 {
     public string description;
     public bool isCompleted;

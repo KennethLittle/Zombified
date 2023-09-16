@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New InteractObjectQuestStep", menuName = "Quests/InteractObjectQuestStep")]
 public class InteractObjectQuestStep : QuestStep 
 {
     public GameObject objectType;
