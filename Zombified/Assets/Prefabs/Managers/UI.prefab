@@ -579,6 +579,7 @@ GameObject:
   - component: {fileID: 600885114396203816}
   - component: {fileID: 600885114396203818}
   - component: {fileID: 600885114396203830}
+  - component: {fileID: 4322711206488871700}
   - component: {fileID: 600885114396203823}
   - component: {fileID: 600885114396203822}
   - component: {fileID: 600885114396203821}
@@ -657,6 +658,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c69e22bce0a8b142a881679b7c99ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4322711206488871700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600885114396203820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e754a666ec3641bb2c4f7ad1fab80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questTitleText: {fileID: 0}
+  questStepDescriptionText: {fileID: 0}
 --- !u!223 &600885114396203823
 Canvas:
   m_ObjectHideFlags: 0
@@ -747,6 +762,7 @@ MonoBehaviour:
   waveNumberText: {fileID: 0}
   playerHPBar: {fileID: 8021943146335559231}
   staminaBar: {fileID: 8021943147202395687}
+  dialogueBox: {fileID: 0}
   playerDamageFlash: {fileID: 538079622100793900}
   ammoCur: {fileID: 8021943146701149573}
   ammoMax: {fileID: 8021943146594505693}

@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [Header("Manager References")]
     public gameManager gameManagerInstance;
     public GameStateManager gameStateManager;
+    public QuestUIManager questUIManager;
 
     private void Awake()
     {
@@ -43,6 +44,11 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q)) // Let's say Q is the key to toggle the quest tracker.
+        {
+            ToggleQuestTracker();
         }
 
         // Rest of your initialization
@@ -107,6 +113,18 @@ public class UIManager : MonoBehaviour
     {
         dialogueBox.gameObject.SetActive(false);
 
+    }
+
+    public void ToggleQuestTracker()
+    {
+        if (questUIManager.gameObject.activeSelf)
+        {
+            questUIManager.gameObject.SetActive(false);
+        }
+        else
+        {
+            questUIManager.gameObject.SetActive(true);
+        }
     }
 
     // Add other UI-related methods as required

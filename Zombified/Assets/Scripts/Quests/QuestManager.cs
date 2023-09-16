@@ -8,6 +8,7 @@ public class QuestManager : MonoBehaviour
     private List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
     public QuestRuntime CurrentQuest => quests[currentQuestIndex];
+    public QuestUIManager questUIManager;
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class QuestManager : MonoBehaviour
         {
             CurrentQuest.currentStepIndex++;
             CurrentQuest.CurrentStep.StartStep();
+            OnQuestOrStepChanged();
         }
     }
 
@@ -61,6 +63,7 @@ public class QuestManager : MonoBehaviour
 
         // Start the first step of the new quest
         CurrentQuest.CurrentStep.StartStep();
+        OnQuestOrStepChanged();
     }
 
 
@@ -71,6 +74,7 @@ public class QuestManager : MonoBehaviour
         {
             currentQuestIndex = nextQuestIndex;
             quests[nextQuestIndex].CurrentStep.StartStep();
+            OnQuestOrStepChanged();
         }
         else
         {
@@ -83,6 +87,7 @@ public class QuestManager : MonoBehaviour
         if (quests.Count > 0)
         {
             quests[0].CurrentStep.StartStep();
+            OnQuestOrStepChanged();
         }
     }
 
@@ -98,7 +103,24 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void NotifyItemFound(GameObject founditem)
+    public void UpdateQuestUI()
+    {
+        if (CurrentQuest != null)
+        {
+            string questName = CurrentQuest.blueprint.questName;
+            string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
+            questUIManager.UpdateQuestUI(questName, questStepDescription);
+        }
+    }
+
+    // Call this method whenever you progress to a new step or quest:
+    public void OnQuestOrStepChanged()
+    {
+        UpdateQuestUI();
+    }
+
+
+public void NotifyItemFound(GameObject founditem)
     {
         QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
         if (!currentStep.isCompleted && currentStep.blueprint is FindItemQuestStep findItemQuest)
