@@ -11,12 +11,11 @@ public abstract class QuestStep
 
     public abstract bool CheckCompletion();
 
-    public void TryCompleteStep() 
+    public void TryCompleteStep()
     {
-        if (CheckCompletion()) 
+        if (CheckCompletion())
         {
             isCompleted = true;
         }
     }
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Quest
+public class Quest : QuestManager
 {
     public string questName;
     public List<QuestStep> questSteps;
@@ -16,13 +16,14 @@ public class Quest
 
     public void ProceedToNextStep()
     {
-        if(!IsQuestComplete) 
+        if(!IsQuestComplete)
         {
             currentStepIndex++;
             // Trigger dialogue for the new step if there's more steps to go
             if(!IsQuestComplete)
             {
-                // Code to trigger dialogue system with questSteps[currentStepIndex].stepDialogue
+                TriggerDialogue(questSteps[currentStepIndex].stepDialogue);
+                
             }
         }
     }
