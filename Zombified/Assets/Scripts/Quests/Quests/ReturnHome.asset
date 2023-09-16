@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11809e8a8a6f2c84e981ec31797dab97, type: 3}
-  m_Name: New ReturnHomeQuestStep
+  m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
+  m_Name: ReturnHome
   m_EditorClassIdentifier: 
-  description: 
-  isCompleted: 0
-  stepDialogue:
-    speakerName: Kyle
-    sentences:
-    - Welcome back, let's continue the crusade through Alpha station.
+  questName: ReturnHome
+  questSteps:
+  - {fileID: 11400000, guid: a3ba37046073c4443945066e5771099d, type: 2}
+  currentStepIndex: 0

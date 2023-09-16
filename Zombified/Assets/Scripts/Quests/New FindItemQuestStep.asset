@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11809e8a8a6f2c84e981ec31797dab97, type: 3}
-  m_Name: New ReturnHomeQuestStep
+  m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
+  m_Name: New FindItemQuestStep
   m_EditorClassIdentifier: 
   description: 
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Welcome back, let's continue the crusade through Alpha station.
+    - Search Alpha Station and locate the Alpha Station intel.
+  requiredItem: {fileID: 0}
