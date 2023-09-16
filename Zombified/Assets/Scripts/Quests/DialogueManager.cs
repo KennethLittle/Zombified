@@ -54,5 +54,6 @@ public class DialogueManager : MonoBehaviour
     {
         // Logic for when dialogue ends.
         // Maybe hide the dialogue box or signal another system.
+
     }
 }
