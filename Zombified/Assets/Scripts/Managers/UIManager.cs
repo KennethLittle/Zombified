@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
     public Image staminaBar;
+    public Image dialogueBox;
     [SerializeField] GameObject playerDamageFlash;
     public TextMeshProUGUI ammoCur;
     public TextMeshProUGUI ammoMax;
@@ -95,6 +96,17 @@ public class UIManager : MonoBehaviour
         playerDamageFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         playerDamageFlash.SetActive(false);
+    }
+
+    public void showDialogueBox()
+    {
+        dialogueBox.gameObject.SetActive(true);
+    }
+
+    public void hideDialogueBox()
+    {
+        dialogueBox.gameObject.SetActive(false);
+
     }
 
     // Add other UI-related methods as required
