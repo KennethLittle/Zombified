@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
-  m_Name: ReturnHome
+  m_Name: KillEnemies
   m_EditorClassIdentifier: 
-  questName: ReturnHome
+  questName: KillEnemies
   questSteps:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: fc9a3e43565fe9f4582ec118497888ec, type: 2}
+  - {fileID: 11400000, guid: 74c4099ed131a7c43a4bbcf9b392135f, type: 2}
+  - {fileID: 11400000, guid: a3ba37046073c4443945066e5771099d, type: 2}
   currentStepIndex: 0

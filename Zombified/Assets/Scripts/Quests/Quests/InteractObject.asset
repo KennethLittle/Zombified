@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
+  m_Name: InteractObject
+  m_EditorClassIdentifier: 
+  questName: InteractObject
+  questSteps:
+  - {fileID: 11400000, guid: fc9a3e43565fe9f4582ec118497888ec, type: 2}
+  - {fileID: 11400000, guid: 37bb5f4b1aa002a44aaf851191d2cda1, type: 2}
+  - {fileID: 11400000, guid: a3ba37046073c4443945066e5771099d, type: 2}
+  currentStepIndex: 0

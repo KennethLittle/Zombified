@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[CreateAssetMenu(fileName = "New FindItemQuestStep", menuName = "Quests/FindItemQuestStep")]
 public class FindItemQuestStep : QuestStep
 {
     public GameObject requiredItem;
