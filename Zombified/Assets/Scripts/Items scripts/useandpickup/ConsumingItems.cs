@@ -45,13 +45,13 @@ public class ConsumingItems : MonoBehaviour, IPointerDownHandler
                     if (!check)
                     {
                         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().inventorysetup.GetComponent<InventorySystem>().addItemToInventory(currentitem.itemID, currentitem.itemValue);
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().inventorysetup.GetComponent<InventorySystem>().stackableSettings();
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().inventorysetup.GetComponent<InventorySystem>().UpdateStackableItems();
                     }
                     CraftSystem cS = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().craftSystem.GetComponent<CraftSystem>();
                     cS.deleteItems(currentitem);
                     CraftingResults result = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().craftSystem.transform.GetChild(3).GetComponent<CraftingResults>();
                     result.temp = 0;
-                    itemhelper.deactivateTooltip();
+                    itemhelper.deactivateHelperTool();
                     gearable = true;
                     GameObject.FindGameObjectWithTag("MainInventory").GetComponent<InventorySystem>().updateItemList();
                 }
@@ -247,7 +247,7 @@ public class ConsumingItems : MonoBehaviour, IPointerDownHandler
                 if (itemFromDup.itemValue <= 0)
                 {
                     if (itemhelper != null)
-                        itemhelper.deactivateTooltip();
+                        itemhelper.deactivateHelperTool();
                     inventory.deleteItemFromInventory(currentitem);
                     Destroy(duplicateItem.gameObject);
 
@@ -256,7 +256,7 @@ public class ConsumingItems : MonoBehaviour, IPointerDownHandler
             if (currentitem.itemValue <= 0)
             {
                 if (itemhelper != null)
-                   itemhelper.deactivateTooltip();
+                   itemhelper.deactivateHelperTool();
                 inventory.deleteItemFromInventory(currentitem);
                 Destroy(this.gameObject);
             }

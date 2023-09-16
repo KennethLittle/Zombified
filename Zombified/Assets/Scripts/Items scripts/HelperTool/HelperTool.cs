@@ -66,7 +66,7 @@ public class HelperTool : MonoBehaviour
 
     void Start()
     {
-        deactivateTooltip();
+        deactivateHelperTool();
     }
 
 #if UNITY_EDITOR
@@ -107,7 +107,7 @@ public class HelperTool : MonoBehaviour
         DescText = transform.GetChild(3).GetComponent<Text>();
     }
 
-    public void activateTooltip()               //if you activate the tooltip through hovering over an item
+    public void activateHelperTool()               //if you activate the tooltip through hovering over an item
     {
         ToolBarTextName.SetActive(true);
         ToolBarImageIcon.SetActive(true);
@@ -118,7 +118,7 @@ public class HelperTool : MonoBehaviour
         transform.GetChild(3).GetComponent<Text>().text = item.itemDescription;            //and itemDesc is getting set        
     }
 
-    public void deactivateTooltip()             //deactivating the tooltip after you went out of a slot
+    public void deactivateHelperTool()             //deactivating the tooltip after you went out of a slot
     {
         ToolBarTextName.SetActive(false);
         ToolBarImageIcon.SetActive(false);
@@ -126,7 +126,7 @@ public class HelperTool : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void updateTooltip()
+    public void updateHelperTool()
     {
         if (!Application.isPlaying)
         {

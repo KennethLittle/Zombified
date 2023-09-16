@@ -33,7 +33,7 @@ public class ItemPickup : MonoBehaviour
                 {
                     inventorysetup.addItemToInventory(item.itemID, item.itemValue);
                     inventorysetup.updateItemList();
-                    inventorysetup.stackableSettings();
+                    inventorysetup.UpdateStackableItems();
                     Destroy(this.gameObject);
                 }
 

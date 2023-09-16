@@ -556,7 +556,7 @@ public class InventorySystem : MonoBehaviour
                 }
             }
         }
-        stackableSettings();
+        UpdateStackableItems();
     }
 
 
@@ -598,7 +598,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        stackableSettings();
+        UpdateStackableItems();
         updateItemList();
 
     }
@@ -626,7 +626,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        stackableSettings();
+        UpdateStackableItems();
         updateItemList();
         return null;
 
@@ -652,11 +652,11 @@ public class InventorySystem : MonoBehaviour
                 if (inputManagerDatabase == null)
                     inputManagerDatabase = (InputManager)Resources.Load("InputManager");
                 updateItemSize();
-                stackableSettings();
+                UpdateStackableItems();
                 break;
             }
         }
-        stackableSettings();
+        UpdateStackableItems();
         updateItemList();
     }
 
@@ -706,7 +706,7 @@ public class InventorySystem : MonoBehaviour
     }
 
 
-    public void deleteAllItems()
+    public void RemoveAllItems()
     {
         for (int i = 0; i < SlotContainer.transform.childCount; i++)
         {
@@ -728,7 +728,7 @@ public class InventorySystem : MonoBehaviour
         return theList;
     }
 
-    public void stackableSettings()
+    public void UpdateStackableItems()
     {
         for (int i = 0; i < SlotContainer.transform.childCount; i++)
         {
@@ -876,11 +876,11 @@ public class InventorySystem : MonoBehaviour
                 item.GetComponent<RectTransform>().localPosition = Vector3.zero;
                 itemOnObject.item.indexItemInList = 999;
                 updateItemSize();
-                stackableSettings();
+                UpdateStackableItems();
                 break;
             }
         }
-        stackableSettings();
+        UpdateStackableItems();
         updateItemList();
     }
 
