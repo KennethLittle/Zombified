@@ -23,14 +23,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //public void Start()
-    //{
-    //    foreach (var sound in musicSounds)
-    //    {
-    //        PlayMusic(sound.name);
-    //    }
-    //}
-
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.name == name);
@@ -43,6 +35,8 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = s.clip;
             musicSource.Play();
         }
+
+        //change the audio source rate and volume by the levels in the inspector for each sound
     }
 
     public void PlayerSFX(string name)
@@ -55,6 +49,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            sfxSource.volume = s.volume;
             sfxSource.PlayOneShot(s.clip);
         }
     }
@@ -126,5 +121,25 @@ public class AudioManager : MonoBehaviour
         {
             sfxSource.PlayOneShot(s.clip);
         }
+    }
+
+    public void ToggleMusic()
+    {
+        musicSource.mute = !musicSource.mute;
+    }
+
+    public void ToggleSFX()
+    {
+        sfxSource.mute = !sfxSource.mute;
+    }
+
+    public void MusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
     }
 }

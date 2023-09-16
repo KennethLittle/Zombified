@@ -372,9 +372,9 @@ Animator:
   m_GameObject: {fileID: 6864760123798757026}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cfeff1d67ecb92245941b957cebd290e, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4f177d72549cddd48aad42d447007b7a, type: 2}
+  m_Controller: {fileID: 9100000, guid: b974617e2166a8c468751fd8c58dcb30, type: 2}
   m_CullingMode: 1
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -423,26 +423,10 @@ MonoBehaviour:
   weaponSlot: {fileID: 6864760123799076420}
   playerInventoryUI: {fileID: 0}
   controller: {fileID: 6878703988354212238}
-  anim: {fileID: 0}
+  anim: {fileID: 6864760123808088066}
   equippedWeapons:
   - {fileID: 6864760123798753050}
   currentWeaponIndex: 0
-  audioSFX: {fileID: 0}
-  audioFootsteps: []
-  footstepsRate: 0
-  audioFootstepsVol: 0
-  audioJump: []
-  audioJumpVol: 0
-  audioDamage: []
-  audioDamageVol: 0
-  audioLowHealth: []
-  audioLowHealthVol: 0
-  audioShoot: []
-  audioShootVol: 0
-  audioShootCasing: []
-  audioShootCasingVol: 0
-  audioGunReload: []
-  audioGunReloadVol: 0
 --- !u!143 &6878703988354212238
 CharacterController:
   m_ObjectHideFlags: 0

@@ -2,24 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class buttonFunctions : MonoBehaviour
 {
 
     public buttonFunctions loadGameButton;
-    private void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+    public Slider musicSlider, sfxSlider;
 
-        if (System.IO.File.Exists(Application.persistentDataPath + "/save.json"))
-        {
-            loadGameButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            loadGameButton.gameObject.SetActive(false);
-        }
-    }
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
@@ -106,8 +96,29 @@ public class buttonFunctions : MonoBehaviour
         }
     }
 
+    public void ToggleMuscic()
+    {
+        AudioManager.instance.ToggleMusic();
+    }
+    public void ToggleSFX()
+    {
+        AudioManager.instance.ToggleSFX();
+    }
+
+    public void MusicVolume()
+    {
+        AudioManager.instance.MusicVolume(musicSlider.value);
+    }
+
+    public void SFXVolume()
+    {
+        AudioManager.instance.SFXVolume(sfxSlider.value);
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+
 }
