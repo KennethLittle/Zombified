@@ -10,6 +10,8 @@ public class Quest
     public List<QuestStep> questSteps;
     public int currentStepIndex = 0;
 
+
+
     public bool IsQuestComplete => currentStepIndex >= questSteps.Count;
 
     public void ProceedToNextStep()

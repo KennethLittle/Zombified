@@ -294,7 +294,7 @@ public class PlayerEquipment : MonoBehaviour
             else
             {
                 if (Toolbar != null)
-                    Toolbar.deactivateTooltip();
+                    Toolbar.deactivateHelperTool();
                 craftInventory.closeInventory();
             }
         }
@@ -308,7 +308,7 @@ public class PlayerEquipment : MonoBehaviour
             else
             {
                 if (Toolbar != null)
-                    Toolbar.deactivateTooltip();
+                    Toolbar.deactivateHelperTool();
                 mainInventory.closeInventory();
             }
         }
@@ -322,7 +322,7 @@ public class PlayerEquipment : MonoBehaviour
                 if (craft != null)
                     craft.backToInventory();
                 if (Toolbar != null)
-                    Toolbar.deactivateTooltip();
+                    Toolbar.deactivateHelperTool();
                 craftInventory.closeInventory();
             }
         }

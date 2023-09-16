@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -8,9 +9,17 @@ public class QuestManager : MonoBehaviour
     public int currentQuestIndex = 0;
     public Quest CurrentQuest => quests[currentQuestIndex];
 
+    public DialogueManager dialogue;
+    public GameObject dialogueText;
+
+
     public IEnumerator StartQuest()
     {
-        // Start the first quest when the player clicks the Newgame button and the player spawns in
+        // As soon as New game scene loads dialogue box opens, player gets the quests and the quest gets activated
+        if (Input.GetButtonDown("StartNewGame"))
+        {
+            dialogueText.SetActive(true);
+        }
         // Trigger dialogue for the first step
         // Code to trigger dialogue system with CurrentQuest.questSteps[0].stepDialogue
 
@@ -39,5 +48,30 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // Other methods to notify quest steps like RegisterEnemyKill, RegisterObjectInteraction, etc.
+    public void NotifyEnemyKilled(GameObject killedEnemyType)
+    {
+        if(CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count 
+            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is KillEnemiesQuestStep killEnemyQuest)
+        {
+            killEnemyQuest.RegisterEnemyKill(killedEnemyType);
+        }
+    }
+
+    public void NotifyObjectInteracted(GameObject interactedObjectType)
+    {
+        if (CurrentQuest.currentStepIndex < CurrentQuest.questSteps.Count
+            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is InteractObjectQuestStep interObjQuest)
+        {
+            interObjQuest.RegisterObjectInteraction(interactedObjectType);
+        }
+    }
+
+    public void NotifyReturnedHome() 
+    {
+        if(CurrentQuest.currentStepIndex == CurrentQuest.questSteps.Count
+            && CurrentQuest.questSteps[CurrentQuest.currentStepIndex] is ReturnHomeQuestStep ReturnHomeQuest)
+        {
+            ReturnHomeQuest.ReturnHome();
+        }
+    }
 }

@@ -22,28 +22,6 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>(); // List of instantiated weapon game objects
     public int currentWeaponIndex = 0;
 
-    [Header("----- Audio -----")]
-    // audio<something> is an array of sfx
-    // audio<something>Vol is the sfx volume
-    [SerializeField] AudioSource audioSFX;
-    [SerializeField] AudioClip[] audioFootsteps;
-    [SerializeField] [Range(0, 1)] float footstepsRate;
-    [SerializeField] [Range(0, 1)] float audioFootstepsVol;
-    [SerializeField] AudioClip[] audioJump;
-    [SerializeField] [Range(0, 1)] float audioJumpVol;
-    [SerializeField] AudioClip[] audioDamage;
-    [SerializeField] [Range(0, 1)] float audioDamageVol;
-    [SerializeField] AudioClip[] audioLowHealth;
-    [SerializeField] [Range(0, 1)] float audioLowHealthVol;
-    
-    [SerializeField] AudioClip[] audioShoot;
-    [SerializeField] [Range(0, 1)] float audioShootVol;
-    [SerializeField] AudioClip[] audioShootCasing;
-    [SerializeField] [Range(0, 1)] float audioShootCasingVol;
-    [SerializeField] AudioClip[] audioGunReload;
-    [SerializeField] [Range(0, 1)] float audioGunReloadVol;
-
-
     private float originalPlayerSpeed;
     private bool groundedPlayer;
     private Vector3 move;
@@ -52,7 +30,6 @@ public class playerController : MonoBehaviour, IDamage
     private bool isSprinting;
     private bool isShooting;
     private bool footstepsIsPlaying;
-    private float audioLHVolOrig;
     private bool lowHealthIsPlaying;
     private float lastJumpTime = 0f;
     private float jumpCooldown = 3f;
@@ -61,6 +38,10 @@ public class playerController : MonoBehaviour, IDamage
     private float deceleration = 0.5f;
     private float acceleration = 0.6f;
 
+    private float audioLHVolOrig;
+    private float walkVolume;
+
+    //Sound[] 
     private void Start()
     {
         
@@ -69,7 +50,17 @@ public class playerController : MonoBehaviour, IDamage
         originalPlayerSpeed = playerStat.playerSpeed;
         playerStat.HPMax = playerStat.HP;
         playerStat.currentStamina = playerStat.stamina;
-        audioLHVolOrig = audioLowHealthVol;
+        
+        //this is for the changing the rate and volume of footsteps
+        foreach (var sound in AudioManager.instance.playerSFXSounds)
+        {
+            if ( sound.name == "Footsteps")
+            {
+                walkVolume = sound.volume;
+            }
+        }
+        audioLHVolOrig = walkVolume;
+
         spawnPlayer();
     }
 
@@ -117,7 +108,7 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.MarkRunEnd();
         }
 
-        audioSFX.PlayOneShot(audioDamage[Random.Range(0, audioDamage.Length)], audioDamageVol);
+        AudioManager.instance.PlayerSFX("Take Damage");
     }
 
     void lowHealthSFX()
@@ -132,22 +123,41 @@ public class playerController : MonoBehaviour, IDamage
     {
         lowHealthIsPlaying = true;
         // Plays low health audio sfx - Plays a random footsteps sfx from the range audioLowHealth at a volume defined by audioLowHealthVol
-        audioSFX.PlayOneShot(audioLowHealth[Random.Range(0, audioLowHealth.Length)], audioLowHealthVol);
+
         if (playerStat.HP <= (playerStat.HPMax * 0.3) && playerStat.HP > (playerStat.HPMax * 0.2))
         {
-            audioLowHealthVol = audioLHVolOrig + 0.2f;
+            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            {
+                if (sound.name == "LowHealth")
+                {
+                    sound.volume = audioLHVolOrig + 0.2f;
+                }
+            }
             yield return new WaitForSeconds(2.0f);
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.2) && playerStat.HP > (playerStat.HPMax * 0.1))
         {
-            audioLowHealthVol = audioLHVolOrig + 0.4f;
+            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            {
+                if (sound.name == "LowHealth")
+                {
+                    sound.volume = audioLHVolOrig + 0.4f;
+                }
+            }
             yield return new WaitForSeconds(1.5f);
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.1) && playerStat.HPMax > 0)
         {
-            audioLowHealthVol = audioLHVolOrig + 0.6f;
+            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            {
+                if (sound.name == "LowHealth")
+                {
+                    sound.volume = audioLHVolOrig + 0.6f;
+                }
+            }
             yield return new WaitForSeconds(1.0f);
         }
+        AudioManager.instance.PlayerSFX("LowHealth");
         lowHealthIsPlaying = false;
     }
 
@@ -158,7 +168,7 @@ public class playerController : MonoBehaviour, IDamage
         {
             if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
             {
-                StartCoroutine(playFootsteps());
+                StartCoroutine(playFootsteps());                
             }
 
             if (playerVelocity.y < 0)
@@ -211,7 +221,8 @@ public class playerController : MonoBehaviour, IDamage
         {
             lastJumpTime = Time.time;
             // Plays jump audio sfx - Plays a random jump sfx from the range audioJump at a volume defined by audioJumpVol
-            audioSFX.PlayOneShot(audioJump[Random.Range(0, audioJump.Length)], audioJumpVol);
+
+            AudioManager.instance.PlayerSFX("Jump");
 
             
             playerVelocity.y += playerStat.jumpHeight;
@@ -232,16 +243,34 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    // Play footsteps sfx at a rate defined by footstepsRate
-    IEnumerator playFootsteps()
+    //Play footsteps sfx at a rate defined by footstepsRate
+   IEnumerator playFootsteps()
     {
         footstepsIsPlaying = true;
         // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
-        audioSFX.PlayOneShot(audioFootsteps[Random.Range(0, audioFootsteps.Length)], audioFootstepsVol);
+        
+        AudioManager.instance.PlayerSFX("Footsteps");
+        
         if (!isSprinting)
-            yield return new WaitForSeconds(footstepsRate);
+        {
+            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            {
+                if (sound.name == "Footsteps")
+                {
+                    yield return new WaitForSeconds(sound.rate);
+                }
+            }
+        }
         else
-            yield return new WaitForSeconds(footstepsRate / 2);
+        {
+            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            {
+                if (sound.name == "Footsteps")
+                {
+                    yield return new WaitForSeconds(sound.rate / 2);
+                }
+            }
+        }
         footstepsIsPlaying = false;
     }
 
@@ -250,12 +279,14 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
+            //AudioManager.instance.PlayerSFX("SprintBreathing");
         }
+
         else if (Input.GetButtonUp("Sprint") || playerStat.currentStamina <= 0) // Add stamina check here
         {
             isSprinting = false;
+            //AudioManager.instance.PlayerSFX("StaminaRecoverBreathing");
         }
-
         if (isSprinting)
         {
             ConsumeStamina(playerStat.staminaConsumptionRate * Time.deltaTime);
@@ -263,6 +294,10 @@ public class playerController : MonoBehaviour, IDamage
         else
         {
             RegenerateStamina(playerStat.staminaRegenerationRate * Time.deltaTime);
+        }
+        if (playerStat.stamina <= 0)
+        {
+            AudioManager.instance.PlayerSFX("StaminaRecoverBreathing");
         }
     }
 
@@ -281,7 +316,7 @@ public class playerController : MonoBehaviour, IDamage
     public void RegenerateStamina(float amount)
     {
         playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina + amount, 0f, playerStat.stamina);
-
+       
         updatePlayerUI();
     }
 
@@ -311,10 +346,10 @@ public class playerController : MonoBehaviour, IDamage
             updatePlayerUI();
 
             // Plays gunshot audio sfx
-            audioSFX.PlayOneShot(weapon.audioShoot[Random.Range(0, weapon.audioShoot.Length)], weapon.audioShootVol);
+            //audioSFX.PlayOneShot(weapon.audioShoot[Random.Range(0, weapon.audioShoot.Length)], weapon.audioShootVol);
 
             // Plays gunshot casing audio sfx
-            audioSFX.PlayOneShot(weapon.audioShootCasing[Random.Range(0, weapon.audioShootCasing.Length)], weapon.audioShootCasingVol);
+            //audioSFX.PlayOneShot(weapon.audioShootCasing[Random.Range(0, weapon.audioShootCasing.Length)], weapon.audioShootCasingVol);
 
             // Shoot code
             RaycastHit hit;
@@ -370,8 +405,15 @@ public class playerController : MonoBehaviour, IDamage
         transform.position = PlayerManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
         playerStat.HP = playerStat.HPMax;
-        audioLowHealthVol = audioLHVolOrig;
-        updatePlayerUI();
+        foreach (var sound in AudioManager.instance.playerSFXSounds)
+        {
+            if (sound.name == "LowHealth")
+            {
+                sound.volume = audioLHVolOrig;
+            }
+        }
+        audioLHVolOrig = walkVolume;
+        //updatePlayerUI();
     }
 
     public void IncreaseMaxHP(int amount)
