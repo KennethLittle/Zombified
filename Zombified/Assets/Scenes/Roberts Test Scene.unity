@@ -320,7 +320,7 @@ Transform:
   m_GameObject: {fileID: 1387094343}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -648,40 +648,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[0].rate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[3].name
-      value: SprintBreathing
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[4].name
-      value: StaminaRecoverBreathing
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[9].clip
+      propertyPath: playerSFXSounds.Array.data[4].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 99623152e8de546429f8f3142e564c22, type: 3}
+      objectReference: {fileID: 8300000, guid: ee9764cc71a2f0a44b65d9fb72fd26e5, type: 3}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[9].name
-      value: Footsteps
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[9].rate
+      propertyPath: playerSFXSounds.Array.data[4].rate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[10].clip
+      propertyPath: playerSFXSounds.Array.data[8].clip
       value: 
-      objectReference: {fileID: 8300000, guid: ed589df3f38d0244c92ba774a628d02a, type: 3}
+      objectReference: {fileID: 8300000, guid: 8c676c1ea2348c34f88412d77f78fcf6, type: 3}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[10].name
-      value: Walk
+      propertyPath: playerSFXSounds.Array.data[8].rate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: playerSFXSounds.Array.data[4].volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
