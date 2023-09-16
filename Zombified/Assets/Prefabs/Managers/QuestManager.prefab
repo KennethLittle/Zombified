@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6adcd2c4a2c70f438476b899d3f1845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instance: {fileID: 3443215863500192173}
   questTemplates:
   - {fileID: 11400000, guid: 2d42c97ac1b7d494a84f8c6175e1d3d4, type: 2}
   currentQuestIndex: 0

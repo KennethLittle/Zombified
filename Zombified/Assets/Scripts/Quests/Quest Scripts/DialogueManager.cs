@@ -32,20 +32,22 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-       
+
         nameText.text = dialogue.speakerName;
         sentences.Clear();
 
         foreach (string sentence in dialogue.sentences)
-        sentences.Enqueue(sentence);
+            sentences.Enqueue(sentence);
         Debug.Log("Starting dialogue: " + dialogue.sentences);
         StartCoroutine(FadeInDialogueBox());
         DisplayNextSentence();
+
+        StartCoroutine(WaitAndEndDialogue(5.0f));
     }
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count == 0) 
+        if (sentences.Count == 0)
         {
             EndDialogue();
             return;
@@ -73,6 +75,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator FadeInDialogueBox()
     {
+        UIManager.Instance.showDialogueBox(); // Show dialogue box before starting the fade in
         Color tempColor = dialogueBox.color;
 
         while (tempColor.a < 1f)
@@ -93,5 +96,13 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.color = tempColor;
             yield return null;
         }
+
+        UIManager.Instance.hideDialogueBox(); // Hide dialogue box after the fade out process is complete
+    }
+
+    IEnumerator WaitAndEndDialogue(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        EndDialogue();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public QuestManager instance;
+    public static QuestManager instance;
     public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
     private List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
