@@ -10,6 +10,17 @@ public class Quest
     public List<QuestStep> questSteps;
     public int currentStepIndex = 0;
 
+    public playerController player;
+
+    public GameObject questWindow;
+
+    public void OpenQuestWindow()
+    {
+        questWindow.SetActive(true);
+
+    }
+
+
     public bool IsQuestComplete => currentStepIndex >= questSteps.Count;
 
     public void ProceedToNextStep()
