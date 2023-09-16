@@ -12,6 +12,11 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         InitializeQuests();
+
+        foreach (QuestRuntime quest in quests)
+        {
+            quest.OnQuestCompleted += HandleQuestCompletion;
+        }
     }
 
     private void InitializeQuests()
@@ -19,6 +24,65 @@ public class QuestManager : MonoBehaviour
         foreach (Quest questTemplate in questTemplates)
         {
             quests.Add(new QuestRuntime(questTemplate));
+        }
+    }
+
+    public void ProgressToNextStepOrQuest()
+    {
+        if (CurrentQuest.IsQuestComplete)
+        {
+            // Move on to the next quest
+            currentQuestIndex++;
+
+            // Check if the new currentQuestIndex is within the bounds of the quests list
+            if (currentQuestIndex < quests.Count)
+            {
+                // Start the next quest
+                StartQuest();
+            }
+            else
+            {
+                // All quests are completed. Implement any logic you want here, for example:
+                Debug.Log("All quests are completed!");
+                // Or call a method like EndGame(), ShowCompletionCutscene(), etc.
+            }
+        }
+        else
+        {
+            CurrentQuest.currentStepIndex++;
+            CurrentQuest.CurrentStep.StartStep();
+        }
+    }
+
+    public void StartQuest()
+    {
+        // Reset the step index for the new quest
+        CurrentQuest.currentStepIndex = 0;
+
+        // Start the first step of the new quest
+        CurrentQuest.CurrentStep.StartStep();
+    }
+
+
+    public void HandleQuestCompletion(QuestRuntime completedQuest)
+    {
+        int nextQuestIndex = quests.IndexOf(completedQuest) + 1;
+        if (nextQuestIndex < quests.Count)
+        {
+            currentQuestIndex = nextQuestIndex;
+            quests[nextQuestIndex].CurrentStep.StartStep();
+        }
+        else
+        {
+            // All quests completed. You can put end-game logic or whatever you want here.
+        }
+    }
+
+    public void StartFirstQuest()
+    {
+        if (quests.Count > 0)
+        {
+            quests[0].CurrentStep.StartStep();
         }
     }
 
@@ -41,6 +105,11 @@ public class QuestManager : MonoBehaviour
         {
             findItemQuest.RegisterItemFound(founditem);
             currentStep.TryCompleteStep();
+
+            if (currentStep.isCompleted)
+            {
+                CurrentQuest.ProgressToNextStepOrQuest();
+            }
         }
     }
 
@@ -51,6 +120,10 @@ public class QuestManager : MonoBehaviour
         {
             killEnemyQuest.RegisterEnemyKill(killedEnemyType);
             currentStep.TryCompleteStep();
+            if (currentStep.isCompleted)
+            {
+                CurrentQuest.ProgressToNextStepOrQuest();
+            }
         }
     }
 
@@ -61,6 +134,10 @@ public class QuestManager : MonoBehaviour
         {
             interObjQuest.RegisterObjectInteraction(interactedObjectType);
             currentStep.TryCompleteStep();
+            if (currentStep.isCompleted)
+            {
+                CurrentQuest.ProgressToNextStepOrQuest();
+            }
         }
     }
 
@@ -71,6 +148,10 @@ public class QuestManager : MonoBehaviour
         {
             ReturnHomeQuest.ReturnHome();
             currentStep.TryCompleteStep();
+            if (currentStep.isCompleted)
+            {
+                CurrentQuest.ProgressToNextStepOrQuest();
+            }
         }
     }
 }

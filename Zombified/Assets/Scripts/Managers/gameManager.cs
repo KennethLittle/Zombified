@@ -86,6 +86,11 @@ public class gameManager : MonoBehaviour
         // Update game state with the default player data
         defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
 
+        QuestManager questManager = FindObjectOfType<QuestManager>();
+        if (questManager != null)
+        {
+            questManager.StartFirstQuest();
+        }
         // If you have default game states for enemies or other elements, you'd set them up here as well.
     }
 

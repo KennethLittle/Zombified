@@ -37,7 +37,6 @@ public class DialogueManager : MonoBehaviour
 
         foreach (string sentence in dialogue.sentences)
             sentences.Enqueue(sentence);
-
         StartCoroutine(FadeInDialogueBox());
         DisplayNextSentence();
     }
