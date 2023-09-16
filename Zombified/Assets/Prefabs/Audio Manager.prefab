@@ -76,6 +76,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 5e79f26ed88f6b047b1b060268420394, type: 3}
   - name: LevelUp
     clip: {fileID: 8300000, guid: 04a6961fdfe213745afd98959bd02ad7, type: 3}
+  - name: LowHealth
+    clip: {fileID: 8300000, guid: 86ba98058b22af34cab48bacd63ae88b, type: 3}
+  - name: Walk
+    clip: {fileID: 8300000, guid: ed589df3f38d0244c92ba774a628d02a, type: 3}
+  - name: Run
+    clip: {fileID: 8300000, guid: f8d28b4c7d6bbf04382f49aa78452cb2, type: 3}
   itemSFXSounds:
   - name: ExplosionTimer
     clip: {fileID: 8300000, guid: 6d8e5ccf888cf95408087bf49811078f, type: 3}
