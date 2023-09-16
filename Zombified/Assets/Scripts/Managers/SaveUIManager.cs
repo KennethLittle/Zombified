@@ -1,23 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class SaveUIManager : MonoBehaviour
 {
     public GameObject saveFilePrefab; // Drag your Save File Prefab here in the inspector
     public Transform saveFilesParent; // Drag the Content of your Scroll View here
-    public InputField renameInputField;
+    public TMP_InputField tmpInputField;
 
     public GameObject confirmationPanel; // Drag the Panel (Confirmation Dialog) here.
-    public Text confirmationText; // Drag the Text component from the Confirmation Dialog here.
+    public TextMeshProUGUI confirmationText; // Drag the Text component from the Confirmation Dialog here.
 
     private int pendingSaveSlot = -1;
     private int currentlySelectedSaveSlot = -1;
 
     public Button newSaveButton;
     public Button loadButton;
+    public Button renameButton;
 
     private string selectedSaveFile = null;
+    private List<GameObject> saveFileGameObjects = new List<GameObject>();
+
 
     private void Start()
     {
@@ -33,30 +37,49 @@ public class SaveUIManager : MonoBehaviour
         }
 
         List<string> saveFiles = SaveManager.Instance.GetAllSaveFiles();
+        saveFileGameObjects.Clear();
         foreach (string saveFile in saveFiles)
         {
             GameObject go = Instantiate(saveFilePrefab, saveFilesParent);
-            go.GetComponentInChildren<Text>().text = saveFile;
+            saveFileGameObjects.Add(go);
 
             // Extract the integer save slot from the filename
             string slotString = saveFile.Replace("savegame", "").Replace(".json", "");
-            int slot;
-            if (int.TryParse(slotString, out slot))
-            {
-                Button selectButton = go.GetComponent<Button>();
-                selectButton.onClick.AddListener(() => SelectSaveFile(slot));
-            }
-            else
+            if (!int.TryParse(slotString, out int slot))
             {
                 Debug.LogError("Failed to parse slot from save file name: " + saveFile);
+                continue; // Skip the rest of this iteration
             }
+
+            go.GetComponentInChildren<Text>().text = saveFile;
+
+            TMP_Text textComponent = go.transform.Find("TextComponent").GetComponent<TMP_Text>();
+            textComponent.text = saveFile;
+
+            Button selectButton = go.GetComponent<Button>();
+            selectButton.onClick.AddListener(() => SelectSaveFile(slot));
         }
     }
-
     public void SelectSaveFile(int slot)
     {
         currentlySelectedSaveSlot = slot;
-        // You can add code here to visually highlight the selected save file in your UI
+
+        // Reset all save file text to a default color (e.g., white).
+        foreach (GameObject go in saveFileGameObjects)
+        {
+            TMP_Text text = go.GetComponentInChildren<TMP_Text>();
+            if (text != null)
+            {
+                text.color = Color.white;
+            }
+        }
+
+        // Highlight the selected save file text with a different color (e.g., blue).
+        TMP_Text selectedText = saveFileGameObjects[slot].GetComponentInChildren<TMP_Text>();
+        if (selectedText != null)
+        {
+            selectedText.color = Color.blue;
+        }
     }
 
     public void OnLoadButtonPressed()
@@ -138,7 +161,7 @@ public class SaveUIManager : MonoBehaviour
     {
         if (currentlySelectedSaveSlot != -1)
         {
-            renameInputField.gameObject.SetActive(true); // Show the input field
+            tmpInputField.gameObject.SetActive(true); // Show the input field
         }
         else
         {
@@ -148,9 +171,9 @@ public class SaveUIManager : MonoBehaviour
 
     public void FinishRenameProcess()
     {
-        string newName = renameInputField.text;  // Get the new name from the input
+        string newName = tmpInputField.text;  // Get the new name from the input
         SaveManager.Instance.RenameSaveFile(currentlySelectedSaveSlot, newName);
-        renameInputField.gameObject.SetActive(false);  // Hide the input field
+        tmpInputField.gameObject.SetActive(false);  // Hide the input field
         PopulateSaveFiles();  // Refresh the list
     }
 }
