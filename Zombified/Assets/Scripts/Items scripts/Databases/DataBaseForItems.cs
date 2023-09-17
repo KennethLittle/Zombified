@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataBaseForItems : MonoBehaviour
+public class DataBaseForItems : ScriptableObject
 {             //The scriptableObject where the Item getting stored which you create(BataBaseForItems)
 
     [SerializeField]
