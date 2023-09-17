@@ -9,7 +9,8 @@ public class buttonFunctions : MonoBehaviour
 
     public buttonFunctions loadGameButton;
     public Slider musicSlider, sfxSlider;
-    private SaveUIManager saveUIManager;
+    public SaveUIManager saveUIManager;
+    public int saveSlot = 0;
 
     public void resume()
     {
@@ -73,10 +74,16 @@ public class buttonFunctions : MonoBehaviour
 
     public void LoadGame()
     {
-        // After loading the game state, activate the SaveUIManager's menu
-       gameManager.instance.LoadGameState();
-        UIManager.Instance.pauseMenu.SetActive(false);
-        GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        
+        if (saveUIManager)
+        {
+            saveUIManager.OpenSavePanel();
+            UIManager.Instance.pauseMenu.SetActive(false); // Deactivate pause menu
+        }
+        else
+        {
+            Debug.LogError("No SaveUIManager found in the scene!");
+        }
 
     }
 

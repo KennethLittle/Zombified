@@ -84,31 +84,41 @@ public class gameManager : MonoBehaviour
         SaveManager.Instance.SaveGame(saveSlot);
     }
 
-    public void LoadGameState(int saveSlot = 0)
+    public void LoadGameState(int saveSlot)
     {
         GameData loadedData = SaveManager.Instance.LoadGame(saveSlot);
 
-        if (loadedData != null)
+        if (loadedData == null)
         {
-            // Spawn the player
-            PlayerManager.instance.SpawnPlayer(loadedData.playerData);
+            Debug.LogError("Failed to load game data.");
+            return;
+        }
 
-            // Check if there's any enemy data to load
-            if (loadedData.enemiesData != null && loadedData.enemiesData.Count > 0)
-            {
-                // Load enemy data
-                EnemyManager.Instance.LoadEnemyData(loadedData.enemiesData);
-            }
-            else
-            {
-                Debug.Log("No enemy data found in the loaded game state.");
-            }
-
+        // Loading quest data
+        Debug.Log("Loading quest data...");
+        if (loadedData.questsSaveData != null)
+        {
+            QuestManager.instance.LoadQuests(loadedData.questsSaveData);
+            Debug.Log("Quest data loaded. Number of quests: " + loadedData.questsSaveData.Count);
         }
         else
         {
-            Debug.LogError("Failed to load game state.");
+            Debug.LogError("Quests save data is null or not present.");
         }
+
+        // Loading player data
+        Debug.Log("Loading player data...");
+        if (loadedData.playerData != null)
+        {
+            PlayerManager.instance.SpawnPlayer(loadedData.playerData);
+            Debug.Log("Player data loaded.");
+        }
+        else
+        {
+            Debug.LogError("Player save data is null or not present.");
+        }
+
+        // If you have similar methods for enemies or other game elements, do the same for them.
     }
 
     public void Defeat()

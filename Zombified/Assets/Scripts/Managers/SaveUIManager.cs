@@ -99,8 +99,8 @@ public class SaveUIManager : MonoBehaviour
     {
         if (currentlySelectedSaveSlot != -1)
         {
-            LoadingScreenManager.Instance.ShowLoadingScreen();
-            LoadingScreenManager.Instance.StartLoadingSequence(SceneManager.GetActiveScene().buildIndex, currentlySelectedSaveSlot);
+            gameManager.instance.LoadGameState(currentlySelectedSaveSlot);
+            loadMenu.SetActive(false);
 
         }
         else
@@ -190,5 +190,11 @@ public class SaveUIManager : MonoBehaviour
         SaveManager.Instance.RenameSaveFile(currentlySelectedSaveSlot, newName);
         tmpInputField.gameObject.SetActive(false);  // Hide the input field
         PopulateSaveFiles();  // Refresh the list
+    }
+
+    public void OpenSavePanel()
+    {
+        loadMenu.SetActive(true); // assuming SaveUIManager is attached to the panel object
+        PopulateSaveFiles();
     }
 }

@@ -59,7 +59,7 @@ public class SaveManager : MonoBehaviour
             Debug.LogWarning("No enemy data to save. Saving without enemy data.");
 
             // Save just the player data without enemy data
-            GameData gameData = new GameData(pD, new List<EnemyData>(), new List<QuestSaveData>());
+            GameData gameData = new GameData(pD, new List<EnemyData>(), questSaveDataList);
             string jsonData = JsonUtility.ToJson(gameData);
             File.WriteAllText(GetSavePath(saveSlot), jsonData);
             Debug.Log("Game saved without enemy data.");

@@ -53,13 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c4a78c724f5ae459bdfe0ecfcf7f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  inventoryUI: {fileID: 0}
   levelUpSystem: {fileID: 0}
+  uiManager: {fileID: 0}
   questManager: {fileID: 0}
-  enemiesKilled: 0
-  totalXP: 0
-  enemiesRemaining: 0
+  saveUIManager: {fileID: 0}
   isPaused: 0
   isInRun: 0
 --- !u!223 &94326450168513812

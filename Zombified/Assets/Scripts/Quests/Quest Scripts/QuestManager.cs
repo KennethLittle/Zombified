@@ -94,6 +94,7 @@ public class QuestManager : MonoBehaviour
         // Start the first step of the new quest
         CurrentQuest.CurrentStep.StartStep();
         OnQuestOrStepChanged();
+        SaveManager.Instance.SaveGame();
     }
 
 

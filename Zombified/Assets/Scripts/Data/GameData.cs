@@ -11,8 +11,8 @@ public class GameData
     // Constructor that accepts PlayerData and List<EnemyData>
     public GameData(PlayerData pD, List<EnemyData> eD, List<QuestSaveData> qSD)
     {
-        playerData = pD;
-        enemiesData = eD;
-        questsSaveData = qSD;
+        playerData = pD ?? new PlayerData();
+        enemiesData = eD ?? new List<EnemyData>();
+        questsSaveData = qSD ?? new List<QuestSaveData>();
     }
 }
