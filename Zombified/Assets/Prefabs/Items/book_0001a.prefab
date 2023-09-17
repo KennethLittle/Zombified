@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5134827949829976118}
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
+  - component: {fileID: 1835998075}
   m_Layer: 0
   m_Name: book_0001a
   m_TagString: Untagged
@@ -48,12 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemName: 
-    itemID: 0
+    itemID: 2
     itemDescription: 
-    itemIcon: {fileID: 0}
-    itemModel: {fileID: 0}
+    itemIcon: {fileID: 21300000, guid: 0bedb667e7ce923489e337cfa6011bd4, type: 3}
+    itemModel: {fileID: 100000}
     itemValue: 1
-    itemType: 0
+    itemType: 4
     itemWeight: 0
     maxStack: 1
     indexItemInList: 999
@@ -109,3 +110,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &1835998075
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.62
+  m_Center: {x: 0, y: 0.10600002, z: 0}

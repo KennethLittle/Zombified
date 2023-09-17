@@ -7411,10 +7411,10 @@ MonoBehaviour:
   prefabCanvasWithPanel: {fileID: 7423461717082805381}
   prefabSlot: {fileID: 3831936223903270459}
   prefabSlotContainer: {fileID: 2090549544685301176}
-  prefabItem: {fileID: 2738118974601264324}
+  prefabItem: {fileID: 6740010625879187121, guid: e2675fa0cbfd67a45ba14ac0b74dc465, type: 3}
   prefabDraggingItemContainer: {fileID: 6159220557392563657}
   prefabPanel: {fileID: 3831936223903270459}
-  itemDatabase: {fileID: 0}
+  itemDatabase: {fileID: 11400000, guid: 49a584f47739c9849bbdbd039fd50e5c, type: 2}
   inventoryTitle: Inventory
   PanelRectTransform: {fileID: 1464389351677346454}
   PanelImage: {fileID: 468812925470939337}
@@ -7450,8 +7450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2289f52a4d8708a4aa5e902a4374e340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 0}
-  activeSlotDesign: {fileID: 0}
+  slot: {fileID: 4531724719742867031, guid: b155ca34100d14f489900e8083f51cd8, type: 3}
+  activeSlotDesign: {fileID: 4531724719742867031, guid: b155ca34100d14f489900e8083f51cd8, type: 3}
   inventoryBackground: {fileID: 468812925470939337}
   displayInventoryCloseButton: 0
   closeButtonImage: {fileID: 3082107814080726278}
@@ -12888,7 +12888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5582262913534286843, guid: 50c8f0f39b0a4d34ba96aacaf9592903, type: 3}
       propertyPath: m_TagString
-      value: Storage
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5645590987177123658, guid: 50c8f0f39b0a4d34ba96aacaf9592903, type: 3}
       propertyPath: m_AnchorMax.y

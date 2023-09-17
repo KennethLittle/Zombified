@@ -126,7 +126,7 @@ public class InventoryStorage : MonoBehaviour
     void ToggleStorageInteraction()
     {
         isInteractingWithStorage = !isInteractingWithStorage;
-
+        QuestManager.instance.NotifyObjectInteracted(this.gameObject);
         if (isInteractingWithStorage)
         {
             invent.ItemsInInventory.Clear();

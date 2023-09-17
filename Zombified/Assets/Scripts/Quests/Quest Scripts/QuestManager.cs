@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class QuestManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+
 
         foreach (QuestRuntime quest in quests)
         {
@@ -140,7 +141,7 @@ public class QuestManager : MonoBehaviour
     {
         if (CurrentQuest != null)
         {
-            
+
             string questName = CurrentQuest.blueprint.questName;
             string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
             questUIManager.UpdateQuestUI(questName, questStepDescription);
@@ -207,6 +208,7 @@ public class QuestManager : MonoBehaviour
             if (currentStep.isCompleted)
             {
                 CurrentQuest.ProgressToNextStepOrQuest();
+                OnQuestOrStepChanged();
             }
         }
     }
@@ -221,6 +223,7 @@ public class QuestManager : MonoBehaviour
             if (currentStep.isCompleted)
             {
                 CurrentQuest.ProgressToNextStepOrQuest();
+                OnQuestOrStepChanged();
             }
         }
     }
@@ -235,6 +238,7 @@ public class QuestManager : MonoBehaviour
             if (currentStep.isCompleted)
             {
                 CurrentQuest.ProgressToNextStepOrQuest();
+                OnQuestOrStepChanged();
             }
         }
     }
@@ -249,6 +253,7 @@ public class QuestManager : MonoBehaviour
             if (currentStep.isCompleted)
             {
                 CurrentQuest.ProgressToNextStepOrQuest();
+                OnQuestOrStepChanged();
             }
         }
     }

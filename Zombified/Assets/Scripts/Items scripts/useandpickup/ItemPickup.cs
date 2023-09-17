@@ -8,6 +8,7 @@ public class ItemPickup : MonoBehaviour
     public InventoryItem item;
     private InventorySystem inventorysetup;
     private GameObject player;
+    private bool playerInRange = false;
     // Use this for initialization
 
     void Start()
@@ -30,26 +31,36 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
     void Update()
     {
-        if (inventorysetup != null && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && inventorysetup != null && Input.GetKeyDown(KeyCode.E))
         {
-            float distance = Vector3.Distance(this.gameObject.transform.position, player.transform.position);
-
-            if (distance <= 3)
+            bool check = inventorysetup.checkIfItemAllreadyExist(item.itemID, item.itemValue);
+            if (check)
+                Destroy(this.gameObject);
+            else if (inventorysetup.ItemsInInventory.Count < (inventorysetup.width * inventorysetup.height))
             {
-                bool check = inventorysetup.checkIfItemAllreadyExist(item.itemID, item.itemValue);
-                if (check)
-                    Destroy(this.gameObject);
-                else if (inventorysetup.ItemsInInventory.Count < (inventorysetup.width * inventorysetup.height))
-                {
-                    inventorysetup.addItemToInventory(item.itemID, item.itemValue);
-                    inventorysetup.updateItemList();
-                    inventorysetup.UpdateStackableItems();
-                    Destroy(this.gameObject);
-                }
-
+                inventorysetup.addItemToInventory(item.itemID, item.itemValue);
+                QuestManager.instance.NotifyItemFound(this.gameObject);
+                inventorysetup.updateItemList();
+                inventorysetup.UpdateStackableItems();
+                Destroy(this.gameObject);
             }
         }
     }
