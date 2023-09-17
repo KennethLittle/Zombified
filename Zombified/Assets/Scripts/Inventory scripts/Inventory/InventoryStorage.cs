@@ -108,9 +108,7 @@ public class InventoryStorage : MonoBehaviour
             {
                 storedItems.Clear();
                 UpdateStoredItemsList();
-                inventory.SetActive(false);
                 invent.RemoveAllItems();
-                itemHelper.deactivateHelperTool();
             }
         }
     }

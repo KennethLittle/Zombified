@@ -6,6 +6,8 @@ public class GameData
     public PlayerData playerData;
     public List<EnemyData> enemiesData;
     public List<QuestSaveData> questsSaveData;
+    public int activeQuestID;
+    public int currentQueststepID;
 
 
     // Constructor that accepts PlayerData and List<EnemyData>
@@ -14,5 +16,7 @@ public class GameData
         playerData = pD ?? new PlayerData();
         enemiesData = eD ?? new List<EnemyData>();
         questsSaveData = qSD ?? new List<QuestSaveData>();
+        activeQuestID = QuestManager.instance.currentQuestIndex;
+        currentQueststepID = QuestManager.instance.currentQuestStepIndex;
     }
 }

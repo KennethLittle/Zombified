@@ -19,3 +19,4 @@ MonoBehaviour:
     sentences:
     - Lets head to Alpha Station now with the intel you collected. Update you on
       what we need to do when you get there.
+  stepID: 5

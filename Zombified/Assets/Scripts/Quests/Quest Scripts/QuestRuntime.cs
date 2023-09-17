@@ -6,6 +6,7 @@ public class QuestRuntime
 {
     public Quest blueprint; // The original Quest ScriptableObject
     public int currentStepIndex = 0;
+    public int questID;
     public List<QuestStepRuntime> stepsRuntime = new List<QuestStepRuntime>();
     public delegate void QuestCompletedHandler(QuestRuntime completedQuest);
     public event QuestCompletedHandler OnQuestCompleted;

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,7 @@ public class QuestManager : MonoBehaviour
     public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
     public List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
+    public int currentQuestStepIndex = 0;
     public QuestRuntime CurrentQuest
     {
         get
@@ -77,22 +80,29 @@ public class QuestManager : MonoBehaviour
         else
         {
             CurrentQuest.currentStepIndex++;
+            Debug.Log("Setting current step ID to: " + CurrentQuest.currentStepIndex);
+            SaveManager.Instance.GameData.currentQueststepID = CurrentQuest.currentStepIndex;
             CurrentQuest.CurrentStep.StartStep();
             OnQuestOrStepChanged();
         }
     }
 
-    public void StartQuest()
+    public void StartQuest(int startingStepIndex = 0)
     {
         if (currentQuestIndex >= quests.Count || currentQuestIndex < 0)
         {
             Debug.LogError("Current quest index out of bounds: " + currentQuestIndex);
             return;
         }
-        // Reset the step index for the new quest
-        CurrentQuest.currentStepIndex = 0;
-        Debug.Log("Quests are available. Starting the first one.");
-        // Start the first step of the new quest
+
+        // Set the step index for the quest
+        if (QuestManager.instance.CurrentQuest.currentStepIndex == 0)
+        {
+            CurrentQuest.currentStepIndex = 0;
+        }
+
+
+        // Start the current step of the quest
         CurrentQuest.CurrentStep.StartStep();
         OnQuestOrStepChanged();
         SaveManager.Instance.SaveGame();
@@ -178,6 +188,8 @@ public class QuestManager : MonoBehaviour
             // Here you populate the data from savedQuestData[i] into loadedQuest 
             // For example:
             loadedQuest.currentStepIndex = savedQuestData[i].currentStepIndex;
+
+           
             //... Load other necessary data ...
 
             quests.Add(loadedQuest);
@@ -187,6 +199,41 @@ public class QuestManager : MonoBehaviour
         // currentQuestIndex = ...;
 
         // Optional: Trigger some UI or other systems to update based on the loaded quests
+        OnQuestOrStepChanged();
+    }
+
+    public void SetCurrentQuestByID(int questID)
+    {
+        var questToSet = quests.FirstOrDefault(q => q.questID == questID);
+
+        if (questToSet == null)
+        {
+            Debug.LogError("Quest with ID: " + questID + " not found.");
+            return;
+        }
+
+        currentQuestIndex = quests.IndexOf(questToSet);
+    }
+
+    public void SetCurrentQuestStepByID(int stepID)
+    {
+        if (CurrentQuest == null)
+        {
+            Debug.LogError("No active quest to set the step for.");
+            return;
+        }
+
+        // Ensure the stepID is within the bounds of the quest's steps
+        if (stepID < 0 || stepID >= CurrentQuest.blueprint.questSteps.Count)
+        {
+            Debug.LogError("Step ID " + stepID + " is out of bounds for current quest.");
+            return;
+        }
+
+        CurrentQuest.currentStepIndex = stepID;
+        Debug.Log("Setting current step ID to: " + CurrentQuest.currentStepIndex);
+
+        // Optionally, you can call any method here to update the UI or other systems.
         OnQuestOrStepChanged();
     }
 
@@ -224,6 +271,7 @@ public class QuestManager : MonoBehaviour
             {
                 CurrentQuest.ProgressToNextStepOrQuest();
                 OnQuestOrStepChanged();
+
             }
         }
     }

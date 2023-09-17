@@ -7,7 +7,7 @@ public abstract class QuestStep : ScriptableObject
     public string description;
     public bool isCompleted;
     public Dialogue stepDialogue;
-    public string stepID;
+    public int stepID;
 
     public abstract bool CheckCompletion();
 

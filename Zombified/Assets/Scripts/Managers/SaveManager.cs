@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public GameData GameData;
+
     private const string SAVE_FILENAME = "newSave{0}.json";
     public static SaveManager Instance { get; private set; }
 
@@ -36,8 +39,9 @@ public class SaveManager : MonoBehaviour
         List<QuestSaveData> questSaveDataList = new List<QuestSaveData>();
         foreach (QuestRuntime qr in QuestManager.instance.quests)
         {
-            questSaveDataList.Add(qr.GetSaveData());
+            questSaveDataList.Add(QuestDataConverter.ConvertQuestToSaveData(qr));
         }
+
 
         List<EnemyData> eD = (EnemyManager.Instance != null) ? EnemyManager.Instance.GetAllEnemyData() : new List<EnemyData>();
 
@@ -69,31 +73,45 @@ public class SaveManager : MonoBehaviour
         }
 
         GameData data = JsonUtility.FromJson<GameData>(jsonData);
+        Debug.Log("Loading quest ID: " + data.activeQuestID);
+        QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
+        if (data.currentQueststepID > 0)
+        {
+            QuestManager.instance.StartQuest(data.currentQueststepID);
+        }
+        else
+        {
+            QuestManager.instance.StartQuest();  // Starts a new quest from the beginning
+        }
         return data;
     }
 
     public class QuestDataConverter
     {
-        public static QuestSaveData ConvertQuestToSaveData(Quest quest)
+        public static QuestSaveData ConvertQuestToSaveData(QuestRuntime questRuntime)
         {
             QuestSaveData data = new QuestSaveData();
 
-            data.currentStepIndex = quest.currentStepIndex;
+            // Use the questRuntime object that's passed in
+            data.questID = questRuntime.questID;
+            data.currentStepIndex = questRuntime.currentStepIndex;
 
-            foreach (var step in quest.questSteps)
+            foreach (var step in questRuntime.blueprint.questSteps) // Assuming that blueprint has questSteps.
             {
                 QuestStepSaveData stepData = ConvertQuestStepToSaveData(step);
                 data.questStepSaveData.Add(stepData);
             }
 
             return data;
-        }
+        } 
+        
 
         private static QuestStepSaveData ConvertQuestStepToSaveData(QuestStep questStep)
         {
             QuestStepSaveData stepData = new QuestStepSaveData();
             stepData.description = questStep.description;
             stepData.isCompleted = questStep.isCompleted;
+            stepData.stepID = questStep.stepID;
 
             // If I decide to save the Dialogue as mentioned above:
             // stepData.stepDialogueSaveData = ConvertDialogueToSaveData(questStep.stepDialogue);

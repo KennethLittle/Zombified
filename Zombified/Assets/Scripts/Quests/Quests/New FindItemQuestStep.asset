@@ -19,4 +19,5 @@ MonoBehaviour:
     sentences:
     - Grab that intel off my desk, it includes some info on Alpha Station.
     - This might help us uncover some of the secrets of that place.
+  stepID: 1
   requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

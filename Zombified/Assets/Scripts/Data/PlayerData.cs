@@ -6,7 +6,7 @@ public class PlayerData
 {
     public Vector3 playerPosition;
     public Quaternion playerRotation;
-    public string currentQuest;
+    public int currentQuestID;
     public LocationData.Location currentLocation;
     public List<string> currentInventory; // List of items' names or IDs
     public List<QuestSaveData> questsSaveData;
@@ -90,11 +90,7 @@ public class PlayerData
         QuestManager questManager = QuestManager.instance;
         if (questManager != null)
         {
-            questManager.currentQuestIndex = currentQuestIndex;
-            if (questManager.CurrentQuest != null)
-            {
-                questManager.CurrentQuest.currentStepIndex = currentQuestStepIndex;
-            }
+            questManager.SetCurrentQuestByID(currentQuestID); // Assuming you write this method to set a quest by its ID
         }
 
         // When you implement the quest, location, and inventory systems, 

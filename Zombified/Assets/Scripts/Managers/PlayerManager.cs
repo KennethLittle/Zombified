@@ -71,15 +71,19 @@ public class PlayerManager : MonoBehaviour
         QuestManager questManager = FindObjectOfType<QuestManager>();
         if (questManager != null)
         {
-            if (data != null && data.questsSaveData != null)
+            // Check if questsSaveData exists and if it's not empty.
+            if (data != null && data.questsSaveData != null && data.questsSaveData.Any())
             {
-                if (data.questsSaveData == null || !data.questsSaveData.Any())
+                // Load the quest by its ID
+                int questID = data.currentQuestID;
+                if (questID >= 0) // assuming that valid quest IDs are non-negative
                 {
-                    Debug.LogError("No questsSaveData or empty list provided.");
+                    questManager.SetCurrentQuestByID(questID);
+                    questManager.SetCurrentQuestStepByID(questID);
                 }
                 else
                 {
-                    questManager.LoadQuests(data.questsSaveData);
+                    Debug.LogError("Invalid quest ID found in saved data.");
                 }
             }
             else

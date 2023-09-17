@@ -20,4 +20,5 @@ MonoBehaviour:
     - 'Welcome to HomeBase, this will be your new home. We have a few things for
       you to do. We collected some loot for you over there in that loot box by the
       round table. Grab that loot and then we will move on. '
+  stepID: 2
   objectType: {fileID: 4828081072825530902, guid: 757ade11b83984446817616155fb7d97, type: 3}

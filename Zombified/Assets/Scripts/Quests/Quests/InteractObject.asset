@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
   m_Name: InteractObject
   m_EditorClassIdentifier: 
+  questID: 2
   questName: InteractObject
   questSteps:
   - {fileID: 11400000, guid: fc9a3e43565fe9f4582ec118497888ec, type: 2}
