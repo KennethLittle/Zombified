@@ -12,10 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Database
   m_EditorClassIdentifier: Assembly-CSharp::ItemAttributeList
-  itemStatsList:
-  - attributeName: Damage
-    attributeValue: 0
-  - attributeName: Heal
-    attributeValue: 0
-  - attributeName: Ammo
-    attributeValue: 0
+  itemStatsList: []

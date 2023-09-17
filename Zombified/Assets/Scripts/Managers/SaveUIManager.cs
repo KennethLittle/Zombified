@@ -114,6 +114,7 @@ public class SaveUIManager : MonoBehaviour
         {
             gameManager.instance.LoadGameState(currentlySelectedSaveSlot);
             loadMenu.SetActive(false);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
 
         }
         else

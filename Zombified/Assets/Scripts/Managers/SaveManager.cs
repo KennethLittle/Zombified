@@ -37,41 +37,19 @@ public class SaveManager : MonoBehaviour
         foreach (QuestRuntime qr in QuestManager.instance.quests)
         {
             questSaveDataList.Add(qr.GetSaveData());
-        };
-
-        // Check if the EnemyManager instance exists
-        if (EnemyManager.Instance == null)
-        {
-            Debug.LogWarning("No EnemyManager instance found. Saving without enemy data.");
-
-            // Save just the player data without enemy data
-            GameData gameData = new GameData(pD, new List<EnemyData>(), new List<QuestSaveData>());
-            string jsonData = JsonUtility.ToJson(gameData);
-            File.WriteAllText(GetSavePath(saveSlot), jsonData);
-            Debug.Log("Game saved without enemy data.");
-            return;
         }
 
-        List<EnemyData> eD = EnemyManager.Instance.GetAllEnemyData();
-        // Check if there's any enemy data to save
-        if (eD == null || eD.Count == 0)
-        {
-            Debug.LogWarning("No enemy data to save. Saving without enemy data.");
+        List<EnemyData> eD = (EnemyManager.Instance != null) ? EnemyManager.Instance.GetAllEnemyData() : new List<EnemyData>();
 
-            // Save just the player data without enemy data
-            GameData gameData = new GameData(pD, new List<EnemyData>(), questSaveDataList);
-            string jsonData = JsonUtility.ToJson(gameData);
-            File.WriteAllText(GetSavePath(saveSlot), jsonData);
+        // Save the game data
+        GameData gameData = new GameData(pD, eD, questSaveDataList);
+        string jsonData = JsonUtility.ToJson(gameData);
+        File.WriteAllText(GetSavePath(saveSlot), jsonData);
+
+        if (eD.Count == 0)
             Debug.Log("Game saved without enemy data.");
-            return;
-        }
-
-
-        // If we have both player and enemy data, save them together
-        GameData gameDataWithEnemies = new GameData(pD, eD, questSaveDataList);
-        string jsonDataWithEnemies = JsonUtility.ToJson(gameDataWithEnemies);
-        File.WriteAllText(GetSavePath(saveSlot), jsonDataWithEnemies);
-        Debug.Log("Game Saved with enemy and quest data!");
+        else
+            Debug.Log("Game saved with all data.");
     }
 
     public GameData LoadGame(int saveSlot)
