@@ -14,10 +14,11 @@ public class PlayerEquipment : MonoBehaviour
     private InventorySystem mainInventory;
     private InventorySystem characterInventory;
     private HelperTool Toolbar;
-
+    private WeaponDetails weaponDetails;
     private GameStateManager stateManager;
     private InputManager inputManagerData;
-
+    private InventoryItem equippedWeapon;
+    private Transform firePoint;
     public GameObject HPMANACanvas;
 
     Text hpText;
@@ -65,9 +66,11 @@ public class PlayerEquipment : MonoBehaviour
     {
         if (item.itemType == ItemType.Weapon)
         {
+                equippedWeapon = item;
             //add the weapon if you unequip the weapon
         }
     }
+
 
     void UnEquipWeapon(InventoryItem item)
     {
@@ -279,8 +282,33 @@ public class PlayerEquipment : MonoBehaviour
         //}
     }
 
+    IEnumerator Shooting()
+    {
+        while (equippedWeapon != null)
+        {
+            if (Input.GetButtonDown("Fire1"))  // assuming "Fire1" is your shoot button
+            {
+                Shoot();
+                float fireInterval = 1.0f / equippedWeapon.weaponDetails.fireRate;
+                yield return new WaitForSeconds(fireInterval);
+            }
+            yield return null;
+        }
+    }
 
-
+    void Shoot()
+    {
+        if (equippedWeapon.weaponDetails.projectilePrefab)
+        {
+            // Instantiate the bullet/projectile from the weapon at the desired location
+            Instantiate(equippedWeapon.weaponDetails.projectilePrefab, firePoint.position, firePoint.rotation);
+            // Add any logic to propel the bullet/projectile if needed
+        }
+        else
+        {
+            // Melee attack logic here. For example, check what's in range and apply damage
+        }
+    }
     // Update is called once per frame
     void Update()
     {

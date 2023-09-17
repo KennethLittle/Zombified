@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d178cc3e5f120eb46a0b5f2ebb93e3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
+  inventory: {fileID: 155844, guid: 6456a4784f31cab439d29b7e3bb286a4, type: 3}
   storedItems: []
   itemDatabase: {fileID: 11400000, guid: 49a584f47739c9849bbdbd039fd50e5c, type: 2}
   interactionDistance: 3
