@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
 
     private List<int> playedSongs;
 
+    private float fadeDuration = 2.0f;
     public void Awake()
     {
         if (instance == null)
@@ -73,8 +74,7 @@ public class AudioManager : MonoBehaviour
             AudioClip songPlaying = homeBaseTracks[randomSong].clip;
             musicSource.clip = songPlaying;
             musicSource.Play();
-
-            Invoke("PlayRandomSong", songPlaying.length);
+            StartCoroutine(FadeIn(songPlaying));
         }
         else if (currentScene.name == "Alpha stain")
         {
@@ -82,12 +82,52 @@ public class AudioManager : MonoBehaviour
             AudioClip songPlaying = alphaStainTracks[randomSong].clip;
             musicSource.clip = songPlaying;
             musicSource.Play();
-
-            Invoke("PlayRandomSong", songPlaying.length);
+            StartCoroutine(FadeIn(songPlaying));
         }
 
     }
    
+    private IEnumerator FadeIn(AudioClip song)
+    {
+        float startVolume = 0f;
+        float targetVolume = 1;
+
+        musicSource.clip = song;
+        musicSource.volume = startVolume;
+        musicSource.Play();
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            musicSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        musicSource.volume = targetVolume;
+
+        yield return new WaitForSeconds(song.length);
+
+        StartCoroutine(FadeOut() );
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float startVolume = musicSource.volume;
+        float targetVolume = 0f;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            musicSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        musicSource.volume = targetVolume;
+
+        PlayRandomSong();
+    }
 
     public void ToggleMusic()
     {

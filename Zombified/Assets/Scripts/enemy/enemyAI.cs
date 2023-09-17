@@ -165,7 +165,8 @@ public class enemyAI : MonoBehaviour, IDamage
     IEnumerator playZedGroans()
     {
         zedIsGroaning = true;
-        audioSFX.PlayOneShot(audioVoice[UnityEngine.Random.Range(0, audioVoice.Length)], audioVoiceVol);
+        //audioSFX.PlayOneShot(audioVoice[UnityEngine.Random.Range(0, audioVoice.Length)], audioVoiceVol);       
+        AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
         yield return new WaitForSeconds(UnityEngine.Random.Range(voiceTimerMin, voiceTimerMax));
         zedIsGroaning = false;
     }

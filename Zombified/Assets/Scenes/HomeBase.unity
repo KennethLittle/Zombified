@@ -5332,6 +5332,18 @@ PrefabInstance:
       propertyPath: gameManagerInstance
       value: 
       objectReference: {fileID: 780039728}
+    - target: {fileID: 4203738814037795837, guid: 3a29814b732576c4eaf1ff96bcf368fa, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335937931279043827, guid: 3a29814b732576c4eaf1ff96bcf368fa, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 6336246681825161327, guid: 3a29814b732576c4eaf1ff96bcf368fa, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a29814b732576c4eaf1ff96bcf368fa, type: 3}
 --- !u!114 &1133821778 stripped
@@ -11171,6 +11183,30 @@ PrefabInstance:
       propertyPath: alphaStainTracks.Array.data[3].clip
       value: 
       objectReference: {fileID: 8300000, guid: f06c91446807ff841ab028754a77a685, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: homeBaseTracks.Array.data[0].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: homeBaseTracks.Array.data[1].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: alphaStainTracks.Array.data[0].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: alphaStainTracks.Array.data[1].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: alphaStainTracks.Array.data[2].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: alphaStainTracks.Array.data[3].volume
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
 --- !u!4 &1709189768 stripped
