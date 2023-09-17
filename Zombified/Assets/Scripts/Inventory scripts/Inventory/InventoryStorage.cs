@@ -44,6 +44,9 @@ public class InventoryStorage : MonoBehaviour
 
     private bool isInteractingWithStorage;
 
+    private bool playerInRange = false;
+
+
     public void AddItemToStorage(int id, int quantity)
     {
         InventoryItem itemToAdd = itemDatabase.getItemByID(id);
@@ -77,15 +80,6 @@ public class InventoryStorage : MonoBehaviour
                 currentItemCount++;
             }
         }
-
-        if (GameObject.FindGameObjectWithTag("Timer") != null)
-        {
-            interactionTimerImage = GameObject.FindGameObjectWithTag("Timer").GetComponent<Image>();
-            interactionTimerObject = GameObject.FindGameObjectWithTag("Timer");
-            interactionTimerObject.SetActive(false);
-        }
-        if (GameObject.FindGameObjectWithTag("HelperTool") != null)
-            itemHelper = GameObject.FindGameObjectWithTag("HelperTool").GetComponent<HelperTool>();
     }
 
     public void InitializeImportantVariables()
@@ -94,55 +88,50 @@ public class InventoryStorage : MonoBehaviour
             itemDatabase = (DataBaseForItems)Resources.Load("ItemDatabase");
     }
 
-    void Update()
+
+    void OnTriggerEnter(Collider other)
     {
-        float distanceToPlayer = Vector3.Distance(this.gameObject.transform.position, player.transform.position);
-
-        if (displayInteractionTimer && interactionTimerImage != null)
+        if (other.CompareTag("Player"))  // Make sure your player has the tag "Player"
         {
-            interactionTimerObject.SetActive(true);
-            float fillPercentage = (Time.time - interactionStart) / interactionDelay;
-            interactionTimerImage.fillAmount = fillPercentage;
+            playerInRange = true;
         }
+    }
 
-        if (distanceToPlayer <= interactionDistance && Input.GetKeyDown(inputManager.StorageKeyCode))
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            isInteractingWithStorage = !isInteractingWithStorage;
-            StartCoroutine(OpenCloseInventoryWithDelay());
-        }
+            playerInRange = false;
 
-        if (distanceToPlayer > interactionDistance && isInteractingWithStorage)
-        {
-            isInteractingWithStorage = false;
-            if (inventory.activeSelf)
+            // This section ensures the storage closes if the player walks away
+            if (isInteractingWithStorage)
             {
                 storedItems.Clear();
                 UpdateStoredItemsList();
                 inventory.SetActive(false);
                 invent.RemoveAllItems();
+                itemHelper.deactivateHelperTool();
             }
-            itemHelper.deactivateHelperTool();
-            interactionTimerImage.fillAmount = 0;
-            interactionTimerObject.SetActive(false);
-            displayInteractionTimer = false;
         }
     }
 
-    IEnumerator OpenCloseInventoryWithDelay()
+    void Update()
     {
+        if (playerInRange && Input.GetKeyDown(KeyCode.F))
+        {
+            ToggleStorageInteraction();
+        }
+    }
+
+    void ToggleStorageInteraction()
+    {
+        isInteractingWithStorage = !isInteractingWithStorage;
+
         if (isInteractingWithStorage)
         {
-            interactionStart = Time.time;
-            displayInteractionTimer = true;
-            yield return new WaitForSeconds(interactionDelay);
-            if (isInteractingWithStorage)
-            {
-                invent.ItemsInInventory.Clear();
-                inventory.SetActive(true);
-                TransferItemsToInventory();
-                displayInteractionTimer = false;
-                interactionTimerObject.SetActive(false);
-            }
+            invent.ItemsInInventory.Clear();
+            inventory.SetActive(true);
+            TransferItemsToInventory();
         }
         else
         {
@@ -150,9 +139,9 @@ public class InventoryStorage : MonoBehaviour
             UpdateStoredItemsList();
             inventory.SetActive(false);
             invent.RemoveAllItems();
-            itemHelper.deactivateHelperTool();
         }
     }
+
 
     private void UpdateStoredItemsList()
     {

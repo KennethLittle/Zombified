@@ -12,9 +12,22 @@ public class ItemPickup : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-            inventorysetup = player.GetComponent<PlayerEquipment>().inventorysetup.GetComponent<InventorySystem>();
+        GameObject playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
+
+        if (playerManager != null)
+        {
+            PlayerEquipment playerEquipment = playerManager.GetComponent<PlayerEquipment>();
+            if (playerEquipment != null)
+            {
+                inventorysetup = playerEquipment.inventorysetup.GetComponent<InventorySystem>();
+            }
+
+            Transform playerTransform = playerManager.transform.Find("Player");
+            if (playerTransform != null)
+            {
+                player = playerTransform.gameObject;
+            }
+        }
     }
 
     // Update is called once per frame

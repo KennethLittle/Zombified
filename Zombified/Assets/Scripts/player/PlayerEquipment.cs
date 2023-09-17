@@ -289,11 +289,13 @@ public class PlayerEquipment : MonoBehaviour
             if (!charactersetup.activeSelf)
             {
                 craftInventory.openInventory();
+                charactersetup.SetActive(true);
                 GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
             }
             else
             {
                 craftInventory.closeInventory();
+                charactersetup.SetActive(false);
                 GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             }
         }
@@ -303,11 +305,13 @@ public class PlayerEquipment : MonoBehaviour
             if (!inventorysetup.activeSelf)
             {
                 mainInventory.openInventory();
+                inventorysetup.SetActive(true);
                 GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
             }
             else
             {
                 mainInventory.closeInventory();
+                inventorysetup.SetActive(false);
                 GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             }
         }
