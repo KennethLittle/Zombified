@@ -13,6 +13,7 @@ public class buttonFunctions : MonoBehaviour
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        UIManager.Instance.pauseMenu.SetActive(false);
     }
 
     public void restart()
@@ -52,13 +53,6 @@ public class buttonFunctions : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void next()
-    {
-        gameManager.instance.levelUpSystem.RewardXPUponDeath();
-        gameManager.instance.MarkRunEnd();
-        SceneManager.LoadScene("DeathScene");
-    }
-
     public void backtoPlayerMenu()
     {
         int  previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
@@ -79,6 +73,8 @@ public class buttonFunctions : MonoBehaviour
     public void LoadGame()
     {
         gameManager.instance.LoadGameState();
+        UIManager.Instance.pauseMenu.SetActive(false);
+
     }
 
     public void NewGame()

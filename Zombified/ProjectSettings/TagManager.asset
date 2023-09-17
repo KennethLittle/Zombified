@@ -17,6 +17,9 @@ TagManager:
   - Panel
   - Slot
   - DraggingItem
+  - InventorySetup
+  - CharacterSetup
+  - EquipmentSystem
   layers:
   - Default
   - TransparentFX

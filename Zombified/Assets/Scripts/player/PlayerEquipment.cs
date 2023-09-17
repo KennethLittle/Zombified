@@ -15,6 +15,7 @@ public class PlayerEquipment : MonoBehaviour
     private InventorySystem characterInventory;
     private HelperTool Toolbar;
 
+    private GameStateManager stateManager;
     private InputManager inputManagerData;
 
     public GameObject HPMANACanvas;
@@ -175,8 +176,6 @@ public class PlayerEquipment : MonoBehaviour
         if (craftSystem != null)
             craft = craftSystem.GetComponent<CraftSystem>();
 
-        if (GameObject.FindGameObjectWithTag("Tooltip") != null)
-            Toolbar = GameObject.FindGameObjectWithTag("Tooltip").GetComponent<HelperTool>();
         if (inventorysetup != null)
             mainInventory = inventorysetup.GetComponent<InventorySystem>();
         if (charactersetup != null)
@@ -285,49 +284,50 @@ public class PlayerEquipment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(inputManagerData.CharacterSystemKeyCode))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             if (!charactersetup.activeSelf)
             {
                 craftInventory.openInventory();
+                GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
             }
             else
             {
-                if (Toolbar != null)
-                    Toolbar.deactivateHelperTool();
                 craftInventory.closeInventory();
+                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             }
         }
 
-        if (Input.GetKeyDown(inputManagerData.InventoryKeyCode))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             if (!inventorysetup.activeSelf)
             {
                 mainInventory.openInventory();
+                GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
             }
             else
             {
-                if (Toolbar != null)
-                    Toolbar.deactivateHelperTool();
                 mainInventory.closeInventory();
+                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             }
         }
 
-        if (Input.GetKeyDown(inputManagerData.CraftSystemKeyCode))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             if (!craftSystem.activeSelf)
                 craftInventory.openInventory();
-            else
-            {
-                if (craft != null)
-                    craft.backToInventory();
-                if (Toolbar != null)
-                    Toolbar.deactivateHelperTool();
-                craftInventory.closeInventory();
-            }
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
+        }
+        else
+        {
+            if (craft != null)
+            { 
+                craft.backToInventory();
+            craftInventory.closeInventory();
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        }
         }
 
     }
-
 }
 

@@ -2,12 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SaveUIManager : MonoBehaviour
 {
     public GameObject saveFilePrefab; // Drag your Save File Prefab here in the inspector
     public Transform saveFilesParent; // Drag the Content of your Scroll View here
     public TMP_InputField tmpInputField;
+    public GameObject loadMenu;
 
     public GameObject confirmationPanel; // Drag the Panel (Confirmation Dialog) here.
     public TextMeshProUGUI confirmationText; // Drag the Text component from the Confirmation Dialog here.
@@ -25,6 +27,7 @@ public class SaveUIManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Load Menu: " + loadMenu);
         PopulateSaveFiles();
     }
 
@@ -44,19 +47,29 @@ public class SaveUIManager : MonoBehaviour
             saveFileGameObjects.Add(go);
 
             // Extract the integer save slot from the filename
-            string slotString = saveFile.Replace("savegame", "").Replace(".json", "");
+            string slotString;
+            string prefix = "SaveFile ";
+            if (saveFile.Contains(prefix))
+            {
+                slotString = saveFile.Replace(prefix, "").Replace(".json", "");
+            }
+            else
+            {
+                slotString = saveFile.Replace("savegame", "").Replace("newSave", "").Replace(".json", "");
+            }
+
             if (!int.TryParse(slotString, out int slot))
             {
                 Debug.LogError("Failed to parse slot from save file name: " + saveFile);
                 continue; // Skip the rest of this iteration
             }
 
-            go.GetComponentInChildren<Text>().text = saveFile;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = saveFile;
 
-            TMP_Text textComponent = go.transform.Find("TextComponent").GetComponent<TMP_Text>();
+            TMP_Text textComponent = go.transform.Find("Text Area").GetComponent<TMP_Text>();
             textComponent.text = saveFile;
 
-            Button selectButton = go.GetComponent<Button>();
+            Button selectButton = go.transform.Find("Button").GetComponent<Button>();
             selectButton.onClick.AddListener(() => SelectSaveFile(slot));
         }
     }
@@ -86,7 +99,9 @@ public class SaveUIManager : MonoBehaviour
     {
         if (currentlySelectedSaveSlot != -1)
         {
-            SaveManager.Instance.LoadGame(currentlySelectedSaveSlot);
+            LoadingScreenManager.Instance.ShowLoadingScreen();
+            LoadingScreenManager.Instance.StartLoadingSequence(SceneManager.GetActiveScene().buildIndex, currentlySelectedSaveSlot);
+
         }
         else
         {

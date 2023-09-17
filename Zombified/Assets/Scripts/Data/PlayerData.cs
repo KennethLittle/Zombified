@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public Vector3 playerPosition;
+    public Quaternion playerRotation;
     public string currentQuest;
     public LocationData.Location currentLocation;
     public List<string> currentInventory; // List of items' names or IDs
@@ -30,6 +31,7 @@ public class PlayerData
         PlayerStat stats = playerManager.playerStat;
 
         playerPosition = playerManager.player.transform.position;
+        playerRotation = playerManager.player.transform.rotation;
 
         HP = stats.HP;
         HPMax = stats.HPMax;
@@ -51,6 +53,7 @@ public class PlayerData
     public void LoadDataIntoPlayer(PlayerManager playerManager)
     {
         playerManager.player.transform.position = playerPosition;
+        playerManager.player.transform.rotation = playerRotation;
         PlayerStat stats = playerManager.playerStat;
 
         stats.HP = HP;

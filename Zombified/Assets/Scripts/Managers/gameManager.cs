@@ -11,16 +11,14 @@ public class gameManager : MonoBehaviour
     // Components and related scripts
     [Header("Components & Related Scripts")]
     public LevelUpSystem levelUpSystem;
-    private UIManager uiManager;
+    public UIManager uiManager;
     private PlayerManager playerManager;
     private GameStateManager gameStateManager;
     public QuestManager questManager;
+    public SaveUIManager saveUIManager;
 
     // Game data
     [Header("Game Data")]
-    public int enemiesKilled;
-    public int totalXP;
-    public int enemiesRemaining;
     public bool isPaused;
     public bool isInRun;
 
@@ -60,12 +58,6 @@ public class gameManager : MonoBehaviour
 
     }
 
-    public void updateGameGoal(int amount)
-    {
-        enemiesRemaining += amount;
-        enemiesRemaining = Mathf.Max(enemiesRemaining, 0); // Ensure enemiesRemaining doesn't go below 0
-    }
-
     public void StartNewGame()
     {
         Debug.Log("StartNewGame called");
@@ -101,8 +93,26 @@ public class gameManager : MonoBehaviour
             // Load player data
             loadedData.playerData.LoadDataIntoPlayer(PlayerManager.instance);
 
-            // Load enemy data - You would need a method in EnemyManager to handle this.
-            EnemyManager.Instance.LoadEnemyData(loadedData.enemiesData);
+            // Check if there's any enemy data to load
+            if (loadedData.enemiesData != null && loadedData.enemiesData.Count > 0)
+            {
+                // Load enemy data - You would need a method in EnemyManager to handle this.
+                EnemyManager.Instance.LoadEnemyData(loadedData.enemiesData);
+            }
+            else
+            {
+                Debug.Log("No enemy data found in the loaded game state.");
+            }
+
+            // After loading the game state, activate the SaveUIManager's menu
+            if (saveUIManager != null)
+            { 
+                saveUIManager.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("SaveUIManager reference is not set!");
+            }
         }
         else
         {

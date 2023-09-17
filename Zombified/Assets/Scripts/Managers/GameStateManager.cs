@@ -33,25 +33,13 @@ public class GameStateManager : MonoBehaviour
         {
             case GameState.Playing:
                 Time.timeScale = 1;
-                uiManager.SetActiveMenu(null);
                 Cursor.lockState = CursorLockMode.Locked;
                 break;
             case GameState.Paused:
                 Time.timeScale = 0;
-                uiManager.SetActiveMenu(uiManager.pauseMenu);
+                
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
-            case GameState.Ended:
-                Time.timeScale = 0;
-                uiManager.SetActiveMenu(uiManager.loseMenu);
-                Cursor.lockState = CursorLockMode.Confined;
-                break;
-            case GameState.Escape:
-                Time.timeScale = 0;
-                uiManager.SetActiveMenu(uiManager.escapeMenu);
-                Cursor.lockState= CursorLockMode.Confined;
-                break;
-
         }
     }
 

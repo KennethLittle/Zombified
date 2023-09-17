@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject activeMenu;
-    public GameObject pauseMenu;
     public GameObject loseMenu;
     public GameObject escapeMenu;
     public GameObject controlMenu;
@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI medPackMax;
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
+    public Canvas mainUICanvas;
+
+    public GameObject pauseMenu;
     // Add other UI references as required
 
     [Header("Manager References")]
@@ -46,23 +49,35 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q)) // Let's say Q is the key to toggle the quest tracker.
-        {
-            ToggleQuestTracker();
-        }
+
+
+
 
         // Rest of your initialization
     }
 
+    private void Update()
+    {
+        TogglePauseMenu();
+
+        if (Input.GetKeyDown(KeyCode.Q)) // Let's say Q is the key to toggle the quest tracker.
+        {
+            ToggleQuestTracker();
+        }
+    }
+
+    public void ToggleUI(bool isActive)
+    {
+        mainUICanvas.gameObject.SetActive(isActive);
+        // Do this for other canvases if you have more than one.
+    }
+
     public void TogglePauseMenu()
     {
-        if (gameStateManager.currentState == GameStateManager.GameState.Playing)
+       if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameStateManager.ChangeState(GameStateManager.GameState.Paused);
-        }
-        else if (gameStateManager.currentState == GameStateManager.GameState.Paused)
-        {
-            gameStateManager.ChangeState(GameStateManager.GameState.Playing);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
+            pauseMenu.SetActive(true);
         }
     }
 
@@ -76,20 +91,6 @@ public class UIManager : MonoBehaviour
         enemiesRemainingText.text = count.ToString();
     }
 
-    public void SetActiveMenu(GameObject menu)
-    {
-        if (activeMenu != null)
-        {
-            activeMenu.SetActive(false);
-        }
-
-        activeMenu = menu;
-
-        if (activeMenu != null)
-        {
-            activeMenu.SetActive(true);
-        }
-    }
 
     public void UpdatePlayerUI(int currentHP, int maxHP, float currentStamina, float maxStamina)
     {
@@ -117,14 +118,7 @@ public class UIManager : MonoBehaviour
 
     public void ToggleQuestTracker()
     {
-        if (questUIManager.gameObject.activeSelf)
-        {
-            questUIManager.gameObject.SetActive(false);
-        }
-        else
-        {
-            questUIManager.gameObject.SetActive(true);
-        }
+        
     }
 
     // Add other UI-related methods as required
