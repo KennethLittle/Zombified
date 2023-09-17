@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    public Sound[] musicSounds, playerSFXSounds, itemSFXSounds, levelSFXSounds, enemySFXSounds, NPCSFXSounds, UI_MenuSFXSounds;
-    public AudioSource musicSource, sfxSource;
+    public Sound[] mainMenuTracks, homeBaseTracks, alphaStainTracks, PlayerSounds, itemSFXSounds, levelSFXSounds, enemySFXSounds, NPCSFXSounds, UI_MenuSFXSounds;
+    public AudioSource musicSource, SFXSource;
+
+    private List<int> playedSongs;
 
     public void Awake()
     {
@@ -22,10 +25,21 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public void PlayMusic(string name)
+    public void Start()
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "MainMenu")
+        {
+
+            PlayMusic("MainMenu", mainMenuTracks);
+        }
+        else PlayRandomSong();
+
+    }
+
+    public void PlayMusic(string name, Sound[] soundArray)
+    {
+        Sound s = Array.Find(soundArray, x => x.name == name);
         if (s == null)
         {
             Debug.Log("Sound Not Found");
@@ -35,93 +49,45 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = s.clip;
             musicSource.Play();
         }
-
-        //change the audio source rate and volume by the levels in the inspector for each sound
     }
-
-    public void PlayerSFX(string name)
+    public void PlaySound(string name, Sound[] soundArray)
     {
-        Sound s = Array.Find(playerSFXSounds, x=> x.name == name);
-
+        Sound s = Array.Find(soundArray, x => x.name == name);
         if (s == null)
         {
             Debug.Log("Sound Not Found");
         }
         else
         {
-            sfxSource.volume = s.volume;
-            sfxSource.PlayOneShot(s.clip);
+            SFXSource.clip = s.clip;
+            SFXSource.Play();
         }
     }
-
-    public void LevelSFX(string name)
+ 
+    private void PlayRandomSong()
     {
-        Sound s = Array.Find(levelSFXSounds, x => x.name == name);
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "HomeBase")
+        {
+            int randomSong = UnityEngine.Random.Range(0, homeBaseTracks.Length);
+            AudioClip songPlaying = homeBaseTracks[randomSong].clip;
+            musicSource.clip = songPlaying;
+            musicSource.Play();
 
-        if (s == null)
-        {
-            Debug.Log("Sound Not Found");
+            Invoke("PlayRandomSong", songPlaying.length);
         }
-        else
+        else if (currentScene.name == "Alpha stain")
         {
-            sfxSource.PlayOneShot(s.clip);
+            int randomSong = UnityEngine.Random.Range(0,alphaStainTracks.Length);
+            AudioClip songPlaying = alphaStainTracks[randomSong].clip;
+            musicSource.clip = songPlaying;
+            musicSource.Play();
+
+            Invoke("PlayRandomSong", songPlaying.length);
         }
+
     }
-
-    public void EnemySFX(string name)
-    {
-        Sound s = Array.Find(enemySFXSounds, x => x.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            sfxSource.PlayOneShot(s.clip);
-        }
-    }
-
-    public void NPCSFX(string name)
-    {
-        Sound s = Array.Find(NPCSFXSounds, x => x.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            sfxSource.PlayOneShot(s.clip);
-        }
-    }
-
-    public void UI_MenuSFX(string name)
-    {
-        Sound s = Array.Find(UI_MenuSFXSounds, x => x.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            sfxSource.PlayOneShot(s.clip);
-        }
-    }
-    public void ItemSFX(string name)
-    {
-        Sound s = Array.Find(itemSFXSounds, x => x.name == name);
-
-        if (s == null)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            sfxSource.PlayOneShot(s.clip);
-        }
-    }
+   
 
     public void ToggleMusic()
     {
@@ -130,7 +96,7 @@ public class AudioManager : MonoBehaviour
 
     public void ToggleSFX()
     {
-        sfxSource.mute = !sfxSource.mute;
+        SFXSource.mute = !SFXSource.mute;
     }
 
     public void MusicVolume(float volume)
@@ -140,6 +106,6 @@ public class AudioManager : MonoBehaviour
 
     public void SFXVolume(float volume)
     {
-        sfxSource.volume = volume;
+        SFXSource.volume = volume;
     }
 }

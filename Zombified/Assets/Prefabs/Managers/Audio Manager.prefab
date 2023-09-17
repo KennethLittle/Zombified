@@ -46,31 +46,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5643d2b758c2a542bbeb8d84033cb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
+  mainMenuTracks:
   - name: MainMenu
     clip: {fileID: 8300000, guid: af1aef93b3ff796448e20e87b4afc6ac, type: 3}
     rate: 0
-    volume: 0
-  - name: GameOver
-    clip: {fileID: 8300000, guid: 200c04e535795ef428c8a9c3dabb3f9b, type: 3}
+    volume: 0.5
+  homeBaseTracks:
+  - name: HBTrack1
+    clip: {fileID: 8300000, guid: d0966db9f72d41e469ac27c2aa87a19b, type: 3}
     rate: 0
-    volume: 0
-  - name: Track1
+    volume: 0.5
+  - name: HBTrack2
+    clip: {fileID: 8300000, guid: 0a3de4956834cb14c827daead1e78bfa, type: 3}
+    rate: 0
+    volume: 0.5
+  alphaStainTracks:
+  - name: ASTrack1
     clip: {fileID: 8300000, guid: b7e66643876f0d54481555daa647c696, type: 3}
     rate: 0
-    volume: 0
-  - name: Track2
+    volume: 0.5
+  - name: ASTrack2
     clip: {fileID: 8300000, guid: 26136e04d8f779544b417a76cf6caaf3, type: 3}
     rate: 0
-    volume: 0
-  - name: Track3
+    volume: 0.5
+  - name: ASTrack3
     clip: {fileID: 8300000, guid: bacc3faf166505944a574960b26fe29c, type: 3}
     rate: 0
-    volume: 0
-  - name: Track4
+    volume: 0.5
+  - name: ASTrack4
     clip: {fileID: 8300000, guid: f06c91446807ff841ab028754a77a685, type: 3}
     rate: 0
-    volume: 0
+    volume: 0.5
   playerSFXSounds:
   - name: Jump
     clip: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
@@ -89,9 +95,9 @@ MonoBehaviour:
     rate: 0
     volume: 0
   - name: StaminaRecoverBreathing
-    clip: {fileID: 8300000, guid: e6a5899f1de339b4695287640ae309e6, type: 3}
-    rate: 0.506
-    volume: 0
+    clip: {fileID: 8300000, guid: ee9764cc71a2f0a44b65d9fb72fd26e5, type: 3}
+    rate: 1
+    volume: 1
   - name: UseMedPack
     clip: {fileID: 8300000, guid: 903b06ef99e20c1429acd1c716c7f9d2, type: 3}
     rate: 0
@@ -105,8 +111,8 @@ MonoBehaviour:
     rate: 0
     volume: 0
   - name: LowHealth
-    clip: {fileID: 8300000, guid: 86ba98058b22af34cab48bacd63ae88b, type: 3}
-    rate: 0
+    clip: {fileID: 8300000, guid: 8c676c1ea2348c34f88412d77f78fcf6, type: 3}
+    rate: 0.5
     volume: 0
   - name: Footsteps
     clip: {fileID: 8300000, guid: 99623152e8de546429f8f3142e564c22, type: 3}
@@ -190,10 +196,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
