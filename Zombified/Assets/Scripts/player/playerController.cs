@@ -48,7 +48,7 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.currentStamina = playerStat.stamina;
         
         //this is for the changing the rate and volume of footsteps
-        foreach (var sound in AudioManager.instance.playerSFXSounds)
+        foreach (var sound in AudioManager.instance.PlayerSounds)
         {
             if ( sound.name == "Footsteps")
             {
@@ -102,7 +102,7 @@ public class playerController : MonoBehaviour, IDamage
             gameManager.instance.MarkRunEnd();
         }
 
-        AudioManager.instance.PlayerSFX("Take Damage");
+        AudioManager.instance.PlaySound("Take Damage", AudioManager.instance.PlayerSounds);
     }
 
     void lowHealthSFX()
@@ -120,9 +120,9 @@ public class playerController : MonoBehaviour, IDamage
 
         if (playerStat.HP <= (playerStat.HPMax * 0.3) && playerStat.HP > (playerStat.HPMax * 0.2))
         {
-            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            foreach (var sound in AudioManager.instance.PlayerSounds)
             {
-                if (sound.name == "LowHealth")
+                if (sound.name == "Low Health")
                 {
                     sound.volume = audioLHVolOrig + 0.2f;
                 }
@@ -131,9 +131,9 @@ public class playerController : MonoBehaviour, IDamage
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.2) && playerStat.HP > (playerStat.HPMax * 0.1))
         {
-            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            foreach (var sound in AudioManager.instance.PlayerSounds)
             {
-                if (sound.name == "LowHealth")
+                if (sound.name == "Low Health")
                 {
                     sound.volume = audioLHVolOrig + 0.4f;
                 }
@@ -142,16 +142,16 @@ public class playerController : MonoBehaviour, IDamage
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.1) && playerStat.HPMax > 0)
         {
-            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            foreach (var sound in AudioManager.instance.PlayerSounds)
             {
-                if (sound.name == "LowHealth")
+                if (sound.name == "Low Health")
                 {
                     sound.volume = audioLHVolOrig + 0.6f;
                 }
             }
             yield return new WaitForSeconds(1.0f);
         }
-        AudioManager.instance.PlayerSFX("LowHealth");
+        AudioManager.instance.PlaySound("LowHealth", AudioManager.instance.PlayerSounds);
         lowHealthIsPlaying = false;
     }
 
@@ -234,7 +234,7 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
-            AudioManager.instance.PlayerSFX("Jump");
+            AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
 
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
@@ -252,11 +252,11 @@ public class playerController : MonoBehaviour, IDamage
         footstepsIsPlaying = true;
         // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
         
-        AudioManager.instance.PlayerSFX("Footsteps");
+        AudioManager.instance.PlaySound("Footsteps", AudioManager.instance.PlayerSounds);
         
         if (!isSprinting)
         {
-            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            foreach (var sound in AudioManager.instance.PlayerSounds)
             {
                 if (sound.name == "Footsteps")
                 {
@@ -266,7 +266,7 @@ public class playerController : MonoBehaviour, IDamage
         }
         else
         {
-            foreach (var sound in AudioManager.instance.playerSFXSounds)
+            foreach (var sound in AudioManager.instance.PlayerSounds)
             {
                 if (sound.name == "Footsteps")
                 {
@@ -401,7 +401,7 @@ public class playerController : MonoBehaviour, IDamage
         transform.position = PlayerManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
         playerStat.HP = playerStat.HPMax;
-        foreach (var sound in AudioManager.instance.playerSFXSounds)
+        foreach (var sound in AudioManager.instance.PlayerSounds)
         {
             if (sound.name == "LowHealth")
             {

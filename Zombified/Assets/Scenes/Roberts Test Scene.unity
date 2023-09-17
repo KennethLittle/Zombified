@@ -154,6 +154,11 @@ Transform:
   m_Father: {fileID: 1071950479}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &456386299 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6067508096533776503, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+  m_PrefabInstance: {fileID: 6067508095005380885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &713793390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -648,23 +653,107 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[4].clip
+      propertyPath: SFXSource
       value: 
-      objectReference: {fileID: 8300000, guid: ee9764cc71a2f0a44b65d9fb72fd26e5, type: 3}
+      objectReference: {fileID: 456386299}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[4].rate
-      value: 1
+      propertyPath: PlayerSounds.Array.size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[8].clip
+      propertyPath: PlayerSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e79f26ed88f6b047b1b060268420394, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[0].name
+      value: Armor Break
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[1].name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 04a6961fdfe213745afd98959bd02ad7, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[2].name
+      value: Level Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b3900a213ad9e29489c59cd341b38a41, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[3].name
+      value: Land
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[4].clip
       value: 
       objectReference: {fileID: 8300000, guid: 8c676c1ea2348c34f88412d77f78fcf6, type: 3}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[8].rate
+      propertyPath: PlayerSounds.Array.data[4].name
+      value: Low Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 97e5bc387b1aba04a96cd99f3388b90c, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[5].name
+      value: Take Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 903b06ef99e20c1429acd1c716c7f9d2, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[6].name
+      value: Use Med Pack
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 99623152e8de546429f8f3142e564c22, type: 3}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[7].name
+      value: Footsteps
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[7].rate
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: playerSFXSounds.Array.data[4].volume
+      propertyPath: PlayerSounds.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[2].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[3].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[4].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[5].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[6].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: PlayerSounds.Array.data[7].volume
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
