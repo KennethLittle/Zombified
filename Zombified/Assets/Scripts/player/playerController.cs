@@ -349,6 +349,7 @@ public class playerController : MonoBehaviour, IDamage
 
             // Shoot code
             RaycastHit hit;
+            anim.SetTrigger("isShooting");
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, weapon.shootDist))
             {
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
