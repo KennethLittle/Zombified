@@ -42,10 +42,20 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField][Range(25, 60)] private float voiceTimerMax;
 
     private bool isAttacking = false;
-    private bool zedIsGroaning;
+    private bool robotIsGroaning;
     private bool isDead = false;
     private bool pause = false;
     private bool destinationChosen = false;
+
+    private bool groundedEnemy;
+    private bool footstepsIsPlaying;
+    private Vector3 enemyVelocity;
+    private Vector3 move;
+    private int jumpCount;
+    private bool isSprinting;
+    private float walkVolume;
+    private float audioLHVolOrig;
+
     Vector3 playerDir;
 
     bool playerInRange;
@@ -63,7 +73,14 @@ public class enemyAI : MonoBehaviour, IDamage
         EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
         enemyID = nextID++;
-
+        foreach (var sound in AudioManager.instance.enemySFXSounds)
+        {
+            if (sound.name == "FootStep")
+            {
+                walkVolume = sound.volume;
+            }
+        }
+        audioLHVolOrig = walkVolume;
         // TODO: Update the player's level in enemyStats. You need a way to access player's level.
         // enemyStats.UpdatePlayerLevel(PlayerManager.instance.playerLevel); 
     }
@@ -87,11 +104,11 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         agent.stoppingDistance = meleeRange;
         agent.SetDestination(PlayerManager.instance.player.transform.position);
+        anim.SetBool("isRoaming", false);
+        anim.SetBool("isChasing", true);
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            anim.SetBool("isRoaming", false);
-            anim.SetBool("isChasing", true);
             facePlayer();
             if (!isAttacking && angleToPlayer <= attackAngle)
             {
@@ -156,34 +173,44 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         Quaternion rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * playerFaceSpeed);
+        zedGroansSFX();
     }
 
     void zedGroansSFX()
     {
-        if (!zedIsGroaning && enemyStats.CurrentHP > 0)
+        if (!robotIsGroaning && enemyStats.CurrentHP > 0)
         {
-            StartCoroutine(playZedGroans());
+            StartCoroutine(playRobotGroans());
         }
     }
 
-    IEnumerator playZedGroans()
+    IEnumerator playRobotGroans()
     {
-        zedIsGroaning = true;
-        //audioSFX.PlayOneShot(audioVoice[UnityEngine.Random.Range(0, audioVoice.Length)], audioVoiceVol);       
+        robotIsGroaning = true;
+
         AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
-        yield return new WaitForSeconds(UnityEngine.Random.Range(voiceTimerMin, voiceTimerMax));
-        zedIsGroaning = false;
+
+        yield return new WaitForSeconds(UnityEngine.Random.Range(10f, 30f));
+
+        while (true)
+        {
+            AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(10f, 30f));
+
+        }
+        //robotIsGroaning = false;
     }
 
     IEnumerator attack()
     {
         if (!isDead)
         {
-            anim.SetTrigger("isAttacking");
+            anim.SetBool("isAttacking", true);
             MeleeDamage(enemyStats.CurrentDamage); // Using stats from EnemyStat
             yield return new WaitForSeconds(attackRate);
             isAttacking = false;
         }
+        anim.SetBool("isAttacking", false);
     }
 
     public void takeDamage(int amount)
@@ -204,6 +231,7 @@ public class enemyAI : MonoBehaviour, IDamage
             anim.SetTrigger("isDead");
             Destroy(gameObject);
         }
+        AudioManager.instance.PlaySound("TakeDamage", AudioManager.instance.enemySFXSounds);
     }
 
     IEnumerator flashDamage()
@@ -233,6 +261,52 @@ public class enemyAI : MonoBehaviour, IDamage
         this.enemyStats.baseDefense= data.baseDefense;
         Vector3 enemyPosition = data.position;
         // Add more as needed
+    }
+
+
+    void HandleGroundedState()
+    {
+        if (groundedEnemy)
+        {
+            enemyVelocity.y = 0f; // Ensures the enemy does not accumulate downward velocity when grounded.
+            jumpCount = 0;
+
+            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && enemyStats.currentHP > 0)
+            {
+                StartCoroutine(playFootsteps());
+            }
+        }
+    }
+
+    IEnumerator playFootsteps()
+    {
+        footstepsIsPlaying = true;
+        // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
+
+        AudioManager.instance.PlaySound("FootStep", AudioManager.instance.enemySFXSounds);
+
+        //// this code is for when we add a run feature to the enemy
+        //if (!isSprinting)
+        //{
+        //    foreach (var sound in AudioManager.instance.PlayerSounds)
+        //    {
+        //        if (sound.name == "Footsteps")
+        //        {
+        //            yield return new WaitForSeconds(sound.rate);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        foreach (var sound in AudioManager.instance.PlayerSounds)
+        {
+            if (sound.name == "Footsteps")
+            {
+                yield return new WaitForSeconds(sound.rate / 2);
+            }
+        }
+        //}
+        footstepsIsPlaying = false;
     }
 
 }

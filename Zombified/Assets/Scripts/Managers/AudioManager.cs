@@ -60,6 +60,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            //SFXSource = gameObject.AddComponent<AudioSource>();
             SFXSource.clip = s.clip;
             SFXSource.Play();
         }
