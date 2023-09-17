@@ -55,65 +55,57 @@ MonoBehaviour:
   - name: HBTrack1
     clip: {fileID: 8300000, guid: d0966db9f72d41e469ac27c2aa87a19b, type: 3}
     rate: 0
-    volume: 0.5
+    volume: 0.2
   - name: HBTrack2
     clip: {fileID: 8300000, guid: 0a3de4956834cb14c827daead1e78bfa, type: 3}
     rate: 0
-    volume: 0.5
+    volume: 0.2
   alphaStainTracks:
   - name: ASTrack1
     clip: {fileID: 8300000, guid: b7e66643876f0d54481555daa647c696, type: 3}
     rate: 0
-    volume: 0.5
+    volume: 0.2
   - name: ASTrack2
     clip: {fileID: 8300000, guid: 26136e04d8f779544b417a76cf6caaf3, type: 3}
     rate: 0
-    volume: 0.5
+    volume: 0.2
   - name: ASTrack3
     clip: {fileID: 8300000, guid: bacc3faf166505944a574960b26fe29c, type: 3}
     rate: 0
-    volume: 0.5
+    volume: 0.2
   - name: ASTrack4
     clip: {fileID: 8300000, guid: f06c91446807ff841ab028754a77a685, type: 3}
     rate: 0
-    volume: 0.5
-  playerSFXSounds:
-  - name: Jump
-    clip: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
-    rate: 0
-    volume: 0.5
-  - name: TakeDamage
-    clip: {fileID: 8300000, guid: 97e5bc387b1aba04a96cd99f3388b90c, type: 3}
-    rate: 0
-    volume: 0
-  - name: EndJump
-    clip: {fileID: 8300000, guid: b3900a213ad9e29489c59cd341b38a41, type: 3}
-    rate: 0
-    volume: 0
-  - name: SprintBreathing
-    clip: {fileID: 8300000, guid: 1fef2bdec6c3cc1438fea504bc1ce213, type: 3}
-    rate: 0
-    volume: 0
-  - name: StaminaRecoverBreathing
-    clip: {fileID: 8300000, guid: ee9764cc71a2f0a44b65d9fb72fd26e5, type: 3}
-    rate: 1
-    volume: 1
-  - name: UseMedPack
-    clip: {fileID: 8300000, guid: 903b06ef99e20c1429acd1c716c7f9d2, type: 3}
-    rate: 0
-    volume: 0
-  - name: ArmorBreak
+    volume: 0.2
+  PlayerSounds:
+  - name: Armor Break
     clip: {fileID: 8300000, guid: 5e79f26ed88f6b047b1b060268420394, type: 3}
     rate: 0
     volume: 0
-  - name: LevelUp
+  - name: Jump
+    clip: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
+    rate: 0
+    volume: 1
+  - name: Level Up
     clip: {fileID: 8300000, guid: 04a6961fdfe213745afd98959bd02ad7, type: 3}
     rate: 0
-    volume: 0
-  - name: LowHealth
+    volume: 1
+  - name: Land
+    clip: {fileID: 8300000, guid: b3900a213ad9e29489c59cd341b38a41, type: 3}
+    rate: 0
+    volume: 1
+  - name: Low Health
     clip: {fileID: 8300000, guid: 8c676c1ea2348c34f88412d77f78fcf6, type: 3}
-    rate: 0.5
-    volume: 0
+    rate: 0
+    volume: 1
+  - name: Take Damage
+    clip: {fileID: 8300000, guid: 97e5bc387b1aba04a96cd99f3388b90c, type: 3}
+    rate: 0
+    volume: 1
+  - name: Use Med Pack
+    clip: {fileID: 8300000, guid: 903b06ef99e20c1429acd1c716c7f9d2, type: 3}
+    rate: 0
+    volume: 1
   - name: Footsteps
     clip: {fileID: 8300000, guid: 99623152e8de546429f8f3142e564c22, type: 3}
     rate: 0.5
@@ -152,7 +144,7 @@ MonoBehaviour:
     rate: 0
     volume: 0
   musicSource: {fileID: 6067508096198701573}
-  sfxSource: {fileID: 6067508096533776503}
+  SFXSource: {fileID: 6067508096533776503}
 --- !u!1 &6067508096198701594
 GameObject:
   m_ObjectHideFlags: 0

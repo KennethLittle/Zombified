@@ -154,11 +154,6 @@ Transform:
   m_Father: {fileID: 1071950479}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &456386299 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 6067508096533776503, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-  m_PrefabInstance: {fileID: 6067508095005380885}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &713793390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -329,7 +324,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1387094348
 BoxCollider:
@@ -369,7 +364,7 @@ PrefabInstance:
       objectReference: {fileID: 998283556}
     - target: {fileID: 5984017873586348090, guid: 6184954f809a19e4baad963a68910397, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5984017873586348090, guid: 6184954f809a19e4baad963a68910397, type: 3}
       propertyPath: m_LocalPosition.x
@@ -534,7 +529,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1715670125
 PrefabInstance:
@@ -610,7 +605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880372, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880372, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -653,107 +648,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: SFXSource
+      propertyPath: enemySFXSounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
+      propertyPath: enemySFXSounds.Array.data[3].clip
       value: 
-      objectReference: {fileID: 456386299}
+      objectReference: {fileID: 8300000, guid: 3077cd334f269f441bbb4ab2cffb7ed3, type: 3}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.size
-      value: 8
+      propertyPath: enemySFXSounds.Array.data[3].name
+      value: TakeDamage
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[0].clip
+      propertyPath: enemySFXSounds.Array.data[4].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 5e79f26ed88f6b047b1b060268420394, type: 3}
+      objectReference: {fileID: 8300000, guid: 80bfe834e74b9da49b07e60326086662, type: 3}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[0].name
-      value: Armor Break
+      propertyPath: enemySFXSounds.Array.data[4].name
+      value: RobotGroan
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b9992fd418e20694480071682d096bab, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[1].name
-      value: Jump
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[2].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 04a6961fdfe213745afd98959bd02ad7, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[2].name
-      value: Level Up
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[3].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b3900a213ad9e29489c59cd341b38a41, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[3].name
-      value: Land
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[4].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 8c676c1ea2348c34f88412d77f78fcf6, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[4].name
-      value: Low Health
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[5].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 97e5bc387b1aba04a96cd99f3388b90c, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[5].name
-      value: Take Damage
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[6].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 903b06ef99e20c1429acd1c716c7f9d2, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[6].name
-      value: Use Med Pack
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[7].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 99623152e8de546429f8f3142e564c22, type: 3}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[7].name
-      value: Footsteps
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[7].rate
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[1].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[2].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[3].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[4].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[5].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[6].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6067508095753880373, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
-      propertyPath: PlayerSounds.Array.data[7].volume
+      propertyPath: enemySFXSounds.Array.data[4].volume
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
