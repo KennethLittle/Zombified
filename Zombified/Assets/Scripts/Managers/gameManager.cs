@@ -90,13 +90,13 @@ public class gameManager : MonoBehaviour
 
         if (loadedData != null)
         {
-            // Load player data
-            loadedData.playerData.LoadDataIntoPlayer(PlayerManager.instance);
+            // Spawn the player
+            PlayerManager.instance.SpawnPlayer(loadedData.playerData);
 
             // Check if there's any enemy data to load
             if (loadedData.enemiesData != null && loadedData.enemiesData.Count > 0)
             {
-                // Load enemy data - You would need a method in EnemyManager to handle this.
+                // Load enemy data
                 EnemyManager.Instance.LoadEnemyData(loadedData.enemiesData);
             }
             else
@@ -104,15 +104,6 @@ public class gameManager : MonoBehaviour
                 Debug.Log("No enemy data found in the loaded game state.");
             }
 
-            // After loading the game state, activate the SaveUIManager's menu
-            if (saveUIManager != null)
-            { 
-                saveUIManager.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogWarning("SaveUIManager reference is not set!");
-            }
         }
         else
         {

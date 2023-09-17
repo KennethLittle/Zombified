@@ -43,25 +43,35 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayer(PlayerData data = null)
     {
+        // Check if a player already exists
+        if (player != null)
+        {
+            Destroy(player.gameObject);
+        }
+
         player = Instantiate(playerPrefab, playerSpawnPos.position, Quaternion.identity);
         player.tag = "Player";
         playerScript = player.GetComponent<playerController>();
         playerStat = player.GetComponent<PlayerStat>();
 
-        // Load temporary data if available
-        if (TempPlayerData != null)
+        if (data != null)
         {
-            TempPlayerData.LoadDataIntoPlayer(this);
-            TempPlayerData = null; // Clear temporary data after use
+            // Load saved data into player
+            data.LoadDataIntoPlayer(this);
         }
+        else
+        {
+            Debug.LogWarning("No player data provided. Using default values.");
+            // Here, you can assign default values if needed.
+        }
+
         QuestManager questManager = FindObjectOfType<QuestManager>();
         if (questManager != null)
         {
             questManager.StartQuest();
             Debug.Log("Quest Started");
         }
-        
     }
 }

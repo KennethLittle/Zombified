@@ -32,13 +32,19 @@ public class SaveManager : MonoBehaviour
     {
         PlayerData pD = new PlayerData(PlayerManager.instance);
 
+        List<QuestSaveData> questSaveDataList = new List<QuestSaveData>();
+        foreach (QuestRuntime qr in QuestManager.instance.quests)
+        {
+            questSaveDataList.Add(qr.GetSaveData());
+        };
+
         // Check if the EnemyManager instance exists
         if (EnemyManager.Instance == null)
         {
             Debug.LogWarning("No EnemyManager instance found. Saving without enemy data.");
 
             // Save just the player data without enemy data
-            GameData gameData = new GameData(pD, new List<EnemyData>());
+            GameData gameData = new GameData(pD, new List<EnemyData>(), new List<QuestSaveData>());
             string jsonData = JsonUtility.ToJson(gameData);
             File.WriteAllText(GetSavePath(saveSlot), jsonData);
             Debug.Log("Game saved without enemy data.");
@@ -52,18 +58,19 @@ public class SaveManager : MonoBehaviour
             Debug.LogWarning("No enemy data to save. Saving without enemy data.");
 
             // Save just the player data without enemy data
-            GameData gameData = new GameData(pD, new List<EnemyData>());
+            GameData gameData = new GameData(pD, new List<EnemyData>(), new List<QuestSaveData>());
             string jsonData = JsonUtility.ToJson(gameData);
             File.WriteAllText(GetSavePath(saveSlot), jsonData);
             Debug.Log("Game saved without enemy data.");
             return;
         }
 
+
         // If we have both player and enemy data, save them together
-        GameData gameDataWithEnemies = new GameData(pD, eD);
+        GameData gameDataWithEnemies = new GameData(pD, eD, questSaveDataList);
         string jsonDataWithEnemies = JsonUtility.ToJson(gameDataWithEnemies);
         File.WriteAllText(GetSavePath(saveSlot), jsonDataWithEnemies);
-        Debug.Log("Game Saved with enemy data!");
+        Debug.Log("Game Saved with enemy and quest data!");
     }
 
     public GameData LoadGame(int saveSlot)

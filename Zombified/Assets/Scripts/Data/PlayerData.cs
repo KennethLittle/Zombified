@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class PlayerData
@@ -9,6 +9,9 @@ public class PlayerData
     public string currentQuest;
     public LocationData.Location currentLocation;
     public List<string> currentInventory; // List of items' names or IDs
+
+    public int currentQuestIndex; // index of the current quest in the QuestManager's list
+    public int currentQuestStepIndex;
 
     // Player stats fields
     public int HP;
@@ -46,6 +49,20 @@ public class PlayerData
         jumpHeight = stats.jumpHeight;
         gravityValue = stats.gravityValue;
 
+        QuestManager questManager = QuestManager.instance;
+        if (questManager != null)
+        {
+            currentQuestIndex = questManager.currentQuestIndex;
+            if (questManager.CurrentQuest != null)
+            {
+                currentQuestStepIndex = questManager.CurrentQuest.currentStepIndex;
+            }
+            else
+            {
+                currentQuestStepIndex = -1; // Invalid value to signify no current step
+            }
+        }
+
         // As before, the other data (currentQuest, currentLocation, currentInventory) 
         // will be set outside of this constructor when you have those systems in place.
     }
@@ -69,6 +86,16 @@ public class PlayerData
         stats.jumpHeight = jumpHeight;
         stats.gravityValue = gravityValue;
 
+        QuestManager questManager = QuestManager.instance;
+        if (questManager != null)
+        {
+            questManager.currentQuestIndex = currentQuestIndex;
+            if (questManager.CurrentQuest != null)
+            {
+                questManager.CurrentQuest.currentStepIndex = currentQuestStepIndex;
+            }
+        }
+
         // When you implement the quest, location, and inventory systems, 
         // you'll similarly use the PlayerManager to set the player's state based on the saved data.
     }
@@ -91,8 +118,10 @@ public class PlayerData
             sprintMod = 2,
             jumpMax = 1,
             jumpHeight = 4,
-            gravityValue = -15
-           
+            gravityValue = -15,
+            currentQuestIndex = 0, // Start with the first quest by default
+            currentQuestStepIndex = 0
+
         };
     }
 }

@@ -33,4 +33,19 @@ public class QuestStepRuntime
             isCompleted = true;
         }
     }
+
+    public QuestStepSaveData GetSaveData()
+    {
+        return new QuestStepSaveData()
+        {
+            isCompleted = this.isCompleted
+            // Add other fields as needed
+        };
+    }
+
+    public void LoadFromSaveData(QuestStepSaveData data)
+    {
+        this.isCompleted = data.isCompleted;
+        // Load other fields as needed
+    }
 }

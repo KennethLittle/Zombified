@@ -9,6 +9,7 @@ public class buttonFunctions : MonoBehaviour
 
     public buttonFunctions loadGameButton;
     public Slider musicSlider, sfxSlider;
+    private SaveUIManager saveUIManager;
 
     public void resume()
     {
@@ -72,8 +73,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void LoadGame()
     {
-        gameManager.instance.LoadGameState();
+        // After loading the game state, activate the SaveUIManager's menu
+       gameManager.instance.LoadGameState();
         UIManager.Instance.pauseMenu.SetActive(false);
+        GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
 
     }
 

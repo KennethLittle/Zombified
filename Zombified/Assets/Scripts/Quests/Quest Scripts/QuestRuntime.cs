@@ -43,4 +43,29 @@ public class QuestRuntime
             OnQuestCompleted?.Invoke(this);
         }
     }
+
+    public QuestSaveData GetSaveData()
+    {
+        QuestSaveData saveData = new QuestSaveData()
+        {
+            currentStepIndex = this.currentStepIndex
+        };
+
+        foreach (var stepRuntime in stepsRuntime)
+        {
+            saveData.questStepSaveData.Add(stepRuntime.GetSaveData());
+        }
+
+        return saveData;
+    }
+
+    public void LoadFromSaveData(QuestSaveData data)
+    {
+        this.currentStepIndex = data.currentStepIndex;
+
+        for (int i = 0; i < data.questStepSaveData.Count; i++)
+        {
+            stepsRuntime[i].LoadFromSaveData(data.questStepSaveData[i]);
+        }
+    }
 }

@@ -5,7 +5,7 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
     public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
-    private List<QuestRuntime> quests = new List<QuestRuntime>();
+    public List<QuestRuntime> quests = new List<QuestRuntime>();
     public int currentQuestIndex = 0;
     public QuestRuntime CurrentQuest
     {
@@ -145,6 +145,47 @@ public class QuestManager : MonoBehaviour
             questUIManager.UpdateQuestUI(questName, questStepDescription);
             Debug.Log("Updating Quest UI with quest name: " + questName);
         }
+    }
+
+    public void LoadQuests(List<QuestSaveData> savedQuestData)
+    {
+        if (savedQuestData == null || savedQuestData.Count == 0)
+        {
+            Debug.LogError("Invalid saved quest data provided.");
+            return;
+        }
+
+        // Clear any existing quests
+        quests.Clear();
+
+        // Repopulate quests based on saved data
+        for (int i = 0; i < savedQuestData.Count; i++)
+        {
+            // Assuming the order of saved quests matches the order in questTemplates
+            if (i >= questTemplates.Count)
+            {
+                Debug.LogError("Mismatch in number of saved quests and quest templates.");
+                break;
+            }
+
+            Quest questTemplate = questTemplates[i];
+
+            // Create a new runtime quest instance based on the saved data and template
+            QuestRuntime loadedQuest = new QuestRuntime(questTemplate);
+
+            // Here you populate the data from savedQuestData[i] into loadedQuest 
+            // For example:
+            loadedQuest.currentStepIndex = savedQuestData[i].currentStepIndex;
+            //... Load other necessary data ...
+
+            quests.Add(loadedQuest);
+        }
+
+        // Update current quest index based on saved data (if you've saved the current quest index)
+        // currentQuestIndex = ...;
+
+        // Optional: Trigger some UI or other systems to update based on the loaded quests
+        OnQuestOrStepChanged();
     }
 
     // Call this method whenever you progress to a new step or quest:
