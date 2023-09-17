@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
     private IEnumerator FadeIn(AudioClip song)
     {
         float startVolume = 0f;
-        float targetVolume = 1;
+        float targetVolume = 0.05f;
 
         musicSource.clip = song;
         musicSource.volume = startVolume;
