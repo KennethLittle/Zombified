@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8eede39257f3af47a87fe69af5ab9af, type: 3}
   m_Name: New GoToAlphaStationQuestStep
   m_EditorClassIdentifier: 
-  description: 
+  description: Head to Alpha station. Just head where you started.
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Enter Alpha Station to start your journey.
+    - Lets head to Alpha Station now with the intel you collected. Update you on
+      what we need to do when you get there.

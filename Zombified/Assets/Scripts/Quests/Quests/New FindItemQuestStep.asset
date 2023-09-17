@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
   m_Name: New FindItemQuestStep
   m_EditorClassIdentifier: 
-  description: 
+  description: Gathering Intel
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Search Alpha Station and locate the Alpha Station intel.
-  requiredItem: {fileID: 0}
+    - Grab that intel off my desk, it includes some info on Alpha Station.
+    - This might help us uncover some of the secrets of that place.
+  requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
