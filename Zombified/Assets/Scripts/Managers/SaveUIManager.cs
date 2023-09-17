@@ -41,36 +41,49 @@ public class SaveUIManager : MonoBehaviour
 
         List<string> saveFiles = SaveManager.Instance.GetAllSaveFiles();
         saveFileGameObjects.Clear();
-        foreach (string saveFile in saveFiles)
+
+        int maxSlots = 5;
+        for (int i = 0; i < maxSlots; i++)
         {
             GameObject go = Instantiate(saveFilePrefab, saveFilesParent);
             saveFileGameObjects.Add(go);
 
-            // Extract the integer save slot from the filename
-            string slotString;
-            string prefix = "SaveFile ";
-            if (saveFile.Contains(prefix))
+            TMP_Text textComponent = go.transform.Find("Text Area").GetComponent<TMP_Text>();
+
+            string displayedName;
+            if (i < saveFiles.Count)
             {
-                slotString = saveFile.Replace(prefix, "").Replace(".json", "");
+                displayedName = saveFiles[i];
+
+                // Extract the integer save slot from the filename
+                string slotString;
+                string prefix = "SaveFile ";
+                if (displayedName.Contains(prefix))
+                {
+                    slotString = displayedName.Replace(prefix, "").Replace(".json", "");
+                }
+                else
+                {
+                    slotString = displayedName.Replace("savegame", "").Replace("newSave", "").Replace(".json", "");
+                }
+
+                if (!int.TryParse(slotString, out int slot))
+                {
+                    Debug.LogError("Failed to parse slot from save file name: " + displayedName);
+                    continue; // Skip the rest of this iteration
+                }
+
+                Button selectButton = go.transform.Find("Button").GetComponent<Button>();
+                selectButton.onClick.AddListener(() => SelectSaveFile(slot));
             }
             else
             {
-                slotString = saveFile.Replace("savegame", "").Replace("newSave", "").Replace(".json", "");
+                // No data for this save slot
+                displayedName = "No Data";
             }
 
-            if (!int.TryParse(slotString, out int slot))
-            {
-                Debug.LogError("Failed to parse slot from save file name: " + saveFile);
-                continue; // Skip the rest of this iteration
-            }
-
-            go.GetComponentInChildren<TextMeshProUGUI>().text = saveFile;
-
-            TMP_Text textComponent = go.transform.Find("Text Area").GetComponent<TMP_Text>();
-            textComponent.text = saveFile;
-
-            Button selectButton = go.transform.Find("Button").GetComponent<Button>();
-            selectButton.onClick.AddListener(() => SelectSaveFile(slot));
+            textComponent.text = displayedName;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = displayedName;
         }
     }
     public void SelectSaveFile(int slot)
