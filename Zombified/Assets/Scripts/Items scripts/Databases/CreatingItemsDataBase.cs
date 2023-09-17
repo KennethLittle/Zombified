@@ -1,18 +1,24 @@
 using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class CreatingItemsDataBase
 {
-    public static CreatingItemsDataBase asset;
+    public static DataBaseForItems asset;
+
+#if Unity_EDITOR
 
     public static CreatingItemsDataBase CreatingItems()
     {
-        //asset = ScriptableObject.CreateInstance<CreatingItemsDataBase>();
+        asset = ScriptableObject.CreateInstance<DataBaseForItems>();
 
-        //AssetDatabase.CreatingAsset(asset, "Assets/InventoryMaster/Resources/ItemDatabase.asset");
-        //AssetDatabase.SaveAssets();
-        //asset.itemList.Add(new Item());
+        AssetDatabase.CreateAsset(asset, "Assets/InventoryMaster/Resources/ItemDatabase.asset");
+        AssetDatabase.SaveAssets();
+        asset.itemNumber.Add(new InventoryItem());
         return asset;
     }
+#endif
+
 }

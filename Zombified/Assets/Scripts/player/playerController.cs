@@ -10,6 +10,10 @@ public class playerController : MonoBehaviour, IDamage
 {
     public PlayerStat playerStat;
     public Transform weaponSlot;
+    GameObject inventory;
+    GameObject craftSystem;
+    GameObject characterSystem;
+
 
     public PlayerEquipment playerInventoryUI;
 
@@ -52,7 +56,6 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-
         spawnPlayer();
     }
 
