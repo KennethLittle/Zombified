@@ -204,10 +204,14 @@ public class playerController : MonoBehaviour, IDamage
                 if (isSprinting && playerStat.currentStamina > 0)
                 {
                     move *= effectivePlayerSpeed * playerStat.playerSpeed;
+                    anim.SetBool("isWalking", false);
+                    anim.SetBool("isRunning", isSprinting);
                 }
                 else
                 {
                     isSprinting = false;
+                    anim.SetBool("isWalking", true);
+                    anim.SetBool("isRunning", isSprinting);
                     move *= playerStat.playerSpeed;
                 }
             }
@@ -218,7 +222,12 @@ public class playerController : MonoBehaviour, IDamage
                 move.z = playerVelocity.z;
             }
 
-            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), effectivePlayerSpeed, Time.deltaTime));
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+            anim.SetBool("isRunning", false);
+
         }
 
         // Handle Jumping
