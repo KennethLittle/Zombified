@@ -51,6 +51,11 @@ public class UIManager : MonoBehaviour
             ToggleQuestTracker();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
+        }
+
         // Rest of your initialization
     }
 
@@ -59,10 +64,7 @@ public class UIManager : MonoBehaviour
         if (gameStateManager.currentState == GameStateManager.GameState.Playing)
         {
             gameStateManager.ChangeState(GameStateManager.GameState.Paused);
-        }
-        else if (gameStateManager.currentState == GameStateManager.GameState.Paused)
-        {
-            gameStateManager.ChangeState(GameStateManager.GameState.Playing);
+            pauseMenu.SetActive(true);
         }
     }
 
@@ -78,7 +80,7 @@ public class UIManager : MonoBehaviour
 
     public void SetActiveMenu(GameObject menu)
     {
-        if (activeMenu != null)
+        if (activeMenu == null)
         {
             activeMenu.SetActive(false);
         }
