@@ -9,6 +9,7 @@ public class PlayerData
     public string currentQuest;
     public LocationData.Location currentLocation;
     public List<string> currentInventory; // List of items' names or IDs
+    public List<QuestSaveData> questsSaveData;
 
     public int currentQuestIndex; // index of the current quest in the QuestManager's list
     public int currentQuestStepIndex;
