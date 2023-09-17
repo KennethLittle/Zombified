@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Database", menuName = "Database")]
 public class DataBaseForItems : ScriptableObject
 {             //The scriptableObject where the Item getting stored which you create(BataBaseForItems)
 
