@@ -8,6 +8,7 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public GameData GameData;
+    
 
     private const string SAVE_FILENAME = "newSave{0}.json";
     public static SaveManager Instance { get; private set; }
@@ -75,7 +76,6 @@ public class SaveManager : MonoBehaviour
         GameData data = JsonUtility.FromJson<GameData>(jsonData);
         Debug.Log("Loading quest ID: " + data.activeQuestID);
         QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
-        Debug.Log("Setting current step ID to: " + CurrentQuest.currentStepIndex);
         if (data.currentQueststepID > 0)
         {
             QuestManager.instance.StartQuest(data.currentQueststepID);
