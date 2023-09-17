@@ -10,8 +10,6 @@ public class gameManager : MonoBehaviour
 
     // Components and related scripts
     [Header("Components & Related Scripts")]
-    public GameObject inventory;
-    public InventoryUI inventoryUI;
     public LevelUpSystem levelUpSystem;
     private UIManager uiManager;
     private PlayerManager playerManager;
@@ -55,7 +53,6 @@ public class gameManager : MonoBehaviour
     private void SetupReferences()
     {
         levelUpSystem = FindObjectOfType<LevelUpSystem>();
-        inventoryUI = FindObjectOfType<InventoryUI>();
         questManager= FindObjectOfType<QuestManager>();
         uiManager = GetComponent<UIManager>();
         playerManager = GetComponent<PlayerManager>();

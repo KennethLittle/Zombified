@@ -12,6 +12,11 @@ TagManager:
   - BayDoor
   - LootBox
   - MAST_Holder
+  - Canvas
+  - Slots
+  - Panel
+  - Slot
+  - DraggingItem
   layers:
   - Default
   - TransparentFX

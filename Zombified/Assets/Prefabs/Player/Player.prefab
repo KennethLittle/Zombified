@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 6878703988354212238}
   - component: {fileID: 5278510262154791696}
   - component: {fileID: -722061730209073869}
+  - component: {fileID: 6121586055019300906}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStat: {fileID: 2315855857986874302}
   weaponSlot: {fileID: 6864760123799076420}
-  playerInventoryUI: {fileID: 0}
+  playerInventoryUI: {fileID: 6121586055019300906}
   controller: {fileID: 6878703988354212238}
   anim: {fileID: 6864760123808088066}
   equippedWeapons:
@@ -472,6 +473,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 6864760123798978940}
+--- !u!114 &6121586055019300906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864760123798757026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838316c0b6860b84d8e525ed998fa7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorysetup: {fileID: 0}
+  charactersetup: {fileID: 0}
+  craftSystem: {fileID: 0}
+  HPMANACanvas: {fileID: 0}
+  currentHealth: 60
 --- !u!1 &6864760123798769602
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +747,10 @@ PrefabInstance:
     - target: {fileID: 3751246900730709102, guid: ead487ed73ef48044b2b11eb5c61e1d3, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751246900730709102, guid: ead487ed73ef48044b2b11eb5c61e1d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8279291103139707641, guid: ead487ed73ef48044b2b11eb5c61e1d3, type: 3}

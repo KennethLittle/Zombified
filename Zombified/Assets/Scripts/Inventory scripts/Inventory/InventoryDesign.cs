@@ -5,6 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class InventoryDesign : MonoBehaviour
 {

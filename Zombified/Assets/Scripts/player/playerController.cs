@@ -11,7 +11,7 @@ public class playerController : MonoBehaviour, IDamage
     public PlayerStat playerStat;
     public Transform weaponSlot;
 
-    public InventoryUI playerInventoryUI;
+    public PlayerEquipment playerInventoryUI;
 
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;

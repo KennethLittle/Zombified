@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[CreateAssetMenu(fileName = "Input", menuName = "Input")]
 public class InputManager : ScriptableObject
 {
     public bool FPS;
