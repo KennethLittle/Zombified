@@ -87,11 +87,11 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         agent.stoppingDistance = meleeRange;
         agent.SetDestination(PlayerManager.instance.player.transform.position);
+        anim.SetBool("isRoaming", false);
+        anim.SetBool("isChasing", true);
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            anim.SetBool("isRoaming", false);
-            anim.SetBool("isChasing", true);
             facePlayer();
             if (!isAttacking && angleToPlayer <= attackAngle)
             {
@@ -179,11 +179,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (!isDead)
         {
-            anim.SetTrigger("isAttacking");
+            anim.SetBool("isAttacking", true);
             MeleeDamage(enemyStats.CurrentDamage); // Using stats from EnemyStat
             yield return new WaitForSeconds(attackRate);
             isAttacking = false;
         }
+        anim.SetBool("isAttacking", false);
     }
 
     public void takeDamage(int amount)
