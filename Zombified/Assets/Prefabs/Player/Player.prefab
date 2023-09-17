@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 6878703988354212238}
   - component: {fileID: 5278510262154791696}
   - component: {fileID: -722061730209073869}
-  - component: {fileID: 6121586055019300906}
+  - component: {fileID: 1806551080}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -422,7 +422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStat: {fileID: 2315855857986874302}
   weaponSlot: {fileID: 6864760123799076420}
-  playerInventoryUI: {fileID: 6121586055019300906}
+  playerInventoryUI: {fileID: 0}
   controller: {fileID: 6878703988354212238}
   anim: {fileID: 6864760123808088066}
   equippedWeapons:
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 6864760123798978940}
---- !u!114 &6121586055019300906
+--- !u!114 &1806551080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -17,10 +17,10 @@ public class ConsumingItems : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         currentitem = GetComponent<ItemWithObject>().item;
-        if (GameObject.FindGameObjectWithTag("EquipmentSystem") != null)
+        if (GameObject.FindGameObjectWithTag("CharacterSetup") != null)
             equipmentSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().charactersetup.GetComponent<EquipmentSystem>();
-        if (GameObject.FindGameObjectWithTag("MainInventory") != null)
-            primaryInventory = GameObject.FindGameObjectWithTag("MainInventory");
+        if (GameObject.FindGameObjectWithTag("InventorySetup") != null)
+            primaryInventory = GameObject.FindGameObjectWithTag("InventorySetup");
     }
 
     public void OnPointerDown(PointerEventData eventData)

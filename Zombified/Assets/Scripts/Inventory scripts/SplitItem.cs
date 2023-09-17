@@ -14,7 +14,7 @@ public class SplitItem : MonoBehaviour, IPointerDownHandler
     {
         if (Input.GetKeyDown(KeyCode.N))                     //if we press right controll the ....
             pressingButtonToSplit = true;                               //getting changed to true 
-        if (Input.GetKeyUp(inputManagerDatabase.SplitItem))
+        if (Input.GetKeyUp(KeyCode.N))
             pressingButtonToSplit = false;                              //or false
 
     }

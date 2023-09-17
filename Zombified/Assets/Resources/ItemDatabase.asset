@@ -10,12 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21328896062341a45afc6640ec573613, type: 3}
-  m_Name: Basic Gun
+  m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   itemNumber:
   - itemName: Gun
     itemID: 1
     itemDescription: Basic Gun
+    itemIcon: {fileID: 21300000, guid: de31ce17d9ef0d44681da38244e979d1, type: 3}
+    itemModel: {fileID: 100002, guid: 41ddbc89f43ce1149ba4f6f0f8ad75c8, type: 3}
+    itemValue: 25
+    itemType: 1
+    itemWeight: 1
+    maxStack: 1
+    indexItemInList: 1
+    rarity: 1
+    itemStats:
+    - attributeName: Damage
+      attributeValue: 50
+  - itemName: Intel Book
+    itemID: 2
+    itemDescription: Book with Intel about certain things
     itemIcon: {fileID: 21300000, guid: de31ce17d9ef0d44681da38244e979d1, type: 3}
     itemModel: {fileID: 100002, guid: 41ddbc89f43ce1149ba4f6f0f8ad75c8, type: 3}
     itemValue: 25
