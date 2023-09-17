@@ -71,7 +71,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         float agentVel = agent.velocity.normalized.magnitude;
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
+        //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
         if (canSeePlayer())
         {
@@ -90,9 +90,12 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
+            anim.SetBool("isRoaming", false);
+            anim.SetBool("isChasing", true);
             facePlayer();
             if (!isAttacking && angleToPlayer <= attackAngle)
             {
+                anim.SetBool("isChasing", false);
                 StartCoroutine(attack());
             }
         }
@@ -133,6 +136,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (agent.remainingDistance < 0.05f && !destinationChosen)
         {
+            anim.SetBool("isRoaming", true);
             destinationChosen = true;
             agent.stoppingDistance = 0;
             yield return new WaitForSeconds(roamTimer);
