@@ -39,7 +39,8 @@ public class playerController : MonoBehaviour, IDamage
     private float jumpCooldown = 3f;
     private float audioLHVolOrig;
     private float walkVolume;
- 
+    private bool playingTakeDamageSFX = false;
+
     private void Start()
     {
         
@@ -63,9 +64,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        lowHealthSFX();
-        
-
+        lowHealthSFX();       
     }
 
     public void ResetToDefaults()
@@ -86,17 +85,31 @@ public class playerController : MonoBehaviour, IDamage
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         playerStat.HP -= amount;
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
-        
         if (playerStat.HP <= 0)
         {
             anim.SetTrigger("IsDead");
             gameManager.instance.Defeat();
             gameManager.instance.MarkRunEnd();
         }
-
-        AudioManager.instance.PlaySound("Take Damage", AudioManager.instance.PlayerSounds);
+        else
+        {
+            if (!playingTakeDamageSFX)
+            {
+                AudioManager.instance.PlaySound("Take Damage", AudioManager.instance.PlayerSounds);               
+                playingTakeDamageSFX = true;
+            }
+            else if (playingTakeDamageSFX)
+            {
+                Invoke("takeDamageSFXFinished", AudioManager.instance.PlayerSounds[5].clip.length);
+            }
+        }
     }
 
+    void takeDamageSFXFinished()
+    {
+        playingTakeDamageSFX = false;
+        Debug.Log("Audio Finished");
+    }
     void lowHealthSFX()
     {
         if (!lowHealthIsPlaying && playerStat.HP <= (playerStat.HPMax * 0.3))
