@@ -45,18 +45,6 @@ public class LevelUpSystem : MonoBehaviour
         return Mathf.RoundToInt(requiredXP * (1 + 0.1f * playerStats.Level));
     }
 
-    public void RewardXPUponEscape()
-    {
-        int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.85f);
-        gameManager.instance.totalXP += rewardXP;
-        CheckLevelUp();
-    }
-
-    public void RewardXPUponDeath()
-    {
-        int rewardXP = Mathf.FloorToInt(totalAccumulatedXP * 0.15f);
-        gameManager.instance.totalXP -= rewardXP;
-    }
 
     // Move the MarkRunStart and MarkRunEnd functions to GameManager or a similar appropriate class.
 }

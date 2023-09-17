@@ -51,7 +51,6 @@ public class EnemyManager : MonoBehaviour
     public void HandleEnemyDeath(enemyAI enemy)
     {
         // Handle XP gain, game goals, and other logic related to enemy death.
-        gameManager.instance.updateGameGoal(-1);
         SpawnerManager.instance.EnemyDefeated();
     }
 

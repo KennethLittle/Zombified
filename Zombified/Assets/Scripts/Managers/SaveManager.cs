@@ -31,14 +31,39 @@ public class SaveManager : MonoBehaviour
     public void SaveGame(int saveSlot = 0)
     {
         PlayerData pD = new PlayerData(PlayerManager.instance);
+
+        // Check if the EnemyManager instance exists
+        if (EnemyManager.Instance == null)
+        {
+            Debug.LogWarning("No EnemyManager instance found. Saving without enemy data.");
+
+            // Save just the player data without enemy data
+            GameData gameData = new GameData(pD, new List<EnemyData>());
+            string jsonData = JsonUtility.ToJson(gameData);
+            File.WriteAllText(GetSavePath(saveSlot), jsonData);
+            Debug.Log("Game saved without enemy data.");
+            return;
+        }
+
         List<EnemyData> eD = EnemyManager.Instance.GetAllEnemyData();
+        // Check if there's any enemy data to save
+        if (eD == null || eD.Count == 0)
+        {
+            Debug.LogWarning("No enemy data to save. Saving without enemy data.");
 
-        GameData gameData = new GameData(pD, eD);
+            // Save just the player data without enemy data
+            GameData gameData = new GameData(pD, new List<EnemyData>());
+            string jsonData = JsonUtility.ToJson(gameData);
+            File.WriteAllText(GetSavePath(saveSlot), jsonData);
+            Debug.Log("Game saved without enemy data.");
+            return;
+        }
 
-        string jsonData = JsonUtility.ToJson(gameData);
-        File.WriteAllText(GetSavePath(saveSlot), jsonData);
-
-        Debug.Log("Game Saved!");
+        // If we have both player and enemy data, save them together
+        GameData gameDataWithEnemies = new GameData(pD, eD);
+        string jsonDataWithEnemies = JsonUtility.ToJson(gameDataWithEnemies);
+        File.WriteAllText(GetSavePath(saveSlot), jsonDataWithEnemies);
+        Debug.Log("Game Saved with enemy data!");
     }
 
     public GameData LoadGame(int saveSlot)
