@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -70,8 +71,23 @@ public class PlayerManager : MonoBehaviour
         QuestManager questManager = FindObjectOfType<QuestManager>();
         if (questManager != null)
         {
-            questManager.StartQuest();
-            Debug.Log("Quest Started");
+            if (data != null && data.questsSaveData != null)
+            {
+                if (data.questsSaveData == null || !data.questsSaveData.Any())
+                {
+                    Debug.LogError("No questsSaveData or empty list provided.");
+                }
+                else
+                {
+                    questManager.LoadQuests(data.questsSaveData);
+                }
+            }
+            else
+            {
+                questManager.StartQuest();
+                Debug.Log("Quest Started");
+            }
         }
     }
+
 }

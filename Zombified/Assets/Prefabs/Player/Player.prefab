@@ -403,8 +403,8 @@ MonoBehaviour:
   staminaConsumptionRate: 10
   staminaRegenerationRate: 7
   Level: 1
-  playerSpeed: 5
-  sprintMod: 1.2
+  playerSpeed: 2
+  sprintMod: 1.1
   jumpMax: 1
   jumpHeight: 7
   gravityValue: -15

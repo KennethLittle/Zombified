@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -91,6 +92,44 @@ public class SaveManager : MonoBehaviour
 
         GameData data = JsonUtility.FromJson<GameData>(jsonData);
         return data;
+    }
+
+    public class QuestDataConverter
+    {
+        public static QuestSaveData ConvertQuestToSaveData(Quest quest)
+        {
+            QuestSaveData data = new QuestSaveData();
+
+            data.currentStepIndex = quest.currentStepIndex;
+
+            foreach (var step in quest.questSteps)
+            {
+                QuestStepSaveData stepData = ConvertQuestStepToSaveData(step);
+                data.questStepSaveData.Add(stepData);
+            }
+
+            return data;
+        }
+
+        private static QuestStepSaveData ConvertQuestStepToSaveData(QuestStep questStep)
+        {
+            QuestStepSaveData stepData = new QuestStepSaveData();
+            stepData.description = questStep.description;
+            stepData.isCompleted = questStep.isCompleted;
+
+            // If I decide to save the Dialogue as mentioned above:
+            // stepData.stepDialogueSaveData = ConvertDialogueToSaveData(questStep.stepDialogue);
+
+            return stepData;
+        }
+
+        // If I decide to save Dialogue:
+        // private static DialogueSaveData ConvertDialogueToSaveData(Dialogue dialogue)
+        // {
+        //     DialogueSaveData dialogueData = new DialogueSaveData();
+        //     // Fill in the details
+        //     return dialogueData;
+        // }
     }
 
     public bool DoesSaveGameExist(int saveSlot)
