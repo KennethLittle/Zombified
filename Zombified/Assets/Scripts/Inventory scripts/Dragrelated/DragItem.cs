@@ -385,7 +385,7 @@ public class DragItem : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDr
                 //dragging into a equipmentsystem/charactersystem
                 if (Inventory.GetComponent<EquipmentSystem>() != null)
                 {
-                    ItemType[] itemTypeOfSlots = GameObject.FindGameObjectWithTag("EquipmentSystem").GetComponent<EquipmentSystem>().slotItemTypes;
+                    ItemType[] itemTypeOfSlots = GameObject.FindGameObjectWithTag("CharacterSetup").GetComponent<EquipmentSystem>().slotItemTypes;
                     int newSlotChildCount = newSlot.transform.parent.childCount;
                     bool isOnSlot = newSlot.transform.parent.GetChild(0).tag == "ItemIcon";
                     bool sameItemType = firstItem.itemType == secondItem.itemType;

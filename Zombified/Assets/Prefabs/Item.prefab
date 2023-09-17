@@ -211,7 +211,7 @@ MonoBehaviour:
     indexItemInList: 999
     rarity: 0
     itemStats: []
-  slotItemTypes: 
+  slotItemTypes: 0100000000000000
   duplicateItem: {fileID: 0}
 --- !u!1 &7090513214881865418
 GameObject:

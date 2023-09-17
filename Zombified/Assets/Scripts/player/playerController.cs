@@ -64,14 +64,7 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         lowHealthSFX();
-        if (weaponSlot.transform.childCount > 0 && Input.GetButton("Shoot") && !isShooting)
-        {
-            StartCoroutine(shoot());
-        }
-        if (Input.GetButtonDown("SwitchWeapons"))
-        {
-            SwitchToNextWeapon();
-        }
+        
 
     }
 
@@ -93,7 +86,6 @@ public class playerController : MonoBehaviour, IDamage
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         playerStat.HP -= amount;
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
-        updatePlayerUI();
         
         if (playerStat.HP <= 0)
         {
@@ -306,95 +298,16 @@ public class playerController : MonoBehaviour, IDamage
         {
             isSprinting = false;
         }
-
-        updatePlayerUI();
     }
 
     public void RegenerateStamina(float amount)
     {
         playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina + amount, 0f, playerStat.stamina);
        
-        updatePlayerUI();
+        
     }
 
-    IEnumerator shoot()
-    {
-        if (weaponSlot.transform.childCount == 0)
-        {
-            Debug.Log("No weapon in the slot.");
-            yield break;
-        }
-
-        ItemBehavior itemBehavior = weaponSlot.transform.GetChild(0).GetComponent<ItemBehavior>();
-        if (itemBehavior == null || itemBehavior.weaponStats == null)
-        {
-            Debug.Log("ItemBehavior or WeaponStats not found.");
-            yield break;
-        }
-
-        WeaponStats weapon = itemBehavior.weaponStats; // <-- Here's where we set the weapon stats
-
-        if (weapon.ammoCur > 0)
-        {
-            isShooting = true;
-
-            weapon.ammoCur--;
-            updatePlayerUI();
-
-            // Plays gunshot audio sfx
-            //audioSFX.PlayOneShot(weapon.audioShoot[Random.Range(0, weapon.audioShoot.Length)], weapon.audioShootVol);
-
-            // Plays gunshot casing audio sfx
-            //audioSFX.PlayOneShot(weapon.audioShootCasing[Random.Range(0, weapon.audioShootCasing.Length)], weapon.audioShootCasingVol);
-
-            // Shoot code
-            RaycastHit hit;
-            anim.SetTrigger("isShooting");
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, weapon.shootDist))
-            {
-                IDamage damageable = hit.collider.GetComponent<IDamage>();
-
-                if (damageable != null)
-                {
-                    damageable.takeDamage(weapon.shootDamage);
-                }
-            }
-
-            yield return new WaitForSeconds(weapon.shootRate);
-            isShooting = false;
-        }
-    }
-
-    WeaponStats GetCurrentWeaponStats()
-    {
-        if (currentWeaponIndex >= 0 && currentWeaponIndex < equippedWeapons.Count)
-        {
-            ItemBehavior itemBehavior = equippedWeapons[currentWeaponIndex].GetComponent<ItemBehavior>();
-            return itemBehavior?.itemStats as WeaponStats;
-        }
-        return null;
-    }
-
-    private void SwitchToNextWeapon()
-    {
-        if (equippedWeapons.Count > 0)
-        {
-            // Deactivate the current weapon
-            if (currentWeaponIndex >= 0 && currentWeaponIndex < equippedWeapons.Count)
-            {
-                equippedWeapons[currentWeaponIndex].SetActive(false);
-            }
-
-            // Increment the weapon index
-            currentWeaponIndex = (currentWeaponIndex + 1) % equippedWeapons.Count;
-
-            // Activate the new weapon
-            equippedWeapons[currentWeaponIndex].SetActive(true);
-
-            // Update the player UI
-            updatePlayerUI();
-        }
-    }
+  
 
     public void spawnPlayer()
     {
@@ -410,7 +323,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-        updatePlayerUI();
+      
     }
 
     public void IncreaseMaxHP(int amount)
@@ -420,7 +333,7 @@ public class playerController : MonoBehaviour, IDamage
              
             playerStat.HPMax += amount;
             playerStat.HP += amount;
-            updatePlayerUI();
+           
         }
     }
 
@@ -431,46 +344,8 @@ public class playerController : MonoBehaviour, IDamage
             
             playerStat.stamina += amount;
             playerStat.currentStamina += amount;
-            updatePlayerUI();
+            
         }
     }
-
-    public void updatePlayerUI()
-    {
-        UIManager.Instance.playerHPBar.fillAmount = (float)playerStat.HP / playerStat.HPMax;
-        UIManager.Instance.staminaBar.fillAmount = playerStat.currentStamina / playerStat.stamina;
-
-        WeaponStats currentWeapon = GetCurrentWeaponStats();
-        if (currentWeapon != null)
-        {
-            UIManager.Instance.ammoCur.text = currentWeapon.ammoCur.ToString("F0");
-            UIManager.Instance.ammoMax.text = currentWeapon.ammoMax.ToString("F0");
-            UIManager.Instance.weaponIcon.sprite = currentWeapon.icon;
-        }
-
-    }
-
-    public void EquipWeapon(BaseItemStats weapon)
-    {
-        if (weaponSlot.transform.childCount > 0)
-        {
-            foreach (Transform child in weaponSlot.transform)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        if (weapon.itemType == ItemType.Weapon)
-        {
-            GameObject equippedWeaponGO = Instantiate(weapon.modelPrefab, weaponSlot.transform.position, Quaternion.identity, weaponSlot.transform);
-            weaponSlot.GetComponent<MeshFilter>().sharedMesh = weapon.modelPrefab.GetComponent<MeshFilter>().sharedMesh;
-            weaponSlot.GetComponent<MeshRenderer>().sharedMaterial = weapon.modelPrefab.GetComponent<MeshRenderer>().sharedMaterial;
-            ItemBehavior weaponBehavior = equippedWeaponGO.AddComponent<ItemBehavior>();
-            weaponBehavior.itemStats = weapon;
-
-            equippedWeapons.Add(equippedWeaponGO);
-        }
-    }
-
 
 }

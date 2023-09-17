@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[CreateAssetMenu(fileName = "Database", menuName = "AttributeList")]
 public class ItemAttributeList : ScriptableObject
 {
     [SerializeField]

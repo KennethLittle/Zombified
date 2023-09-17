@@ -22,7 +22,7 @@ MonoBehaviour:
     itemType: 1
     itemWeight: 1
     maxStack: 1
-    indexItemInList: 1
+    indexItemInList: 999
     rarity: 1
     itemStats:
     - attributeName: Damage
@@ -30,14 +30,40 @@ MonoBehaviour:
   - itemName: Intel Book
     itemID: 2
     itemDescription: Book with Intel about certain things
-    itemIcon: {fileID: 21300000, guid: de31ce17d9ef0d44681da38244e979d1, type: 3}
-    itemModel: {fileID: 100002, guid: 41ddbc89f43ce1149ba4f6f0f8ad75c8, type: 3}
-    itemValue: 25
-    itemType: 1
+    itemIcon: {fileID: 21300000, guid: 0bedb667e7ce923489e337cfa6011bd4, type: 3}
+    itemModel: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
+    itemValue: 0
+    itemType: 4
     itemWeight: 1
     maxStack: 1
-    indexItemInList: 1
+    indexItemInList: 999
+    rarity: 1
+    itemStats: []
+  - itemName: MedPack
+    itemID: 3
+    itemDescription: MedPack To Heal You
+    itemIcon: {fileID: 21300000, guid: 848e9bf5b083de0498f4be6839482c19, type: 3}
+    itemModel: {fileID: 597585026870109221, guid: bb5fec042daa8c848ab9ec0c45dac7f7, type: 3}
+    itemValue: 0
+    itemType: 2
+    itemWeight: 1
+    maxStack: 99
+    indexItemInList: 999
     rarity: 1
     itemStats:
-    - attributeName: Damage
+    - attributeName: Heal
       attributeValue: 50
+  - itemName: Ammo
+    itemID: 4
+    itemDescription: Ammo to reload your guns
+    itemIcon: {fileID: 21300000, guid: 848e9bf5b083de0498f4be6839482c19, type: 3}
+    itemModel: {fileID: 597585026870109221, guid: bb5fec042daa8c848ab9ec0c45dac7f7, type: 3}
+    itemValue: 12
+    itemType: 3
+    itemWeight: 1
+    maxStack: 99
+    indexItemInList: 999
+    rarity: 1
+    itemStats:
+    - attributeName: Ammo
+      attributeValue: 30

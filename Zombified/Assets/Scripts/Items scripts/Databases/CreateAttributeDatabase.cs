@@ -15,7 +15,7 @@ public class CreateAttributeDatabase : MonoBehaviour
     {
         asset = ScriptableObject.CreateInstance<ItemAttributeList>();                       //of the ScriptableObject InventoryItemList
 
-        AssetDatabase.CreateAsset(asset, "Assets/InventoryMaster/Resources/AttributeDatabase.asset");            //in the Folder Assets/Resources/ItemDatabase.asset
+        AssetDatabase.CreateAsset(asset, "Assets/Resources/AttributeDatabase.asset");            //in the Folder Assets/Resources/ItemDatabase.asset
         AssetDatabase.SaveAssets();                                                         //and than saves it there        
         return asset;
     }
