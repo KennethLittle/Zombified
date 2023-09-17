@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd38975317e9ad749882b2ed3ac60aa3, type: 3}
   m_Name: Input
   m_EditorClassIdentifier: 
-  FPS: 0
+  FPS: 1
   reloadWeapon: 114
   throwGrenade: 103
-  SplitItem: 0
-  InventoryKeyCode: 0
+  SplitItem: 121
+  InventoryKeyCode: 105
   StorageKeyCode: 0
-  CharacterSystemKeyCode: 0
+  CharacterSystemKeyCode: 99
   CraftSystemKeyCode: 0
