@@ -17,8 +17,6 @@ public class ConsumingItems : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         currentitem = GetComponent<ItemWithObject>().item;
-        if (GameObject.FindGameObjectWithTag("ToolBar") != null)
-            itemhelper = GameObject.FindGameObjectWithTag("ToolBar").GetComponent<HelperTool>();
         if (GameObject.FindGameObjectWithTag("EquipmentSystem") != null)
             equipmentSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipment>().charactersetup.GetComponent<EquipmentSystem>();
         if (GameObject.FindGameObjectWithTag("MainInventory") != null)
