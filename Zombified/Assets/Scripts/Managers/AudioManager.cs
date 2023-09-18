@@ -51,6 +51,21 @@ public class AudioManager : MonoBehaviour
             musicSource.Play();
         }
     }
+    //public void PlaySound(string name, Sound[] soundArray)
+    //{
+    //    Sound s = Array.Find(soundArray, x => x.name == name);
+    //    if (s == null)
+    //    {
+    //        Debug.Log("Sound Not Found");
+    //    }
+    //    else
+    //    {
+    //        //SFXSource = gameObject.AddComponent<AudioSource>();
+    //        SFXSource.clip = s.clip;
+    //        SFXSource.Play();
+    //    }
+    //}
+
     public void PlaySound(string name, Sound[] soundArray)
     {
         Sound s = Array.Find(soundArray, x => x.name == name);
@@ -60,12 +75,13 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            //SFXSource = gameObject.AddComponent<AudioSource>();
-            SFXSource.clip = s.clip;
-            SFXSource.Play();
+            AudioSource newSFXSource = gameObject.AddComponent<AudioSource>();
+            newSFXSource.clip = s.clip;
+            newSFXSource.Play();
+            Destroy(newSFXSource, s.clip.length); // destroy the AudioSource once the clip has finished playing
         }
     }
- 
+
     private void PlayRandomSong()
     {
         Scene currentScene = SceneManager.GetActiveScene();
