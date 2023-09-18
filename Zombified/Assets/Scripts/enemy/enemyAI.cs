@@ -61,7 +61,20 @@ public class enemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     float angleToPlayer;
     Vector3 startingPos;
-    
+
+    private GameObject _player;
+    private GameObject Player
+    {
+        get
+        {
+            if (_player == null && PlayerManager.instance != null)
+            {
+                _player = PlayerManager.instance.player;
+            }
+            return _player;
+        }
+    }
+
     float stoppingDistOrig;
 
 
@@ -70,7 +83,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         // Assuming you have a singleton or reference to your EnemyManager
-       // EnemyManager.Instance.RegisterEnemy(this);
+       EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
         enemyID = nextID++;
         foreach (var sound in AudioManager.instance.enemySFXSounds)
@@ -88,13 +101,12 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         float agentVel = agent.velocity.normalized.magnitude;
-        //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentVel, Time.deltaTime * animChangeSpeed));
 
-        if (canSeePlayer())
-        {
-            ChaseAndAttackPlayer();
-        }
-        else if (agent.remainingDistance < 0.05f)
+       // if (canSeePlayer())
+        //{
+            //ChaseAndAttackPlayer();
+      //  }
+        if (agent.remainingDistance < 0.05f)
         {
             StartCoroutine(roam());
         }
@@ -103,7 +115,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void ChaseAndAttackPlayer()
     {
         agent.stoppingDistance = meleeRange;
-        agent.SetDestination(PlayerManager.instance.player.transform.position);
+        agent.SetDestination(Player.transform.position);
         anim.SetBool("isRoaming", false);
         anim.SetBool("isChasing", true);
 
@@ -121,7 +133,7 @@ public class enemyAI : MonoBehaviour, IDamage
     bool canSeePlayer()
     {
         agent.stoppingDistance = stoppingDistOrig;
-        playerDir = PlayerManager.instance.player.transform.position - headPos.position;
+        playerDir = Player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, 0, playerDir.z), transform.forward);
 
         RaycastHit hit;
@@ -244,7 +256,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void MeleeDamage(int amount)
     {
-        PlayerManager.instance.playerScript.takeDamage(amount);
+        if (Player != null)
+        {
+            Player.GetComponent<playerController>().takeDamage(amount);
+        }
     }
 
     void OnDestroy()

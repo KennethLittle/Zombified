@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3894260934791530043}
   - component: {fileID: 3894260934791530040}
+  - component: {fileID: 616097196}
   m_Layer: 0
   m_Name: PlayerManager
-  m_TagString: Untagged
+  m_TagString: PlayerManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,3 +51,40 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   playerStat: {fileID: 0}
   levelSystem: {fileID: 0}
+--- !u!114 &616097196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894260934791530041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838316c0b6860b84d8e525ed998fa7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorysetup: {fileID: 0}
+  charactersetup: {fileID: 0}
+  craftSystem: {fileID: 0}
+  equippedWeapon:
+    itemName: 
+    itemID: 0
+    itemDescription: 
+    itemIcon: {fileID: 0}
+    itemModel: {fileID: 0}
+    itemValue: 1
+    itemType: 0
+    itemWeight: 0
+    maxStack: 1
+    indexItemInList: 999
+    rarity: 0
+    projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+    fireRate: 0
+    range: 0
+    weaponDetails:
+      projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+      fireRate: 0
+      range: 0
+    itemStats: []
+  HPMANACanvas: {fileID: 0}
+  currentHealth: 60

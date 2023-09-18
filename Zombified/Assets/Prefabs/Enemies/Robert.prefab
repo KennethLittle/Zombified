@@ -439,7 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 15
-  baseHP: 50
+  baseHP: 35
   baseDefense: 15
   currentHP: 50
   damageMultiplier: 1.2

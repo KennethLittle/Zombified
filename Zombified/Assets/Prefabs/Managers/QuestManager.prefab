@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questTemplates:
   - {fileID: 11400000, guid: 2d42c97ac1b7d494a84f8c6175e1d3d4, type: 2}
+  - {fileID: 11400000, guid: 1d41a04a4ff8ca0499712dc1ea2bbb2d, type: 2}
   currentQuestIndex: 0
+  currentQuestStepIndex: 0
   questUIManager: {fileID: 0}

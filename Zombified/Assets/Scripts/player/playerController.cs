@@ -56,7 +56,7 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-        spawnPlayer();
+        PlayerManager.instance.SpawnPlayer(); 
     }
 
     void Update()
@@ -378,24 +378,6 @@ public class playerController : MonoBehaviour, IDamage
 
     }
 
-
-
-    public void spawnPlayer()
-    {
-        controller.enabled = false;
-        transform.position = PlayerManager.instance.playerSpawnPos.transform.position;
-        controller.enabled = true;
-        playerStat.HP = playerStat.HPMax;
-        foreach (var sound in AudioManager.instance.PlayerSounds)
-        {
-            if (sound.name == "LowHealth")
-            {
-                sound.volume = audioLHVolOrig;
-            }
-        }
-        audioLHVolOrig = walkVolume;
-
-    }
 
     public void IncreaseMaxHP(int amount)
     {

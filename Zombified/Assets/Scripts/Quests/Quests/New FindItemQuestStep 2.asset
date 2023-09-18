@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: New FindItemQuestStep 2
   m_EditorClassIdentifier: 
-  description: Find the second Intel Book in the office upstairs.
+  description: Find the Intel Book by a Bunch of Stationary Robots
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Great You found the first one, the second one will tell us how to dismantle
-      their weapon surpression system.
-    - Find that one, I heard it was upstairs in the office.
+    - 'Now that were here, there are a couple documents we need to grab. '
+    - The first one is by all the robots. It might be about how they are made. FInd
+      that book for me.
   stepID: 1
   requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

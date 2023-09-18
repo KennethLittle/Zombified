@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: New FindItemQuestStep 1
   m_EditorClassIdentifier: 
-  description: Find the second Intel Book in the office upstairs.
+  description: Gathering Intel
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Great You found the first one, the second one will tell us how to dismantle
-      their weapon surpression system.
-    - Find that one, I heard it was upstairs in the office.
+    - Grab that intel off my desk, it includes some info on Alpha Station.
+    - This might help us uncover some of the secrets of that place.
   stepID: 1
   requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

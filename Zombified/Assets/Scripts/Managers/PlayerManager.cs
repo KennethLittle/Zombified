@@ -46,20 +46,26 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnPlayer(PlayerData data = null)
     {
-        // Check if a player already exists
-        if (player != null)
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        // If player does not exist, create one.
+        if (player == null)
         {
-            Destroy(player.gameObject);
+            player = Instantiate(playerPrefab, playerSpawnPos.position, Quaternion.identity);
+            player.tag = "Player";
+            playerScript = player.GetComponent<playerController>();
+            playerStat = player.GetComponent<PlayerStat>();
+        }
+        else
+        {
+            playerScript = player.GetComponent<playerController>();
+            playerStat = player.GetComponent<PlayerStat>();
         }
 
-        player = Instantiate(playerPrefab, playerSpawnPos.position, Quaternion.identity);
-        player.tag = "Player";
-        playerScript = player.GetComponent<playerController>();
-        playerStat = player.GetComponent<PlayerStat>();
-
+        // Load data into the player.
         if (data != null)
         {
-            // Load saved data into player
+            // Load saved data into player.
             data.LoadDataIntoPlayer(this);
         }
         else
@@ -74,9 +80,9 @@ public class PlayerManager : MonoBehaviour
             // Check if questsSaveData exists and if it's not empty.
             if (data != null && data.questsSaveData != null && data.questsSaveData.Any())
             {
-                // Load the quest by its ID
+                // Load the quest by its ID.
                 int questID = data.currentQuestID;
-                if (questID >= 0) // assuming that valid quest IDs are non-negative
+                if (questID >= 0) // Assuming that valid quest IDs are non-negative.
                 {
                     questManager.SetCurrentQuestByID(questID);
                     questManager.SetCurrentQuestStepByID(questID);

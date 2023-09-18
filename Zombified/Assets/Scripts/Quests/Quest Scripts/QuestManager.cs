@@ -63,11 +63,13 @@ public class QuestManager : MonoBehaviour
         {
             // Move on to the next quest
             currentQuestIndex++;
+            OnQuestOrStepChanged();
 
             // Check if the new currentQuestIndex is within the bounds of the quests list
             if (currentQuestIndex < quests.Count)
             {
                 // Start the next quest
+                OnQuestOrStepChanged();
                 StartQuest();
             }
             else
@@ -305,6 +307,22 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
+    public void NotifyGotToAlphaStation()
+    {
+        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        if (currentStep.blueprint is GoToAlphaStationQuestStep GoToAlphaStationQuest)
+        {
+            currentStep.TryCompleteStep();
+            if (currentStep.isCompleted)
+            {
+                CurrentQuest.ProgressToNextStepOrQuest();
+                OnQuestOrStepChanged();
+                GoToAlphaStationQuest.EnterAlphaStation();
+            }
+        }
+    }
+
 }
 
 
