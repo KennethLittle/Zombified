@@ -151,6 +151,7 @@ public class InventorySystem : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         checkIfAllInventoryClosed();
+        Cursor.visible = true;
     }
 
     public void openInventory()

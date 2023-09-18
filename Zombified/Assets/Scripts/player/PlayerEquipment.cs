@@ -286,9 +286,10 @@ public class PlayerEquipment : MonoBehaviour
     {
         while (equippedWeapon != null)
         {
-            if (Input.GetButtonDown("Fire1"))  // assuming "Fire1" is your shoot button
+            if (Input.GetButtonDown("Shoot"))  // assuming "Fire1" is your shoot button
             {
                 Shoot();
+                Debug.Log("Shooting");
                 float fireInterval = 1.0f / equippedWeapon.weaponDetails.fireRate;
                 yield return new WaitForSeconds(fireInterval);
             }
@@ -359,6 +360,7 @@ public class PlayerEquipment : MonoBehaviour
             GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
         }
         }
+        StartCoroutine(Shooting());
 
     }
 }
