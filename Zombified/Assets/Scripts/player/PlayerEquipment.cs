@@ -1,11 +1,11 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
+
 
 public class PlayerEquipment : MonoBehaviour
 {
+    public static PlayerEquipment Instance;
+    private PlayerStat playerstat;
     public GameObject inventorysetup;
     public GameObject charactersetup;
     public GameObject craftSystem;
@@ -17,22 +17,20 @@ public class PlayerEquipment : MonoBehaviour
     private WeaponDetails weaponDetails;
     private GameStateManager stateManager;
     private InputManager inputManagerData;
-    private InventoryItem equippedWeapon;
-    private Transform firePoint;
+    public InventoryItem equippedWeapon;
+    public Transform firePoint;
     public GameObject HPMANACanvas;
 
-    Text hpText;
-    Text manaText;
     Image hpImage;
-    Image manaImage;
+    Image staminaImage;
 
-    float maxHealth = 100;
-    float maxMana = 100;
+    float maxHealth = PlayerStat.Instance.HPMax;
+    float stamina = PlayerStat.Instance.stamina;
     float maxDamage = 0;
     float maxArmor = 0;
 
-    public float currentHealth = 60;
-    float currentMana = 100;
+    public float currentHealth = PlayerStat.Instance.HP;
+    float currentStamina = PlayerStat.Instance.currentStamina;
     float currentDamage = 0;
     float currentArmor = 0;
 
@@ -66,7 +64,7 @@ public class PlayerEquipment : MonoBehaviour
     {
         if (item.itemType == ItemType.Weapon)
         {
-                equippedWeapon = item;
+            equippedWeapon = item;
             //add the weapon if you unequip the weapon
         }
     }
@@ -160,18 +158,23 @@ public class PlayerEquipment : MonoBehaviour
 
     void Start()
     {
-        //if (HPMANACanvas != null)
-        //{
-        //    hpText = HPMANACanvas.transform.GetChild(1).GetChild(0).GetComponent<Text>();
+        if (HPMANACanvas != null)
+        {
+            hpImage = HPMANACanvas.transform.Find("Player HP Bar").GetComponent<Image>();
+            staminaImage = HPMANACanvas.transform.Find("Stamina Bar").GetComponent<Image>();
 
-        //    manaText = HPMANACanvas.transform.GetChild(2).GetChild(0).GetComponent<Text>();
-
-        //    hpImage = HPMANACanvas.transform.GetChild(1).GetComponent<Image>();
-        //    manaImage = HPMANACanvas.transform.GetChild(1).GetComponent<Image>();
-
-        //    UpdateHPBar();
-        //    UpdateManaBar();
-        //}
+            UpdateHPBar();
+            UpdateStaminaBar();
+        }
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (inputManagerData == null)
             inputManagerData = (InputManager)Resources.Load("InputManager");
@@ -187,19 +190,17 @@ public class PlayerEquipment : MonoBehaviour
             craftInventory = craftSystem.GetComponent<InventorySystem>();
     }
 
-    //void UpdateHPBar()
-    //{
-    //    hpText.text = (currentHealth + "/" + maxHealth);
-    //    float fillAmount = currentHealth / maxHealth;
-    //    hpImage.fillAmount = fillAmount;
-    //}
+    public void UpdateHPBar()
+    {
+        float fillAmount = currentHealth / maxHealth;
+        hpImage.fillAmount = fillAmount;
+    }
 
-    //void UpdateManaBar()
-    //{
-    //    manaText.text = (currentMana + "/" + maxMana);
-    //    float fillAmount = currentMana / maxMana;
-    //    manaImage.fillAmount = fillAmount;
-    //}
+    public void UpdateStaminaBar()
+    {
+        float fillAmount = currentStamina / stamina;
+        staminaImage.fillAmount = fillAmount;
+    }
 
 
     public void OnConsumeItem(InventoryItem item)
@@ -215,10 +216,10 @@ public class PlayerEquipment : MonoBehaviour
             }
             if (item.itemStats[i].attributeName == "Mana")
             {
-                if ((currentMana + item.itemStats[i].attributeValue) > maxMana)
-                    currentMana = maxMana;
+                if ((currentStamina + item.itemStats[i].attributeValue) > stamina)
+                    currentStamina = stamina;
                 else
-                    currentMana += item.itemStats[i].attributeValue;
+                    currentStamina += item.itemStats[i].attributeValue;
             }
             if (item.itemStats[i].attributeName == "Armor")
             {
@@ -235,11 +236,11 @@ public class PlayerEquipment : MonoBehaviour
                     currentDamage += item.itemStats[i].attributeValue;
             }
         }
-        //if (HPMANACanvas != null)
-        //{
-        //    UpdateManaBar();
-        //    UpdateHPBar();
-        //}
+        if (HPMANACanvas != null)
+        {
+            UpdateStaminaBar();
+            UpdateHPBar();
+        }
     }
 
     public void OnGearItem(InventoryItem item)
@@ -249,17 +250,17 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Health")
                 maxHealth += item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Mana")
-                maxMana += item.itemStats[i].attributeValue;
+                stamina += item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Armor")
                 maxArmor += item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage += item.itemStats[i].attributeValue;
         }
-        //if (HPMANACanvas != null)
-        //{
-        //    UpdateManaBar();
-        //    UpdateHPBar();
-        //}
+        if (HPMANACanvas != null)
+        {
+            UpdateStaminaBar();
+            UpdateHPBar();
+        }
     }
 
     public void OnUnEquipItem(InventoryItem item)
@@ -269,47 +270,20 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Health")
                 maxHealth -= item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Mana")
-                maxMana -= item.itemStats[i].attributeValue;
+                stamina -= item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Armor")
                 maxArmor -= item.itemStats[i].attributeValue;
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage -= item.itemStats[i].attributeValue;
         }
-        //if (HPMANACanvas != null)
-        //{
-        //    UpdateManaBar();
-        //    UpdateHPBar();
-        //}
-    }
-
-    IEnumerator Shooting()
-    {
-        while (equippedWeapon != null)
+        if (HPMANACanvas != null)
         {
-            if (Input.GetButtonDown("Shoot"))  // assuming "Fire1" is your shoot button
-            {
-                Shoot();
-                Debug.Log("Shooting");
-                float fireInterval = 1.0f / equippedWeapon.weaponDetails.fireRate;
-                yield return new WaitForSeconds(fireInterval);
-            }
-            yield return null;
+            UpdateStaminaBar();
+            UpdateHPBar();
         }
     }
 
-    void Shoot()
-    {
-        if (equippedWeapon.weaponDetails.projectilePrefab)
-        {
-            // Instantiate the bullet/projectile from the weapon at the desired location
-            Instantiate(equippedWeapon.weaponDetails.projectilePrefab, firePoint.position, firePoint.rotation);
-            // Add any logic to propel the bullet/projectile if needed
-        }
-        else
-        {
-            // Melee attack logic here. For example, check what's in range and apply damage
-        }
-    }
+
     // Update is called once per frame
     void Update()
     {
@@ -354,13 +328,13 @@ public class PlayerEquipment : MonoBehaviour
         else
         {
             if (craft != null)
-            { 
+            {
                 craft.backToInventory();
-            craftInventory.closeInventory();
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+                craftInventory.closeInventory();
+                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+            }
         }
-        }
-        StartCoroutine(Shooting());
+
 
     }
 }

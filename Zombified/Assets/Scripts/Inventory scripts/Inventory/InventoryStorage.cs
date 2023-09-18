@@ -6,7 +6,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
+
 
 public class InventoryStorage : MonoBehaviour
 {

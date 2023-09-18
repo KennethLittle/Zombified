@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using static UnityEditor.Progress;
+
 
 public class ConsumingItems : MonoBehaviour, IPointerDownHandler
 {

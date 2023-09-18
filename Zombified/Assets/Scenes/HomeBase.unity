@@ -1036,7 +1036,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3443215863500192162, guid: 19f23ff49ea1a154d95930ae44325343, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3443215863500192162, guid: 19f23ff49ea1a154d95930ae44325343, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1952,7 +1952,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &496466429
 PrefabInstance:
@@ -2746,6 +2746,27 @@ MonoBehaviour:
   inventorysetup: {fileID: 5513792948018486262}
   charactersetup: {fileID: 6290702756560210023}
   craftSystem: {fileID: 0}
+  equippedWeapon:
+    itemName: 
+    itemID: 0
+    itemDescription: 
+    itemIcon: {fileID: 0}
+    itemModel: {fileID: 0}
+    itemValue: 1
+    itemType: 0
+    itemWeight: 0
+    maxStack: 1
+    indexItemInList: 999
+    rarity: 0
+    projectilePrefab: {fileID: 0}
+    fireRate: 0
+    range: 0
+    weaponDetails:
+      projectilePrefab: {fileID: 0}
+      fireRate: 0
+      range: 0
+    itemStats: []
+  firePoint: {fileID: 0}
   HPMANACanvas: {fileID: 0}
   currentHealth: 60
 --- !u!1001 &634046873
@@ -4081,7 +4102,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1655913165023090816, guid: 8f25f1cfc9072f946bf10578f8915cd0, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1655913165023090816, guid: 8f25f1cfc9072f946bf10578f8915cd0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9075,7 +9096,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1381128042
 PrefabInstance:
@@ -10512,7 +10533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880372, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6067508095753880372, guid: 96053fa944642cb48b8fbaba93c9b0ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12750,7 +12771,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &2105641958
 PrefabInstance:
@@ -12759,9 +12780,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6412341303698792287, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6412341303698808711, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
       propertyPath: m_Name
       value: Weapon_Rifle_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412341303698808711, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412341303698895637, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412341303699000079, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6412341303699156697, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
       propertyPath: m_RootOrder
@@ -12807,7 +12844,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2981547621431756997, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}
 --- !u!1001 &2132491556
 PrefabInstance:
@@ -13312,7 +13350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3831936223903270459, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3880755390713211256, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
       propertyPath: m_AnchorMax.y

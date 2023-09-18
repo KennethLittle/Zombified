@@ -1,10 +1,7 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
+using System.Security.Cryptography;
 using UnityEngine;
-using static InventoryItem;
 
 public class playerController : MonoBehaviour, IDamage
 {
@@ -16,6 +13,7 @@ public class playerController : MonoBehaviour, IDamage
 
 
     public PlayerEquipment playerInventoryUI;
+    public InventoryItem currentEquippedItem;
 
     [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
@@ -39,19 +37,20 @@ public class playerController : MonoBehaviour, IDamage
     private float jumpCooldown = 3f;
     private float audioLHVolOrig;
     private float walkVolume;
+
     //private bool playingTakeDamageSFX = false;
 
     private void Start()
     {
-        
+
         originalPlayerSpeed = playerStat.playerSpeed;
         playerStat.HP = playerStat.HPMax;
         playerStat.currentStamina = playerStat.stamina;
-        
+
         //this is for the changing the rate and volume of footsteps
         foreach (var sound in AudioManager.instance.PlayerSounds)
         {
-            if ( sound.name == "Footsteps")
+            if (sound.name == "Footsteps")
             {
                 walkVolume = sound.volume;
             }
@@ -64,8 +63,20 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        lowHealthSFX();       
+        lowHealthSFX();
+        if (Input.GetButtonDown("Shooting") && !isShooting)
+        {
+            StartCoroutine(Shooting());
+            Debug.Log("Shooting");
+        }
+
     }
+
+    public void EquipItem(InventoryItem item)
+    {
+        currentEquippedItem = item;
+    }
+
 
     public void ResetToDefaults()
     {
@@ -80,16 +91,54 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.stamina = stamina;
     }
 
+    int GetDamageFromItemStats()
+    {
+        foreach (ItemStats stat in currentEquippedItem.itemStats)
+        {
+            if (stat.attributeName == "Damage")  // Compare attributeName to "Damage" string
+            {
+                return stat.attributeValue;  // Return the attributeValue for damage
+            }
+        }
+        return 0;  // Default to no damage if not found
+    }
+
+    IEnumerator Shooting()
+    { 
+        while (PlayerEquipment.Instance.equippedWeapon != null)
+        {
+            isShooting = true;
+
+            float fireRate = currentEquippedItem.fireRate;
+            float shootDist = currentEquippedItem.range;
+            int damage = GetDamageFromItemStats();
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            {
+                IDamage damageable = hit.collider.GetComponent<IDamage>();
+                if (damageable != null)
+                {
+                    damageable.takeDamage(damage);
+                }
+
+            }
+            float fireInterval = 1.0f / PlayerEquipment.Instance.equippedWeapon.weaponDetails.fireRate;
+            yield return new WaitForSeconds(fireInterval);
+            isShooting = false;
+        }
+    }
+   
+
     public void takeDamage(int amount)
     {
         // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         playerStat.HP -= amount;
+        updatePlayerUI();
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
         if (playerStat.HP <= 0)
         {
             anim.SetTrigger("IsDead");
-            gameManager.instance.Defeat();
-            gameManager.instance.MarkRunEnd();
         }
         //else
         //{
@@ -103,6 +152,12 @@ public class playerController : MonoBehaviour, IDamage
         //        Invoke("takeDamageSFXFinished", AudioManager.instance.PlayerSounds[5].clip.length);
         //    }
         //}
+    }
+
+    public void updatePlayerUI()
+    {
+        PlayerEquipment.Instance.UpdateHPBar();
+        PlayerEquipment.Instance.UpdateStaminaBar();
     }
 
     //void takeDamageSFXFinished()
@@ -256,9 +311,9 @@ public class playerController : MonoBehaviour, IDamage
     {
         footstepsIsPlaying = true;
         // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
-        
+
         AudioManager.instance.PlaySound("Footsteps", AudioManager.instance.PlayerSounds);
-        
+
         if (!isSprinting)
         {
             foreach (var sound in AudioManager.instance.PlayerSounds)
@@ -287,6 +342,7 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
+            
         }
         else if (Input.GetButtonUp("Sprint") || playerStat.currentStamina <= 0) // Add stamina check here
         {
@@ -295,10 +351,12 @@ public class playerController : MonoBehaviour, IDamage
         if (isSprinting)
         {
             ConsumeStamina(playerStat.staminaConsumptionRate * Time.deltaTime);
+            updatePlayerUI();
         }
         else
         {
             RegenerateStamina(playerStat.staminaRegenerationRate * Time.deltaTime);
+            updatePlayerUI();
         }
 
     }
@@ -316,11 +374,11 @@ public class playerController : MonoBehaviour, IDamage
     public void RegenerateStamina(float amount)
     {
         playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina + amount, 0f, playerStat.stamina);
-       
-        
+
+
     }
 
-  
+
 
     public void spawnPlayer()
     {
@@ -336,17 +394,17 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-      
+
     }
 
     public void IncreaseMaxHP(int amount)
     {
         if (!gameManager.instance.isInRun)
         {
-             
+
             playerStat.HPMax += amount;
             playerStat.HP += amount;
-           
+
         }
     }
 
@@ -354,10 +412,10 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (!gameManager.instance.isInRun)
         {
-            
+
             playerStat.stamina += amount;
             playerStat.currentStamina += amount;
-            
+
         }
     }
 

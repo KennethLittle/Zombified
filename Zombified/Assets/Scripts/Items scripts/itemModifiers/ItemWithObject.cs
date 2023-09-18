@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using static UnityEditor.Progress;
+
 
 public class ItemWithObject : MonoBehaviour                   //Saves the Item in the slot
 {

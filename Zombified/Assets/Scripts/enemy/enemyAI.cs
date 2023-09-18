@@ -70,7 +70,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         // Assuming you have a singleton or reference to your EnemyManager
-        EnemyManager.Instance.RegisterEnemy(this);
+       // EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
         enemyID = nextID++;
         foreach (var sound in AudioManager.instance.enemySFXSounds)
@@ -215,6 +215,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
+        StartCoroutine(flashDamage());
         enemyStats.CurrentHP -= amount; // Using stats from EnemyStat
         anim.SetTrigger("isDamaged");
         if (enemyStats.CurrentHP <= 0)
@@ -248,7 +249,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void OnDestroy()
     {
-        EnemyManager.Instance.DeRegisterEnemy(this);
+       // EnemyManager.Instance.DeRegisterEnemy(this);
     }
 
     public void SetData(EnemyData data)
