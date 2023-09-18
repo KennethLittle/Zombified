@@ -3,7 +3,12 @@ guid: a7fa87652e796e149bcf74bfcbfdef8f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paperman Material
+    second: {fileID: 2100000, guid: 34eac4f5bd687a844a48b967710ce1b2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

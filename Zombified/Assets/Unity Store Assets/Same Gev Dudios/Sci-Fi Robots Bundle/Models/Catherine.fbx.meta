@@ -3,7 +3,12 @@ guid: 371dce4e1cddc664dbe58267450ae1d8
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Catherine Material
+    second: {fileID: 2100000, guid: bf65fea03a3b02340a99cffb5ac15fc6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -16,8 +21,7 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
-      human bone 'LeftFoot' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
