@@ -17,7 +17,6 @@ public class ClosingInventory : MonoBehaviour, IPointerDownHandler
         if(pointerinfo.button == PointerEventData.InputButton.Left)
         {
             inventorySystem.closeInventory();
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
         }
     }
 
