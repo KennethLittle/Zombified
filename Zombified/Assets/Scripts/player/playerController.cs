@@ -156,8 +156,8 @@ public class playerController : MonoBehaviour, IDamage
 
     public void updatePlayerUI()
     {
-        PlayerEquipment.Instance.UpdateHPBar();
-        PlayerEquipment.Instance.UpdateStaminaBar();
+        UIManager.Instance.playerHPBar.fillAmount = (float)PlayerStat.Instance.HP / PlayerStat.Instance.HPMax;
+        UIManager.Instance.staminaBar.fillAmount = (float)PlayerStat.Instance.currentStamina / PlayerStat.Instance.stamina;
     }
 
     //void takeDamageSFXFinished()

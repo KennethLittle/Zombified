@@ -18,19 +18,19 @@ public class PlayerEquipment : MonoBehaviour
     private GameStateManager stateManager;
     private InputManager inputManagerData;
     public InventoryItem equippedWeapon;
-    public Transform firePoint;
+    private Transform firePoint;
     public GameObject HPMANACanvas;
 
     Image hpImage;
     Image staminaImage;
 
-    float maxHealth = PlayerStat.Instance.HPMax;
-    float stamina = PlayerStat.Instance.stamina;
+    float maxHealth = 100;
+    float stamina = 100;
     float maxDamage = 0;
     float maxArmor = 0;
 
-    public float currentHealth = PlayerStat.Instance.HP;
-    float currentStamina = PlayerStat.Instance.currentStamina;
+    public float currentHealth = 100;
+    float currentStamina = 100;
     float currentDamage = 0;
     float currentArmor = 0;
 
