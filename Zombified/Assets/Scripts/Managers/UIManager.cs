@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject activeMenu;
     public GameObject loseMenu;
     public GameObject escapeMenu;
-    public GameObject controlMenu;
+    public GameObject controlMenu, closecontrolMenu;
     public TextMeshProUGUI enemiesRemainingText;
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI ammoBoxAmount;
     public Image weaponIcon;
     public Canvas mainUICanvas;
-
+    private bool toggleControls;
     public GameObject pauseMenu;
     // Add other UI references as required
 
@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         TogglePauseMenu();
+        ToggleControlMenu();
 
         if (Input.GetKeyDown(KeyCode.Q)) // Let's say Q is the key to toggle the quest tracker.
         {
@@ -83,7 +84,12 @@ public class UIManager : MonoBehaviour
 
     public void ToggleControlMenu()
     {
-        controlMenu.SetActive(!controlMenu.activeSelf);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            toggleControls = !toggleControls;
+            controlMenu.SetActive(toggleControls);
+            closecontrolMenu.SetActive(!toggleControls);
+        }
     }
 
     public void UpdateEnemiesRemainingText(int count)
