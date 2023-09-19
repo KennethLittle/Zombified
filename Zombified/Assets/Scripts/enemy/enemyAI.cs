@@ -94,18 +94,16 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-        // TODO: Update the player's level in enemyStats. You need a way to access player's level.
-        // enemyStats.UpdatePlayerLevel(PlayerManager.instance.playerLevel); 
     }
 
     void Update()
     {
         float agentVel = agent.velocity.normalized.magnitude;
 
-       // if (canSeePlayer())
-        //{
-            //ChaseAndAttackPlayer();
-      //  }
+       if (canSeePlayer())
+       {
+            ChaseAndAttackPlayer();
+       }
         if (agent.remainingDistance < 0.05f)
         {
             StartCoroutine(roam());
@@ -228,19 +226,18 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         StartCoroutine(flashDamage());
-        enemyStats.CurrentHP -= amount; // Using stats from EnemyStat
+        enemyStats.CurrentHP -= amount;
         anim.SetTrigger("isDamaged");
+
         if (enemyStats.CurrentHP <= 0)
         {
             int xpReward = enemyStats.CalculateExperienceReward();
+            PlayerManager.instance.GetComponent<LevelUpSystem>().GainXP(xpReward); // Adding this line to award experience to the player
+
             isDead = true;
             pause = true;
-
             OnEnemyDeathEvent?.Invoke(this);
-
-            // Instead of directly modifying the gameManager, let the enemy manager handle it.
             EnemyManager.Instance.HandleEnemyDeath(this);
-
             anim.SetTrigger("isDead");
             Destroy(gameObject);
         }

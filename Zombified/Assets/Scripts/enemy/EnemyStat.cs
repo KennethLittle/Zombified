@@ -3,6 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyStat : MonoBehaviour
 {
+    public int enemyLevel;
     public int baseDamage;
     public int baseHP;
     public int baseDefense;
@@ -17,19 +18,13 @@ public class EnemyStat : MonoBehaviour
     [Range(0.1f, 5f)] public float hpMultiplier = 1.2f;
     [Range(0.1f, 5f)] public float defenseMultiplier = 1.1f;
 
-    private int playerLevel;
 
-    // Constructor
-    public EnemyStat(int playerLevel)
-    {
-        this.playerLevel = playerLevel;
-    }
 
     public int CurrentDamage
     {
         get
         {
-            return Mathf.RoundToInt(baseDamage * Mathf.Pow(damageMultiplier, playerLevel - 1));
+            return Mathf.RoundToInt(baseDamage * Mathf.Pow(damageMultiplier, PlayerStat.Instance.Level - 1));
         }
     }
 
@@ -47,28 +42,23 @@ public class EnemyStat : MonoBehaviour
     {
         get
         {
-            return Mathf.RoundToInt(baseDefense * Mathf.Pow(defenseMultiplier, playerLevel - 1));
+            return Mathf.RoundToInt(baseDefense * Mathf.Pow(defenseMultiplier, PlayerStat.Instance.Level - 1));
         }
     }
 
     // If you need to update the player's level on the fly
-    public void UpdatePlayerLevel(int newLevel)
+    public void UpdateEnemyLevelBasedOnPlayer()
     {
-        this.playerLevel = newLevel;
+        
+        enemyLevel = Mathf.Max(1, PlayerStat.Instance.Level + 2); // The enemy will be at most 2 levels below the player
     }
 
-    public int Level
-    {
-        get
-        {
-            return playerStat.Level;
-        }
-    }
     public int baseXP = 10;
 
     public int CalculateExperienceReward()
     {
-        return Mathf.RoundToInt(baseXP * Mathf.Pow(1 + (float)Level / 10, 2));
+        // This is a simplistic formula and might need tuning based on your game's balance
+        return baseXP * (1 + enemyLevel / 10);
     }
 
     public EnemyData ExtractData()
@@ -86,6 +76,7 @@ public class EnemyStat : MonoBehaviour
         }
 
         data.position = transform.position;
+        data.currentLevel = this.enemyLevel;
         data.currentHP = this.currentHP;
         data.baseDamage = this.baseDamage;
         data.baseDefense = this.baseDefense;

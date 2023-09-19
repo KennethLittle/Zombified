@@ -88,18 +88,6 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.stamina = stamina;
     }
 
-    int GetDamageFromItemStats()
-    {
-        foreach (ItemStats stat in currentEquippedItem.itemStats)
-        {
-            if (stat.attributeName == "Damage")
-            {
-                return stat.attributeValue;
-            }
-        }
-        return 0;
-    }
-
     IEnumerator Shooting()
     {
         WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
@@ -110,7 +98,7 @@ public class playerController : MonoBehaviour, IDamage
 
             float fireRate = weapon.fireRate;
             float shootDist = weapon.range;
-            int damage = GetDamageFromItemStats();
+            int damage = weapon.damage;
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
