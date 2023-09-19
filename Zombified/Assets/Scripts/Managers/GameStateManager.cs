@@ -36,8 +36,7 @@ public class GameStateManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 break;
             case GameState.Paused:
-                Time.timeScale = 0;
-                
+                Time.timeScale = 0;              
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
         }
