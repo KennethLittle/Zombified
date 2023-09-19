@@ -37,7 +37,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        if (Input.GetButtonDown("Shooting") && !isShooting && PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0)
+        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetButton("Shooting") && !isShooting )
         {
             StartCoroutine(Shooting());
         }
@@ -104,7 +104,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
 
-        while (weapon != null && weapon.ammoCurrent > 0)
+        while (weapon != null && weapon.ammoCurrent > 0 && Input.GetButton("Shooting"))
         {
             isShooting = true;
 
@@ -115,6 +115,7 @@ public class playerController : MonoBehaviour, IDamage
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
+
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
                 if (damageable != null)
                 {
@@ -126,14 +127,14 @@ public class playerController : MonoBehaviour, IDamage
                 Instantiate(weapon.projectilePrefab, weaponSlot.position, weaponSlot.rotation);
             }
 
-            // Deduct ammo
             weapon.ammoCurrent--;
             updatePlayerUI();
+
 
             float fireInterval = 1.0f / weapon.fireRate;
             yield return new WaitForSeconds(fireInterval);
             isShooting = false;
-            Debug.Log("Stopped Shooting");
+            
         }
     }
 
