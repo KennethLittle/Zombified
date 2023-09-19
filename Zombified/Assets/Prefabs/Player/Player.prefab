@@ -509,6 +509,26 @@ MonoBehaviour:
   playerStat: {fileID: 2315855857986874302}
   weaponSlot: {fileID: 6864760123799076420}
   playerInventoryUI: {fileID: 0}
+  currentEquippedItem:
+    itemName: 
+    itemID: 0
+    itemDescription: 
+    itemIcon: {fileID: 0}
+    itemModel: {fileID: 0}
+    itemValue: 1
+    itemType: 0
+    itemWeight: 0
+    maxStack: 1
+    indexItemInList: 999
+    rarity: 0
+    projectilePrefab: {fileID: 0}
+    fireRate: 0
+    range: 0
+    weaponDetails:
+      projectilePrefab: {fileID: 0}
+      fireRate: 0
+      range: 0
+    itemStats: []
   controller: {fileID: 6878703988354212238}
   anim: {fileID: 6864760123808088066}
   equippedWeapons:
@@ -703,7 +723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7721187921820246398}
   m_LocalRotation: {x: 0.30138224, y: -0, z: -0, w: 0.95350343}
-  m_LocalPosition: {x: 0.048, y: 1.834, z: 0.135}
+  m_LocalPosition: {x: 0.001, y: 1.641, z: 0.402}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -757,7 +777,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.25
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
