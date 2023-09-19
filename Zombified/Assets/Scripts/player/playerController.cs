@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage
@@ -25,6 +24,10 @@ public class playerController : MonoBehaviour, IDamage
     private bool isShooting;
     private bool isReloading = false;
     private float reloadDuration = 2.0f;
+    private bool lowHealthIsPlaying;
+    private bool walkVolume;
+    private bool footstepsIsPlaying;
+
 
     private void Start()
     {
@@ -40,14 +43,14 @@ public class playerController : MonoBehaviour, IDamage
         //        walkVolume = sound.volume;
         //    }
         //}
-        audioLHVolOrig = walkVolume;
+        //audioLHVolOrig = walkVolume;
     }
 
     void Update()
     {
         movement();
         sprint();
-        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetButton("Shooting") && !isShooting )
+        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetButton("Shooting") && !isShooting)
         {
             StartCoroutine(Shooting());
         }
@@ -132,7 +135,7 @@ public class playerController : MonoBehaviour, IDamage
             float fireInterval = 1.0f / weapon.fireRate;
             yield return new WaitForSeconds(fireInterval);
             isShooting = false;
-            
+
         }
     }
 
@@ -181,6 +184,12 @@ public class playerController : MonoBehaviour, IDamage
         {
             WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
 
+            UIManager.Instance.ammoCur.text = weapon.ammoCurrent.ToString();
+            UIManager.Instance.ammoMax.text = weapon.ammoMax.ToString();
+            UIManager.Instance.ammoBoxAmount.text = weapon.ammoAdditional.ToString();
+        }
+    }
+
     IEnumerator playLowHealth()
     {
         lowHealthIsPlaying = true;
@@ -221,10 +230,7 @@ public class playerController : MonoBehaviour, IDamage
         }
         //AudioManager.instance.PlaySound("LowHealth", AudioManager.instance.PlayerSounds);
         lowHealthIsPlaying = false;
-            UIManager.Instance.ammoCur.text = weapon.ammoCurrent.ToString();
-            UIManager.Instance.ammoMax.text = weapon.ammoMax.ToString();
-            UIManager.Instance.ammoBoxAmount.text = weapon.ammoAdditional.ToString();
-        }
+
     }
 
     void movement()
@@ -251,7 +257,7 @@ public class playerController : MonoBehaviour, IDamage
 
             if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
             {
-               // StartCoroutine(playFootsteps());
+                // StartCoroutine(playFootsteps());
             }
         }
     }
@@ -287,7 +293,7 @@ public class playerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax)
         {
-            lastJumpTime = Time.time;
+           // lastJumpTime = Time.time;
             //AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
 
             playerVelocity.y += playerStat.jumpHeight;
@@ -381,3 +387,4 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.currentStamina = playerStat.stamina;  // Optional: This line refills the player's stamina after increasing the max stamina.
     }
 }
+

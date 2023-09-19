@@ -10,7 +10,7 @@ public class LevelUpSystem : MonoBehaviour
     public int totalEarnedXP;
     public int requiredXP;
 
-    // No need for extraHP and extraStamina variables. We'll calculate them directly in the LevelUp function
+    
 
     public void GainXP(int xpAmount)
     {
@@ -46,5 +46,5 @@ public class LevelUpSystem : MonoBehaviour
     }
 
 
-    // Move the MarkRunStart and MarkRunEnd functions to GameManager or a similar appropriate class.
+    
 }
