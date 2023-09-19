@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject loseMenu;
     public GameObject escapeMenu;
     public GameObject controlMenu, closecontrolMenu;
+    public GameObject QuestTracker, QuestTrackeroff;
     public TextMeshProUGUI enemiesRemainingText;
     public TextMeshProUGUI waveNumberText;
     public Image playerHPBar;
@@ -124,7 +125,10 @@ public class UIManager : MonoBehaviour
 
     public void ToggleQuestTracker()
     {
-        
+        toggleControls = !toggleControls;
+        QuestTracker.SetActive(toggleControls);
+        QuestTrackeroff.SetActive(!toggleControls);
+
     }
 
     // Add other UI-related methods as required
