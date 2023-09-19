@@ -60,22 +60,20 @@ public class PlayerEquipment : MonoBehaviour
         InventorySystem.ItemEquip -= EquipWeapon;
     }
 
-    void EquipWeapon(InventoryItem item)
+    public void EquipWeapon(InventoryItem weaponItem)
     {
-        if (item.itemType == ItemType.Weapon)
-        {
-            equippedWeapon = item;
-            //add the weapon if you unequip the weapon
-        }
+        equippedWeapon = weaponItem;
+
+        equippedWeapon.weaponDetails = weaponItem.weaponDetails;
+
+        Debug.Log("Weapon Equipped with New stats");
     }
 
 
-    void UnEquipWeapon(InventoryItem item)
+    public void UnEquipWeapon(InventoryItem item)
     {
-        if (item.itemType == ItemType.Weapon)
-        {
-            //delete the weapon if you unequip the weapon
-        }
+        equippedWeapon = null;
+        Debug.Log("Weapon Unequipped!");
     }
 
     void OnBackpack(InventoryItem item)

@@ -24,13 +24,16 @@ MonoBehaviour:
     maxStack: 1
     indexItemInList: 999
     rarity: 1
-    projectilePrefab: {fileID: 0}
-    fireRate: 5
+    projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+    fireRate: 1
     range: 200
     weaponDetails:
-      projectilePrefab: {fileID: 0}
-      fireRate: 0
-      range: 0
+      projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+      fireRate: 0.5
+      range: 100
+      ammoCurrent: 30
+      ammoMax: 30
+      ammoAdditional: 120
     itemStats:
     - attributeName: Damage
       attributeValue: 50
@@ -52,6 +55,9 @@ MonoBehaviour:
       projectilePrefab: {fileID: 0}
       fireRate: 0
       range: 0
+      ammoCurrent: 0
+      ammoMax: 0
+      ammoAdditional: 0
     itemStats: []
   - itemName: MedPack
     itemID: 3
@@ -71,6 +77,9 @@ MonoBehaviour:
       projectilePrefab: {fileID: 0}
       fireRate: 0
       range: 0
+      ammoCurrent: 0
+      ammoMax: 0
+      ammoAdditional: 0
     itemStats:
     - attributeName: Heal
       attributeValue: 50
@@ -92,6 +101,9 @@ MonoBehaviour:
       projectilePrefab: {fileID: 0}
       fireRate: 0
       range: 0
+      ammoCurrent: 0
+      ammoMax: 0
+      ammoAdditional: 0
     itemStats:
     - attributeName: Ammo
       attributeValue: 30

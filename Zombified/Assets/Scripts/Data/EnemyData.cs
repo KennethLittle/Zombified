@@ -8,6 +8,7 @@ public class EnemyData
     public int currentHP;
     public int baseDamage;
     public int baseDefense;
+    public int currentLevel;
     // You can add more properties as needed, such as enemy type, level, etc.
 
     // Optional: If you want constructors or methods within this class, 

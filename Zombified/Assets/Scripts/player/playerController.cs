@@ -7,21 +7,13 @@ public class playerController : MonoBehaviour, IDamage
 {
     public PlayerStat playerStat;
     public Transform weaponSlot;
-    GameObject inventory;
-    GameObject craftSystem;
-    GameObject characterSystem;
-
-
-    public PlayerEquipment playerInventoryUI;
     public InventoryItem currentEquippedItem;
 
-    [Header("----- Character -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] Animator anim;
 
-
     [Header("----- Player Gun Stats -----")]
-    [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>(); // List of instantiated weapon game objects
+    [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>();
     public int currentWeaponIndex = 0;
 
     private float originalPlayerSpeed;
@@ -31,18 +23,11 @@ public class playerController : MonoBehaviour, IDamage
     private int jumpCount;
     private bool isSprinting;
     private bool isShooting;
-    private bool footstepsIsPlaying;
-    private bool lowHealthIsPlaying;
-    private float lastJumpTime = 0f;
-    private float jumpCooldown = 3f;
-    private float audioLHVolOrig;
-    private float walkVolume;
-
-    //private bool playingTakeDamageSFX = false;
+    private bool isReloading = false;
+    private float reloadDuration = 2.0f;
 
     private void Start()
     {
-
         originalPlayerSpeed = playerStat.playerSpeed;
         playerStat.HP = playerStat.HPMax;
         playerStat.currentStamina = playerStat.stamina;
@@ -62,20 +47,43 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        lowHealthSFX();
-        if (Input.GetButtonDown("Shooting") && !isShooting)
+        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetButton("Shooting") && !isShooting )
         {
             StartCoroutine(Shooting());
-            Debug.Log("Shooting");
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+        {
+            StartCoroutine(Reload());
+            updatePlayerUI();
+        }
     }
 
     public void EquipItem(InventoryItem item)
     {
         currentEquippedItem = item;
+
+        // If the equipped item is a weapon, set the weapon's details in the PlayerEquipment script.
+        if (item.itemType == ItemType.Weapon)
+        {
+            PlayerEquipment.Instance.EquipWeapon(item);
+        }
+
+        Debug.Log("Item Equipped!");
     }
 
+    public void UnEquipItem(InventoryItem item)
+    {
+        if (currentEquippedItem != null)
+        {
+            if (currentEquippedItem.itemType == ItemType.Weapon)
+            {
+                PlayerEquipment.Instance.UnEquipWeapon(item);
+            }
+            currentEquippedItem = null;
+            Debug.Log("Item Unequipped!");
+        }
+    }
 
     public void ResetToDefaults()
     {
@@ -90,48 +98,71 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.stamina = stamina;
     }
 
-    int GetDamageFromItemStats()
-    {
-        foreach (ItemStats stat in currentEquippedItem.itemStats)
-        {
-            if (stat.attributeName == "Damage")  // Compare attributeName to "Damage" string
-            {
-                return stat.attributeValue;  // Return the attributeValue for damage
-            }
-        }
-        return 0;  // Default to no damage if not found
-    }
-
     IEnumerator Shooting()
-    { 
-        while (PlayerEquipment.Instance.equippedWeapon != null)
+    {
+        WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
+
+        while (weapon != null && weapon.ammoCurrent > 0 && Input.GetButton("Shooting"))
         {
             isShooting = true;
 
-            float fireRate = currentEquippedItem.fireRate;
-            float shootDist = currentEquippedItem.range;
-            int damage = GetDamageFromItemStats();
+            float fireRate = weapon.fireRate;
+            float shootDist = weapon.range;
+            int damage = weapon.damage;
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
+
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
                 if (damageable != null)
                 {
                     damageable.takeDamage(damage);
                 }
-
             }
-            float fireInterval = 1.0f / PlayerEquipment.Instance.equippedWeapon.weaponDetails.fireRate;
+            if (weapon.projectilePrefab != null)
+            {
+                Instantiate(weapon.projectilePrefab, weaponSlot.position, weaponSlot.rotation);
+            }
+
+            weapon.ammoCurrent--;
+            updatePlayerUI();
+
+
+            float fireInterval = 1.0f / weapon.fireRate;
             yield return new WaitForSeconds(fireInterval);
             isShooting = false;
+            
         }
     }
-   
+
+    IEnumerator Reload()
+    {
+        if (PlayerEquipment.Instance.equippedWeapon != null)
+        {
+            WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
+
+            // If there's no need to reload, exit early
+            if (weapon.ammoCurrent >= weapon.ammoMax || weapon.ammoAdditional <= 0)
+                yield break;
+
+            isReloading = true;
+
+            // Wait for the reload duration
+            yield return new WaitForSeconds(reloadDuration);
+
+            int ammoNeeded = weapon.ammoMax - weapon.ammoCurrent; // Calculate the amount needed to fill the current ammo
+            int ammoToTransfer = Mathf.Min(ammoNeeded, weapon.ammoAdditional); // Determine the amount to transfer, considering the backup ammo
+
+            weapon.ammoCurrent += ammoToTransfer; // Add the transferred ammo to the current ammo
+            weapon.ammoAdditional -= ammoToTransfer; // Subtract the transferred ammo from the backup ammo
+
+            isReloading = false;
+        }
+    }
 
     public void takeDamage(int amount)
     {
-        // Plays damaged audio sfx - Plays a random damaged sfx from the range audioDamage at a volume defined by audioDamageVol 
         playerStat.HP -= amount;
         updatePlayerUI();
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
@@ -139,38 +170,16 @@ public class playerController : MonoBehaviour, IDamage
         {
             anim.SetTrigger("IsDead");
         }
-        //else
-        //{
-        //    if (!playingTakeDamageSFX)
-        //    {
-        //        AudioManager.instance.PlaySound("Take Damage", AudioManager.instance.PlayerSounds);
-        //        playingTakeDamageSFX = true;
-        //    }
-        //    else if (playingTakeDamageSFX)
-        //    {
-        //        Invoke("takeDamageSFXFinished", AudioManager.instance.PlayerSounds[5].clip.length);
-        //    }
-        //}
     }
 
     public void updatePlayerUI()
     {
         UIManager.Instance.playerHPBar.fillAmount = (float)PlayerStat.Instance.HP / PlayerStat.Instance.HPMax;
         UIManager.Instance.staminaBar.fillAmount = (float)PlayerStat.Instance.currentStamina / PlayerStat.Instance.stamina;
-    }
 
-    //void takeDamageSFXFinished()
-    //{
-    //    playingTakeDamageSFX = false;
-    //    Debug.Log("Audio Finished");
-    //}
-    void lowHealthSFX()
-    {
-        if (!lowHealthIsPlaying && playerStat.HP <= (playerStat.HPMax * 0.3))
+        if (PlayerEquipment.Instance.equippedWeapon != null)
         {
-            StartCoroutine((playLowHealth()));
-        }
-    }
+            WeaponDetails weapon = PlayerEquipment.Instance.equippedWeapon.weaponDetails;
 
     IEnumerator playLowHealth()
     {
@@ -212,6 +221,10 @@ public class playerController : MonoBehaviour, IDamage
         }
         //AudioManager.instance.PlaySound("LowHealth", AudioManager.instance.PlayerSounds);
         lowHealthIsPlaying = false;
+            UIManager.Instance.ammoCur.text = weapon.ammoCurrent.ToString();
+            UIManager.Instance.ammoMax.text = weapon.ammoMax.ToString();
+            UIManager.Instance.ammoBoxAmount.text = weapon.ammoAdditional.ToString();
+        }
     }
 
     void movement()
@@ -219,15 +232,10 @@ public class playerController : MonoBehaviour, IDamage
         groundedPlayer = controller.isGrounded;
 
         HandleGroundedState();
-
         HandlePlayerInput();
-
         ApplyGravity();
-
-        // Combine the movement from input and the velocity due to external forces.
         controller.Move((move + playerVelocity) * Time.deltaTime);
 
-        // Reset the IsJumping animation parameter if the player is grounded
         if (groundedPlayer)
         {
             anim.SetBool("IsJumping", false);
@@ -238,7 +246,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         if (groundedPlayer)
         {
-            playerVelocity.y = 0f; // Ensures the player does not accumulate downward velocity when grounded.
+            playerVelocity.y = 0f;
             jumpCount = 0;
 
             if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
@@ -256,41 +264,28 @@ public class playerController : MonoBehaviour, IDamage
 
         float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
 
+        // Simplified movement logic to remove audio dependencies.
         if (move != Vector3.zero)
         {
             if (groundedPlayer)
             {
-                if (isSprinting && playerStat.currentStamina > 0)
-                {
-                    move *= effectivePlayerSpeed * playerStat.playerSpeed;
-                    anim.SetBool("isWalking", false);
-                    anim.SetBool("isRunning", isSprinting);
-                }
-                else
-                {
-                    isSprinting = false;
-                    anim.SetBool("isWalking", true);
-                    anim.SetBool("isRunning", isSprinting);
-                    move *= playerStat.playerSpeed;
-                }
+                move *= (isSprinting && playerStat.currentStamina > 0) ? effectivePlayerSpeed * playerStat.playerSpeed : playerStat.playerSpeed;
+                anim.SetBool("isWalking", !isSprinting);
+                anim.SetBool("isRunning", isSprinting);
             }
             else
             {
-                // This preserves momentum while airborne.
                 move.x = playerVelocity.x;
                 move.z = playerVelocity.z;
             }
-
         }
         else
         {
             anim.SetBool("isWalking", false);
             anim.SetBool("isRunning", false);
-
         }
 
-        // Handle Jumping
-        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
+        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax)
         {
             lastJumpTime = Time.time;
             //AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
@@ -341,7 +336,7 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
         {
             isSprinting = true;
-            
+
         }
         else if (Input.GetButtonUp("Sprint") || playerStat.currentStamina <= 0) // Add stamina check here
         {
@@ -363,7 +358,6 @@ public class playerController : MonoBehaviour, IDamage
     public void ConsumeStamina(float amount)
     {
         playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina - amount, 0f, playerStat.stamina);
-
         if (playerStat.currentStamina <= 0f)
         {
             isSprinting = false;
@@ -373,31 +367,17 @@ public class playerController : MonoBehaviour, IDamage
     public void RegenerateStamina(float amount)
     {
         playerStat.currentStamina = Mathf.Clamp(playerStat.currentStamina + amount, 0f, playerStat.stamina);
-
-
     }
-
 
     public void IncreaseMaxHP(int amount)
     {
-        if (!gameManager.instance.isInRun)
-        {
-
-            playerStat.HPMax += amount;
-            playerStat.HP += amount;
-
-        }
+        playerStat.HPMax += amount;
+        playerStat.HP = playerStat.HPMax;  // Optional: This line refills the player's health after increasing the max HP.
     }
 
     public void IncreaseMaxStamina(int amount)
     {
-        if (!gameManager.instance.isInRun)
-        {
-
-            playerStat.stamina += amount;
-            playerStat.currentStamina += amount;
-
-        }
+        playerStat.stamina += amount;
+        playerStat.currentStamina = playerStat.stamina;  // Optional: This line refills the player's stamina after increasing the max stamina.
     }
-
 }

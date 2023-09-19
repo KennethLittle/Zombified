@@ -169,25 +169,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemName: 
+    itemName: Gun
     itemID: 1
-    itemDescription: 
-    itemIcon: {fileID: 0}
-    itemModel: {fileID: 0}
+    itemDescription: Basic Gun
+    itemIcon: {fileID: 21300000, guid: de31ce17d9ef0d44681da38244e979d1, type: 3}
+    itemModel: {fileID: 6412341303698808711}
     itemValue: 1
-    itemType: 0
-    itemWeight: 0
+    itemType: 1
+    itemWeight: 1
     maxStack: 1
     indexItemInList: 999
-    rarity: 0
-    projectilePrefab: {fileID: 0}
-    fireRate: 0
-    range: 0
+    rarity: 1
+    projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+    fireRate: 1
+    range: 500
     weaponDetails:
-      projectilePrefab: {fileID: 0}
-      fireRate: 0
-      range: 0
-    itemStats: []
+      projectilePrefab: {fileID: 5420704143360538605, guid: ec537ab3bf254bb4390935e81322a47e, type: 3}
+      fireRate: 1
+      range: 500
+      ammoCurrent: 30
+      ammoMax: 30
+      ammoAdditional: 120
+    itemStats:
+    - attributeName: Damage
+      attributeValue: 50
 --- !u!1 &6412341303698895637
 GameObject:
   m_ObjectHideFlags: 0
