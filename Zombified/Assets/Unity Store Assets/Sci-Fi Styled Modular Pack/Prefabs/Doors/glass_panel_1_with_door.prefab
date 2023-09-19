@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 435530}
-  - component: {fileID: 642925229033692321}
+  - component: {fileID: 518095437977446450}
   - component: {fileID: 3398946}
   - component: {fileID: 2341864}
   - component: {fileID: 6580822}
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 417258}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &642925229033692321
+--- !u!114 &518095437977446450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 127260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf2af0a804fdcf3499536177e320c96a, type: 3}
+  m_Script: {fileID: 11500000, guid: adcc06bb072575544802efd82317cc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   doorInteraction: {fileID: 0}
+  doorOpenHeight: 3
+  doorOpenSpeed: 1
 --- !u!33 &3398946
 MeshFilter:
   m_ObjectHideFlags: 0
