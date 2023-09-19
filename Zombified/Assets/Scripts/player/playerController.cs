@@ -48,13 +48,13 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.currentStamina = playerStat.stamina;
 
         //this is for the changing the rate and volume of footsteps
-        foreach (var sound in AudioManager.instance.PlayerSounds)
-        {
-            if (sound.name == "Footsteps")
-            {
-                walkVolume = sound.volume;
-            }
-        }
+        //foreach (var sound in AudioManager.instance.PlayerSounds)
+        //{
+        //    if (sound.name == "Footsteps")
+        //    {
+        //        walkVolume = sound.volume;
+        //    }
+        //}
         audioLHVolOrig = walkVolume;
     }
 
@@ -179,38 +179,38 @@ public class playerController : MonoBehaviour, IDamage
 
         if (playerStat.HP <= (playerStat.HPMax * 0.3) && playerStat.HP > (playerStat.HPMax * 0.2))
         {
-            foreach (var sound in AudioManager.instance.PlayerSounds)
-            {
-                if (sound.name == "Low Health")
-                {
-                    sound.volume = audioLHVolOrig + 0.2f;
-                }
-            }
+            //foreach (var sound in AudioManager.instance.PlayerSounds)
+            //{
+            //    if (sound.name == "Low Health")
+            //    {
+            //        sound.volume = audioLHVolOrig + 0.2f;
+            //    }
+            //}
             yield return new WaitForSeconds(2.0f);
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.2) && playerStat.HP > (playerStat.HPMax * 0.1))
         {
-            foreach (var sound in AudioManager.instance.PlayerSounds)
-            {
-                if (sound.name == "Low Health")
-                {
-                    sound.volume = audioLHVolOrig + 0.4f;
-                }
-            }
+            //foreach (var sound in AudioManager.instance.PlayerSounds)
+            //{
+            //    if (sound.name == "Low Health")
+            //    {
+            //        sound.volume = audioLHVolOrig + 0.4f;
+            //    }
+            //}
             yield return new WaitForSeconds(1.5f);
         }
         else if (playerStat.HP <= (playerStat.HPMax * 0.1) && playerStat.HPMax > 0)
         {
-            foreach (var sound in AudioManager.instance.PlayerSounds)
-            {
-                if (sound.name == "Low Health")
-                {
-                    sound.volume = audioLHVolOrig + 0.6f;
-                }
-            }
+            //foreach (var sound in AudioManager.instance.PlayerSounds)
+            //{
+            //    if (sound.name == "Low Health")
+            //    {
+            //        sound.volume = audioLHVolOrig + 0.6f;
+            //    }
+            //}
             yield return new WaitForSeconds(1.0f);
         }
-        AudioManager.instance.PlaySound("LowHealth", AudioManager.instance.PlayerSounds);
+        //AudioManager.instance.PlaySound("LowHealth", AudioManager.instance.PlayerSounds);
         lowHealthIsPlaying = false;
     }
 
@@ -243,7 +243,7 @@ public class playerController : MonoBehaviour, IDamage
 
             if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
             {
-                StartCoroutine(playFootsteps());
+               // StartCoroutine(playFootsteps());
             }
         }
     }
@@ -293,7 +293,7 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
-            AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
+            //AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
 
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
@@ -306,35 +306,35 @@ public class playerController : MonoBehaviour, IDamage
     }
 
     //Play footsteps sfx at a rate defined by footstepsRate
-    IEnumerator playFootsteps()
-    {
-        footstepsIsPlaying = true;
-        // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
+    //IEnumerator playFootsteps()
+    //{
+    //    footstepsIsPlaying = true;
+    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
 
-        AudioManager.instance.PlaySound("Footsteps", AudioManager.instance.PlayerSounds);
+    //    //AudioManager.instance.PlaySound("Footsteps", AudioManager.instance.PlayerSounds);
 
-        if (!isSprinting)
-        {
-            foreach (var sound in AudioManager.instance.PlayerSounds)
-            {
-                if (sound.name == "Footsteps")
-                {
-                    yield return new WaitForSeconds(sound.rate);
-                }
-            }
-        }
-        else
-        {
-            foreach (var sound in AudioManager.instance.PlayerSounds)
-            {
-                if (sound.name == "Footsteps")
-                {
-                    yield return new WaitForSeconds(sound.rate / 2);
-                }
-            }
-        }
-        footstepsIsPlaying = false;
-    }
+    //    //if (!isSprinting)
+    //    //{
+    //        //foreach (var sound in AudioManager.instance.PlayerSounds)
+    //        //{
+    //        //    if (sound.name == "Footsteps")
+    //        //    {
+    //        //        yield return new WaitForSeconds(sound.rate);
+    //        //    }
+    //        //}
+    //    //}
+    //    //else
+    //    //{
+    //        //foreach (var sound in AudioManager.instance.PlayerSounds)
+    //        //{
+    //        //    if (sound.name == "Footsteps")
+    //        //    {
+    //                yield return new WaitForSeconds(sound.rate / 2);
+    //        //    }
+    //        //}
+    //    //}
+    //    footstepsIsPlaying = false;
+    //}
 
     void sprint()
     {

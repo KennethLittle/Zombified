@@ -8,10 +8,11 @@ public class buttonFunctions : MonoBehaviour
 {
 
     public buttonFunctions loadGameButton;
-    public Slider musicSlider, sfxSlider;
+    public Slider musicSlider, ambiSlider, sfxSlider;
     public SaveUIManager saveUIManager;
     public int saveSlot = 0;
 
+    public AudioManager audioManager;
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
@@ -101,21 +102,31 @@ public class buttonFunctions : MonoBehaviour
 
     public void ToggleMuscic()
     {
-        AudioManager.instance.ToggleMusic();
+        audioManager.ToggleMusic();
+
+    }
+    public void ToggleAmbi()
+    {
+        audioManager.ToggleAmbi();
     }
     public void ToggleSFX()
     {
-        AudioManager.instance.ToggleSFX();
+        audioManager.ToggleSFX();
     }
-
     public void MusicVolume()
     {
-        AudioManager.instance.MusicVolume(musicSlider.value);
+        audioManager.MusicVolume(musicSlider.value);
     }
+
 
     public void SFXVolume()
     {
-        AudioManager.instance.SFXVolume(sfxSlider.value);
+        audioManager.SFXVolume(sfxSlider.value);
+    }
+
+    public void AmbiVolume()
+    {
+        audioManager.AmbiVolume(ambiSlider.value);
     }
 
     private void OnDestroy()

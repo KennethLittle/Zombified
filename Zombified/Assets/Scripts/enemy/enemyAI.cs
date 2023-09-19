@@ -86,13 +86,13 @@ public class enemyAI : MonoBehaviour, IDamage
        EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
         enemyID = nextID++;
-        foreach (var sound in AudioManager.instance.enemySFXSounds)
-        {
-            if (sound.name == "FootStep")
-            {
-                walkVolume = sound.volume;
-            }
-        }
+        //foreach (var sound in AudioManager.instance.enemySFXSounds)
+        //{
+        //    if (sound.name == "FootStep")
+        //    {
+        //        walkVolume = sound.volume;
+        //    }
+        //}
         audioLHVolOrig = walkVolume;
         // TODO: Update the player's level in enemyStats. You need a way to access player's level.
         // enemyStats.UpdatePlayerLevel(PlayerManager.instance.playerLevel); 
@@ -200,13 +200,13 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         robotIsGroaning = true;
 
-        AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
+       // AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
 
         yield return new WaitForSeconds(UnityEngine.Random.Range(10f, 30f));
 
         while (true)
         {
-            AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
+           // AudioManager.instance.PlaySound("RobotGroan", AudioManager.instance.enemySFXSounds);
             yield return new WaitForSeconds(UnityEngine.Random.Range(10f, 30f));
 
         }
@@ -244,7 +244,7 @@ public class enemyAI : MonoBehaviour, IDamage
             anim.SetTrigger("isDead");
             Destroy(gameObject);
         }
-        AudioManager.instance.PlaySound("TakeDamage", AudioManager.instance.enemySFXSounds);
+        //AudioManager.instance.PlaySound("TakeDamage", AudioManager.instance.enemySFXSounds);
     }
 
     IEnumerator flashDamage()
@@ -289,41 +289,41 @@ public class enemyAI : MonoBehaviour, IDamage
 
             if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && enemyStats.currentHP > 0)
             {
-                StartCoroutine(playFootsteps());
+                //StartCoroutine(playFootsteps());
             }
         }
     }
 
-    IEnumerator playFootsteps()
-    {
-        footstepsIsPlaying = true;
-        // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
+    //IEnumerator playFootsteps()
+    //{
+    //    footstepsIsPlaying = true;
+    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
 
-        AudioManager.instance.PlaySound("FootStep", AudioManager.instance.enemySFXSounds);
+    //    //AudioManager.instance.PlaySound("FootStep", AudioManager.instance.enemySFXSounds);
 
-        //// this code is for when we add a run feature to the enemy
-        //if (!isSprinting)
-        //{
-        //    foreach (var sound in AudioManager.instance.PlayerSounds)
-        //    {
-        //        if (sound.name == "Footsteps")
-        //        {
-        //            yield return new WaitForSeconds(sound.rate);
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        foreach (var sound in AudioManager.instance.PlayerSounds)
-        {
-            if (sound.name == "Footsteps")
-            {
-                yield return new WaitForSeconds(sound.rate / 2);
-            }
-        }
-        //}
-        footstepsIsPlaying = false;
-    }
+    //    //// this code is for when we add a run feature to the enemy
+    //    //if (!isSprinting)
+    //    //{
+    //    //    foreach (var sound in AudioManager.instance.PlayerSounds)
+    //    //    {
+    //    //        if (sound.name == "Footsteps")
+    //    //        {
+    //    //            yield return new WaitForSeconds(sound.rate);
+    //    //        }
+    //    //    }
+    //    //}
+    //    //else
+    //    //{
+    //    //foreach (var sound in AudioManager.instance.PlayerSounds)
+    //    //{
+    //    //    if (sound.name == "Footsteps")
+    //    //    {
+    //            yield return new WaitForSeconds(sound.rate / 2);
+    //    //    }
+    //    //}
+    //    //}
+    //    footstepsIsPlaying = false;
+    //}
 
 }
 
