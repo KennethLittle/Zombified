@@ -1,33 +1,27 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
-    public List<Quest> questTemplates; // Set these in the editor, these are your ScriptableObjects
+    public List<Quest> questTemplates;
     public List<QuestRuntime> quests = new List<QuestRuntime>();
-    public int currentQuestIndex = 0;
-    public int currentQuestStepIndex = 0;
-    public QuestRuntime CurrentQuest
-    {
-        get
-        {
-            if (currentQuestIndex < 0 || currentQuestIndex >= quests.Count)
-            {
-                Debug.LogError("CurrentQuest access error. Index out of range: " + currentQuestIndex);
-                return null;
-            }
-            return quests[currentQuestIndex];
-        }
-    }
     public QuestUIManager questUIManager;
+
+    public int currentQuestIndex = 0;
+
+    public QuestRuntime CurrentQuest => quests.Count > currentQuestIndex ? quests[currentQuestIndex] : null;
+
+    public int currentQuestID { get; private set; }
 
     private void Awake()
     {
-        InitializeQuests();
+        InitializeSingleton();
+    }
+
+    private void InitializeSingleton()
+    {
         if (instance == null)
         {
             instance = this;
@@ -35,105 +29,75 @@ public class QuestManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Multiple instances of QuestManager found. Destroying one.");
             Destroy(gameObject);
         }
+    }
 
-
+    public void InitializeQuests()
+    {
+        foreach (Quest questTemplate in questTemplates)
+        {
+            quests.Add(new QuestRuntime(questTemplate, questTemplate.questID));
+            UpdateQuestUI();
+        }
 
         foreach (QuestRuntime quest in quests)
         {
             quest.OnQuestCompleted += HandleQuestCompletion;
         }
-    }
 
-    private void InitializeQuests()
-    {
-        foreach (Quest questTemplate in questTemplates)
+        Debug.Log($"Total quests initialized: {quests.Count}");
+
+        if (quests.Count > 0 && quests[0].CurrentStep.blueprint.stepDialogue != null)
         {
-            quests.Add(new QuestRuntime(questTemplate));
+            TriggerDialogue(quests[0].CurrentStep.blueprint.stepDialogue);
         }
-
-        Debug.Log("Total quests initialized: " + quests.Count);
     }
 
     public void ProgressToNextStepOrQuest()
     {
-        if (CurrentQuest.IsQuestComplete)
-        {
-            // Move on to the next quest
-            currentQuestIndex++;
-            OnQuestOrStepChanged();
+        if (CurrentQuest == null) return;
 
-            // Check if the new currentQuestIndex is within the bounds of the quests list
-            if (currentQuestIndex < quests.Count)
-            {
-                // Start the next quest
-                OnQuestOrStepChanged();
-                StartQuest();
-            }
-            else
-            {
-                // All quests are completed. Implement any logic you want here, for example:
-                Debug.Log("All quests are completed!");
-                // Or call a method like EndGame(), ShowCompletionCutscene(), etc.
-            }
+        // Check if the current step is the final step of the quest
+        bool isFinalStep = CurrentQuest.currentStepIndex == CurrentQuest.stepsRuntime.Count - 1;
+        Debug.Log($"Is final step of quest ID {CurrentQuest.questID}: {isFinalStep}");
+
+        if (CurrentQuest.IsQuestComplete || isFinalStep)
+        {
+            HandleQuestCompletion(CurrentQuest);
         }
         else
         {
-            CurrentQuest.currentStepIndex++;
-            Debug.Log("Setting current step ID to: " + CurrentQuest.currentStepIndex);
-            SaveManager.Instance.GameData.currentQueststepID = CurrentQuest.currentStepIndex;
-            CurrentQuest.CurrentStep.StartStep();
+            CurrentQuest.ProgressToNextStepOrQuest();
             OnQuestOrStepChanged();
         }
     }
-
-    public void StartQuest(int startingStepIndex = 0)
-    {
-        if (currentQuestIndex >= quests.Count || currentQuestIndex < 0)
-        {
-            Debug.LogError("Current quest index out of bounds: " + currentQuestIndex);
-            return;
-        }
-
-        // Set the step index for the quest
-        if (QuestManager.instance.CurrentQuest.currentStepIndex == 0)
-        {
-            CurrentQuest.currentStepIndex = 0;
-        }
-
-
-        // Start the current step of the quest
-        CurrentQuest.CurrentStep.StartStep();
-        OnQuestOrStepChanged();
-        SaveManager.Instance.SaveGame();
-    }
-
 
     public void HandleQuestCompletion(QuestRuntime completedQuest)
     {
         int nextQuestIndex = quests.IndexOf(completedQuest) + 1;
         if (nextQuestIndex < quests.Count)
         {
+            Debug.Log($"Progressing from Quest {completedQuest.questID} to Quest {quests[nextQuestIndex].questID}");
             currentQuestIndex = nextQuestIndex;
             quests[nextQuestIndex].CurrentStep.StartStep();
             OnQuestOrStepChanged();
         }
         else
         {
-            // All quests completed. You can put end-game logic or whatever you want here.
+            Debug.Log("All quests are completed!");
         }
     }
 
-    public void StartFirstQuest()
+    public void OnQuestOrStepChanged()
     {
-        Debug.Log("Inside StartFirstQuest method");
-        if (quests.Count > 0)
-        {
-            quests[0].CurrentStep.StartStep();
-            OnQuestOrStepChanged();
-        }
+        if (CurrentQuest == null) return;
+
+        Debug.Log($"Starting Step with ID: {CurrentQuest.CurrentStep.stepID} for Quest with ID: {CurrentQuest.questID}"); // Added log
+
+        string questName = CurrentQuest.blueprint.questName;
+        string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
+        questUIManager.UpdateQuestUI(questName, questStepDescription);
     }
 
     public void TriggerDialogue(Dialogue dialogue)
@@ -172,35 +136,37 @@ public class QuestManager : MonoBehaviour
         // Clear any existing quests
         quests.Clear();
 
-        // Repopulate quests based on saved data
-        for (int i = 0; i < savedQuestData.Count; i++)
+        foreach (QuestSaveData questData in savedQuestData)
         {
-            // Assuming the order of saved quests matches the order in questTemplates
-            if (i >= questTemplates.Count)
+            Quest correspondingTemplate = questTemplates.FirstOrDefault(q => q.questID == questData.questID);
+
+            if (correspondingTemplate == null)
             {
-                Debug.LogError("Mismatch in number of saved quests and quest templates.");
-                break;
+                Debug.LogError($"No quest template found for questID: {questData.questID}");
+                continue;
             }
 
-            Quest questTemplate = questTemplates[i];
+            QuestRuntime loadedQuest = new QuestRuntime(correspondingTemplate, correspondingTemplate.questID);
+            loadedQuest.currentStepIndex = questData.currentStepIndex;
 
-            // Create a new runtime quest instance based on the saved data and template
-            QuestRuntime loadedQuest = new QuestRuntime(questTemplate);
+            // Load the state of each step using the saved data
+            for (int i = 0; i < questData.questStepSaveData.Count; i++)
+            {
+                QuestStepSaveData stepSaveData = questData.questStepSaveData[i];
+                QuestStepRuntime step = loadedQuest.stepsRuntime[i];
 
-            // Here you populate the data from savedQuestData[i] into loadedQuest 
-            // For example:
-            loadedQuest.currentStepIndex = savedQuestData[i].currentStepIndex;
+                step.isCompleted = stepSaveData.isCompleted;
 
-           
-            //... Load other necessary data ...
+                // ... Load other necessary data for the step ...
+            }
 
             quests.Add(loadedQuest);
         }
 
-        // Update current quest index based on saved data (if you've saved the current quest index)
-        // currentQuestIndex = ...;
+        // Update current quest index based on saved data
+        currentQuestIndex = savedQuestData.FirstOrDefault(q => q.questID == currentQuestID)?.currentStepIndex ?? -1;
 
-        // Optional: Trigger some UI or other systems to update based on the loaded quests
+        // Update UI based on loaded quests
         OnQuestOrStepChanged();
     }
 
@@ -226,7 +192,7 @@ public class QuestManager : MonoBehaviour
         }
 
         // Ensure the stepID is within the bounds of the quest's steps
-        if (stepID < 0 || stepID >= CurrentQuest.blueprint.questSteps.Count)
+        if (stepID < 0 || stepID >= CurrentQuest.stepsRuntime.Count)
         {
             Debug.LogError("Step ID " + stepID + " is out of bounds for current quest.");
             return;
@@ -239,25 +205,54 @@ public class QuestManager : MonoBehaviour
         OnQuestOrStepChanged();
     }
 
-    // Call this method whenever you progress to a new step or quest:
-    public void OnQuestOrStepChanged()
+    public int GetCurrentQuestID()
     {
-        UpdateQuestUI();
+        if (CurrentQuest != null)
+        {
+            return CurrentQuest.questID;
+            // Assuming each QuestRuntime has a property or field named 'questID'
+        }
+        else
+        {
+            return -1; // Return an invalid value to indicate no current quest
+        }
+    }
+
+    // This method returns the ID of the currently active quest step
+    public int GetCurrentQuestStepID()
+    {
+        if (CurrentQuest != null && CurrentQuest.CurrentStep != null)
+        {
+            return CurrentQuest.CurrentStep.stepID;
+            // Assuming each QuestStepRuntime has a property or field named 'stepID'
+        }
+        else
+        {
+            return -1; // Return an invalid value to indicate no current quest step
+        }
     }
 
 
-    public void NotifyItemFound(GameObject founditem)
+    public void NotifyItemFound(int foundItemID)
     {
+        if (CurrentQuest == null) return;
+
         QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+
         if (!currentStep.isCompleted && currentStep.blueprint is FindItemQuestStep findItemQuest)
         {
-            findItemQuest.RegisterItemFound(founditem);
+            findItemQuest.RegisterItemFound(foundItemID);
             currentStep.TryCompleteStep();
 
             if (currentStep.isCompleted)
             {
-                CurrentQuest.ProgressToNextStepOrQuest();
+                Debug.Log($"Step with ID: {currentStep.stepID} is completed using NotifyItemFound for Quest with ID: {CurrentQuest.questID}");
+                ProgressToNextStepOrQuest();
                 OnQuestOrStepChanged();
+            }
+            else
+            {
+                Debug.Log($"Item found but step with ID: {currentStep.stepID} for Quest with ID: {CurrentQuest.questID} is not yet complete.");
             }
         }
     }

@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
   m_Name: HomeBase
   m_EditorClassIdentifier: 
-  questID: 1
+  questID: 0
   questName: HomeBase
   questSteps:
   - {fileID: 11400000, guid: 2e1934c7d3fd9dd49b6e18f8b9143aee, type: 2}
-  - {fileID: 11400000, guid: fc9a3e43565fe9f4582ec118497888ec, type: 2}
-  currentStepIndex: 0
+  - {fileID: 11400000, guid: 440ec6d5ab0bbd24ca6066bc4d0e512f, type: 2}

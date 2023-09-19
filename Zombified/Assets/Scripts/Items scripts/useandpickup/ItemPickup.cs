@@ -57,7 +57,7 @@ public class ItemPickup : MonoBehaviour
             else if (inventorysetup.ItemsInInventory.Count < (inventorysetup.width * inventorysetup.height))
             {
                 inventorysetup.addItemToInventory(item.itemID, item.itemValue);
-                QuestManager.instance.NotifyItemFound(this.gameObject);
+                QuestManager.instance.NotifyItemFound(item.itemID);
                 inventorysetup.updateItemList();
                 inventorysetup.UpdateStackableItems();
                 Destroy(this.gameObject);

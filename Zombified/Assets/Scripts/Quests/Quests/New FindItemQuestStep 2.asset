@@ -17,8 +17,10 @@ MonoBehaviour:
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'Now that were here, there are a couple documents we need to grab. '
-    - The first one is by all the robots. It might be about how they are made. FInd
-      that book for me.
-  stepID: 1
-  requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
+    - 'Head to Alpha Station, theres a Intel Book there we need to Collect. '
+    - 'I heard it was by a bunch of robots, that are being getting ready to be sent
+      out. '
+  stepID: 3
+  requiredItemID: 2
+  requiredItemCount: 0
+  currentItemFoundCount: 0

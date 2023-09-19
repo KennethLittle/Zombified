@@ -7,10 +7,12 @@ public class InteractObjectQuestStep : QuestStep
 {
     public GameObject objectType;
 
-    public void RegisterObjectInteraction(GameObject interactedObjectType) 
-    { 
-        if(!isCompleted && interactedObjectType == objectType)
-            TryCompleteStep();
+    public void RegisterObjectInteraction(GameObject interactedObjectType)
+    {
+        if (!isCompleted && interactedObjectType == objectType)
+        {
+            isCompleted = CheckCompletion();
+        }
     }
 
     public override bool CheckCompletion()

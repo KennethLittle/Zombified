@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerStat playerStat;
     public LevelUpSystem levelSystem;
     public static PlayerData TempPlayerData = null;
-    
+
 
     void Awake()
     {
@@ -27,21 +27,14 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Spawn player if not found
         
+        // Spawn player if not found
+
     }
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null)
-        {
-            SpawnPlayer();
-        }
-        else
-        {
-            playerScript = player.GetComponent<playerController>();
-        }
+        SpawnPlayer();
     }
 
     public void SpawnPlayer(PlayerData data = null)
@@ -85,7 +78,7 @@ public class PlayerManager : MonoBehaviour
                 if (questID >= 0) // Assuming that valid quest IDs are non-negative.
                 {
                     questManager.SetCurrentQuestByID(questID);
-                    questManager.SetCurrentQuestStepByID(questID);
+                    questManager.SetCurrentQuestStepByID(data.currentQuestStepIndex);
                 }
                 else
                 {
@@ -94,10 +87,9 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                questManager.StartQuest();
-                Debug.Log("Quest Started");
+                questManager.InitializeQuests(); // Initialize quests for the first time
+                Debug.Log("Quest Initialized");
             }
         }
     }
-
 }

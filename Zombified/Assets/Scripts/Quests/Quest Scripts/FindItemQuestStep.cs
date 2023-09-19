@@ -5,23 +5,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New FindItemQuestStep", menuName = "Quests/FindItemQuestStep")]
 public class FindItemQuestStep : QuestStep
 {
-    public GameObject requiredItem;
-    private int requiredItemCount;
-    private int currentItemFoundCount;
+    public int requiredItemID;  // Change from GameObject to int
+    public int requiredItemCount;
+    public int currentItemFoundCount;
 
-    public FindItemQuestStep(GameObject itemToFind, int countToFind)
+    public FindItemQuestStep(int itemIDToFind, int countToFind)
     {
-        requiredItem = itemToFind;
+        requiredItemID = itemIDToFind;
         requiredItemCount = countToFind;
         currentItemFoundCount = 0;
     }
 
-    public void RegisterItemFound(GameObject foundItem)
+    public void RegisterItemFound(int foundItemID)
     {
-        if(!isCompleted && foundItem == requiredItem)
+        if (!isCompleted && foundItemID == requiredItemID)
         {
             currentItemFoundCount++;
-            TryCompleteStep();
+            isCompleted = CheckCompletion();
         }
     }
 

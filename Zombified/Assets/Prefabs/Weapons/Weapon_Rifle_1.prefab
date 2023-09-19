@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6412341303699100165}
   - component: {fileID: 6412341303695691575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,8 +96,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6412341303699156697}
   - component: {fileID: 6412341303691677079}
-  - component: {fileID: -2981547621431756997}
-  m_Layer: 0
+  - component: {fileID: 37506005}
+  - component: {fileID: 37506002}
+  m_Layer: 7
   m_Name: Weapon_Rifle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +143,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-2981547621431756997
+--- !u!135 &37506005
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6412341303698808711}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &37506002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemName: 
-    itemID: 0
+    itemID: 1
     itemDescription: 
     itemIcon: {fileID: 0}
     itemModel: {fileID: 0}
@@ -183,7 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6412341303699148411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WeaponGrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6412341303699172415}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

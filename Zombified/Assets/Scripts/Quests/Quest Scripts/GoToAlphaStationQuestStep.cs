@@ -16,6 +16,7 @@ public class GoToAlphaStationQuestStep : QuestStep
         if (!isCompleted)
         {
             SceneManager.LoadScene("Alpha Stain");
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             isCompleted = true;
         }
     }

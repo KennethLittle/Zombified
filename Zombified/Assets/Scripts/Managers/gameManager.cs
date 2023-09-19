@@ -73,7 +73,7 @@ public class gameManager : MonoBehaviour
         Debug.Log("QuestManager instance: " + questManager);
         if (questManager != null)
         {
-            questManager.StartFirstQuest();
+            questManager.InitializeQuests();
             Debug.Log("Started First QUest");
         }
         // If you have default game states for enemies or other elements, you'd set them up here as well.

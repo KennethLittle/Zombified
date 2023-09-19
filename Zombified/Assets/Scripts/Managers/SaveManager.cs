@@ -76,14 +76,16 @@ public class SaveManager : MonoBehaviour
         GameData data = JsonUtility.FromJson<GameData>(jsonData);
         Debug.Log("Loading quest ID: " + data.activeQuestID);
         QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
+
         if (data.currentQueststepID > 0)
         {
-            QuestManager.instance.StartQuest(data.currentQueststepID);
+            QuestManager.instance.SetCurrentQuestStepByID(data.currentQueststepID);
         }
         else
         {
-            QuestManager.instance.StartQuest();  // Starts a new quest from the beginning
+            QuestManager.instance.InitializeQuests();  // Initialize quests for the first time
         }
+
         return data;
     }
 

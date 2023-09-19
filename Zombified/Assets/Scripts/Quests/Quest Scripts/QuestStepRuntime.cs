@@ -1,26 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestStepRuntime
 {
     public QuestStep blueprint;
     public bool isCompleted;
+    public int stepID;
 
-    public QuestStepRuntime(QuestStep originalStep)
+    public QuestStepRuntime(QuestStep originalStep, int id)
     {
+        stepID = id; // Assign the ID
         blueprint = originalStep;
     }
 
     public void StartStep()
     {
-        if (blueprint.stepDialogue != null)
+        if (blueprint.stepDialogue != null && DialogueManager.instance != null)
         {
             DialogueManager.instance.StartDialogue(blueprint.stepDialogue);
         }
-        else
+        else if (blueprint.stepDialogue == null)
         {
-            Debug.LogWarning("No dialogue set for quest step: " + blueprint.description);
+            Debug.LogWarning($"No dialogue set for quest step: {blueprint.description}");
         }
     }
 
@@ -28,9 +28,17 @@ public class QuestStepRuntime
 
     public void TryCompleteStep()
     {
-        if (CheckCompletion())
+        Debug.Log($"Checking if Step with ID: {this.stepID} can be completed.");
+
+        // The conditions to complete the step
+        if (true)
         {
-            isCompleted = true;
+            this.isCompleted = true;
+            Debug.Log($"Successfully completed Step with ID: {this.stepID}.");
+        }
+        else
+        {
+            Debug.Log($"Failed to complete Step with ID: {this.stepID}. Conditions not met.");
         }
     }
 
@@ -38,6 +46,7 @@ public class QuestStepRuntime
     {
         return new QuestStepSaveData()
         {
+            stepID = this.stepID,  // Save the stepID
             isCompleted = this.isCompleted
             // Add other fields as needed
         };
@@ -45,7 +54,7 @@ public class QuestStepRuntime
 
     public void LoadFromSaveData(QuestStepSaveData data)
     {
-        this.isCompleted = data.isCompleted;
+        this.stepID = data.stepID;
         // Load other fields as needed
     }
 }

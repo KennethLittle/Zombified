@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+    public TextMeshProUGUI continuePrompt;
     public Image dialogueBox;
     public Queue<string> sentences;
     public static DialogueManager instance;
@@ -28,6 +29,15 @@ public class DialogueManager : MonoBehaviour
     {
         sentences = new Queue<string>();
         instance = this;
+        continuePrompt.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F)) 
+        {
+            DisplayNextSentence();
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -39,10 +49,9 @@ public class DialogueManager : MonoBehaviour
         foreach (string sentence in dialogue.sentences)
             sentences.Enqueue(sentence);
         Debug.Log("Starting dialogue: " + dialogue.sentences);
-        StartCoroutine(FadeInDialogueBox());
+        UIManager.Instance.showDialogueBox();
         DisplayNextSentence();
-
-        StartCoroutine(WaitAndEndDialogue(5.0f));
+        continuePrompt.gameObject.SetActive(true);
     }
 
     public void DisplayNextSentence()
@@ -50,6 +59,9 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            continuePrompt.gameObject.SetActive(false);
+
+
             return;
         }
 
@@ -70,36 +82,10 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
-        StartCoroutine(FadeOutDialogueBox());
+        UIManager.Instance.hideDialogueBox();
     }
 
-    IEnumerator FadeInDialogueBox()
-    {
-        UIManager.Instance.showDialogueBox(); // Show dialogue box before starting the fade in
-        Color tempColor = dialogueBox.color;
-
-        while (tempColor.a < 1f)
-        {
-            tempColor.a += Time.deltaTime;
-            dialogueBox.color = tempColor;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeOutDialogueBox()
-    {
-        Color tempColor = dialogueBox.color;
-
-        while (tempColor.a > 0f)
-        {
-            tempColor.a -= Time.deltaTime;
-            dialogueBox.color = tempColor;
-            yield return null;
-        }
-
-        UIManager.Instance.hideDialogueBox(); // Hide dialogue box after the fade out process is complete
-    }
-
+    
     IEnumerator WaitAndEndDialogue(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);

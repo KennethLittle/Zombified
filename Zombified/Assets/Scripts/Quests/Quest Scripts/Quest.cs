@@ -8,17 +8,6 @@ public class Quest : ScriptableObject
     public int questID;
     public string questName;
     public List<QuestStep> questSteps; // Holds references to QuestStep ScriptableObjects
-    public int currentStepIndex = 0;
-
-    public bool IsQuestComplete => currentStepIndex >= questSteps.Count;
-
-    public void ProceedToNextStep()
-    {
-        if (!IsQuestComplete)
-        {
-            currentStepIndex++;
-        }
-    }
 }
 
 

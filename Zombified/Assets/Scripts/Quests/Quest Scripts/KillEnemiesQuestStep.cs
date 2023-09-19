@@ -12,10 +12,10 @@ public class KillEnemiesQuestStep : QuestStep
 
     public void RegisterEnemyKill(GameObject killedEnemyType)
     {
-        if(!isCompleted && killedEnemyType ==  EnemyPrefab)
+        if (!isCompleted && killedEnemyType == EnemyPrefab)
         {
             currentKillCount++;
-            TryCompleteStep();
+            isCompleted = CheckCompletion();
         }
     }
 

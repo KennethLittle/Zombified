@@ -56,7 +56,6 @@ public class playerController : MonoBehaviour, IDamage
             }
         }
         audioLHVolOrig = walkVolume;
-        PlayerManager.instance.SpawnPlayer(); 
     }
 
     void Update()

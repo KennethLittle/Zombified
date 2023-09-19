@@ -46,11 +46,10 @@ public class buttonFunctions : MonoBehaviour
 
     public void ReturntoHomeBase()
     {
-        PlayerData data = new PlayerData(PlayerManager.instance);
-        PlayerManager.TempPlayerData = data;
         int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 1;
         SceneManager.LoadScene(previousSceneIndex);
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        UIManager.Instance.pauseMenu.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
   m_Name: New FindItemQuestStep
   m_EditorClassIdentifier: 
-  description: Find the second Intel Book in the office upstairs.
-  isCompleted: 0
+  description: Grab the gun
+  isCompleted: 1
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Great You found the first one, the second one will tell us how to dismantle
-      their weapon surpression system.
-    - Find that one, I heard it was upstairs in the office.
-  stepID: 1
-  requiredItem: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
+    - That intel book, has everything you need to know about Alpha Station, or at
+      least what we have.
+    - Grab that gun on the wall and lets get ready to go to Alpha Station.
+  stepID: 2
+  requiredItemID: 1
+  requiredItemCount: 0
+  currentItemFoundCount: 1

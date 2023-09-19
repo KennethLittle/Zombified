@@ -57,15 +57,31 @@ public class PlayerData
             if (questManager.CurrentQuest != null)
             {
                 currentQuestStepIndex = questManager.CurrentQuest.currentStepIndex;
-            }
-            else
-            {
-                currentQuestStepIndex = -1; // Invalid value to signify no current step
+
+                questsSaveData = new List<QuestSaveData>();
+
+                foreach (var quest in questManager.quests)
+                {
+                    QuestSaveData questData = new QuestSaveData();
+                    questData.questID = quest.questID;
+                    questData.currentStepIndex = quest.currentStepIndex;
+
+                    foreach (var step in quest.stepsRuntime)
+                    {
+                        QuestStepSaveData stepData = new QuestStepSaveData
+                        {
+                            isCompleted = step.isCompleted,
+                            stepID = step.stepID,
+                            // ... Set other properties of the step ...
+                        };
+
+                        questData.questStepSaveData.Add(stepData);
+                    }
+
+                    questsSaveData.Add(questData);
+                }
             }
         }
-
-        // As before, the other data (currentQuest, currentLocation, currentInventory) 
-        // will be set outside of this constructor when you have those systems in place.
     }
 
     public void LoadDataIntoPlayer(PlayerManager playerManager)

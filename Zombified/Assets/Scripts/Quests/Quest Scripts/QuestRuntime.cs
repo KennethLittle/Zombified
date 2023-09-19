@@ -1,47 +1,48 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestRuntime
 {
-    public Quest blueprint; // The original Quest ScriptableObject
-    public int currentStepIndex = 0;
     public int questID;
+    public Quest blueprint;
+    public int currentStepIndex = 0;
     public List<QuestStepRuntime> stepsRuntime = new List<QuestStepRuntime>();
-    public delegate void QuestCompletedHandler(QuestRuntime completedQuest);
-    public event QuestCompletedHandler OnQuestCompleted;
-    public QuestManager manager;
 
-    public QuestRuntime(Quest originalQuest)
-    {
-        blueprint = originalQuest;
-        foreach (var step in originalQuest.questSteps)
-        {
-            stepsRuntime.Add(new QuestStepRuntime(step));
-        }
-    }
+    public event Action<QuestRuntime> OnQuestCompleted;
 
     public bool IsQuestComplete => currentStepIndex >= stepsRuntime.Count;
 
     public QuestStepRuntime CurrentStep => stepsRuntime[currentStepIndex];
 
+    public QuestRuntime(Quest originalQuest, int id)
+    {
+        questID = id; // Assign the ID
+        blueprint = originalQuest;
+        foreach (var step in originalQuest.questSteps)
+        {
+            stepsRuntime.Add(new QuestStepRuntime(step, stepsRuntime.Count)); // Assigning IDs to steps based on their order
+        }
+    }
+
     public void ProgressToNextStepOrQuest()
     {
-        if (IsQuestComplete)
-        {
-            manager.HandleQuestCompletion(this);
-        }
-        else
+        if (currentStepIndex < stepsRuntime.Count - 1)  // Ensure we're not at the last step already
         {
             currentStepIndex++;
             CurrentStep.StartStep();
         }
-    }
-    public void CheckQuestCompletion()
-    {
-        if (IsQuestComplete)
+        else if (IsQuestComplete)
         {
             OnQuestCompleted?.Invoke(this);
+        }
+    }
+
+    public void ProceedToNextStep()
+    {
+        if (!IsQuestComplete)
+        {
+            currentStepIndex++;
         }
     }
 
@@ -49,6 +50,7 @@ public class QuestRuntime
     {
         QuestSaveData saveData = new QuestSaveData()
         {
+            questID = this.questID,  // Save the questID
             currentStepIndex = this.currentStepIndex
         };
 
@@ -62,7 +64,7 @@ public class QuestRuntime
 
     public void LoadFromSaveData(QuestSaveData data)
     {
-        this.currentStepIndex = data.currentStepIndex;
+        this.questID = data.questID;
 
         for (int i = 0; i < data.questStepSaveData.Count; i++)
         {
