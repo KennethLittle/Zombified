@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource MusicSource;
-    public AudioSource AmbiSource;
+    [Header("-------Music & Ambi-------")]
+    public AudioSource MusicSource1;
+    public AudioSource AmbiSource1;
+
+    [Header("-------For Track Fading-------")]
+    public AudioSource MusicSource2;
+    public AudioSource AmbiSource2;
+
+    [Header("-------All Other Sources-------")]
     public AudioSource SFXSource;
+
+    [Header("-------Audio Arrays-------")]
     public AudioClip[] HBTracks;
     public AudioClip[] HBAmbi;
     public AudioClip[] OSTracks;
@@ -20,54 +30,40 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        PlayHomeBase();
-
+        AudioFunctionalities.PlayRandomClip(MusicSource1, HBTracks);
+        AudioFunctionalities.PlayRandomClip(AmbiSource1, HBAmbi);
 
     }
+
     void PlaySound(AudioSource source, AudioClip clip)
     {
         source.clip = clip;
         source.Play();
     }
 
-    //public void SwapTrack(AudioClip[] newMusic, AudioClip[] newAmbi)
-    //{
-
-    //}
-    public void PlayHomeBase()
-    {
-        AudioFunctionalities.PlayRandomClip(MusicSource, HBTracks);
-        AudioFunctionalities.PlayRandomClip(AmbiSource, HBAmbi);
-    }
-    public void PlayOutSide()
-    {
-        AudioFunctionalities.PlayRandomClip(MusicSource, OSTracks);
-        AudioFunctionalities.PlayRandomClip(AmbiSource, OSAmbi);
-    }
-
 
     public void ToggleMusic()
     {
-        MusicSource.mute = !MusicSource.mute;
+        MusicSource1.mute = !MusicSource1.mute;
     }
 
     public void ToggleAmbi()
     {
-        AmbiSource.mute = !AmbiSource.mute;
+        AmbiSource1.mute = !AmbiSource1.mute;
     }
 
     public void MusicVolume(float volume)
     {
-        MusicSource.volume = volume;
+        MusicSource1.volume = volume;
     }
 
     public void AmbiVolume(float volume)
     {
-        AmbiSource.volume = volume;
+        AmbiSource1.volume = volume;
     }
     public void ToggleSFX()
     {
-        SFXSource.mute = !AmbiSource.mute;
+        SFXSource.mute = !AmbiSource1.mute;
     }
 
     public void SFXVolume(float volume)

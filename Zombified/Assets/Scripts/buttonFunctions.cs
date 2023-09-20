@@ -121,7 +121,6 @@ public class buttonFunctions : MonoBehaviour
 
     public void MouseSensitivity()
     {
-
         cameraController.MouseSensitivity((int)mouseSensitivity.value);
     }
 
