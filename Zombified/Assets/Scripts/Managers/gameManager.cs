@@ -42,7 +42,6 @@ public class gameManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Multiple instances of gameManager found. Destroying one.");
             Destroy(gameObject);
         }
     }
@@ -58,7 +57,6 @@ public class gameManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        Debug.Log("StartNewGame called");
         // Set up a new game using default player data
         PlayerData defaultPlayerData = PlayerData.GetDefaultPlayerData();
 
@@ -68,11 +66,9 @@ public class gameManager : MonoBehaviour
 
         // Update game state with the default player data
         defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
-        Debug.Log("QuestManager instance: " + questManager);
         if (questManager != null)
         {
             questManager.InitializeQuests();
-            Debug.Log("Started First QUest");
         }
         // If you have default game states for enemies or other elements, you'd set them up here as well.
     }

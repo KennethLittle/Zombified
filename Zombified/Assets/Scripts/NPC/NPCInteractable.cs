@@ -14,6 +14,5 @@ public class NPCInteractable : MonoBehaviour
     public void Interact()
     {
         animator.SetTrigger("Talk");
-        Debug.Log("Interact");
     }
 }

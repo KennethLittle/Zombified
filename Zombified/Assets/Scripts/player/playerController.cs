@@ -69,8 +69,6 @@ public class playerController : MonoBehaviour, IDamage
         {
             PlayerEquipment.Instance.EquipWeapon(item);
         }
-
-        Debug.Log("Item Equipped!");
     }
 
     public void UnEquipItem(InventoryItem item)
@@ -82,7 +80,6 @@ public class playerController : MonoBehaviour, IDamage
                 PlayerEquipment.Instance.UnEquipWeapon(item);
             }
             currentEquippedItem = null;
-            Debug.Log("Item Unequipped!");
         }
     }
 
