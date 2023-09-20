@@ -61,6 +61,7 @@ public class QuestManager : MonoBehaviour
         // Check if the current step is the final step of the quest
         bool isFinalStep = CurrentQuest.currentStepIndex == CurrentQuest.stepsRuntime.Count - 1;
         Debug.Log($"Is final step of quest ID {CurrentQuest.questID}: {isFinalStep}");
+        SaveManager.Instance.SaveGame();
 
         if (CurrentQuest.IsQuestComplete || isFinalStep)
         {

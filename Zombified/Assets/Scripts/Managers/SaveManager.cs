@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Unity.Burst;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
     public GameData GameData;
-    
+    private QuestManager questManager;
+    private GameData tempLoadedData = null;
+    private bool isNewGameTriggered = false;    
 
-    private const string SAVE_FILENAME = "newSave{0}.json";
+    private const string SAVE_FILENAME = "saveGame.json"; // Only one save file.
     public static SaveManager Instance { get; private set; }
 
     private void Awake()
@@ -28,13 +28,14 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private string GetSavePath(int saveSlot)
+    private string GetSavePath()
     {
-        return Path.Combine(Application.persistentDataPath, string.Format(SAVE_FILENAME, saveSlot));
+        return Path.Combine(Application.persistentDataPath, SAVE_FILENAME);
     }
 
-    public void SaveGame(int saveSlot = 0)
+    public void SaveGame()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
         PlayerData pD = new PlayerData(PlayerManager.instance);
 
         List<QuestSaveData> questSaveDataList = new List<QuestSaveData>();
@@ -43,29 +44,25 @@ public class SaveManager : MonoBehaviour
             questSaveDataList.Add(QuestDataConverter.ConvertQuestToSaveData(qr));
         }
 
-
         List<EnemyData> eD = (EnemyManager.Instance != null) ? EnemyManager.Instance.GetAllEnemyData() : new List<EnemyData>();
 
         // Save the game data
-        GameData gameData = new GameData(pD, eD, questSaveDataList);
+        GameData gameData = new GameData(pD, eD, questSaveDataList, currentScene);
         string jsonData = JsonUtility.ToJson(gameData);
-        File.WriteAllText(GetSavePath(saveSlot), jsonData);
+        File.WriteAllText(GetSavePath(), jsonData);
 
-        if (eD.Count == 0)
-            Debug.Log("Game saved without enemy data.");
-        else
-            Debug.Log("Game saved with all data.");
+        Debug.Log("Game saved with all data.");
     }
 
-    public GameData LoadGame(int saveSlot)
+    public GameData LoadGame()
     {
-        if (!File.Exists(GetSavePath(saveSlot)))
+        if (!File.Exists(GetSavePath()))
         {
             Debug.LogError("Save file not found!");
             return null;
         }
 
-        string jsonData = File.ReadAllText(GetSavePath(saveSlot));
+        string jsonData = File.ReadAllText(GetSavePath());
 
         if (string.IsNullOrEmpty(jsonData))
         {
@@ -74,6 +71,10 @@ public class SaveManager : MonoBehaviour
         }
 
         GameData data = JsonUtility.FromJson<GameData>(jsonData);
+
+        tempLoadedData = data;  // Assign to temporary data
+        LoadSceneAndApplyData(data.sceneName);
+
         Debug.Log("Loading quest ID: " + data.activeQuestID);
         QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
 
@@ -87,6 +88,74 @@ public class SaveManager : MonoBehaviour
         }
 
         return data;
+    }
+
+    public void NewGame()
+    {
+        File.Delete(GetSavePath()); // Delete the current save file.
+
+        isNewGameTriggered = true;
+
+        SceneManager.LoadScene("HomeBase");
+    }
+
+    private void LoadSceneAndApplyData(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (isNewGameTriggered)
+        {
+            ApplyNewGameData();
+            isNewGameTriggered = false; // Reset the flag.
+        }
+        else
+        {
+            ApplyLoadedData();
+        }
+    }
+
+
+
+    private void ApplyLoadedData()
+    {
+        if (tempLoadedData != null)
+        {
+            // Your original logic to apply the loaded data goes here
+            Debug.Log("Loading quest ID: " + tempLoadedData.activeQuestID);
+            QuestManager.instance.SetCurrentQuestByID(tempLoadedData.activeQuestID);
+
+            if (tempLoadedData.currentQueststepID > 0)
+            {
+                QuestManager.instance.SetCurrentQuestStepByID(tempLoadedData.currentQueststepID);
+            }
+            else
+            {
+                QuestManager.instance.InitializeQuests();  // Initialize quests for the first time
+            }
+
+            // Clear the temporary data
+            tempLoadedData = null;
+            Debug.Log("Data applied to the loaded scene.");
+        }
+    }
+
+    private void ApplyNewGameData()
+    {
+        PlayerData defaultPlayerData = PlayerData.GetDefaultPlayerData();
+        PlayerManager.instance.playerScript = PlayerManager.instance.player.GetComponent<playerController>();
+
+        // Update game state with the default player data
+        defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
+        Debug.Log("QuestManager instance: " + questManager);
+        if (questManager != null)
+        {
+            questManager.InitializeQuests();
+            Debug.Log("Started First Quest");
+        }
     }
 
     public class QuestDataConverter
@@ -122,62 +191,6 @@ public class SaveManager : MonoBehaviour
             return stepData;
         }
 
-        // If I decide to save Dialogue:
-        // private static DialogueSaveData ConvertDialogueToSaveData(Dialogue dialogue)
-        // {
-        //     DialogueSaveData dialogueData = new DialogueSaveData();
-        //     // Fill in the details
-        //     return dialogueData;
-        // }
-    }
-
-    public bool DoesSaveGameExist(int saveSlot)
-    {
-        return File.Exists(GetSavePath(saveSlot));
-    }
-
-    // List all save files
-    public List<string> GetAllSaveFiles()
-    {
-        var allSaveFiles = Directory.GetFiles(Application.persistentDataPath, "*.json")
-                                     .Select(Path.GetFileName)
-                                     .ToList();
-        return allSaveFiles;
-    }
-
-    public int GetNextSaveSlot()
-    {
-        List<string> saveFiles = GetAllSaveFiles();
-        int maxSlotNumber = 0;
-
-        foreach (string saveFile in saveFiles)
-        {
-            string slotString = saveFile.Replace("newSave", "").Replace(".json", "");
-            if (int.TryParse(slotString, out int currentSlot))
-            {
-                if (currentSlot > maxSlotNumber)
-                {
-                    maxSlotNumber = currentSlot;
-                }
-            }
-        }
-
-        return maxSlotNumber + 1;
-    }
-
-    public void RenameSaveFile(int saveSlot, string newName)
-    {
-        string oldPath = GetSavePath(saveSlot);
-        string newPath = Path.Combine(Application.persistentDataPath, newName + ".json");
-
-        if (File.Exists(oldPath))
-        {
-            File.Move(oldPath, newPath);
-        }
-        else
-        {
-            Debug.LogError("File doesn't exist: " + oldPath);
-        }
     }
 
 }

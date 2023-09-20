@@ -9,7 +9,6 @@ public class buttonFunctions : MonoBehaviour
 
     public buttonFunctions loadGameButton;
     public Slider musicSlider, ambiSlider, sfxSlider;
-    public SaveUIManager saveUIManager;
     public int saveSlot = 0;
 
     public AudioManager audioManager;
@@ -69,35 +68,17 @@ public class buttonFunctions : MonoBehaviour
 
     public void SaveGame()
     {
-        gameManager.instance.SaveGameState();
+        SaveManager.Instance.SaveGame();
     }
 
     public void LoadGame()
     {
-        
-        if (saveUIManager)
-        {
-            saveUIManager.OpenSavePanel();
-            UIManager.Instance.pauseMenu.SetActive(false); // Deactivate pause menu
-        }
-        else
-        {
-            Debug.LogError("No SaveUIManager found in the scene!");
-        }
-
+        SaveManager.Instance.LoadGame();
     }
 
     public void NewGame()
     {
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        gameManager.instance.StartNewGame();
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SaveManager.Instance.NewGame();
     }
 
     public void ToggleMuscic()
@@ -129,10 +110,6 @@ public class buttonFunctions : MonoBehaviour
         audioManager.AmbiVolume(ambiSlider.value);
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
 
 }
