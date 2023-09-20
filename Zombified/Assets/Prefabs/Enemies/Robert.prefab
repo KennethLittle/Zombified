@@ -418,7 +418,7 @@ MonoBehaviour:
   animChangeSpeed: 5
   roamTimer: 3
   baseXP: 10
-  attackRate: 1
+  attackRate: 5.5
   roamRadius: 10
   detectionRange: 20
   audioSFX: {fileID: 0}
@@ -438,10 +438,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84279c59c8f6e8c4ab23353eff8e8ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 15
+  enemyLevel: 0
+  baseDamage: 1
   baseHP: 35
   baseDefense: 15
-  currentHP: 50
+  currentHP: 15
   damageMultiplier: 1.2
   hpMultiplier: 1.5
   defenseMultiplier: 0.8
@@ -477,7 +478,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 300
