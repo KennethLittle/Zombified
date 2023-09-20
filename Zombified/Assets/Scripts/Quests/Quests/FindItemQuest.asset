@@ -17,3 +17,4 @@ MonoBehaviour:
   questSteps:
   - {fileID: 11400000, guid: 32762aaca7893fd4398ae74829fcc7b0, type: 2}
   - {fileID: 11400000, guid: 73ebfc9d9772b934aa8fe5c2374926df, type: 2}
+  - {fileID: 11400000, guid: 74c4099ed131a7c43a4bbcf9b392135f, type: 2}

@@ -31,7 +31,7 @@ public class QuestStepRuntime
         Debug.Log($"Checking if Step with ID: {this.stepID} can be completed.");
 
         // The conditions to complete the step
-        if (true)
+        if (blueprint.CheckCompletion())
         {
             this.isCompleted = true;
             Debug.Log($"Successfully completed Step with ID: {this.stepID}.");

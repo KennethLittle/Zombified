@@ -264,6 +264,9 @@ public class QuestManager : MonoBehaviour
         if (!currentStep.isCompleted && currentStep.blueprint is KillEnemiesQuestStep killEnemyQuest)
         {
             killEnemyQuest.RegisterEnemyKill(killedEnemyType);
+            string questName = CurrentQuest.blueprint.questName;
+            string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
+            questUIManager.UpdateQuestUI(questName, questStepDescription);
             currentStep.TryCompleteStep();
             if (currentStep.isCompleted)
             {

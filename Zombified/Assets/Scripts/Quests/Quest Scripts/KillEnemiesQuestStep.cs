@@ -8,7 +8,7 @@ public class KillEnemiesQuestStep : QuestStep
 {
     public GameObject EnemyPrefab;
     public int requiredKillCount;
-    private int currentKillCount;
+    public int currentKillCount;
 
     public void RegisterEnemyKill(GameObject killedEnemyType)
     {
@@ -22,5 +22,10 @@ public class KillEnemiesQuestStep : QuestStep
     public override bool CheckCompletion()
     {
         return currentKillCount >= requiredKillCount;
+    }
+
+    public int GetCurrentKillCount()
+    {
+        return currentKillCount;
     }
 }

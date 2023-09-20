@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3202c3a916a617a4285e9f6d9e331a43, type: 3}
   m_Name: New KillEnemiesQuestStep
   m_EditorClassIdentifier: 
-  description: 
+  description: Kill {0}/{20} Robots
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
@@ -21,3 +21,4 @@ MonoBehaviour:
   stepID: 3
   EnemyPrefab: {fileID: 2058362945976864181, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
   requiredKillCount: 20
+  currentKillCount: 0

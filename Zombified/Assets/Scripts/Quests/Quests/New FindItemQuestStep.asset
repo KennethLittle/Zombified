@@ -22,5 +22,5 @@ MonoBehaviour:
     - Grab that gun on the wall and lets get ready to go to Alpha Station.
   stepID: 2
   requiredItemID: 1
-  requiredItemCount: 0
+  requiredItemCount: 1
   currentItemFoundCount: 1
