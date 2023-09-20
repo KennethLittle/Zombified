@@ -223,8 +223,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (enemyStats.CurrentHP <= 0)
         {
-            enabled = false;
             anim.SetTrigger("isDead");
+            enabled = false;
             int xpReward = enemyStats.CalculateExperienceReward();
             isDead = true;
             OnEnemyDeathEvent?.Invoke(this);

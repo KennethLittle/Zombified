@@ -48,7 +48,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
-        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetButton("Shooting") && !isShooting)
+        if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetMouseButton(0) && !isShooting)
         {
             StartCoroutine(Shooting());
         }
@@ -108,7 +108,7 @@ public class playerController : MonoBehaviour, IDamage
         while (weapon != null && weapon.ammoCurrent > 0 && Input.GetButton("Shooting"))
         {
             isShooting = true;
-
+            anim.SetTrigger("isShooting");
             float fireRate = weapon.fireRate;
             float shootDist = weapon.range;
             int damage = weapon.damage;
@@ -150,7 +150,7 @@ public class playerController : MonoBehaviour, IDamage
                 yield break;
 
             isReloading = true;
-
+            anim.SetTrigger("isReloading");
             // Wait for the reload duration
             yield return new WaitForSeconds(reloadDuration);
 
@@ -166,6 +166,7 @@ public class playerController : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
+        anim.SetTrigger("isHit");
         playerStat.HP -= amount;
         updatePlayerUI();
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
