@@ -789,14 +789,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -7103596828700182417, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
-      propertyPath: currentHP
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: -7103596828700182417, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
-      propertyPath: baseDamage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1718992546597132047, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -844,14 +836,6 @@ PrefabInstance:
     - target: {fileID: 2058362945976864181, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: m_Name
       value: Robert
-      objectReference: {fileID: 0}
-    - target: {fileID: 7758100425780072615, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
-      propertyPath: attackRate
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7872316344858786172, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
-      propertyPath: m_Speed
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
@@ -1840,6 +1824,10 @@ PrefabInstance:
     - target: {fileID: 4040071378236188530, guid: f8516e18fa02b8c4d82ba86d1eaa1f75, type: 3}
       propertyPath: enemiesToSpawn
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040071378236188530, guid: f8516e18fa02b8c4d82ba86d1eaa1f75, type: 3}
+      propertyPath: enemyDamageMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4040071378236188530, guid: f8516e18fa02b8c4d82ba86d1eaa1f75, type: 3}
       propertyPath: timeBetweenEnemySpawns
