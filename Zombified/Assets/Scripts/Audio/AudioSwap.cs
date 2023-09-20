@@ -8,30 +8,44 @@ public class AudioSwap : MonoBehaviour
     private bool inside = true;
     private void OnTriggerEnter(Collider other)
     {
-        //if (inside == true)
-        //    inside = false;
-        //else if (inside == false)
-        //    inside = true;
-
-        if (other.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
-            if (inside)
-            {
-                inside = false;
-                AudioSource.MusicSource.Stop();
-                AudioSource.AmbiSource.Stop();
-                AudioSource.PlayOutSide();
-            }
-            else
-            {
-                inside = true;
-                AudioSource.MusicSource.Stop();
-                AudioSource.AmbiSource.Stop();
-                AudioSource.PlayHomeBase();
-            }
-
+            StopAllCoroutines();
+            StartCoroutine(FadeTrack());
         }
     }
+    private IEnumerator FadeTrack()
+    {
+        float timeToFade = 0.25f;
+        float timeElapsed = 0;
+        if (inside)
+        {
+            AudioFunctionalities.PlayRandomClip(AudioSource.MusicSource2, AudioSource.OSTracks);
+            AudioFunctionalities.PlayRandomClip(AudioSource.AmbiSource2, AudioSource.OSAmbi);
+            while (timeElapsed < timeToFade)
+            {
+                AudioSource.MusicSource2.volume = Mathf.Lerp(0, 1, timeElapsed / timeToFade);
+                AudioSource.MusicSource1.volume = Mathf.Lerp(1, 0, timeElapsed / timeToFade);
+                timeElapsed += Time.deltaTime;
+                yield return new WaitForSeconds(.5f);
+            }
+            AudioSource.MusicSource1.Stop();
+            AudioSource.AmbiSource1.Stop();
+        }
+        else
+        {
+            AudioFunctionalities.PlayRandomClip(AudioSource.MusicSource1, AudioSource.HBTracks);
+            AudioFunctionalities.PlayRandomClip(AudioSource.AmbiSource1, AudioSource.HBAmbi);
+            while (timeElapsed < timeToFade)
+            {
+                AudioSource.MusicSource1.volume = Mathf.Lerp(0, 1, timeElapsed/ timeToFade);
+                AudioSource.MusicSource2.volume = Mathf.Lerp(1, 0, timeElapsed/ timeToFade);
+                timeElapsed += Time.deltaTime;
+                yield return new WaitForSeconds(.5f);
+            }
+            AudioSource.MusicSource2.Stop();
+            AudioSource.AmbiSource2.Stop();
+        }
+        inside = false;
+    }
 }
-
-
