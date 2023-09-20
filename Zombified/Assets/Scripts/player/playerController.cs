@@ -262,8 +262,7 @@ public class playerController : MonoBehaviour, IDamage
         float verticalInput = Input.GetAxis("Vertical");
         move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
         float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
-       // controller.Move(move * Time.deltaTime * playerStats.playerSpeed);
-
+        move.Normalize();
         // Simplified movement logic to remove audio dependencies.
         if (move != Vector3.zero)
         {
@@ -278,7 +277,11 @@ public class playerController : MonoBehaviour, IDamage
                 move.x = playerVelocity.x;
                 move.z = playerVelocity.z;
             }
-            PlayerSounds.PlayFootstep(move);
+            if (move.normalized.magnitude > 0f && !isJumping)
+            {
+                //playerVelocity = move * playerStat.playerSpeed;
+                PlayerSounds.PlayFootstep(move * effectivePlayerSpeed);
+            }
 
         }
         else
@@ -304,36 +307,6 @@ public class playerController : MonoBehaviour, IDamage
         // anim.SetBool("IsJumping", false);
     }
 
-    //Play footsteps sfx at a rate defined by footstepsRate
-    //IEnumerator playFootsteps()
-    //{
-    //    footstepsIsPlaying = true;
-    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
-
-    //    //AudioManager.instance.PlaySound("Footsteps", AudioManager.instance.PlayerSounds);
-
-    //    //if (!isSprinting)
-    //    //{
-    //        //foreach (var sound in AudioManager.instance.PlayerSounds)
-    //        //{
-    //        //    if (sound.name == "Footsteps")
-    //        //    {
-    //        //        yield return new WaitForSeconds(sound.rate);
-    //        //    }
-    //        //}
-    //    //}
-    //    //else
-    //    //{
-    //        //foreach (var sound in AudioManager.instance.PlayerSounds)
-    //        //{
-    //        //    if (sound.name == "Footsteps")
-    //        //    {
-    //                yield return new WaitForSeconds(sound.rate / 2);
-    //        //    }
-    //        //}
-    //    //}
-    //    footstepsIsPlaying = false;
-    //}
 
     void sprint()
     {
