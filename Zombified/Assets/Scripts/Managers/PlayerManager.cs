@@ -10,7 +10,6 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerPrefab;
     public playerController playerScript;
     public PlayerStat playerStat;
-    public LevelUpSystem levelSystem;
     public static PlayerData TempPlayerData = null;
 
 

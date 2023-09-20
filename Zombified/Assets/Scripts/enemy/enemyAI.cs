@@ -232,7 +232,6 @@ public class enemyAI : MonoBehaviour, IDamage
         if (enemyStats.CurrentHP <= 0)
         {
             int xpReward = enemyStats.CalculateExperienceReward();
-            PlayerManager.instance.GetComponent<LevelUpSystem>().GainXP(xpReward); // Adding this line to award experience to the player
 
             isDead = true;
             pause = true;
