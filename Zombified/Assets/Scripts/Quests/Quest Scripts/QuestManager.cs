@@ -248,6 +248,7 @@ public class QuestManager : MonoBehaviour
             if (currentStep.isCompleted)
             {
                 Debug.Log($"Step with ID: {currentStep.stepID} is completed using NotifyItemFound for Quest with ID: {CurrentQuest.questID}");
+                SaveManager.Instance.SaveGame();
                 ProgressToNextStepOrQuest();
                 OnQuestOrStepChanged();
             }
@@ -266,7 +267,6 @@ public class QuestManager : MonoBehaviour
             killEnemyQuest.RegisterEnemyKill(killedEnemyType);
             string questName = CurrentQuest.blueprint.questName;
             string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
-            questUIManager.UpdateQuestUI(questName, questStepDescription);
             currentStep.TryCompleteStep();
             if (currentStep.isCompleted)
             {
