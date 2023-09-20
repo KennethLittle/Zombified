@@ -672,6 +672,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2315855857986874302, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: HPMax
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -737,6 +741,10 @@ PrefabInstance:
       propertyPath: currentHP
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: -7103596828700182417, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
+      propertyPath: baseDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1718992546597132047, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -784,6 +792,14 @@ PrefabInstance:
     - target: {fileID: 2058362945976864181, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: m_Name
       value: Robert
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758100425780072615, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
+      propertyPath: attackRate
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872316344858786172, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
+      propertyPath: m_Speed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3039c78ee4854f3408269611653dc92a, type: 3}

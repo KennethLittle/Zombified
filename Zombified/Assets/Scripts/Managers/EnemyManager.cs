@@ -53,6 +53,7 @@ public class EnemyManager : MonoBehaviour
         // Handle XP gain, game goals, and other logic related to enemy death.
         SpawnerManager.instance.EnemyDefeated();
         QuestManager.instance.NotifyEnemyKilled(enemyPrefab);
+        
     }
 
     public List<EnemyData> GetAllEnemyData()

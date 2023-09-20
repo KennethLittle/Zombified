@@ -5,7 +5,7 @@ using TMPro;
 public class QuestUIManager : MonoBehaviour
 {
     public Image questTracker;
-    public QuestUIManager instance;
+    public static QuestUIManager instance;
 
     // Call this method to update the Quest and Step text
 
