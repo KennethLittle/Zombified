@@ -169,6 +169,7 @@ public class playerController : MonoBehaviour, IDamage
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
         if (playerStat.HP <= 0)
         {
+            UIManager.Instance.YouDeadSucka();
             anim.SetTrigger("IsDead");
         }
     }
@@ -248,23 +249,18 @@ public class playerController : MonoBehaviour, IDamage
 
     void HandleGroundedState()
     {
-        if (IsJumping)
+
+        if (groundedPlayer)
         {
-            PlayerSounds.LandEmote();
+            playerVelocity.y = 0f;
+            jumpCount = 0;
         }
 
         playerVelocity.y = 0f;
-        playerVelocity.x = 0f;
-        playerVelocity.z = 0f;// Ensures the player does not accumulate downward velocity when grounded.
-        jumpCount = 0;
-        IsJumping = false;
+        
 
         //Handle FootStepSFX
-        if (move.normalized.magnitude > 0f && !IsJumping)
-        {
-            playerVelocity = move * playerStat.playerSpeed;
-            PlayerSounds.PlayFootstep(playerVelocity);
-        }
+        
     }
 
     void HandlePlayerInput()
@@ -272,7 +268,6 @@ public class playerController : MonoBehaviour, IDamage
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
-        move.Normalize();
         float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
        // controller.Move(move * Time.deltaTime * playerStats.playerSpeed);
 
@@ -300,11 +295,16 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
-            //playerVelocity.y = Mathf.Sqrt(JumpHeight * -2f * GravityValue);
+            //playerVelocity.y = Mathf.Sqrt(playerStat.JumpHeight * -2f * GravityValue);
             PlayerSounds.JumpEmote();
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
             IsJumping = true;
+        }
+        else
+        {
+            PlayerSounds.LandEmote();
+            IsJumping= false;
 
         }
     }
