@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerEquipment : MonoBehaviour
 {
+    private InventorySystem inventory;
     public static PlayerEquipment Instance;
     private PlayerStat playerstat;
     public GameObject inventorysetup;
@@ -72,6 +73,46 @@ public class PlayerEquipment : MonoBehaviour
     public void UnEquipWeapon(InventoryItem item)
     {
         equippedWeapon = null;
+    }
+
+    public void UseItem(InventoryItem item)
+    {
+        switch (item.itemType)
+        {
+            case ItemType.AmmoBox:
+                UseAmmo(item);
+                break;
+            case ItemType.MedPack:
+                UseMedpack(item);
+                break;
+        }
+
+    }
+
+    public void UseAmmo(InventoryItem ammoItem)
+    {
+        if (equippedWeapon != null) // Assumes that your weapon uses ammo
+        {
+            equippedWeapon.weaponDetails.ammoAdditional += ammoItem.ammoDetails.ammo;
+            PlayerManager.instance.playerScript.updatePlayerUI();
+        }
+        // Remove the ammo item from inventory after use
+        inventory.deleteItemFromInventoryWithGameObject(ammoItem);
+    }
+
+    public void UseMedpack(InventoryItem medpackItem)
+    {
+        PlayerStat.Instance.HP += medpackItem.medpackDetails.healingValue;
+        // Ensure player's HP doesn't exceed maxHealth
+        if (PlayerStat.Instance.HP > PlayerStat.Instance.HPMax)
+        {
+            PlayerStat.Instance.HP = PlayerStat.Instance.HPMax;
+            PlayerManager.instance.playerScript.updatePlayerUI();
+
+        }
+
+        // Remove the medpack from inventory after use
+        inventory.deleteItemFromInventoryWithGameObject(medpackItem);
     }
 
     void OnBackpack(InventoryItem item)
@@ -330,7 +371,6 @@ public class PlayerEquipment : MonoBehaviour
                 GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
             }
         }
-
 
     }
 }

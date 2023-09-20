@@ -52,12 +52,15 @@ public class playerController : MonoBehaviour, IDamage
         {
             StartCoroutine(Shooting());
         }
+        
 
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             StartCoroutine(Reload());
             updatePlayerUI();
         }
+
+        
     }
 
     public void EquipItem(InventoryItem item)
@@ -82,6 +85,8 @@ public class playerController : MonoBehaviour, IDamage
             currentEquippedItem = null;
         }
     }
+
+   
 
     public void ResetToDefaults()
     {

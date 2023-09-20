@@ -7304,6 +7304,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8136875087826041396, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
+      propertyPath: slotItemTypes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8136875087826041396, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
+      propertyPath: slotItemTypes.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8136875087826041396, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
+      propertyPath: slotItemTypes.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45281222d6000484095c4f6cbfc15b6f, type: 3}
 --- !u!224 &8766582991192776142 stripped
