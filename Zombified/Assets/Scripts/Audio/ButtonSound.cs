@@ -11,4 +11,13 @@ public class ButtonSound : MonoBehaviour
         ButtonSource.clip = clip;
         ButtonSource.Play();
     }
+    public void ToggleSFX()
+    {
+        ButtonSource.mute = !ButtonSource.mute;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        ButtonSource.volume = volume;
+    }
 }
