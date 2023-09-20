@@ -6,7 +6,9 @@ using UnityEngine;
 public class cameraControls : MonoBehaviour
 {
 
-    [SerializeField] int sensitivity;
+    //[SerializeField] int sensitivity;
+    [Range(50, 150)]
+    public int sensitivity;
 
     [SerializeField] int lockVertMin;
     [SerializeField] int lockVertMax;
@@ -41,5 +43,10 @@ public class cameraControls : MonoBehaviour
         //rotate the player on the y-axis
         transform.parent.Rotate(Vector3.up * mouseX);
 
+    }
+
+    public void MouseSensitivity(int value)
+    {
+        sensitivity = value;
     }
 }

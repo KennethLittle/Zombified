@@ -8,10 +8,11 @@ public class buttonFunctions : MonoBehaviour
 {
 
     public buttonFunctions loadGameButton;
-    public Slider musicSlider, ambiSlider, sfxSlider;
+    public Slider musicSlider, ambiSlider, sfxSlider, mouseSensitivity;
     public int saveSlot = 0;
 
     public AudioManager audioManager;
+    public cameraControls cameraController;
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
@@ -108,6 +109,12 @@ public class buttonFunctions : MonoBehaviour
     public void AmbiVolume()
     {
         audioManager.AmbiVolume(ambiSlider.value);
+    }
+
+    public void MouseSensitivity()
+    {
+
+        cameraController.MouseSensitivity((int)mouseSensitivity.value);
     }
 
 
