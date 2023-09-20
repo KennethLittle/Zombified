@@ -676,6 +676,14 @@ PrefabInstance:
       propertyPath: HPMax
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 2315855857986874302, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: sprintMod
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328272432807537935, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6414967461863746218, guid: 391274f73b3231b4b855c417b1ce0247, type: 2}
     - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: FootStepSFX
       value: 

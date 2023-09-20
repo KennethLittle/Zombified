@@ -238,6 +238,7 @@ public class playerController : MonoBehaviour, IDamage
         ApplyGravity();
         controller.Move((move + playerVelocity) * Time.deltaTime);
 
+
     }
 
     void HandleGroundedState()
@@ -262,21 +263,17 @@ public class playerController : MonoBehaviour, IDamage
         float verticalInput = Input.GetAxis("Vertical");
         move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
         float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
-        move.Normalize();
-        // Simplified movement logic to remove audio dependencies.
+        move.Normalize(); // this keeps the player speed from doubling when moving diaganolly.
+
         if (move != Vector3.zero)
         {
             if (groundedPlayer)
             {
-                move *= (isSprinting && playerStat.currentStamina > 0) ? effectivePlayerSpeed * playerStat.playerSpeed : playerStat.playerSpeed;
+                
                 anim.SetBool("isWalking", !isSprinting);
                 anim.SetBool("isRunning", isSprinting);
             }
-            else
-            {
-                move.x = playerVelocity.x;
-                move.z = playerVelocity.z;
-            }
+            move *= (isSprinting && playerStat.currentStamina > 0) ? effectivePlayerSpeed * playerStat.playerSpeed : playerStat.playerSpeed;
             if (move.normalized.magnitude > 0f && !isJumping)
             {
                 //playerVelocity = move * playerStat.playerSpeed;
