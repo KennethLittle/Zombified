@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class playerController : MonoBehaviour, IDamage
 {
+    [Header("----- Components -----")]
     public PlayerStat playerStat;
     public Transform weaponSlot;
     public InventoryItem currentEquippedItem;
-
+    public PlayerSounds PlayerSounds;
     [SerializeField] CharacterController controller;
     [SerializeField] Animator anim;
 
     [Header("----- Player Gun Stats -----")]
     [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>();
     public int currentWeaponIndex = 0;
+
+
 
     private float originalPlayerSpeed;
     private bool groundedPlayer;
@@ -27,6 +31,9 @@ public class playerController : MonoBehaviour, IDamage
     private bool lowHealthIsPlaying;
     private bool walkVolume;
     private bool footstepsIsPlaying;
+    private bool isJumping;
+    private float lastJumpTime = 0f;
+    private float jumpCooldown = 1f;
 
 
     private void Start()
@@ -35,15 +42,6 @@ public class playerController : MonoBehaviour, IDamage
         playerStat.HP = playerStat.HPMax;
         playerStat.currentStamina = playerStat.stamina;
 
-        //this is for the changing the rate and volume of footsteps
-        //foreach (var sound in AudioManager.instance.PlayerSounds)
-        //{
-        //    if (sound.name == "Footsteps")
-        //    {
-        //        walkVolume = sound.volume;
-        //    }
-        //}
-        //audioLHVolOrig = walkVolume;
     }
 
     void Update()
@@ -250,15 +248,22 @@ public class playerController : MonoBehaviour, IDamage
 
     void HandleGroundedState()
     {
-        if (groundedPlayer)
+        if (isJumping)
         {
-            playerVelocity.y = 0f;
-            jumpCount = 0;
+            PlayerSounds.LandEmote();
+        }
 
-            if (!footstepsIsPlaying && move.normalized.magnitude > 0.5f && playerStat.HP > 0)
-            {
-                // StartCoroutine(playFootsteps());
-            }
+        playerVelocity.y = 0f;
+        playerVelocity.x = 0f;
+        playerVelocity.z = 0f;// Ensures the player does not accumulate downward velocity when grounded.
+        jumpCount = 0;
+        isJumping = false;
+
+        //Handle FootStepSFX
+        if (move.normalized.magnitude > 0f && !isJumping)
+        {
+            playerVelocity = move * playerStat.playerSpeed;
+            PlayerSounds.PlayFootstep(playerVelocity);
         }
     }
 
@@ -267,8 +272,9 @@ public class playerController : MonoBehaviour, IDamage
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         move = (horizontalInput * transform.right) + (verticalInput * transform.forward);
-
+        move.Normalize();
         float effectivePlayerSpeed = isSprinting ? originalPlayerSpeed * playerStat.sprintMod : originalPlayerSpeed;
+       // controller.Move(move * Time.deltaTime * playerStats.playerSpeed);
 
         // Simplified movement logic to remove audio dependencies.
         if (move != Vector3.zero)
@@ -291,13 +297,15 @@ public class playerController : MonoBehaviour, IDamage
             anim.SetBool("isRunning", false);
         }
 
-        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
-           // lastJumpTime = Time.time;
-            //AudioManager.instance.PlaySound("Jump", AudioManager.instance.PlayerSounds);
-
+            lastJumpTime = Time.time;
+            //playerVelocity.y = Mathf.Sqrt(JumpHeight * -2f * GravityValue);
+            PlayerSounds.JumpEmote();
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
+            isJumping = true;
+
         }
     }
 

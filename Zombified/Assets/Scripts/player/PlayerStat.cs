@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
+    [Header("----- Components -----")]
+    public static PlayerStat Instance;
+
     [Header("Player stats")]
     public int HP;
     public int HPMax;
@@ -10,13 +13,14 @@ public class PlayerStat : MonoBehaviour
     public float staminaConsumptionRate;
     public float staminaRegenerationRate;
     public int Level;
+
+    [Header("----- Player Movement -----")]
     public float playerSpeed;
     public float sprintMod;
     public int jumpMax;
     public float jumpHeight;
     public float gravityValue;
-
-    public static PlayerStat Instance;
+   
 
     private void Start()
     {
