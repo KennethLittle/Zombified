@@ -10,8 +10,7 @@ public class PlayerSounds : MonoBehaviour
     public AudioSource EmoteSource;
 
     [Header("Audio Clips")]
-    //public AudioClip[] FootStepSFX;
-    public AudioClip FootStepSFX;
+    public AudioClip[] FootStepSFX;
     public AudioClip[] TakeDamage;
     public AudioClip[] JumpSFX;
     public AudioClip[] LandSFX;
@@ -21,19 +20,19 @@ public class PlayerSounds : MonoBehaviour
     public float FootstepFrequency;
     public Vector2 PitchRange = new Vector2(0.9f, 1.1f);
 
-
-    private float _footstepDistanceCounter;
+    [Range(0, 1)]
+    public float _footstepDistanceCounter;
 
 
     public void PlayFootstep(Vector3 velocity)
     {
+
         if (_footstepDistanceCounter >= 1f / FootstepFrequency)
         {
             _footstepDistanceCounter = 0f;
 
-            //AudioFunctionalities.PlayRandomClip(LocomotionSource, FootStepSFX, PitchRange.x, PitchRange.y);
-            LocomotionSource.clip = FootStepSFX;
-            LocomotionSource.Play();
+            AudioFunctionalities.PlayRandomClip(LocomotionSource, FootStepSFX, PitchRange.x, PitchRange.y);
+
         }
 
         _footstepDistanceCounter += velocity.magnitude * Time.deltaTime;

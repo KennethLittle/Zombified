@@ -680,6 +680,42 @@ PrefabInstance:
       propertyPath: FootStepSFX
       value: 
       objectReference: {fileID: 8300000, guid: 3f76a70a85a010a4984725f426d5c0d1, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootstepFrequency
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c25e822383a5c4b4aa54d9ff810e83ce, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fc810f0b79e298459f129a29d4767c1, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: c02c9461a81c02f4abecb293d43f0f9e, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2cdb964589984044d9cecdd00b1b9c2e, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 504d6c4f4d37aef45b353df682202352, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 55e772048e69d0941b3ba8c106ec33ac, type: 3}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: c15e56516715a3b448d6cc89242be92a, type: 3}
     - target: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -732,6 +768,10 @@ PrefabInstance:
       propertyPath: sensitivity
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 8250212834682961135, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6414967461863746218, guid: 391274f73b3231b4b855c417b1ce0247, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
 --- !u!1001 &896129887
