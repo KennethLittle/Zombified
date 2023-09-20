@@ -99,11 +99,11 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         float agentVel = agent.velocity.normalized.magnitude;
-
-       if (canSeePlayer())
-       {
+       
+        if (canSeePlayer())
+        {
             ChaseAndAttackPlayer();
-       }
+        }
         if (agent.remainingDistance < 0.05f)
         {
             StartCoroutine(roam());
@@ -215,12 +215,10 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (!isDead)
         {
-            anim.SetBool("isAttacking", true);
             MeleeDamage(enemyStats.CurrentDamage); // Using stats from EnemyStat
             yield return new WaitForSeconds(attackRate);
             isAttacking = false;
         }
-        anim.SetBool("isAttacking", false);
     }
 
     public void takeDamage(int amount)
@@ -231,14 +229,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (enemyStats.CurrentHP <= 0)
         {
+            enabled = false;
+            anim.SetTrigger("isDead");
             int xpReward = enemyStats.CalculateExperienceReward();
-
             isDead = true;
-            pause = true;
             OnEnemyDeathEvent?.Invoke(this);
             EnemyManager.Instance.HandleEnemyDeath(this);
-            anim.SetTrigger("isDead");
-            Destroy(gameObject);
+            Destroy(gameObject,10);
+
         }
         //AudioManager.instance.PlaySound("TakeDamage", AudioManager.instance.enemySFXSounds);
     }
@@ -254,6 +252,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (Player != null)
         {
+            anim.SetTrigger("isAttacking");
             Player.GetComponent<playerController>().takeDamage(amount);
         }
     }
