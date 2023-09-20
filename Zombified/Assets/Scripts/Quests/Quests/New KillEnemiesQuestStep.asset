@@ -20,5 +20,5 @@ MonoBehaviour:
     - Cleanse Alpha Station from the grips of the Robot Army.
   stepID: 3
   EnemyPrefab: {fileID: 2058362945976864181, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
-  requiredKillCount: 20
+  requiredKillCount: 2
   currentKillCount: 0

@@ -72,16 +72,28 @@ public class SaveManager : MonoBehaviour
         tempLoadedData = data;  // Assign to temporary data
         LoadSceneAndApplyData(data.sceneName);
 
-        QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
+        return data;
+    }
 
-        if (data.currentQueststepID > 0)
+    public GameData LoadGameInScene()
+    {
+        if (!File.Exists(GetSavePath()))
         {
-            QuestManager.instance.SetCurrentQuestStepByID(data.currentQueststepID);
+            return null;
         }
-        else
+
+        string jsonData = File.ReadAllText(GetSavePath());
+
+        if (string.IsNullOrEmpty(jsonData))
         {
-            QuestManager.instance.InitializeQuests();  // Initialize quests for the first time
+            return null;
         }
+
+        GameData data = JsonUtility.FromJson<GameData>(jsonData);
+
+        tempLoadedData = data;  // Assign to temporary data
+
+        ApplyLoadedData();
 
         return data;
     }
@@ -120,9 +132,11 @@ public class SaveManager : MonoBehaviour
     {
         if (tempLoadedData != null)
         {
-            // Your original logic to apply the loaded data goes here
-            QuestManager.instance.SetCurrentQuestByID(tempLoadedData.activeQuestID);
+            
+            PlayerData loadedPlayerData = tempLoadedData.playerData;
+            loadedPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
 
+            QuestManager.instance.SetCurrentQuestByID(tempLoadedData.activeQuestID);
             if (tempLoadedData.currentQueststepID > 0)
             {
                 QuestManager.instance.SetCurrentQuestStepByID(tempLoadedData.currentQueststepID);

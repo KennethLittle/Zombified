@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &132692021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2447,8 +2447,10 @@ MonoBehaviour:
   musicSlider: {fileID: 620570511}
   ambiSlider: {fileID: 671216968}
   sfxSlider: {fileID: 0}
+  mouseSensitivity: {fileID: 0}
   saveSlot: 0
   audioManager: {fileID: 1533988660}
+  cameraController: {fileID: 0}
 --- !u!1 &1260415702
 GameObject:
   m_ObjectHideFlags: 0

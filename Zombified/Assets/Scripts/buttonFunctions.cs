@@ -74,7 +74,15 @@ public class buttonFunctions : MonoBehaviour
 
     public void LoadGame()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SaveManager.Instance.LoadGame();
+    }
+
+    public void LoadGameInScene()
+    {
+        SaveManager.Instance.LoadGameInScene();
+        GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        UIManager.Instance.pauseMenu.SetActive(false);
     }
 
     public void NewGame()
