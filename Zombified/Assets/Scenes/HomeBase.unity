@@ -676,6 +676,10 @@ PrefabInstance:
       propertyPath: HPMax
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootStepSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f76a70a85a010a4984725f426d5c0d1, type: 3}
     - target: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_Name
       value: Player

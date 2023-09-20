@@ -20,7 +20,7 @@ public class PlayASound : MonoBehaviour
 
     }
 
-    void PlaySound(AudioSource source, AudioClip clip)
+    public void PlaySound(AudioSource source, AudioClip clip)
     {
         source.clip = clip;
         source.Play();

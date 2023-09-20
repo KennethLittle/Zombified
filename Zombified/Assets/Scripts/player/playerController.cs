@@ -31,9 +31,9 @@ public class playerController : MonoBehaviour, IDamage
     private bool lowHealthIsPlaying;
     private bool walkVolume;
     private bool footstepsIsPlaying;
-    private bool IsJumping;
     private float lastJumpTime = 0f;
     private float jumpCooldown = 1f;
+    private bool isJumping;
 
 
     private void Start()
@@ -238,10 +238,6 @@ public class playerController : MonoBehaviour, IDamage
         ApplyGravity();
         controller.Move((move + playerVelocity) * Time.deltaTime);
 
-        if (groundedPlayer)
-        {
-           // anim.SetBool("IsJumping", false);
-        }
     }
 
     void HandleGroundedState()
@@ -251,13 +247,13 @@ public class playerController : MonoBehaviour, IDamage
         {
             playerVelocity.y = 0f;
             jumpCount = 0;
-        }
-
-        playerVelocity.y = 0f;
-        
-
-        //Handle FootStepSFX
-        
+              if (isJumping)
+            {
+                PlayerSounds.LandEmote();
+                isJumping = false;
+            }
+        }        
+        //Handle FootStepSFX      
     }
 
     void HandlePlayerInput()
@@ -282,6 +278,8 @@ public class playerController : MonoBehaviour, IDamage
                 move.x = playerVelocity.x;
                 move.z = playerVelocity.z;
             }
+            PlayerSounds.PlayFootstep(move);
+
         }
         else
         {
@@ -292,23 +290,18 @@ public class playerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Jump") && jumpCount < playerStat.jumpMax && Time.time - lastJumpTime > jumpCooldown)
         {
             lastJumpTime = Time.time;
-            //playerVelocity.y = Mathf.Sqrt(playerStat.JumpHeight * -2f * GravityValue);
             PlayerSounds.JumpEmote();
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
-            IsJumping = true;
-        }
-        else
-        {
-            PlayerSounds.LandEmote();
-            IsJumping= false;
-
+            isJumping = true;
         }
     }
 
     void ApplyGravity()
     {
         playerVelocity.y += playerStat.gravityValue * Time.deltaTime;
+
+        // anim.SetBool("IsJumping", false);
     }
 
     //Play footsteps sfx at a rate defined by footstepsRate

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class PlayerSounds : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class PlayerSounds : MonoBehaviour
     public AudioSource EmoteSource;
 
     [Header("Audio Clips")]
-    public AudioClip[] FootStepSFX;
+    //public AudioClip[] FootStepSFX;
+    public AudioClip FootStepSFX;
     public AudioClip[] TakeDamage;
     public AudioClip[] JumpSFX;
     public AudioClip[] LandSFX;
@@ -29,7 +31,9 @@ public class PlayerSounds : MonoBehaviour
         {
             _footstepDistanceCounter = 0f;
 
-            AudioFunctionalities.PlayRandomClip(LocomotionSource, FootStepSFX, PitchRange.x, PitchRange.y);
+            //AudioFunctionalities.PlayRandomClip(LocomotionSource, FootStepSFX, PitchRange.x, PitchRange.y);
+            LocomotionSource.clip = FootStepSFX;
+            LocomotionSource.Play();
         }
 
         _footstepDistanceCounter += velocity.magnitude * Time.deltaTime;
