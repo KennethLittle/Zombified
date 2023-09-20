@@ -20,7 +20,11 @@ public class InventoryItem
     public GameObject projectilePrefab;  // Prefab for the projectile (e.g. bullet, arrow, etc.)
     public float fireRate; // Number of times weapon can be fired in a second
     public float range; // The range of the weapon if it's melee
+    public int ammo;
+    public int healing;
     public WeaponDetails weaponDetails;
+    public AmmoDetails ammoDetails;
+    public MedpackDetails medpackDetails;
 
 
     [SerializeField]
@@ -28,7 +32,7 @@ public class InventoryItem
 
     public InventoryItem() {}
 
-    public InventoryItem(string name, int id, string description, Sprite icon, GameObject model, int maxStack, ItemType type, string sendmessagetext, List<ItemStats> itemStats, float dist, float firing, GameObject project)                 //function to create a instance of the Item
+    public InventoryItem(string name, int id, string description, Sprite icon, GameObject model, int maxStack, ItemType type, string sendmessagetext, List<ItemStats> itemStats, float dist, float firing, GameObject project, int extraAmmo, int healValue)                 //function to create a instance of the Item
     {
         itemName = name;
         itemID = id;
@@ -43,6 +47,14 @@ public class InventoryItem
             fireRate = firing;
             range = dist;
             project = projectilePrefab;           
+        }
+        if(itemType == ItemType.AmmoBox)
+        {
+            ammo = extraAmmo;
+        }
+        if(itemType == ItemType.MedPack)
+        {
+            healing = healValue;
         }
     }
 
