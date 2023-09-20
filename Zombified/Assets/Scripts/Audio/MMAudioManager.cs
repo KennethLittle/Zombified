@@ -8,6 +8,7 @@ public class MMAudioManager : MonoBehaviour
     public AudioClip[] MusicClips;
     public AudioSource AmbiSource;
     public AudioClip AmbiClip;
+    public AudioSource SFXSource;
 
     // Start is called before the first frame update
     void Start()
@@ -43,5 +44,14 @@ public class MMAudioManager : MonoBehaviour
     public void AmbiVolume(float volume)
     {
         AmbiSource.volume = volume;
+    }
+    public void ToggleSFX()
+    {
+        SFXSource.mute = !SFXSource.mute;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        SFXSource.volume = volume;
     }
 }

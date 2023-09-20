@@ -12,7 +12,9 @@ public class buttonFunctions : MonoBehaviour
     public int saveSlot = 0;
 
     public AudioManager audioManager;
+    public MMAudioManager mmAudioManager;
     public cameraControls cameraController;
+    public ButtonSound buttonSound;
     public void resume()
     {
         GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
@@ -124,6 +126,40 @@ public class buttonFunctions : MonoBehaviour
         cameraController.MouseSensitivity((int)mouseSensitivity.value);
     }
 
+
+    public void ToggleMMMuscic()
+    {
+        mmAudioManager.ToggleMusic();
+
+    }
+    public void ToggleMMAmbi()
+    {
+        mmAudioManager.ToggleAmbi();
+    }
+    public void ToggleMMSFX()
+    {
+        buttonSound.ToggleSFX();
+    }
+    public void MusicMMVolume()
+    {
+        mmAudioManager.MusicVolume(musicSlider.value);
+    }
+
+
+    public void SFXMMVolume()
+    {
+        buttonSound.SFXVolume(sfxSlider.value);
+    }
+
+    public void AmbiMMVolume()
+    {
+        mmAudioManager.AmbiVolume(ambiSlider.value);
+    }
+
+    public void MMMouseSensitivity()
+    {
+        cameraController.MouseSensitivity((int)mouseSensitivity.value);
+    }
 
 
 }

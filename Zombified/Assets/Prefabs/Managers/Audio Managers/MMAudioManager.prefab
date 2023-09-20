@@ -265,8 +265,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8096460103897565044}
-  - component: {fileID: 8096460103897565043}
   - component: {fileID: 8096460103897565042}
+  - component: {fileID: 1211872502}
   m_Layer: 0
   m_Name: MMAudioManager
   m_TagString: Untagged
@@ -292,24 +292,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8096460103897565043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8096460103897565046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60e1d82e6b7de40438c48d8389ccfc2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MusicSource: {fileID: 8096460104695365537}
-  MusicClips:
-  - {fileID: 8300000, guid: af1aef93b3ff796448e20e87b4afc6ac, type: 3}
-  AmbiSource: {fileID: 8096460103040405925}
-  AmbiClips:
-  - {fileID: 8300000, guid: 7224141afbf0c2642a0ba36ba4f8f0af, type: 3}
 --- !u!114 &8096460103897565042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +306,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MouseInputSource: {fileID: 8096460103349172331}
   MouseInputClip: {fileID: 0}
+--- !u!114 &1211872502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096460103897565046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a00da7b5662b3448e98795e93e9636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicSource: {fileID: 0}
+  MusicClips: []
+  AmbiSource: {fileID: 0}
+  AmbiClip: {fileID: 0}
 --- !u!1 &8096460104695365539
 GameObject:
   m_ObjectHideFlags: 0
