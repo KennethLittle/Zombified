@@ -51,14 +51,12 @@ public class SaveManager : MonoBehaviour
         string jsonData = JsonUtility.ToJson(gameData);
         File.WriteAllText(GetSavePath(), jsonData);
 
-        Debug.Log("Game saved with all data.");
     }
 
     public GameData LoadGame()
     {
         if (!File.Exists(GetSavePath()))
         {
-            Debug.LogError("Save file not found!");
             return null;
         }
 
@@ -66,7 +64,6 @@ public class SaveManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(jsonData))
         {
-            Debug.LogError("Save file is corrupted or empty!");
             return null;
         }
 
@@ -75,7 +72,6 @@ public class SaveManager : MonoBehaviour
         tempLoadedData = data;  // Assign to temporary data
         LoadSceneAndApplyData(data.sceneName);
 
-        Debug.Log("Loading quest ID: " + data.activeQuestID);
         QuestManager.instance.SetCurrentQuestByID(data.activeQuestID);
 
         if (data.currentQueststepID > 0)
@@ -125,7 +121,6 @@ public class SaveManager : MonoBehaviour
         if (tempLoadedData != null)
         {
             // Your original logic to apply the loaded data goes here
-            Debug.Log("Loading quest ID: " + tempLoadedData.activeQuestID);
             QuestManager.instance.SetCurrentQuestByID(tempLoadedData.activeQuestID);
 
             if (tempLoadedData.currentQueststepID > 0)
@@ -139,7 +134,6 @@ public class SaveManager : MonoBehaviour
 
             // Clear the temporary data
             tempLoadedData = null;
-            Debug.Log("Data applied to the loaded scene.");
         }
     }
 
@@ -150,11 +144,9 @@ public class SaveManager : MonoBehaviour
 
         // Update game state with the default player data
         defaultPlayerData.LoadDataIntoPlayer(PlayerManager.instance);
-        Debug.Log("QuestManager instance: " + questManager);
         if (questManager != null)
         {
             questManager.InitializeQuests();
-            Debug.Log("Started First Quest");
         }
     }
 

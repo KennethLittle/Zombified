@@ -33,7 +33,6 @@ public class GameData
         }
         else
         {
-            Debug.LogWarning("QuestManager instance is not available.");
             activeQuestID = -1; // Set to an invalid value to indicate an error
             currentQueststepID = -1; // Set to an invalid value to indicate an error
         }

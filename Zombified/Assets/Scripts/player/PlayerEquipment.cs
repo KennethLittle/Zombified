@@ -66,14 +66,12 @@ public class PlayerEquipment : MonoBehaviour
 
         equippedWeapon.weaponDetails = weaponItem.weaponDetails;
 
-        Debug.Log("Weapon Equipped with New stats");
     }
 
 
     public void UnEquipWeapon(InventoryItem item)
     {
         equippedWeapon = null;
-        Debug.Log("Weapon Unequipped!");
     }
 
     void OnBackpack(InventoryItem item)

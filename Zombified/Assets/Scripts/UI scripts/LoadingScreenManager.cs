@@ -41,29 +41,22 @@ public class LoadingScreenManager : MonoBehaviour
     {
         UIManager.Instance.ToggleUI(false);
         SetAlpha(1f);
-        Debug.Log("UI off and alpha set to 1.");
 
         // Display loading screen
         ShowLoadingScreen();
-        Debug.Log("Loading screen displayed.");
 
         // Wait for the duration
         // yield return new WaitForSeconds(displayDuration);
         yield return null;
-        Debug.Log("Waited for duration.");
 
         // Load the scene
         SceneManager.LoadScene(sceneIndex);
-        Debug.Log("Scene loaded.");
 
         UIManager.Instance.ToggleUI(true);
-        Debug.Log("UI on.");
 
         // Hide the loading screen
         HideLoadingScreen();
-        Debug.Log("Loading screen hidden.");
         SetAlpha(0f);
-        Debug.Log("Alpha set to 0.");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

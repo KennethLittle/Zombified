@@ -22,7 +22,6 @@ public class PlayerManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Multiple instances of PlayerManager found. Destroying one.");
             Destroy(gameObject);
         }
 
@@ -62,7 +61,6 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No player data provided. Using default values.");
             // Here, you can assign default values if needed.
         }
 
@@ -79,15 +77,10 @@ public class PlayerManager : MonoBehaviour
                     questManager.SetCurrentQuestByID(questID);
                     questManager.SetCurrentQuestStepByID(data.currentQuestStepIndex);
                 }
-                else
-                {
-                    Debug.LogError("Invalid quest ID found in saved data.");
-                }
             }
             else
             {
                 questManager.InitializeQuests(); // Initialize quests for the first time
-                Debug.Log("Quest Initialized");
             }
         }
     }

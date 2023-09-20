@@ -70,10 +70,6 @@ public class EnemyStat : MonoBehaviour
         {
             data.enemyID = aiComponent.enemyID;
         }
-        else
-        {
-            Debug.LogError("Failed to get enemyAI component.");
-        }
 
         data.position = transform.position;
         data.currentLevel = this.enemyLevel;

@@ -20,7 +20,6 @@ public class GameStateManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            Debug.LogError("Multiple instances of GameStateManager found. Destroying one.");
             Destroy(gameObject);
         }
     }
