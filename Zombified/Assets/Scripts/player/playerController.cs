@@ -31,7 +31,7 @@ public class playerController : MonoBehaviour, IDamage
     private bool lowHealthIsPlaying;
     private bool walkVolume;
     private bool footstepsIsPlaying;
-    private bool isJumping;
+    private bool IsJumping;
     private float lastJumpTime = 0f;
     private float jumpCooldown = 1f;
 
@@ -242,13 +242,13 @@ public class playerController : MonoBehaviour, IDamage
 
         if (groundedPlayer)
         {
-            anim.SetBool("IsJumping", false);
+           // anim.SetBool("IsJumping", false);
         }
     }
 
     void HandleGroundedState()
     {
-        if (isJumping)
+        if (IsJumping)
         {
             PlayerSounds.LandEmote();
         }
@@ -257,10 +257,10 @@ public class playerController : MonoBehaviour, IDamage
         playerVelocity.x = 0f;
         playerVelocity.z = 0f;// Ensures the player does not accumulate downward velocity when grounded.
         jumpCount = 0;
-        isJumping = false;
+        IsJumping = false;
 
         //Handle FootStepSFX
-        if (move.normalized.magnitude > 0f && !isJumping)
+        if (move.normalized.magnitude > 0f && !IsJumping)
         {
             playerVelocity = move * playerStat.playerSpeed;
             PlayerSounds.PlayFootstep(playerVelocity);
@@ -304,7 +304,7 @@ public class playerController : MonoBehaviour, IDamage
             PlayerSounds.JumpEmote();
             playerVelocity.y += playerStat.jumpHeight;
             jumpCount++;
-            isJumping = true;
+            IsJumping = true;
 
         }
     }
