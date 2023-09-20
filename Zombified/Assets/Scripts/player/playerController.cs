@@ -274,6 +274,7 @@ public class playerController : MonoBehaviour, IDamage
                 anim.SetBool("isRunning", isSprinting);
             }
             move *= (isSprinting && playerStat.currentStamina > 0) ? effectivePlayerSpeed * playerStat.playerSpeed : playerStat.playerSpeed;
+
             if (move.normalized.magnitude > 0f && !isJumping)
             {
                 //playerVelocity = move * playerStat.playerSpeed;

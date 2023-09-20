@@ -5,19 +5,23 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource MusicSource;
-    public AudioClip[] MusicClips;
     public AudioSource AmbiSource;
-    public AudioClip[] AmbiClips;
     public AudioSource SFXSource;
-    public AudioClip[] SFXClips;
+    public AudioClip[] HBTracks;
+    public AudioClip[] HBAmbi;
+    public AudioClip[] OSTracks;
+    public AudioClip[] OSAmbi;
+    public AudioClip[] ASTracks;
+    public AudioClip[] ASAmbi;
+
+    private bool inHomeBase;
+    private bool inOutDoors;
+    private bool inAlphaStain;
 
     void Start()
     {
-        //PlaySound(MusicSource, MusicClip);
-        AudioFunctionalities.PlayRandomClip(MusicSource, MusicClips);
-        AudioFunctionalities.PlayRandomClip(AmbiSource, AmbiClips);
+        PlayHomeBase();
 
-        //AudioFunctionalities.PlayRandomClip();
 
     }
     void PlaySound(AudioSource source, AudioClip clip)
@@ -25,6 +29,22 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         source.Play();
     }
+
+    //public void SwapTrack(AudioClip[] newMusic, AudioClip[] newAmbi)
+    //{
+
+    //}
+    public void PlayHomeBase()
+    {
+        AudioFunctionalities.PlayRandomClip(MusicSource, HBTracks);
+        AudioFunctionalities.PlayRandomClip(AmbiSource, HBAmbi);
+    }
+    public void PlayOutSide()
+    {
+        AudioFunctionalities.PlayRandomClip(MusicSource, OSTracks);
+        AudioFunctionalities.PlayRandomClip(AmbiSource, OSAmbi);
+    }
+
 
     public void ToggleMusic()
     {
