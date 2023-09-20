@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class EnemySounds : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Audio Source")]
+    public AudioSource LocomotionSource;
+    public AudioSource EmoteSource;
 
-    // Update is called once per frame
-    void Update()
+    [Header("Audio Clips")]
+    public AudioClip[] FootStepSFX;
+
+    public void PlayEnemyFootsteps()
     {
-        
+        AudioFunctionalities.PlayRandomClip(LocomotionSource, FootStepSFX);
     }
 }

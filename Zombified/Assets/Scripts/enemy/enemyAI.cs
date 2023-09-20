@@ -34,13 +34,6 @@ public class enemyAI : MonoBehaviour, IDamage
     [Header("----- Detection -----")]
     public float detectionRange = 15f;
 
-    [Header("----- Audio -----")]
-    [SerializeField] private AudioSource audioSFX;
-    [SerializeField] private AudioClip[] audioVoice;
-    [SerializeField][Range(0, 1)] private float audioVoiceVol;
-    [SerializeField][Range(5, 24)] private float voiceTimerMin;
-    [SerializeField][Range(25, 60)] private float voiceTimerMax;
-
     private bool isAttacking = false;
     private bool robotIsGroaning;
     private bool isDead = false;
@@ -114,6 +107,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         agent.stoppingDistance = meleeRange;
         agent.SetDestination(Player.transform.position);
+
         anim.SetBool("isRoaming", false);
         anim.SetBool("isChasing", true);
 
@@ -288,37 +282,6 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }
     }
-
-    //IEnumerator playFootsteps()
-    //{
-    //    footstepsIsPlaying = true;
-    //    // Plays footsteps audio sfx - Plays a random footsteps sfx from the range audioFootsteps at a volume defined by audioFootstepsVol
-
-    //    //AudioManager.instance.PlaySound("FootStep", AudioManager.instance.enemySFXSounds);
-
-    //    //// this code is for when we add a run feature to the enemy
-    //    //if (!isSprinting)
-    //    //{
-    //    //    foreach (var sound in AudioManager.instance.PlayerSounds)
-    //    //    {
-    //    //        if (sound.name == "Footsteps")
-    //    //        {
-    //    //            yield return new WaitForSeconds(sound.rate);
-    //    //        }
-    //    //    }
-    //    //}
-    //    //else
-    //    //{
-    //    //foreach (var sound in AudioManager.instance.PlayerSounds)
-    //    //{
-    //    //    if (sound.name == "Footsteps")
-    //    //    {
-    //            yield return new WaitForSeconds(sound.rate / 2);
-    //    //    }
-    //    //}
-    //    //}
-    //    footstepsIsPlaying = false;
-    //}
 
 }
 

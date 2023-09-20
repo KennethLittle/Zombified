@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        
         AudioFunctionalities.PlayRandomClip(MusicSource1, HBTracks);
         AudioFunctionalities.PlayRandomClip(AmbiSource1, HBAmbi);
     }
