@@ -223,17 +223,6 @@ public class PlayerEquipment : MonoBehaviour
             craftInventory = charactersetup.GetComponent<InventorySystem>();
     }
 
-    public void UpdateHPBar()
-    {
-        float fillAmount = currentHealth / maxHealth;
-        hpImage.fillAmount = fillAmount;
-    }
-
-    public void UpdateStaminaBar()
-    {
-        float fillAmount = currentStamina / stamina;
-        staminaImage.fillAmount = fillAmount;
-    }
 
 
     public void OnConsumeItem(InventoryItem item)
@@ -269,11 +258,7 @@ public class PlayerEquipment : MonoBehaviour
                     currentDamage += item.itemStats[i].attributeValue;
             }
         }
-        if (HPMANACanvas != null)
-        {
-            UpdateStaminaBar();
-            UpdateHPBar();
-        }
+       
     }
 
     public void OnGearItem(InventoryItem item)
@@ -289,11 +274,7 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage += item.itemStats[i].attributeValue;
         }
-        if (HPMANACanvas != null)
-        {
-            UpdateStaminaBar();
-            UpdateHPBar();
-        }
+        
     }
 
     public void OnUnEquipItem(InventoryItem item)
@@ -309,11 +290,7 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage -= item.itemStats[i].attributeValue;
         }
-        if (HPMANACanvas != null)
-        {
-            UpdateStaminaBar();
-            UpdateHPBar();
-        }
+        
     }
 
     void ToggleSystem()
