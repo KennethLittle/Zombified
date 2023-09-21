@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep 1
+  m_Name: First Intel in Alpha
   m_EditorClassIdentifier: 
-  description: Gathering Intel
-  isCompleted: 1
+  description: Find the Intel Book by a Bunch of Stationary Robots
+  isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Grab that intel off my desk, it includes some info on Alpha Station.
-    - This might help us uncover some of the secrets of that place.
-  stepID: 1
+    - 'Head to Alpha Station, theres a Intel Book there we need to Collect. '
+    - 'I heard it was by a bunch of robots, that are being getting ready to be sent
+      out. '
+  stepID: 3
   requiredItemID: 2
-  requiredItemCount: 1
-  currentItemFoundCount: 1
+  requiredItemCount: 0
+  currentItemFoundCount: 0
