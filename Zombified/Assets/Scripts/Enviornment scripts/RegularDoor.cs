@@ -55,15 +55,17 @@ public class RegularDoor : MonoBehaviour
 
     private void ToggleDoor()
     {
-        doorOpen = !doorOpen;
-        DoorSound();
+        doorOpen = !doorOpen;      
         StopAllCoroutines();
+        
         if (doorOpen)
         {
+            DoorSound();
             StartCoroutine(OpenDoor());
         }
         else
         {
+            DoorSound();
             StartCoroutine(CloseDoor());
         }
     }

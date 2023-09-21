@@ -24,10 +24,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] ASTracks;
     public AudioClip[] ASAmbi;
 
-    private bool inHomeBase;
-    private bool inOutDoors;
-    private bool inAlphaStain;
-
     void Start()
     {
         
