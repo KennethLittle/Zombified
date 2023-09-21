@@ -87,6 +87,7 @@ public class enemyAI : MonoBehaviour, IDamage
         //    }
         //}
         audioLHVolOrig = walkVolume;
+        startingPos = transform.position;
     }
 
     void Update()
