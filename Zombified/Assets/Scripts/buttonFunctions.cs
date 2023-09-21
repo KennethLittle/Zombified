@@ -10,7 +10,7 @@ public class buttonFunctions : MonoBehaviour
     public buttonFunctions loadGameButton;
     public Slider musicSlider, ambiSlider, sfxSlider, mouseSensitivity;
     public int saveSlot = 0;
-
+    public Image credits;
     public AudioManager audioManager;
     public MMAudioManager mmAudioManager;
     public cameraControls cameraController;
@@ -44,7 +44,7 @@ public class buttonFunctions : MonoBehaviour
     public void quittoMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
-        
+
     }
 
     public void ReturntoHomeBase()
@@ -59,7 +59,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void backtoPlayerMenu()
     {
-        int  previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
+        int previousSceneIndex = SceneManager.GetActiveScene().buildIndex - 3;
         SceneManager.LoadScene(previousSceneIndex);
     }
 
@@ -159,6 +159,14 @@ public class buttonFunctions : MonoBehaviour
     public void MMMouseSensitivity()
     {
         cameraController.MouseSensitivity((int)mouseSensitivity.value);
+    }
+    public void Credits()
+    {
+        credits.gameObject.SetActive(true);
+    }
+    public void CreditsClose()
+    {
+        credits.gameObject.SetActive(false);
     }
 
 
