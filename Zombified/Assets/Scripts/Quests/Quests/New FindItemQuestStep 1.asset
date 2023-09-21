@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: New FindItemQuestStep 1
   m_EditorClassIdentifier: 
-  description: Find the third Intel in Alpha Station
+  description: Find the book on the robot head upstairs in the office
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'The third intel is by all the pipes in the downstairs, it should tell us how
-      to shutdown their production of robots. '
-  stepID: 5
+    - So thats what they are doing, planning a war. I need you to see if you can
+      find any pieces of those robots anywhere in Alpha station.
+  stepID: 7
   requiredItemID: 2
   requiredItemCount: 1
   currentItemFoundCount: 0

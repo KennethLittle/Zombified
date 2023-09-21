@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: New FindItemQuestStep 3
   m_EditorClassIdentifier: 
-  description: Find the third Intel in Alpha Station
+  description: Find the scared sword behind alpha station
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'The third intel is by all the pipes in the downstairs, it should tell us how
-      to shutdown their production of robots. '
-  stepID: 5
-  requiredItemID: 2
+    - So running diagonstics on the robot parts, I dicovered that they are hiding
+      a sword that has been messing with our base. The signal from it is coming from
+      behind the station.
+    - Go retrieve the sword and after that we should be back to running normaly
+  stepID: 9
+  requiredItemID: 5
   requiredItemCount: 1
   currentItemFoundCount: 0

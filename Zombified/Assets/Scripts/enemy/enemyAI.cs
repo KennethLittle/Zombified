@@ -12,6 +12,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] private Animator anim;
+  
 
     [Header("----- Stats -----")]
     public EnemyStat enemyStats; // Introducing the EnemyStat reference
@@ -48,6 +49,8 @@ public class enemyAI : MonoBehaviour, IDamage
     private bool isSprinting;
     private float walkVolume;
     private float audioLHVolOrig;
+
+    private GameObject enemy;
 
     Vector3 playerDir;
 
@@ -88,7 +91,6 @@ public class enemyAI : MonoBehaviour, IDamage
         //    }
         //}
         audioLHVolOrig = walkVolume;
-        startingPos = transform.position;
     }
 
     void Update()
@@ -231,8 +233,9 @@ public class enemyAI : MonoBehaviour, IDamage
             isDead = true;
             OnEnemyDeathEvent?.Invoke(this);
             EnemyManager.Instance.HandleEnemyDeath(this);
-            Destroy(gameObject,10);
+            Destroy(gameObject,3);
 
+            
         }
         //AudioManager.instance.PlaySound("TakeDamage", AudioManager.instance.enemySFXSounds);
     }
@@ -255,7 +258,8 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void OnDestroy()
     {
-       // EnemyManager.Instance.DeRegisterEnemy(this);
+       EnemyManager.Instance.DeRegisterEnemy(this);
+        
     }
 
     public void SetData(EnemyData data)

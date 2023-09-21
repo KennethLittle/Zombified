@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: New FindItemQuestStep 4
   m_EditorClassIdentifier: 
-  description: Find the third Intel in Alpha Station
+  description: Find the intel book thats sticking in the glass blocking all the robots
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'The third intel is by all the pipes in the downstairs, it should tell us how
-      to shutdown their production of robots. '
+    - More intel needs to be collected so we can find out more. Sources say there
+      are 4 more that need to be collected.
+    - The first one is again by glass blocking all the robots, but its stuck in the
+      glass.
   stepID: 5
   requiredItemID: 2
   requiredItemCount: 1
