@@ -12,15 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
   m_Name: New FindItemQuestStep
   m_EditorClassIdentifier: 
-  description: Grab the gun
-  isCompleted: 1
+  description: 
+  isCompleted: 0
   stepDialogue:
-    speakerName: Kyle
-    sentences:
-    - That intel book, has everything you need to know about Alpha Station, or at
-      least what we have.
-    - Grab that gun on the wall and lets get ready to go to Alpha Station.
-  stepID: 2
-  requiredItemID: 1
-  requiredItemCount: 1
-  currentItemFoundCount: 1
+    speakerName: 
+    sentences: []
+  stepID: 0
+  requiredItemID: 0
+  requiredItemCount: 0
+  currentItemFoundCount: 0

@@ -36,6 +36,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (activeEnemies.Contains(enemy))
             activeEnemies.Remove(enemy);
+        QuestManager.instance.NotifyEnemyKilled(enemyPrefab);
+
     }
 
     private void OnEnable()
@@ -50,10 +52,7 @@ public class EnemyManager : MonoBehaviour
 
     public void HandleEnemyDeath(enemyAI enemy)
     {
-        // Handle XP gain, game goals, and other logic related to enemy death.
         SpawnerManager.instance.EnemyDefeated();
-        QuestManager.instance.NotifyEnemyKilled(enemyPrefab);
-        
     }
 
     public List<EnemyData> GetAllEnemyData()

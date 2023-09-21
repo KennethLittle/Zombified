@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
+  m_Name: First Intel in Alpha
+  m_EditorClassIdentifier: 
+  description: Find the Intel Book by a Bunch of Stationary Robots
+  isCompleted: 0
+  stepDialogue:
+    speakerName: Kyle
+    sentences:
+    - 'Head to Alpha Station, theres a Intel Book there we need to Collect. '
+    - 'I heard it was by a bunch of robots, that are being getting ready to be sent
+      out. '
+  stepID: 3
+  requiredItemID: 2
+  requiredItemCount: 0
+  currentItemFoundCount: 0

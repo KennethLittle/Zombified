@@ -1,12 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using static Unity.VisualScripting.Member;
 
 public class RegularDoor : MonoBehaviour
 {
     private bool playerNearby = false;
     private bool doorOpen = false;
     public TextMeshProUGUI doorInteraction;
+
+    public AudioSource doorSource;
+    public AudioClip doorClip;
 
     [SerializeField]
     private float doorOpenHeight = 3.0f; // The height by which the door will open
@@ -51,16 +55,25 @@ public class RegularDoor : MonoBehaviour
 
     private void ToggleDoor()
     {
-        doorOpen = !doorOpen;
+        doorOpen = !doorOpen;      
         StopAllCoroutines();
+        
         if (doorOpen)
         {
+            DoorSound();
             StartCoroutine(OpenDoor());
         }
         else
         {
+            DoorSound();
             StartCoroutine(CloseDoor());
         }
+    }
+
+    private void DoorSound()
+    {
+        doorSource.clip = doorClip;
+        doorSource.Play();
     }
 
     private IEnumerator OpenDoor()

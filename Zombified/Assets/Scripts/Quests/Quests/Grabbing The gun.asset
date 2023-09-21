@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
+  m_Name: Grabbing The gun
+  m_EditorClassIdentifier: 
+  description: Grab the gun
+  isCompleted: 1
+  stepDialogue:
+    speakerName: Kyle
+    sentences:
+    - That intel book, has everything you need to know about Alpha Station, or at
+      least what we have.
+    - Grab that gun on the wall and lets get ready to go to Alpha Station.
+  stepID: 2
+  requiredItemID: 1
+  requiredItemCount: 1
+  currentItemFoundCount: 1

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -34,6 +35,7 @@ public class playerController : MonoBehaviour, IDamage
     private float lastJumpTime = 0f;
     private float jumpCooldown = 1f;
     private bool isJumping;
+    private bool canPlayDamageSound = true;
 
 
     private void Start()
@@ -48,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        PlayLowHealth();
         if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetMouseButton(0) && !isShooting)
         {
             StartCoroutine(Shooting());
@@ -59,8 +62,6 @@ public class playerController : MonoBehaviour, IDamage
             StartCoroutine(Reload());
             updatePlayerUI();
         }
-
-        
     }
 
     public void EquipItem(InventoryItem item)
@@ -116,7 +117,7 @@ public class playerController : MonoBehaviour, IDamage
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
-
+                PlayerSounds.ShootEmote();
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
                 if (damageable != null)
                 {
@@ -175,6 +176,20 @@ public class playerController : MonoBehaviour, IDamage
             UIManager.Instance.YouDeadSucka();
             anim.SetTrigger("IsDead");
         }
+        TakeDamageSound();
+    }
+    public async void TakeDamageSound()
+    {
+        if (canPlayDamageSound)
+        {
+            PlayerSounds.TakeDamageEmote();
+            canPlayDamageSound = false;
+
+            int number = Random.Range(0, 30);
+            await Task.Delay(number);
+            canPlayDamageSound = true;
+        }
+        
     }
 
     public void updatePlayerUI()
@@ -192,6 +207,17 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
+    void PlayLowHealth()
+    {
+        if (playerStat.HP < 20 && playerStat.HP > 0)
+        {
+            PlayerSounds.LowHealthEmote();
+        }
+        else
+        {
+            PlayerSounds.DamageSource.Stop();
+        }
+    }
     IEnumerator playLowHealth()
     {
         lowHealthIsPlaying = true;
