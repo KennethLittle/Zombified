@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3202c3a916a617a4285e9f6d9e331a43, type: 3}
-  m_Name: New KillEnemiesQuestStep
+  m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
+  m_Name: End
   m_EditorClassIdentifier: 
-  description: 
-  isCompleted: 0
-  stepDialogue:
-    speakerName: 
-    sentences: []
-  stepID: 0
-  EnemyPrefab: {fileID: 0}
-  requiredKillCount: 0
+  questID: 4
+  questName: End
+  questSteps:
+  - {fileID: 11400000, guid: 35148dfd82381e844be235f2e49ea1e4, type: 2}

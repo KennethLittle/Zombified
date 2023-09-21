@@ -34,7 +34,7 @@ MonoBehaviour:
       fireRate: 2
       range: 100
       damage: 25
-      ammoCurrent: 30
+      ammoCurrent: 6
       ammoMax: 30
       ammoAdditional: 99999999
     ammoDetails:
@@ -109,6 +109,35 @@ MonoBehaviour:
     itemModel: {fileID: 7812650758040217082, guid: 97a033df86ff347439929003edc5c992, type: 3}
     itemValue: 12
     itemType: 3
+    itemWeight: 1
+    maxStack: 99
+    indexItemInList: 999
+    rarity: 1
+    projectilePrefab: {fileID: 0}
+    fireRate: 0
+    range: 0
+    ammo: 30
+    healing: 0
+    weaponDetails:
+      projectilePrefab: {fileID: 0}
+      fireRate: 0
+      range: 0
+      damage: 0
+      ammoCurrent: 0
+      ammoMax: 0
+      ammoAdditional: 0
+    ammoDetails:
+      ammo: 30
+    medpackDetails:
+      healingValue: 0
+    itemStats: []
+  - itemName: Scared Sword
+    itemID: 8
+    itemDescription: Ammo to reload your guns
+    itemIcon: {fileID: 4707482838051528495, guid: 2262f408278271248889a3ea3c7e75bf, type: 3}
+    itemModel: {fileID: 1907275252520156, guid: f800fcc198377b4408a28f2715b1a60d, type: 3}
+    itemValue: 12
+    itemType: 4
     itemWeight: 1
     maxStack: 99
     indexItemInList: 999

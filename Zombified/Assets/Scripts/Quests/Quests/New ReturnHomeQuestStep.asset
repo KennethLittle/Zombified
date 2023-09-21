@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11809e8a8a6f2c84e981ec31797dab97, type: 3}
+  m_Name: New ReturnHomeQuestStep
+  m_EditorClassIdentifier: 
+  description: This is the End
+  isCompleted: 0
+  stepDialogue:
+    speakerName: Kyle
+    sentences:
+    - Because of all your work, we are up and running again. It will be a while before
+      I have anything for you to do, but just know when I get something, you will
+      be the first to know.
+    - Thanks for uncovering the secrets of alpha station
+  stepID: 0

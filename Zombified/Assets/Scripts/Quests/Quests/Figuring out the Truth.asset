@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
   m_Name: Figuring out the Truth
   m_EditorClassIdentifier: 
-  questID: 0
-  questName: 
-  questSteps: []
+  questID: 3
+  questName: Figuring out the Truth
+  questSteps:
+  - {fileID: 11400000, guid: 7cefcb6e893287d4db3d7a43f4517046, type: 2}
+  - {fileID: 11400000, guid: 00024734357db4d4192c9e495595f9f4, type: 2}
+  - {fileID: 11400000, guid: ec90c4f11fcec6b43a8a6a4d30ebc18a, type: 2}
+  - {fileID: 11400000, guid: e82c90a8521d60f4ebf75bdea0e158f8, type: 2}
+  - {fileID: 11400000, guid: 3e9433db8911a38499e0915579f8740a, type: 2}
