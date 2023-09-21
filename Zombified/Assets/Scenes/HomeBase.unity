@@ -1161,7 +1161,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robert
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     - target: {fileID: 8000513170445301405, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: FootStepSFX.Array.size
       value: 4
@@ -1182,12 +1181,10 @@ PrefabInstance:
       propertyPath: FootStepSFX.Array.data[3]
       value: 
       objectReference: {fileID: 8300000, guid: 969b6cafec14d074f8feb05f1aea7fe8, type: 3}
-=======
     - target: {fileID: 7758100425780072615, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
       propertyPath: roamRadius
       value: 4
       objectReference: {fileID: 0}
->>>>>>> Stashed changes
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3039c78ee4854f3408269611653dc92a, type: 3}
 --- !u!1001 &929254350
