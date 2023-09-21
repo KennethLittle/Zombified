@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Unity.VisualScripting.Member;
+using System;
+using System.Threading.Tasks;
 
 public class PlayerSounds : MonoBehaviour
 {
     [Header("Audio Source")]
     public AudioSource LocomotionSource;
-    public AudioSource EmoteSource;
+    public AudioSource JumpSource;
+    public AudioSource DamageSource;
+    public AudioSource LowHealthSource;
+    public AudioSource ShootSource;
 
     [Header("Audio Clips")]
     public AudioClip[] FootStepSFX;
-    public AudioClip[] TakeDamage;
+    public AudioClip[] TakeDamageSFX;
     public AudioClip[] JumpSFX;
     public AudioClip[] LandSFX;
-    public AudioClip LowHealth;
+    public AudioClip[] LowHealthSFX;
+    public AudioClip[] ShootSFX;
 
     [Range(0, 1)]
     public float FootstepFrequency;
@@ -40,11 +46,25 @@ public class PlayerSounds : MonoBehaviour
 
     public void JumpEmote()
     {
-        AudioFunctionalities.PlayRandomClip(EmoteSource, JumpSFX, PitchRange.x, PitchRange.y);
+        AudioFunctionalities.PlayRandomClip(JumpSource, JumpSFX, PitchRange.x, PitchRange.y);
     }
 
     public void LandEmote()
     {
-        AudioFunctionalities.PlayRandomClip(EmoteSource, LandSFX, PitchRange.x, PitchRange.y);
+        AudioFunctionalities.PlayRandomClip(JumpSource, LandSFX, PitchRange.x, PitchRange.y);
     }
+
+    public void LowHealthEmote()
+    {
+        AudioFunctionalities.PlayRandomClip(LowHealthSource, LowHealthSFX, PitchRange.x, PitchRange.y);
+    }
+
+    public void TakeDamageEmote()
+    {
+        AudioFunctionalities.PlayRandomClip(DamageSource, TakeDamageSFX, PitchRange.x, PitchRange.y);
+    }
+    public void ShootEmote()
+    {
+        AudioFunctionalities.PlayRandomClip(ShootSource, ShootSFX, PitchRange.x, PitchRange.y);
+    }    
 }
