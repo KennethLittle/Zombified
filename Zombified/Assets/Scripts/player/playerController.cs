@@ -50,6 +50,7 @@ public class playerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        PlayLowHealth();
         if (PlayerEquipment.Instance.equippedWeapon != null && PlayerEquipment.Instance.equippedWeapon.weaponDetails.ammoCurrent > 0 && Input.GetMouseButton(0) && !isShooting)
         {
             StartCoroutine(Shooting());
@@ -61,9 +62,6 @@ public class playerController : MonoBehaviour, IDamage
             StartCoroutine(Reload());
             updatePlayerUI();
         }
-        PlayLowHealth();
-
-
     }
 
     public void EquipItem(InventoryItem item)
