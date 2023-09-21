@@ -1,5 +1,16 @@
+using Palmmedia.ReportGenerator.Core;
+using System.Diagnostics;
+using System.Net;
+using System.Numerics;
+using System.Security.Principal;
+using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Unity.VisualScripting;
+using UnityEditor.Presets;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements.Experimental;
 
 
 public class PlayerEquipment : MonoBehaviour
@@ -195,14 +206,6 @@ public class PlayerEquipment : MonoBehaviour
 
     void Start()
     {
-        if (HPMANACanvas != null)
-        {
-            hpImage = HPMANACanvas.transform.Find("Player HP Bar").GetComponent<Image>();
-            staminaImage = HPMANACanvas.transform.Find("Stamina Bar").GetComponent<Image>();
-
-            UpdateHPBar();
-            UpdateStaminaBar();
-        }
         if (Instance == null)
         {
             Instance = this;
@@ -213,31 +216,13 @@ public class PlayerEquipment : MonoBehaviour
             return;
         }
 
-        if (inputManagerData == null)
-            inputManagerData = (InputManager)Resources.Load("InputManager");
-
-        if (craftSystem != null)
-            craft = craftSystem.GetComponent<CraftSystem>();
 
         if (inventorysetup != null)
             mainInventory = inventorysetup.GetComponent<InventorySystem>();
         if (charactersetup != null)
             craftInventory = charactersetup.GetComponent<InventorySystem>();
-        if (craftSystem != null)
-            craftInventory = craftSystem.GetComponent<InventorySystem>();
     }
 
-    public void UpdateHPBar()
-    {
-        float fillAmount = currentHealth / maxHealth;
-        hpImage.fillAmount = fillAmount;
-    }
-
-    public void UpdateStaminaBar()
-    {
-        float fillAmount = currentStamina / stamina;
-        staminaImage.fillAmount = fillAmount;
-    }
 
 
     public void OnConsumeItem(InventoryItem item)
@@ -273,11 +258,7 @@ public class PlayerEquipment : MonoBehaviour
                     currentDamage += item.itemStats[i].attributeValue;
             }
         }
-        if (HPMANACanvas != null)
-        {
-            UpdateStaminaBar();
-            UpdateHPBar();
-        }
+       
     }
 
     public void OnGearItem(InventoryItem item)
@@ -293,11 +274,7 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage += item.itemStats[i].attributeValue;
         }
-        if (HPMANACanvas != null)
-        {
-            UpdateStaminaBar();
-            UpdateHPBar();
-        }
+        
     }
 
     public void OnUnEquipItem(InventoryItem item)
@@ -313,12 +290,45 @@ public class PlayerEquipment : MonoBehaviour
             if (item.itemStats[i].attributeName == "Damage")
                 maxDamage -= item.itemStats[i].attributeValue;
         }
-        if (HPMANACanvas != null)
+        
+    }
+
+    void ToggleSystem()
+    {
+        if (!charactersetup.activeSelf)
         {
-            UpdateStaminaBar();
-            UpdateHPBar();
+            craftInventory.openInventory();
+            charactersetup.SetActive(true);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
+        }
+        else
+        {
+            craftInventory.closeInventory();
+            charactersetup.SetActive(false);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
         }
     }
+
+    void ToggleInventory()
+    {
+        if (!inventorysetup.activeSelf)
+        {
+            mainInventory.openInventory();
+            inventorysetup.SetActive(true);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
+        }
+        else
+        {
+            mainInventory.closeInventory();
+            inventorysetup.SetActive(false);
+            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
+        }
+    }
+
+
+
+
+
 
 
     // Update is called once per frame
@@ -326,50 +336,12 @@ public class PlayerEquipment : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (!charactersetup.activeSelf)
-            {
-                craftInventory.openInventory();
-                charactersetup.SetActive(true);
-                GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
-            }
-            else
-            {
-                craftInventory.closeInventory();
-                charactersetup.SetActive(false);
-                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
-            }
+            ToggleSystem();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (!inventorysetup.activeSelf)
-            {
-                mainInventory.openInventory();
-                inventorysetup.SetActive(true);
-                GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
-            }
-            else
-            {
-                mainInventory.closeInventory();
-                inventorysetup.SetActive(false);
-                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (!craftSystem.activeSelf)
-                craftInventory.openInventory();
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
-        }
-        else
-        {
-            if (craft != null)
-            {
-                craft.backToInventory();
-                craftInventory.closeInventory();
-                GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
-            }
+           ToggleInventory();
         }
 
     }

@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep
+  m_Name: Starting Intel
   m_EditorClassIdentifier: 
-  description: 
-  isCompleted: 0
+  description: Gathering Intel
+  isCompleted: 1
   stepDialogue:
-    speakerName: 
-    sentences: []
-  stepID: 0
-  requiredItemID: 0
-  requiredItemCount: 0
-  currentItemFoundCount: 0
+    speakerName: Kyle
+    sentences:
+    - Grab that intel off my desk, it includes some info on Alpha Station.
+    - This might help us uncover some of the secrets of that place.
+  stepID: 1
+  requiredItemID: 2
+  requiredItemCount: 1
+  currentItemFoundCount: 1

@@ -292,36 +292,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void NotifyReturnedHome()
-    {
-        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
-        if (currentStep.blueprint is ReturnHomeQuestStep ReturnHomeQuest)
-        {
-            ReturnHomeQuest.ReturnHome();
-            currentStep.TryCompleteStep();
-            if (currentStep.isCompleted)
-            {
-                CurrentQuest.ProgressToNextStepOrQuest();
-                OnQuestOrStepChanged();
-            }
-        }
-    }
-
-    public void NotifyGotToAlphaStation()
-    {
-        QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
-        if (currentStep.blueprint is GoToAlphaStationQuestStep GoToAlphaStationQuest)
-        {
-            currentStep.TryCompleteStep();
-            if (currentStep.isCompleted)
-            {
-                CurrentQuest.ProgressToNextStepOrQuest();
-                OnQuestOrStepChanged();
-                GoToAlphaStationQuest.EnterAlphaStation();
-            }
-        }
-    }
-
 }
 
 

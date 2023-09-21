@@ -8,7 +8,7 @@ public class KillEnemiesQuestStep : QuestStep
 {
     public GameObject EnemyPrefab;
     public int requiredKillCount;
-    public int currentKillCount;
+    private int currentKillCount;
 
     public void RegisterEnemyKill(GameObject killedEnemyType)
     {
