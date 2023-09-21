@@ -79,6 +79,7 @@ public class enemyAI : MonoBehaviour, IDamage
        EnemyManager.Instance.RegisterEnemy(this);
         agent.stoppingDistance = meleeRange;
         enemyID = nextID++;
+        startingPos = transform.position;
         //foreach (var sound in AudioManager.instance.enemySFXSounds)
         //{
         //    if (sound.name == "FootStep")
@@ -91,7 +92,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Update()
     {
-        float agentVel = agent.velocity.normalized.magnitude;
+       // float agentVel = agent.velocity.normalized.magnitude;
        
         if (canSeePlayer())
         {
