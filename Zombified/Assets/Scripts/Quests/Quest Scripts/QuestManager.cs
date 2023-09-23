@@ -8,6 +8,7 @@ public class QuestManager : MonoBehaviour
     public List<Quest> questTemplates;
     public List<QuestRuntime> quests = new List<QuestRuntime>();
     public QuestUIManager questUIManager;
+    public GameObject objectType;
 
     public int currentQuestIndex = 0;
 

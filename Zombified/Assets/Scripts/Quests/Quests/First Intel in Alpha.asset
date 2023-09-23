@@ -22,5 +22,6 @@ MonoBehaviour:
       out. '
   stepID: 3
   requiredItemID: 2
-  requiredItemCount: 0
+  requiredItemCount: 1
   currentItemFoundCount: 0
+  objectType: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

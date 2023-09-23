@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep 2
+  m_Name: Sacred Sword
   m_EditorClassIdentifier: 
-  description: Find the book on the Legs and Arms, its on a stack of crates in Alpha
-    station
+  description: ' Find the sacred sword behind alpha station.'
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Alright, we just need the legs and arms now. After this mission, we should
-      have enough intel on them to figure out what they are looking for.
-  stepID: 8
-  requiredItemID: 2
+    - So running diagonstics on the robot parts, I dicovered that they are hiding
+      a sword that has been messing with our base. The signal from it is coming from
+      behind the station.
+    - Go retrieve the sword and after that we should be back to running normaly
+  stepID: 10
+  requiredItemID: 5
   requiredItemCount: 1
   currentItemFoundCount: 0
+  objectType: {fileID: 1907275252520156, guid: f800fcc198377b4408a28f2715b1a60d, type: 3}

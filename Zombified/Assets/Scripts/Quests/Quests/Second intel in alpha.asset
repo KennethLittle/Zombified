@@ -22,5 +22,6 @@ MonoBehaviour:
     - Find that one, I heard it was upstairs in the office.
   stepID: 4
   requiredItemID: 2
-  requiredItemCount: 0
+  requiredItemCount: 1
   currentItemFoundCount: 0
+  objectType: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

@@ -8,6 +8,7 @@ public class FindItemQuestStep : QuestStep
     public int requiredItemID;  // Change from GameObject to int
     public int requiredItemCount;
     public int currentItemFoundCount;
+    public GameObject objectType;
 
     public FindItemQuestStep(int itemIDToFind, int countToFind)
     {

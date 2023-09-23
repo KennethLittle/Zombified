@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: New FindItemQuestStep 3
+  m_Name: An Arm and A Leg
   m_EditorClassIdentifier: 
-  description: Find the scared sword behind alpha station
+  description: Find the book on the Legs and Arms, its on a stack of crates in Alpha
+    station.
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - So running diagonstics on the robot parts, I dicovered that they are hiding
-      a sword that has been messing with our base. The signal from it is coming from
-      behind the station.
-    - Go retrieve the sword and after that we should be back to running normaly
+    - Alright, we just need the legs and arms now. After this mission, we should
+      have enough intel on them to figure out what they are looking for.
   stepID: 9
-  requiredItemID: 5
+  requiredItemID: 2
   requiredItemCount: 1
   currentItemFoundCount: 0
+  objectType: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}

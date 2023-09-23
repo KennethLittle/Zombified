@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
-  m_Name: Find the chest piece
+  m_Name: I Need More
   m_EditorClassIdentifier: 
-  description: Find the book on the chest piece of the robot under the stairs to
-    nothing.
+  description: Find the intel book thats sticking in the glass blocking all the robots
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'Great we have one piece, Go back and see if you can find anymore pieces of
-      the robot. '
-  stepID: 7
-  requiredItemID: 5
+    - More intel needs to be collected so we can find out more. Sources say there
+      are 4 more that need to be collected.
+    - The first one is again by glass blocking all the robots, but its stuck in the
+      glass.
+  stepID: 6
+  requiredItemID: 2
   requiredItemCount: 1
   currentItemFoundCount: 0
+  objectType: {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
