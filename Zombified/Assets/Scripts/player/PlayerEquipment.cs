@@ -337,11 +337,13 @@ public class PlayerEquipment : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             ToggleSystem();
+            ToggleInventory();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
            ToggleInventory();
+            ToggleSystem();
         }
 
     }

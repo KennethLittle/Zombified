@@ -12,9 +12,11 @@ public class KillEnemiesQuestStep : QuestStep
 
     public void RegisterEnemyKill(GameObject killedEnemyType)
     {
-        if (!isCompleted && killedEnemyType == EnemyPrefab)
+        Debug.Log($"Registering kill. Current kill count: {currentKillCount}, Required: {requiredKillCount}");
+        if (!isCompleted && killedEnemyType.CompareTag(EnemyPrefab.tag))
         {
             currentKillCount++;
+            Debug.Log($"Kill registered. New kill count: {currentKillCount}");
             isCompleted = CheckCompletion();
         }
     }

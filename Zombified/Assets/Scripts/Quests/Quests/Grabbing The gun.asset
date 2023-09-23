@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grabbing The gun
   m_EditorClassIdentifier: 
   description: Grab the gun
-  isCompleted: 0
+  isCompleted: 1
   stepDialogue:
     speakerName: Kyle
     sentences:
@@ -23,5 +23,5 @@ MonoBehaviour:
   stepID: 2
   requiredItemID: 1
   requiredItemCount: 1
-  currentItemFoundCount: 0
-  objectType: {fileID: 0}
+  currentItemFoundCount: 1
+  objectType: {fileID: 6412341303698808711, guid: d6f1b7e229ed0684eb6e5571c6a7d8ee, type: 3}

@@ -340,8 +340,9 @@ public class playerController : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0) // Add stamina check here
+        if (Input.GetButtonDown("Sprint") && playerStat.currentStamina > 0)// Add stamina check here
         {
+           
             isSprinting = true;
 
         }

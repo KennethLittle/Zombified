@@ -232,7 +232,6 @@ public class enemyAI : MonoBehaviour, IDamage
             int xpReward = enemyStats.CalculateExperienceReward();
             isDead = true;
             OnEnemyDeathEvent?.Invoke(this);
-            EnemyManager.Instance.HandleEnemyDeath(this);
             Destroy(gameObject,3);
 
             
@@ -254,12 +253,6 @@ public class enemyAI : MonoBehaviour, IDamage
             anim.SetTrigger("isAttacking");
             Player.GetComponent<playerController>().takeDamage(amount);
         }
-    }
-
-    void OnDestroy()
-    {
-       EnemyManager.Instance.DeRegisterEnemy(this);
-        
     }
 
     public void SetData(EnemyData data)

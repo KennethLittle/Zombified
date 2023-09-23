@@ -8,7 +8,8 @@ public class QuestManager : MonoBehaviour
     public List<Quest> questTemplates;
     public List<QuestRuntime> quests = new List<QuestRuntime>();
     public QuestUIManager questUIManager;
-    public GameObject objectType;
+    [SerializeField]
+    private DataBaseForItems itemDatabase;
 
     public int currentQuestIndex = 0;
 
@@ -96,6 +97,11 @@ public class QuestManager : MonoBehaviour
         if (CurrentQuest == null) return;
 
         Debug.Log($"Starting Step with ID: {CurrentQuest.CurrentStep.stepID} for Quest with ID: {CurrentQuest.questID}"); // Added log
+
+        if (CurrentQuest.CurrentStep.blueprint is FindItemQuestStep findItemStep)
+        {
+            findItemStep.StartQuestStep();
+        }
 
         string questName = CurrentQuest.blueprint.questName;
         string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
@@ -240,6 +246,7 @@ public class QuestManager : MonoBehaviour
         if (CurrentQuest == null) return;
 
         QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+        
 
         if (!currentStep.isCompleted && currentStep.blueprint is FindItemQuestStep findItemQuest)
         {
@@ -262,15 +269,18 @@ public class QuestManager : MonoBehaviour
 
     public void NotifyEnemyKilled(GameObject killedEnemyType)
     {
+        if (CurrentQuest == null) return;
+
         QuestStepRuntime currentStep = CurrentQuest.CurrentStep;
+
         if (!currentStep.isCompleted && currentStep.blueprint is KillEnemiesQuestStep killEnemyQuest)
         {
             killEnemyQuest.RegisterEnemyKill(killedEnemyType);
-            string questName = CurrentQuest.blueprint.questName;
-            string questStepDescription = CurrentQuest.CurrentStep.blueprint.description;
             currentStep.TryCompleteStep();
+
             if (currentStep.isCompleted)
             {
+                SaveManager.Instance.SaveGame();
                 CurrentQuest.ProgressToNextStepOrQuest();
                 OnQuestOrStepChanged();
 

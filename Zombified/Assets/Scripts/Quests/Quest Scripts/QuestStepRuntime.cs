@@ -5,11 +5,17 @@ public class QuestStepRuntime
     public QuestStep blueprint;
     public bool isCompleted;
     public int stepID;
+    public int requiredItemID = -1;
 
     public QuestStepRuntime(QuestStep originalStep, int id)
     {
         stepID = id; // Assign the ID
         blueprint = originalStep;
+
+        if (blueprint is FindItemQuestStep findItemStep)
+        {
+            requiredItemID = findItemStep.requiredItemID;
+        }
     }
 
     public void StartStep()

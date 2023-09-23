@@ -34,6 +34,7 @@ public class Spawner : MonoBehaviour
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; // Choose a random spawn point
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        newEnemy.tag = "Enemy";
 
         EnemyStat enemyAIComponent = newEnemy.GetComponent<EnemyStat>();
 

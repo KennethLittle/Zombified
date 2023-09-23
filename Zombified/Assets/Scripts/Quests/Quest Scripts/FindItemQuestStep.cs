@@ -19,15 +19,39 @@ public class FindItemQuestStep : QuestStep
 
     public void RegisterItemFound(int foundItemID)
     {
+        Debug.Log($"RegisterItemFound called with ID: {foundItemID}, Required ID: {requiredItemID}");
         if (!isCompleted && foundItemID == requiredItemID)
         {
             currentItemFoundCount++;
+            Debug.Log($"Current Item Count: {currentItemFoundCount}, Required Item Count: {requiredItemCount}");
             isCompleted = CheckCompletion();
+            if (isCompleted)
+            {
+                Debug.Log("Quest Step Completed.");
+            }
         }
     }
 
     public override bool CheckCompletion()
     {
         return currentItemFoundCount >= requiredItemCount;
+    }
+
+    public void StartQuestStep()
+    {
+        GameObject questItem = QuestItemManager.instance.questItems[requiredItemID];
+        if (questItem != null)
+        {
+            questItem.SetActive(true);
+        }
+    }
+
+    public void EndQuestStep()
+    {
+        GameObject questItem = QuestItemManager.instance.questItems[requiredItemID];
+        if (questItem != null)
+        {
+            questItem.SetActive(false);
+        }
     }
 }
