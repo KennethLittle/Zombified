@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid:
     xzUnitSize: 1
-    yUnitSize: 1
+    yUnitSize: 0.25
     cellCount: 500
     gridHeight: 0
     tintColor: {r: 0.23834105, g: 0.389676, b: 0.49056602, a: 0.15686275}
@@ -24,7 +24,7 @@ MonoBehaviour:
     snapshotCameraYaw: 30
     overwriteThumbnails: 0
   toolbar:
-    selectedDrawToolIndex: 0
+    selectedDrawToolIndex: -1
     selectedPaintToolIndex: 1
     position: 0
     scale: 1
