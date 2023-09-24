@@ -3168,26 +3168,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2315855857986874302, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
-      propertyPath: sprintMod
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2315855857986874302, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
-      propertyPath: staminaConsumptionRate
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2315855857986874302, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
-      propertyPath: staminaRegenerationRate
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
-      propertyPath: ReloadSFX.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
-      propertyPath: ReloadSFX.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: c4084d04c67bb4d4f869dbf0bc3c970f, type: 3}
     - target: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4726,6 +4706,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 616097196, guid: 2f546b291ec120347b2923361a95e6b3, type: 3}
+      propertyPath: WeaponMesh
+      value: 
+      objectReference: {fileID: 1750367915}
+    - target: {fileID: 616097196, guid: 2f546b291ec120347b2923361a95e6b3, type: 3}
       propertyPath: HPMANACanvas
       value: 
       objectReference: {fileID: 643452237}
@@ -4737,10 +4721,6 @@ PrefabInstance:
       propertyPath: inventorysetup
       value: 
       objectReference: {fileID: 5513792948018486262}
-    - target: {fileID: 3894260934791530040, guid: 2f546b291ec120347b2923361a95e6b3, type: 3}
-      propertyPath: levelSystem
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3894260934791530040, guid: 2f546b291ec120347b2923361a95e6b3, type: 3}
       propertyPath: playerSpawnPos
       value: 
@@ -9984,6 +9964,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!137 &1750367915 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 913548810146147556, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+  m_PrefabInstance: {fileID: 841294986}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1770032863
 PrefabInstance:
   m_ObjectHideFlags: 0
