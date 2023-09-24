@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
-  m_Name: Quest4 End
+  m_Name: Chapter 2 Just Getting Started
   m_EditorClassIdentifier: 
-  questID: 4
-  questName: End
+  questID: 2
+  questName: 'Chapter 2: Just Getting Started'
   questSteps:
-  - {fileID: 11400000, guid: 35148dfd82381e844be235f2e49ea1e4, type: 2}
+  - {fileID: 11400000, guid: 32762aaca7893fd4398ae74829fcc7b0, type: 2}
+  - {fileID: 11400000, guid: 73ebfc9d9772b934aa8fe5c2374926df, type: 2}
+  - {fileID: 11400000, guid: 775a73d866749f848a7df23cbb812e58, type: 2}

@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
   m_Name: Second intel in alpha
   m_EditorClassIdentifier: 
-  description: Find the second Intel Book in the office upstairs.
+  description: Find the second intel book.
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Great You found the first one, the second one will tell us how to dismantle
-      their weapon surpression system.
-    - Find that one, I heard it was upstairs in the office.
+    - Great! You found the first book. Now that we know how to get around. Let's
+      search for more intel. Maybe it will tell us how to dismantle their weapons
+      system.
+    - Go now. It may be somewhere upstairs in one of the offices.
   stepID: 4
   requiredItemID: 2
   requiredItemCount: 1

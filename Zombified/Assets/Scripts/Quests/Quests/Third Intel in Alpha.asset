@@ -17,8 +17,11 @@ MonoBehaviour:
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'The third intel is by all the pipes  downstairs, it should tell us how to
-      shutdown their production of robots. '
+    - Analyzing....
+    - I'm reading that we now have 2 out of 3 initial intel books.
+    - It says the third book is somewhere downstairs. It should tell us how to shutdown
+      their production of robots.
+    - Let's check by the maintenance pipes
   stepID: 5
   requiredItemID: 2
   requiredItemCount: 1
