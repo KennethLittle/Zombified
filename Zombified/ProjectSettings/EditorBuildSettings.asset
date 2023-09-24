@@ -11,9 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HomeBase.unity
     guid: 3769333c7558f094a85284830bb82ac1
-  - enabled: 1
-    path: Assets/Scenes/Alpha stain.unity
-    guid: 83b619ad8313fdc4f825e7a2494decb2
   - enabled: 0
     path: Assets/Scenes/DeathScene.unity
     guid: bdb3bb9e1491ef541bfaa25f0bff3e98
