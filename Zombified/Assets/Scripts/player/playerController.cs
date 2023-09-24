@@ -153,6 +153,7 @@ public class playerController : MonoBehaviour, IDamage
             isReloading = true;
             anim.SetTrigger("isReloading");
             // Wait for the reload duration
+            PlayerSounds.ReloadEmote();
             yield return new WaitForSeconds(reloadDuration);
 
             int ammoNeeded = weapon.ammoMax - weapon.ammoCurrent; // Calculate the amount needed to fill the current ammo
