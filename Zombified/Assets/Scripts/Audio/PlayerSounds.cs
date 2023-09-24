@@ -21,6 +21,7 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip[] LandSFX;
     public AudioClip[] LowHealthSFX;
     public AudioClip[] ShootSFX;
+    public AudioClip[] ReloadSFX;
 
     [Range(0, 1)]
     public float FootstepFrequency;
@@ -67,4 +68,9 @@ public class PlayerSounds : MonoBehaviour
     {
         AudioFunctionalities.PlayRandomClip(ShootSource, ShootSFX, PitchRange.x, PitchRange.y);
     }    
+
+    public void ReloadEmote()
+    {
+        AudioFunctionalities.PlayRandomClip(ShootSource, ReloadSFX, PitchRange.x, PitchRange.y);
+    }
 }
