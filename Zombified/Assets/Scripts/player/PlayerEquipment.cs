@@ -215,12 +215,6 @@ public class PlayerEquipment : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-
-        if (inventorysetup != null)
-            mainInventory = inventorysetup.GetComponent<InventorySystem>();
-        if (charactersetup != null)
-            craftInventory = charactersetup.GetComponent<InventorySystem>();
     }
 
 
@@ -291,61 +285,6 @@ public class PlayerEquipment : MonoBehaviour
                 maxDamage -= item.itemStats[i].attributeValue;
         }
         
-    }
-
-    void ToggleSystem()
-    {
-        if (!charactersetup.activeSelf)
-        {
-            craftInventory.openInventory();
-            charactersetup.SetActive(true);
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
-        }
-        else
-        {
-            craftInventory.closeInventory();
-            charactersetup.SetActive(false);
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
-        }
-    }
-
-    void ToggleInventory()
-    {
-        if (!inventorysetup.activeSelf)
-        {
-            mainInventory.openInventory();
-            inventorysetup.SetActive(true);
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
-        }
-        else
-        {
-            mainInventory.closeInventory();
-            inventorysetup.SetActive(false);
-            GameStateManager.instance.ChangeState(GameStateManager.GameState.Playing);
-        }
-    }
-
-
-
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ToggleSystem();
-            ToggleInventory();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-           ToggleInventory();
-            ToggleSystem();
-        }
-
     }
 }
 
