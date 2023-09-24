@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b4091578450c647b486ef60839d75c, type: 3}
   m_Name: First Intel in Alpha
   m_EditorClassIdentifier: 
-  description: Find the Intel Book by a Bunch of Stationary Robots
+  description: Find an intel book by a formation of robots
   isCompleted: 0
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - 'Head to Alpha Station, theres a Intel Book there we need to Collect. '
-    - 'I heard it was by a bunch of robots, that are being getting ready to be sent
-      out. '
+    - 'Head to Alpha Station, there''s an intel book there that we need to collect. '
+    - Last I remember, it was by a bunch of robots, that were being prepared for
+      deployment.
   stepID: 3
   requiredItemID: 2
   requiredItemCount: 1

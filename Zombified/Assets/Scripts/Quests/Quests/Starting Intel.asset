@@ -17,7 +17,7 @@ MonoBehaviour:
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - Grab that intel off my desk, it includes some info on Alpha Station.
+    - Grab that book off my desk. It should have some information on Alpha Station.
     - This might help us uncover some of the secrets of that place.
   stepID: 1
   requiredItemID: 2

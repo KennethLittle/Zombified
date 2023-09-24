@@ -17,9 +17,9 @@ MonoBehaviour:
   stepDialogue:
     speakerName: Kyle
     sentences:
-    - That intel book, has everything you need to know about Alpha Station, or at
-      least what we have.
-    - Grab that gun on the wall and lets get ready to go to Alpha Station.
+    - That intel book should have what you need to know about Alpha Station like,
+      how to get around.
+    - Grab that gun on the wall and lets get ready to go to there.
   stepID: 2
   requiredItemID: 1
   requiredItemCount: 1

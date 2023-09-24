@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4fb9f3944f02e7468be63dd9f1c7626, type: 3}
-  m_Name: Quest3 Figuring out the Truth
+  m_Name: Chapter 3 Figuring out the Truth
   m_EditorClassIdentifier: 
   questID: 3
   questName: 'Chapter 3: Figuring out the Truth'
