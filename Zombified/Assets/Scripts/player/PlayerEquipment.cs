@@ -15,6 +15,7 @@ using UnityEngine.UIElements.Experimental;
 
 public class PlayerEquipment : MonoBehaviour
 {
+    [SerializeField] SkinnedMeshRenderer WeaponMesh;
     private InventorySystem inventory;
     public static PlayerEquipment Instance;
     private PlayerStat playerstat;
@@ -74,6 +75,7 @@ public class PlayerEquipment : MonoBehaviour
 
     public void EquipWeapon(InventoryItem weaponItem)
     {
+        WeaponMesh.enabled = true;
         equippedWeapon = weaponItem;
 
         equippedWeapon.weaponDetails = weaponItem.weaponDetails;

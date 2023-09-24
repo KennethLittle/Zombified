@@ -124,10 +124,10 @@ public class playerController : MonoBehaviour, IDamage
                     damageable.takeDamage(damage);
                 }
             }
-            if (weapon.projectilePrefab != null)
-            {
-                Instantiate(weapon.projectilePrefab, weaponSlot.position, weaponSlot.rotation);
-            }
+            //if (weapon.projectilePrefab != null)
+            //{
+            //    Instantiate(weapon.projectilePrefab, weaponSlot.position, weaponSlot.rotation);
+            //}
 
             weapon.ammoCurrent--;
             updatePlayerUI();
