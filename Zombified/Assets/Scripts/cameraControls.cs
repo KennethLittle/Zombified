@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class cameraControls : MonoBehaviour
 {
 
     //[SerializeField] int sensitivity;
-    [Range(50, 150)]
+    [Range(1, 10)]
     public int sensitivity;
 
     [SerializeField] int lockVertMin;
@@ -21,13 +22,14 @@ public class cameraControls : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        MouseSensitivity(5);
     }
 
 
     void Update()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
 
         if (invertY)
             xRotation += mouseY;
