@@ -79,6 +79,8 @@ public class UIManager : MonoBehaviour
        if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameStateManager.instance.ChangeState(GameStateManager.GameState.Paused);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             pauseMenu.SetActive(true);
         }
     }

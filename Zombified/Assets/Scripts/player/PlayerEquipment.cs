@@ -1,16 +1,5 @@
-using Palmmedia.ReportGenerator.Core;
-using System.Diagnostics;
-using System.Net;
-using System.Numerics;
-using System.Security.Principal;
-using System;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using Unity.VisualScripting;
-using UnityEditor.Presets;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements.Experimental;
 
 
 public class PlayerEquipment : MonoBehaviour
