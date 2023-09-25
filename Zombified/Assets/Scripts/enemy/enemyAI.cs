@@ -253,6 +253,7 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             anim.SetTrigger("isAttacking");
             Player.GetComponent<playerController>().takeDamage(amount, source);
+            Debug.Log("Damage from: " + source.name + ", Amount: " + amount);
         }
     }
 
