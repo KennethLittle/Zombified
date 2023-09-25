@@ -135,7 +135,7 @@ public class UIManager : MonoBehaviour
 
     public void YouDeadSucka()
     {
-        pauseMenu.SetActive(true) ;
+        pauseMenu.SetActive(true);
         pauseMenu.GetComponent<Button>().GetComponent("Resume").hideFlags= HideFlags.HideInHierarchy;
     }
 

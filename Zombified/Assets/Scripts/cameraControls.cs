@@ -8,7 +8,7 @@ public class cameraControls : MonoBehaviour
 {
 
     //[SerializeField] int sensitivity;
-    [Range(1, 10)]
+    [Range(50, 150)]
     public int sensitivity;
 
     [SerializeField] int lockVertMin;
@@ -22,14 +22,14 @@ public class cameraControls : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        MouseSensitivity(5);
+        MouseSensitivity(100);
     }
 
 
     void Update()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity; //When removed Time.dt it makes screen unlocked with paused screen active
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
 
         if (invertY)
             xRotation += mouseY;
