@@ -8919,6 +8919,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5755915912769471457, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: FootstepFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -8967,6 +8971,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8266413911633685786, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1412309331}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
 --- !u!220 &846267017
@@ -18924,6 +18932,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 4, z: 1.5584333}
   m_Center: {x: 0, y: 2, z: -0.7792165}
+--- !u!1 &1412309331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6864760123798757026, guid: c45ee12be7492cf4abaf3b6ee7d0c9a7, type: 3}
+  m_PrefabInstance: {fileID: 841294986}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1418470598
 PrefabInstance:
   m_ObjectHideFlags: 0
