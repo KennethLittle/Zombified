@@ -27190,6 +27190,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6879264528185442045, guid: a1e35c1b6310bab4fab423393581a8be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879264528185442045, guid: a1e35c1b6310bab4fab423393581a8be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6942522342672771436, guid: a1e35c1b6310bab4fab423393581a8be, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
