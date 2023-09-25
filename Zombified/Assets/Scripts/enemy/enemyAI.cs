@@ -12,6 +12,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] private Animator anim;
+    public GameObject source;
   
 
     [Header("----- Stats -----")]
@@ -219,7 +220,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, GameObject source)
     {
         StartCoroutine(flashDamage());
         enemyStats.CurrentHP -= amount;
@@ -251,7 +252,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (Player != null)
         {
             anim.SetTrigger("isAttacking");
-            Player.GetComponent<playerController>().takeDamage(amount);
+            Player.GetComponent<playerController>().takeDamage(amount, source);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEditor.Recorder;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,7 @@ public class playerController : MonoBehaviour, IDamage
     public PlayerSounds PlayerSounds;
     [SerializeField] CharacterController controller;
     [SerializeField] Animator anim;
+    public GameObject source;
 
     [Header("----- Player Gun Stats -----")]
     [SerializeField] public List<GameObject> equippedWeapons = new List<GameObject>();
@@ -43,6 +45,7 @@ public class playerController : MonoBehaviour, IDamage
         originalPlayerSpeed = playerStat.playerSpeed;
         playerStat.HP = playerStat.HPMax;
         playerStat.currentStamina = playerStat.stamina;
+        isSprinting = false;
 
     }
 
@@ -121,7 +124,7 @@ public class playerController : MonoBehaviour, IDamage
                 IDamage damageable = hit.collider.GetComponent<IDamage>();
                 if (damageable != null)
                 {
-                    damageable.takeDamage(damage);
+                    damageable.takeDamage(damage, source);
                 }
             }
             //if (weapon.projectilePrefab != null)
@@ -166,11 +169,12 @@ public class playerController : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, GameObject source)
     {
         anim.SetTrigger("isHit");
         playerStat.HP -= amount;
         updatePlayerUI();
+        Debug.Log("Damage from: " + source.name + ", Amount: " + amount);
         StartCoroutine(UIManager.Instance.PlayerFlashDamage());
         if (playerStat.HP <= 0)
         {
@@ -311,7 +315,12 @@ public class playerController : MonoBehaviour, IDamage
             if (move.normalized.magnitude > 0f && !isJumping)
             {
                 //playerVelocity = move * playerStat.playerSpeed;
-                PlayerSounds.PlayFootstep(move * effectivePlayerSpeed);
+                PlayerSounds.PlayFootstep(move * 1.85f);
+                if (isSprinting)
+                {
+                    PlayerSounds.PlayFootstep(move * playerStat.sprintMod * 0.00005f);
+                    //the whole .00005 thing does nothing. Don't know why the thing won't just do move * sprintmod.
+                }
             }
 
         }
